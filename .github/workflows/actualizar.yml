@@ -1,0 +1,46 @@
+# =====================================================================
+#  LeoFX — actualizar.yml (GitHub Actions)
+# ---------------------------------------------------------------------
+#  Programa que corre en los servidores de GitHub (no en su computadora)
+#  dos veces al día. Hace lo mismo que la tarea de Windows:
+#    1) guarda el dólar del día        (guardar_cotizaciones.ps1)
+#    2) busca noticias del dólar       (buscar_noticias.ps1)
+#    3) vuelve a armar LeoFX.html      (armar_LeoFX.ps1)
+#  y guarda los cambios en el repositorio. Así, la página web y TODAS las
+#  copias de LeoFX.html (que leen la carpeta datos-en-linea) quedan al día
+#  aunque su computadora esté apagada.
+# =====================================================================
+name: Actualizar LeoFX
+
+on:
+  schedule:
+    # GitHub usa hora UTC. Bolivia = UTC−4.
+    - cron: "0 13 * * *"   # 09:00 en Bolivia
+    - cron: "0 1 * * *"    # 21:00 en Bolivia (después de que el BCB publica)
+  workflow_dispatch:        # botón "Run workflow" para actualizar a mano
+
+permissions:
+  contents: write           # permiso para guardar los cambios
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el proyecto
+        uses: actions/checkout@v4
+
+      - name: Guardar el dólar, buscar noticias y armar LeoFX.html
+        shell: pwsh
+        run: ./codigo-fuente/actualizar_leofx.ps1
+
+      - name: Guardar los cambios en GitHub
+        run: |
+          git config user.name "LeoFX (actualización automática)"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Sin cambios."
+          else
+            git commit -m "Actualización automática: dólar y noticias"
+            git push
+          fi

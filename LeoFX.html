@@ -1,0 +1,4499 @@
+<!DOCTYPE html>
+<!-- ARCHIVO GENERADO AUTOMÁTICAMENTE: no lo edite. Edite los archivos de la carpeta
+     codigo-fuente y luego haga doble clic en codigo-fuente\armar_LeoFX.bat -->
+<!--
+  =====================================================================
+  LeoFX — index.html
+  ---------------------------------------------------------------------
+  Este archivo es el "esqueleto" de la página: define qué secciones,
+  textos, botones y formularios existen. No calcula nada.
+    - El diseño (colores, tamaños) está en styles.css
+    - Los datos históricos están en datos.js
+    - Los cálculos y predicciones están en app.js
+  Los elementos con id="..." son los que app.js busca para escribir
+  resultados dentro de ellos.
+  =====================================================================
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <!-- Hace que la página se adapte bien a celulares -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LeoFX — Predicción del dólar en Bolivia</title>
+  <meta name="description" content="Herramienta de apoyo para decidir cuándo comprar dólares en Bolivia: tipo de cambio oficial (BCB) y paralelo, con predicciones a 1, 7 y 30 días.">
+  <!-- Color verde de la barra del navegador en celulares -->
+  <meta name="theme-color" content="#14532d">
+  <!-- Ícono de la pestaña: el logo dibujado en SVG, escrito dentro del mismo
+       archivo (así no depende de ninguna imagen aparte) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%23166534'/%3E%3Cpolyline points='11,33 19,25 25,29 37,15' fill='none' stroke='%2386efac' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpolyline points='30,15 37,15 37,22' fill='none' stroke='%2386efac' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+  <!-- Letra "Inter" de Google Fonts (necesita internet; sin internet se
+       usa la letra del sistema y todo sigue funcionando) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+
+  <!-- Hoja de estilos (diseño) -->
+  <style>
+/* =====================================================================
+   LeoFX — styles.css
+   ---------------------------------------------------------------------
+   Aquí se define el DISEÑO: colores, tipografía, tamaños, efectos y cómo
+   se acomodan las cosas en computadora y en celular.
+
+   Cómo se lee una regla CSS:
+     .tarjeta { padding: 20px; }
+     └ "a todo elemento con class="tarjeta", dale 20 px de relleno".
+
+   (El diseño anterior, más sobrio, está guardado en styles_anterior.css.)
+   ===================================================================== */
+
+
+/* ---------- 1. Variables de color y medidas ----------
+   Se definen una sola vez y se reutilizan con var(--nombre).
+   Paleta: verdes esmeralda y turquesa, vivos, sobre fondo blanco.
+   Los colores de las líneas del gráfico están en app.js (objeto SERIES). */
+:root {
+  /* Escala de verdes (900 = más oscuro, 50 = más claro) */
+  --verde-950: #022c22;
+  --verde-900: #064e3b;
+  --verde-800: #065f46;
+  --verde-700: #047857;
+  --verde-600: #059669;
+  --verde-500: #10b981;
+  --verde-400: #34d399;
+  --verde-300: #6ee7b7;
+  --verde-100: #d1fae5;
+  --verde-50:  #ecfdf5;
+  --turquesa:  #14b8a6;
+  --lima:      #bef264;
+
+  --primario: var(--verde-600);
+  --primario-oscuro: var(--verde-900);
+  --primario-claro: var(--verde-50);
+
+  /* Degradados (mezclas de color) usados en botones, encabezado, etc. */
+  --degradado: linear-gradient(135deg, #059669 0%, #10b981 55%, #14b8a6 100%);
+  --degradado-oscuro: linear-gradient(135deg, #022c22 0%, #064e3b 45%, #047857 100%);
+
+  /* Colores con significado */
+  --sube: #dc2626;            /* rojo: el dólar sube */
+  --sube-fondo: #fef2f2;
+  --baja: #059669;            /* verde: el dólar baja */
+  --baja-fondo: #ecfdf5;
+  --neutro: #64748b;          /* gris: sin cambio */
+  --neutro-fondo: #f1f5f9;
+  --alerta: #b45309;
+  --alerta-fondo: #fffbeb;
+
+  /* Superficies y texto */
+  --fondo: #ffffff;           /* fondo general de la página (blanco) */
+  --superficie: #ffffff;      /* fondo de las tarjetas */
+  --texto: #0f172a;
+  --texto-suave: #64748b;
+  --borde: rgba(5, 150, 105, 0.14);
+
+  /* Formas y sombras (las sombras tienen un leve tinte verde) */
+  --radio: 18px;
+  --radio-chico: 12px;
+  --sombra: 0 1px 2px rgba(2, 44, 34, 0.04), 0 10px 30px -14px rgba(2, 44, 34, 0.20);
+  --sombra-alta: 0 2px 4px rgba(2, 44, 34, 0.05), 0 22px 44px -18px rgba(5, 150, 105, 0.38);
+  --brillo: 0 8px 24px -8px rgba(16, 185, 129, 0.55);
+
+  --transicion: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* ---------- 2. Estilos generales ---------- */
+* {
+  box-sizing: border-box;     /* el ancho incluye el relleno y el borde */
+}
+
+html {
+  scroll-behavior: smooth;    /* desplazamiento suave al usar el menú */
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  /* Inter: letra moderna y muy legible (se descarga de Google Fonts).
+     Sin internet se usa la letra del sistema. */
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Centra el contenido y limita su ancho en pantallas grandes. */
+.contenedor {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+h1, h2, h3 {
+  line-height: 1.2;
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+}
+/* Título de cada tarjeta, con una pequeña barra de color a la izquierda. */
+h2 {
+  font-size: 1.22rem;
+  font-weight: 800;
+  color: var(--verde-950);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+h2::before {
+  content: "";
+  width: 5px;
+  height: 20px;
+  border-radius: 99px;
+  background: var(--degradado);
+  flex-shrink: 0;
+}
+h3 { font-size: 1.04rem; font-weight: 700; margin-top: 24px; color: var(--verde-900); }
+
+/* Números alineados (todas las cifras del mismo ancho). */
+.tv-numero, .tp-esperado, .tabla td {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Casillas de verificación en verde. */
+input[type="checkbox"] {
+  accent-color: var(--verde-600);
+  width: 17px;
+  height: 17px;
+}
+
+
+/* ---------- 3. Encabezado ---------- */
+.encabezado {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  padding: 22px 0;            /* alto de la franja verde (arriba y abajo) */
+  /* Varias capas: dos "luces" verdes difusas sobre un degradado oscuro. */
+  background:
+    radial-gradient(circle at 88% 15%, rgba(52, 211, 153, 0.45), transparent 38%),
+    radial-gradient(circle at 8% 110%, rgba(20, 184, 166, 0.40), transparent 42%),
+    var(--degradado-oscuro);
+}
+/* Cuadrícula muy tenue de fondo, como un papel de gráfico. */
+.encabezado::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: linear-gradient(90deg, transparent, #000 60%);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 60%);
+  pointer-events: none;
+}
+/* Brillo que cruza el encabezado lentamente (efecto "aurora"). */
+.encabezado::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -30%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  transform: rotate(18deg);
+  animation: aurora 9s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes aurora {
+  0%   { left: -40%; }
+  60%  { left: 120%; }
+  100% { left: 120%; }
+}
+/* Logo, nombre y subtítulo en una sola fila (en celular el subtítulo
+   pasa abajo automáticamente gracias a flex-wrap). */
+.encabezado .contenedor {
+  position: relative;         /* el texto queda por encima de los efectos */
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 24px;
+}
+.encabezado h1 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+/* Logo + nombre, uno al lado del otro. */
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.marca h1 {
+  margin: 0;
+}
+.logo {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;             /* que el logo no se achique */
+  filter: drop-shadow(0 0 14px rgba(52, 211, 153, 0.55));
+  animation: flotar 5s ease-in-out infinite;
+}
+@keyframes flotar {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+
+/* La parte "FX" del nombre, con un degradado lima → menta. */
+.marca-fx {
+  background: linear-gradient(90deg, var(--lima), var(--verde-300));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* Subtítulo, separado del nombre por una línea vertical tenue. */
+.subtitulo {
+  margin: 0;
+  max-width: 560px;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: rgba(236, 253, 245, 0.85);
+  padding-left: 24px;
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+
+/* ---------- 4. Aviso y menú ---------- */
+.aviso-principal {
+  background: linear-gradient(90deg, #fffbeb, #fef3c7);
+  color: var(--alerta);
+  border-bottom: 1px solid #fde68a;
+  padding: 10px 0;
+  font-size: 0.9rem;
+}
+.aviso-principal .contenedor::before {
+  content: "⚠ ";
+}
+
+/* ----- Barra de navegación -----
+   "Pegajosa" y semitransparente (efecto vidrio): se queda arriba al bajar
+   por la página y deja ver borroso lo que pasa por detrás. */
+.barra-navegacion {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: saturate(1.6) blur(14px);
+  -webkit-backdrop-filter: saturate(1.6) blur(14px);
+  border-bottom: 1px solid var(--borde);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.barra-navegacion .contenedor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+}
+/* Botón ☰ "Menú" */
+.boton-menu {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--verde-800);
+  background: var(--verde-50);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-chico);
+  padding: 8px 14px 8px 12px;
+  cursor: pointer;
+  transition: background var(--transicion), box-shadow var(--transicion), transform var(--transicion);
+}
+.boton-menu:hover {
+  background: var(--verde-100);
+  box-shadow: 0 6px 16px -8px rgba(16, 185, 129, 0.6);
+}
+.boton-menu:active { transform: scale(0.97); }
+.boton-menu:focus-visible, .boton-cerrar:focus-visible, .opcion-menu:focus-visible {
+  outline: 3px solid var(--verde-300);
+  outline-offset: 2px;
+}
+/* Las tres rayitas del ícono ☰, dibujadas con CSS. */
+.icono-hamburguesa {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 18px;
+  height: 13px;
+}
+.icono-hamburguesa span {
+  display: block;
+  height: 2.5px;
+  border-radius: 2px;
+  background: var(--verde-700);
+  transition: width var(--transicion);
+}
+.icono-hamburguesa span:nth-child(2) { width: 70%; }
+.boton-menu:hover .icono-hamburguesa span:nth-child(2) { width: 100%; }
+
+.separador-nav {
+  width: 1px;
+  height: 24px;
+  background: var(--borde);
+}
+/* Nombre del apartado que se está viendo. */
+.titulo-apartado {
+  font-weight: 700;
+  color: var(--verde-950);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;    /* "…" si no entra en celulares angostos */
+}
+
+/* ----- Fondo oscuro detrás del menú abierto ----- */
+.fondo-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  background: rgba(2, 44, 34, 0.45);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  opacity: 0;
+  pointer-events: none;       /* cerrado: no se puede hacer clic */
+  transition: opacity 0.3s ease;
+}
+.fondo-menu.visible {
+  opacity: 1;
+  pointer-events: auto;       /* abierto: un clic aquí cierra el menú */
+}
+
+/* ----- Panel lateral -----
+   Cerrado, está corrido a la izquierda, fuera de la pantalla
+   (translateX(-105%)). Al abrirse vuelve a su lugar con una animación. */
+.panel-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 40;
+  width: min(320px, 86vw);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  box-shadow: 24px 0 60px -20px rgba(2, 44, 34, 0.45);
+  transform: translateX(-105%);
+  transition: transform 0.38s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.panel-menu.abierto {
+  transform: translateX(0);
+}
+/* Cabecera del panel, con el mismo degradado que el encabezado. */
+.panel-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 16px 18px 20px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 90% 0%, rgba(52, 211, 153, 0.4), transparent 50%),
+    var(--degradado-oscuro);
+}
+.panel-marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.logo-chico {
+  width: 34px;
+  height: 34px;
+  filter: drop-shadow(0 0 10px rgba(52, 211, 153, 0.5));
+}
+/* Botón X para cerrar. */
+.boton-cerrar {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  transition: background var(--transicion), transform var(--transicion);
+}
+.boton-cerrar:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: rotate(90deg);   /* la X gira un cuarto de vuelta */
+}
+.boton-cerrar svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+
+/* Lista de opciones del menú. */
+.panel-opciones {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 14px;
+  overflow-y: auto;
+  flex: 1;
+}
+.opcion-menu {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 14px;
+  border-radius: var(--radio-chico);
+  color: var(--texto);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background var(--transicion), color var(--transicion), transform var(--transicion), box-shadow var(--transicion);
+}
+.opcion-menu:hover {
+  background: var(--verde-50);
+  color: var(--verde-800);
+  transform: translateX(4px);
+}
+.icono-opcion {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: var(--verde-600);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke var(--transicion);
+}
+/* Opción activa (el apartado que se está viendo): resaltada en verde. */
+.opcion-menu.activa {
+  background: var(--degradado);
+  color: #fff;
+  box-shadow: var(--brillo);
+}
+.opcion-menu.activa .icono-opcion { stroke: #fff; }
+.opcion-menu.activa:hover { transform: none; }
+
+/* Al abrir el panel, las opciones entran una tras otra. */
+.panel-menu.abierto .opcion-menu {
+  animation: entrarOpcion 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.panel-menu.abierto .opcion-menu:nth-child(1) { animation-delay: 0.08s; }
+.panel-menu.abierto .opcion-menu:nth-child(2) { animation-delay: 0.13s; }
+.panel-menu.abierto .opcion-menu:nth-child(3) { animation-delay: 0.18s; }
+.panel-menu.abierto .opcion-menu:nth-child(4) { animation-delay: 0.23s; }
+.panel-menu.abierto .opcion-menu:nth-child(5) { animation-delay: 0.28s; }
+.panel-menu.abierto .opcion-menu:nth-child(6) { animation-delay: 0.33s; }
+@keyframes entrarOpcion {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.panel-pie {
+  margin: 0;
+  padding: 14px 20px 20px;
+  border-top: 1px solid var(--borde);
+  color: var(--texto-suave);
+  font-size: 0.78rem;
+}
+
+/* Mientras el menú está abierto, la página de fondo no se desplaza. */
+body.menu-abierto {
+  overflow: hidden;
+}
+
+/* ----- Apartados: se muestra uno a la vez -----
+   Los ocultos llevan el atributo "hidden". El que se muestra entra con
+   una animación suave cada vez que se elige en el menú. */
+.apartado:not([hidden]) {
+  animation: entrarApartado 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes entrarApartado {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ---------- 5. Secciones y tarjetas ---------- */
+.seccion {
+  padding-top: 28px;
+  scroll-margin-top: 54px;    /* para que el menú no tape el título */
+}
+
+.tarjeta {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 24px;
+  margin-bottom: 20px;
+  transition: box-shadow var(--transicion), transform var(--transicion);
+  animation: aparecer 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.tarjeta:hover {
+  box-shadow: var(--sombra-alta);
+}
+
+/* Animación de entrada: sube un poco y aparece. */
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.nota {
+  color: var(--texto-suave);
+  font-size: 0.87rem;
+  margin: 10px 0 0;
+}
+
+
+/* ---------- 6. Barra de actualización automática ---------- */
+.barra-actualizacion {
+  display: flex;
+  align-items: center;
+  gap: 10px 14px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.estado-actualizacion {
+  position: relative;
+  flex: 1 1 320px;
+  margin: 0;
+  padding: 11px 16px 11px 38px;
+  border-radius: var(--radio-chico);
+  font-size: 0.9rem;
+  border: 1px solid var(--borde);
+  background: var(--neutro-fondo);
+  color: var(--texto);
+}
+/* Indicador a la izquierda: un círculo que gira mientras carga... */
+.estado-actualizacion::before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 16px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 2px solid var(--verde-300);
+  border-top-color: var(--verde-600);
+  animation: girar 0.8s linear infinite;
+}
+@keyframes girar { to { transform: rotate(360deg); } }
+.estado-actualizacion.cargando { color: var(--texto-suave); }
+
+/* ...y un punto verde que "late" cuando los datos están al día (en vivo). */
+.estado-actualizacion.ok {
+  background: linear-gradient(90deg, var(--verde-50), #f0fdfa);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+.estado-actualizacion.ok::before {
+  border: 0;
+  background: var(--verde-500);
+  animation: latido 1.8s ease-out infinite;
+}
+@keyframes latido {
+  0%   { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+  70%  { box-shadow: 0 0 0 9px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+.estado-actualizacion.error {
+  background: var(--alerta-fondo);
+  border-color: #fde68a;
+  color: var(--alerta);
+}
+.estado-actualizacion.error::before {
+  border: 0;
+  background: #f59e0b;
+  animation: none;
+}
+.estado-actualizacion .fuente {
+  display: block;
+  color: var(--texto-suave);
+  font-size: 0.78rem;
+  margin-top: 2px;
+}
+
+
+/* ---------- 7. Pestañas ---------- */
+.pestanas {
+  display: inline-flex;
+  background: var(--verde-50);
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  padding: 5px;
+  margin-bottom: 16px;
+}
+.pestana {
+  border: 0;
+  background: transparent;
+  color: var(--verde-800);
+  font: inherit;
+  font-weight: 700;
+  padding: 9px 26px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background var(--transicion), color var(--transicion), box-shadow var(--transicion);
+}
+.pestana:hover:not(.activa) {
+  background: rgba(16, 185, 129, 0.12);
+}
+.pestana.activa {
+  background: var(--degradado);
+  color: #fff;
+  box-shadow: var(--brillo);
+}
+.pestana:focus-visible, .boton:focus-visible {
+  outline: 3px solid var(--verde-300);
+  outline-offset: 2px;
+}
+
+.aviso-dato {
+  background: var(--alerta-fondo);
+  border: 1px solid #fde68a;
+  color: var(--alerta);
+  border-radius: var(--radio-chico);
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  margin: 0 0 16px;
+}
+
+/* Descripción corta del mercado elegido, debajo de las pestañas. */
+.descripcion-mercado {
+  color: var(--texto-suave);
+  font-size: 0.92rem;
+  margin: -4px 0 16px;
+}
+
+
+/* ---------- 8. Tarjeta "Cotización de hoy" ---------- */
+.grid-hoy {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+.grid-hoy.dos {
+  grid-template-columns: repeat(2, 1fr);
+}
+.grid-hoy .brecha {
+  grid-column: 1 / -1;        /* ocupa todo el ancho */
+  margin: 0;
+}
+
+/* El color de cada tarjeta (--color-serie) lo pone app.js según la serie. */
+.tarjeta-valor {
+  --color-serie: var(--verde-600);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, #ffffff 55%, var(--verde-50));
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 22px 24px 20px;
+  transition: transform var(--transicion), box-shadow var(--transicion);
+  animation: aparecer 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.tarjeta-valor:nth-child(2) { animation-delay: 0.08s; }
+/* Franja de color arriba de la tarjeta. */
+.tarjeta-valor::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-serie), var(--verde-300));
+}
+/* Círculo de luz decorativo en la esquina. */
+.tarjeta-valor::after {
+  content: "";
+  position: absolute;
+  right: -60px;
+  top: -60px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-serie) 22%, transparent), transparent 70%);
+  pointer-events: none;
+}
+.tarjeta-valor:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sombra-alta);
+}
+.tv-numero.vacio { color: var(--neutro); }
+
+.tv-titulo {
+  color: var(--texto-suave);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.tv-numero {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--verde-950);
+  margin: 6px 0 0;
+  line-height: 1.1;
+}
+.tv-fecha, .tv-pie {
+  color: var(--texto-suave);
+  font-size: 0.84rem;
+}
+
+/* Variación con flecha: rojo si sube, verde si baja, gris si igual. */
+.tv-variacion {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin: 10px 0 4px;
+  font-size: 0.9rem;
+}
+.tv-variacion.sube   { color: var(--sube);   background: var(--sube-fondo); box-shadow: inset 0 0 0 1px rgba(220, 38, 38, 0.15); }
+.tv-variacion.baja   { color: var(--baja);   background: var(--baja-fondo); box-shadow: inset 0 0 0 1px rgba(5, 150, 105, 0.2); }
+.tv-variacion.neutra { color: var(--neutro); background: var(--neutro-fondo); }
+
+
+/* ---------- 9. Gráfico ---------- */
+.controles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  align-items: center;
+  margin-bottom: 14px;
+  font-size: 0.9rem;
+}
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.selector select {
+  margin-left: 6px;
+}
+.caja-grafico {
+  position: relative;
+  height: 400px;              /* Chart.js usa esta altura */
+}
+
+
+/* ---------- 10. Tarjetas de predicción ---------- */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.tarjeta-pred {
+  position: relative;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-chico);
+  padding: 16px 18px;
+  background: linear-gradient(180deg, #ffffff, #f7fefb);
+  transition: transform var(--transicion), box-shadow var(--transicion), border-color var(--transicion);
+  animation: aparecer 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.tarjeta-pred:nth-child(2) { animation-delay: 0.07s; }
+.tarjeta-pred:nth-child(3) { animation-delay: 0.14s; }
+.tarjeta-pred:hover {
+  transform: translateY(-3px);
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: var(--sombra-alta);
+}
+.tp-plazo {
+  font-weight: 700;
+  color: var(--verde-700);
+}
+.tp-fecha {
+  font-weight: 500;
+  color: var(--texto-suave);
+  font-size: 0.82rem;
+}
+.tp-esperado {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--verde-950);
+  margin-top: 4px;
+}
+.tp-rango {
+  display: flex;
+  justify-content: space-between;
+  color: var(--texto-suave);
+  font-size: 0.86rem;
+  font-weight: 500;
+  border-top: 1px dashed var(--borde);
+  padding-top: 8px;
+  margin-top: 6px;
+}
+
+/* Método usado en cada tarjeta de predicción. */
+.tp-metodo {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+}
+.tp-metodo strong { color: var(--verde-700); }
+
+/* Resumen en palabras de la predicción (arriba de las tarjetas). */
+.resumen-tendencia {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  border-radius: var(--radio-chico);
+  background: linear-gradient(90deg, var(--verde-50), #f0fdfa);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  font-size: 0.95rem;
+}
+
+/* Celda del método elegido/usado en cada plazo (tablas). */
+.tabla td.celda-elegida,
+.tabla tbody tr:hover td.celda-elegida {
+  background: linear-gradient(90deg, #d1fae5, #ecfdf5);
+  font-weight: 700;
+}
+.tabla .neutra { color: var(--neutro); }
+
+.etiqueta-alerta {
+  display: inline-block;
+  background: linear-gradient(90deg, #fef3c7, #fde68a);
+  color: #92400e;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-top: 10px;
+}
+
+
+/* ---------- 11. Tablas ---------- */
+.tabla-scroll {
+  overflow-x: auto;           /* en celular la tabla se desliza de lado */
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-chico);
+}
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.tabla th, .tabla td {
+  text-align: left;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--borde);
+  vertical-align: top;
+}
+.tabla tbody tr:last-child td { border-bottom: 0; }
+.tabla th {
+  background: var(--verde-50);
+  color: var(--verde-800);
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.tabla tbody tr {
+  transition: background var(--transicion);
+}
+.tabla tbody tr:hover td {
+  background: #f6fefa;
+}
+.tabla tr.ganador td {
+  background: linear-gradient(90deg, #d1fae5, #ecfdf5 60%);
+  font-weight: 600;
+}
+.tabla tr.referencia td {
+  color: var(--texto-suave);
+  font-style: italic;
+}
+.tabla tr.fila-n td {
+  color: var(--texto-suave);
+  font-size: 0.84rem;
+}
+.tabla .sub {
+  color: var(--texto-suave);
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+.tabla .sube { color: var(--sube); font-weight: 700; }
+.tabla .baja { color: var(--baja); font-weight: 700; }
+.tabla .vacio {
+  color: var(--texto-suave);
+  text-align: center;
+}
+.insignia {
+  display: inline-block;
+  background: var(--degradado);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-style: normal;
+  padding: 2px 10px;
+  border-radius: 999px;
+  margin-left: 6px;
+  vertical-align: middle;
+  box-shadow: 0 4px 10px -4px rgba(16, 185, 129, 0.7);
+}
+
+
+/* ---------- 12. Formularios y botones ---------- */
+.formulario {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 14px;
+  align-items: end;
+  margin-top: 16px;
+}
+.formulario label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--verde-900);
+}
+input[type="text"], input[type="date"], select {
+  font: inherit;
+  font-weight: 500;
+  color: var(--texto);
+  padding: 11px 13px;
+  border: 1px solid #cfe3d8;
+  border-radius: var(--radio-chico);
+  background: #fff;
+  min-width: 0;
+  transition: border-color var(--transicion), box-shadow var(--transicion);
+}
+input[type="text"]:hover, input[type="date"]:hover, select:hover {
+  border-color: var(--verde-400);
+}
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--verde-500);
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.18);
+}
+
+.boton {
+  font: inherit;
+  font-weight: 700;
+  background: var(--degradado);
+  color: #fff;
+  border: 0;
+  border-radius: var(--radio-chico);
+  padding: 11px 20px;
+  cursor: pointer;
+  box-shadow: var(--brillo);
+  transition: transform var(--transicion), box-shadow var(--transicion), filter var(--transicion);
+}
+.boton:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow: 0 12px 28px -8px rgba(16, 185, 129, 0.65);
+}
+.boton:active {
+  transform: translateY(0) scale(0.98);
+}
+.boton.secundario {
+  background: #fff;
+  color: var(--verde-700);
+  box-shadow: inset 0 0 0 1.5px var(--verde-400);
+}
+.boton.secundario:hover {
+  background: var(--verde-50);
+  box-shadow: inset 0 0 0 1.5px var(--verde-500), 0 8px 20px -10px rgba(16, 185, 129, 0.6);
+}
+.boton.peligro {
+  background: #fff;
+  color: var(--sube);
+  box-shadow: inset 0 0 0 1.5px #fca5a5;
+}
+.boton.peligro:hover {
+  background: var(--sube-fondo);
+}
+.boton.chico {
+  padding: 8px 14px;
+  font-size: 0.86rem;
+}
+.boton:disabled {
+  opacity: 0.55;
+  cursor: wait;
+  transform: none;
+}
+.boton-link {
+  background: none;
+  border: 0;
+  color: var(--sube);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  text-decoration: underline;
+}
+.barra-botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+
+/* ---------- 13. Resultado de la calculadora ---------- */
+.resultado {
+  margin-top: 20px;
+}
+.recomendacion {
+  position: relative;
+  border-radius: var(--radio-chico);
+  padding: 16px 20px 16px 24px;
+  margin-bottom: 16px;
+  background: var(--neutro-fondo);
+  overflow: hidden;
+  animation: aparecer 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.recomendacion::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 6px;
+  background: var(--neutro);
+}
+.recomendacion p { margin: 4px 0 0; }
+.recomendacion.sube { background: linear-gradient(90deg, #fee2e2, var(--sube-fondo)); }
+.recomendacion.sube::before { background: var(--sube); }
+.recomendacion.baja { background: linear-gradient(90deg, #d1fae5, var(--baja-fondo)); }
+.recomendacion.baja::before { background: var(--degradado); }
+.rec-titulo {
+  font-weight: 800;
+  font-size: 1.12rem;
+  letter-spacing: -0.01em;
+}
+.lista-rec {
+  padding-left: 20px;
+  margin: 16px 0 0;
+}
+.lista-rec li {
+  margin-bottom: 10px;
+}
+.lista-rec li::marker { font-size: 1.1em; }
+.lista-rec li.sube::marker    { color: var(--sube); }
+.lista-rec li.baja::marker    { color: var(--baja); }
+.lista-rec li.estable::marker { color: var(--neutro); }
+.error-texto {
+  color: var(--sube);
+  font-weight: 600;
+}
+
+
+/* ---------- 13 B. Noticias e impacto ---------- */
+.lista-noticias {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
+}
+.noticia {
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-chico);
+  padding: 16px 18px;
+  background: linear-gradient(180deg, #ffffff, #fbfefc);
+  transition: transform var(--transicion), box-shadow var(--transicion), border-color var(--transicion);
+  animation: aparecer 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.noticia:hover {
+  transform: translateY(-2px);
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: var(--sombra-alta);
+}
+.noticia-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+}
+.noticia-fecha {
+  color: var(--verde-700);
+}
+.noticia-fuente::before { content: "· "; }
+/* Etiqueta del tipo de noticia. */
+.noticia-tipo {
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+}
+.noticia-tipo.clave      { background: var(--verde-100); color: var(--verde-800); }
+.noticia-tipo.automatica { background: #e0f2fe; color: #0369a1; }
+.noticia-tipo.propia     { background: #fef3c7; color: #92400e; }
+
+/* Línea con la fecha de la última búsqueda automática. */
+.estado-noticias {
+  margin: 0 0 12px;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+
+/* Botones de filtro (Todas / Clave / Automáticas / Mías). */
+.filtro-noticias {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--verde-50);
+  border: 1px solid var(--borde);
+}
+.filtro-noticias button {
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--verde-800);
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: background var(--transicion), color var(--transicion), box-shadow var(--transicion);
+}
+.filtro-noticias button:hover:not(.activo) { background: rgba(16, 185, 129, 0.12); }
+.filtro-noticias button.activo {
+  background: var(--degradado);
+  color: #fff;
+  box-shadow: var(--brillo);
+}
+.noticia-titulo {
+  margin: 6px 0 4px;
+  font-size: 1.04rem;
+  color: var(--verde-950);
+}
+.noticia-titulo a {
+  color: inherit;
+  text-decoration: none;
+  background-image: linear-gradient(var(--verde-300), var(--verde-300));
+  background-size: 0 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--transicion);
+}
+.noticia-titulo a:hover { background-size: 100% 2px; }   /* subrayado que "crece" */
+.noticia-resumen {
+  margin: 0 0 10px;
+  color: #334155;
+  font-size: 0.9rem;
+}
+
+/* Bloque de impacto con la barra. */
+.impacto {
+  border-top: 1px dashed var(--borde);
+  padding-top: 10px;
+}
+.impacto-cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+  margin-bottom: 6px;
+}
+.nivel-impacto {
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 10px;
+  border-radius: 999px;
+}
+.nivel-impacto.normal   { background: var(--neutro-fondo); color: var(--neutro); }
+.nivel-impacto.moderado { background: #fef3c7; color: #92400e; }
+.nivel-impacto.fuerte   { background: #fee2e2; color: #b91c1c; }
+
+.barra-impacto {
+  height: 10px;
+  border-radius: 999px;
+  background: #eef2f0;
+  overflow: hidden;
+}
+.relleno-impacto {
+  height: 100%;
+  border-radius: 999px;
+  animation: llenarBarra 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  transform-origin: left;
+}
+/* Rojo si el dólar subió, verde si bajó; más intenso cuanto más fuerte. */
+.relleno-impacto.sube { background: linear-gradient(90deg, #fca5a5, #dc2626); }
+.relleno-impacto.baja { background: linear-gradient(90deg, #6ee7b7, #059669); }
+.relleno-impacto.normal { opacity: 0.55; }
+@keyframes llenarBarra {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.impacto-detalle {
+  margin-top: 7px;
+  font-size: 0.84rem;
+  color: #334155;
+}
+.impacto-detalle .sube { color: var(--sube); font-weight: 700; }
+.impacto-detalle .baja { color: var(--baja); font-weight: 700; }
+.impacto-detalle.pendiente { color: var(--texto-suave); font-style: italic; }
+.impacto-paralelo {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+}
+
+/* Leyenda de colores. */
+.leyenda-impacto {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 14px 0;
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+}
+.leyenda-impacto span { display: inline-flex; align-items: center; gap: 6px; }
+.punto {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.punto.normal   { background: var(--neutro); opacity: 0.6; }
+.punto.moderado { background: #f59e0b; }
+.punto.fuerte   { background: #b91c1c; }
+.punto.sube     { background: var(--sube); }
+.punto.baja     { background: var(--baja); }
+
+/* Formulario de noticias: algunos campos ocupan más espacio. */
+.formulario-noticia .ancho-doble { grid-column: span 2; }
+.formulario-noticia .ancho-completo { grid-column: 1 / -1; }
+textarea {
+  font: inherit;
+  font-weight: 500;
+  color: var(--texto);
+  padding: 11px 13px;
+  border: 1px solid #cfe3d8;
+  border-radius: var(--radio-chico);
+  resize: vertical;
+  transition: border-color var(--transicion), box-shadow var(--transicion);
+}
+textarea:focus {
+  outline: none;
+  border-color: var(--verde-500);
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.18);
+}
+
+
+/* ---------- 14. Metodología ---------- */
+.texto p, .texto li, .texto dd {
+  max-width: 820px;
+}
+.metodos dt {
+  font-weight: 800;
+  color: var(--verde-800);
+  margin-top: 16px;
+}
+.metodos dd {
+  margin: 4px 0 0 0;
+}
+.formula {
+  font-family: Cambria, "Times New Roman", serif;
+  background: linear-gradient(90deg, var(--verde-50), #f0fdfa);
+  border-left: 3px solid var(--verde-500);
+  border-radius: 0 var(--radio-chico) var(--radio-chico) 0;
+  padding: 12px 16px;
+  margin: 10px 0;
+  overflow-x: auto;
+  font-size: 1.04rem;
+}
+.formula.grande {
+  font-size: 1.18rem;
+  text-align: center;
+}
+
+
+/* ---------- 15. Pie de página y mensajes ---------- */
+.pie {
+  background:
+    radial-gradient(circle at 90% 0%, rgba(52, 211, 153, 0.25), transparent 40%),
+    var(--degradado-oscuro);
+  color: #d1fae5;
+  padding: 26px 0;
+  margin-top: 36px;
+  font-size: 0.87rem;
+}
+.pie p { margin: 4px 0; }
+
+/* Mensaje flotante (aparece unos segundos al guardar, importar, etc.) */
+.mensaje {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translate(-50%, 30px);
+  opacity: 0;
+  pointer-events: none;
+  background: var(--verde-950);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: var(--radio-chico);
+  max-width: calc(100% - 32px);
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 16px 40px -12px rgba(2, 44, 34, 0.5);
+  transition: opacity 0.3s, transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+  z-index: 20;
+}
+.mensaje.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.mensaje.error { background: var(--sube); }
+.mensaje.ok    { background: var(--degradado); }
+
+
+/* ---------- 16. Celulares y pantallas pequeñas ----------
+   Las reglas dentro de @media solo se aplican si la pantalla mide
+   menos de 760 px de ancho. */
+@media (max-width: 760px) {
+  .encabezado { padding: 14px 0; }
+  .encabezado h1 { font-size: 1.6rem; }
+  .logo { width: 34px; height: 34px; }
+  .subtitulo { font-size: 0.85rem; padding-left: 0; border-left: 0; }
+  .grid-hoy.dos, .grid-3 {
+    grid-template-columns: 1fr;   /* una sola columna */
+  }
+  .tv-numero { font-size: 2.5rem; }
+  .formulario-noticia .ancho-doble { grid-column: 1 / -1; }
+  .caja-grafico { height: 300px; }
+  .tarjeta { padding: 18px; }
+  .pestanas { display: flex; }
+  .pestana {
+    flex: 1;
+    padding: 9px 4px;
+    font-size: 0.88rem;
+    white-space: nowrap;      /* el nombre en una sola línea */
+  }
+}
+
+
+/* ---------- 17. Movimiento reducido ----------
+   Si la persona configuró su equipo para "reducir animaciones", se
+   desactivan los efectos de movimiento. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+
+/* ---------- 18. Impresión (por si imprime para sus anexos) ---------- */
+@media print {
+  .barra-navegacion, .panel-menu, .fondo-menu, .barra-botones, .formulario, .mensaje, .controles, .barra-actualizacion { display: none; }
+  /* Al imprimir se incluyen TODOS los apartados, no solo el que se ve. */
+  .apartado[hidden] { display: block !important; }
+  body { background: #fff; }
+  .tarjeta, .tarjeta-valor, .tarjeta-pred { box-shadow: none; break-inside: avoid; animation: none; }
+  .encabezado::after, .logo { animation: none; }
+}
+
+</style>
+
+  <!-- Chart.js: librería gratuita para dibujar gráficos (necesita internet) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+
+<body>
+
+  <!-- ============ ENCABEZADO ============ -->
+  <header class="encabezado">
+    <div class="contenedor">
+      <!-- Logo + nombre. El logo es un dibujo SVG (una línea de tendencia con
+           flecha) escrito aquí mismo, sin archivos de imagen aparte.
+           "FX" es la sigla de foreign exchange (mercado de divisas). -->
+      <div class="marca">
+        <svg class="logo" viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="2" y="2" width="44" height="44" rx="12" fill="#ffffff" fill-opacity="0.12" stroke="#86efac" stroke-width="2"/>
+          <polyline points="11,33 19,25 25,29 37,15" fill="none" stroke="#86efac" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="30,15 37,15 37,22" fill="none" stroke="#86efac" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1>Leo<span class="marca-fx">FX</span></h1>
+      </div>
+      <p class="subtitulo">Predicción del tipo de cambio del dólar en Bolivia — apoyo a la decisión de compra para empresas importadoras</p>
+    </div>
+  </header>
+
+  <!-- Aviso obligatorio, siempre visible arriba -->
+  <div class="aviso-principal" role="note">
+    <div class="contenedor">
+      <strong>Aviso:</strong> Herramienta de apoyo a la toma de decisiones. Las predicciones son estimaciones y no garantizan valores futuros.
+    </div>
+  </div>
+
+  <!-- ============ BARRA DE NAVEGACIÓN ============
+       Se queda fija arriba al bajar por la página. A la izquierda, el botón
+       ☰ que abre el menú lateral; al lado, el nombre del apartado que se
+       está viendo (lo escribe app.js). -->
+  <div class="barra-navegacion">
+    <div class="contenedor">
+      <button type="button" id="btnMenu" class="boton-menu" aria-label="Abrir el menú" aria-controls="panelMenu" aria-expanded="false">
+        <span class="icono-hamburguesa" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="texto-boton-menu">Menú</span>
+      </button>
+      <span class="separador-nav" aria-hidden="true"></span>
+      <span id="tituloApartado" class="titulo-apartado">Cotización y predicción</span>
+    </div>
+  </div>
+
+  <!-- ============ MENÚ LATERAL (panel que se desliza desde la izquierda) ============
+       Para AGREGAR una opción al menú:
+         1) Copie una línea <a class="opcion-menu" ...> de abajo.
+         2) Cambie href="#..." y data-apartado="..." por el id del nuevo
+            apartado, y el texto del <span class="texto-opcion">.
+         3) Cree en <main> una <section class="seccion apartado" id="..."> con
+            ese mismo id.
+       No hace falta tocar app.js: el menú encuentra solo las opciones nuevas. -->
+  <div id="fondoMenu" class="fondo-menu" aria-hidden="true"></div>
+  <aside id="panelMenu" class="panel-menu" aria-label="Menú de apartados" aria-hidden="true" inert>
+    <div class="panel-cabecera">
+      <div class="panel-marca">
+        <svg class="logo-chico" viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="2" y="2" width="44" height="44" rx="12" fill="#ffffff" fill-opacity="0.12" stroke="#86efac" stroke-width="2"/>
+          <polyline points="11,33 19,25 25,29 37,15" fill="none" stroke="#86efac" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="30,15 37,15 37,22" fill="none" stroke="#86efac" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Leo<span class="marca-fx">FX</span></span>
+      </div>
+      <button type="button" id="btnCerrarMenu" class="boton-cerrar" aria-label="Cerrar el menú">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <nav class="panel-opciones" aria-label="Apartados">
+      <a class="opcion-menu" href="#cotizacion" data-apartado="cotizacion">
+        <svg class="icono-opcion" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 6-6"/></svg>
+        <span class="texto-opcion">Cotización y predicción</span>
+      </a>
+      <a class="opcion-menu" href="#calculadora" data-apartado="calculadora">
+        <svg class="icono-opcion" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></svg>
+        <span class="texto-opcion">¿Compro hoy o espero?</span>
+      </a>
+      <a class="opcion-menu" href="#noticias" data-apartado="noticias">
+        <svg class="icono-opcion" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h13v16H6a2 2 0 01-2-2z"/><path d="M17 8h3v10a2 2 0 01-2 2h-1"/><path d="M8 8h5M8 12h5M8 16h3"/></svg>
+        <span class="texto-opcion">Noticias e impacto</span>
+      </a>
+      <a class="opcion-menu" href="#registro" data-apartado="registro">
+        <svg class="icono-opcion" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>
+        <span class="texto-opcion">Registrar cotizaciones</span>
+      </a>
+      <a class="opcion-menu" href="#metodologia" data-apartado="metodologia">
+        <svg class="icono-opcion" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 016.5 17H20V3H6.5A2.5 2.5 0 004 5.5z"/><path d="M4 19.5A2.5 2.5 0 006.5 22H20v-5"/></svg>
+        <span class="texto-opcion">Metodología</span>
+      </a>
+    </nav>
+
+    <p class="panel-pie">Herramienta de apoyo a la toma de decisiones. Las predicciones son estimaciones y no garantizan valores futuros.</p>
+  </aside>
+
+  <main class="contenedor">
+
+    <!-- ============ 1. COTIZACIÓN, GRÁFICO Y PREDICCIONES ============ -->
+    <!-- Cada <section class="apartado"> se muestra por separado, como una
+         página propia. El que tiene "hidden" empieza oculto; app.js decide
+         cuál mostrar según la opción elegida en el menú. -->
+    <section id="cotizacion" class="seccion apartado">
+
+      <!-- Estado de la actualización automática desde internet (lo escribe app.js) -->
+      <div class="barra-actualizacion">
+        <p id="estadoActualizacion" class="estado-actualizacion">Buscando las cotizaciones de hoy…</p>
+        <button type="button" id="btnActualizar" class="boton secundario chico">Actualizar ahora</button>
+      </div>
+
+      <!-- Pestañas: app.js cambia "estado.mercado" al hacer clic -->
+      <div class="pestanas" role="tablist" aria-label="Mercado">
+        <button type="button" class="pestana activa" role="tab" data-mercado="oficial" aria-selected="true">Oficial (BCB)</button>
+        <button type="button" class="pestana" role="tab" data-mercado="paralelo" aria-selected="false">Paralelo</button>
+      </div>
+
+      <!-- Breve explicación del mercado elegido (la escribe app.js) -->
+      <p id="descripcionMercado" class="descripcion-mercado"></p>
+
+      <!-- Aviso si los datos no están al día (lo muestra app.js) -->
+      <p id="avisoDesactualizado" class="aviso-dato" hidden></p>
+
+      <!-- Tarjeta(s) con la cotización de hoy -->
+      <div id="tarjetaHoy" class="grid-hoy"></div>
+
+      <!-- Gráfico histórico -->
+      <div class="tarjeta">
+        <h2 id="tituloGrafico">Evolución del tipo de cambio</h2>
+        <div class="controles">
+          <label class="check"><input type="checkbox" id="chkPrediccion" checked> Mostrar predicción (30 días)</label>
+          <label class="check"><input type="checkbox" id="chkComparar"> Comparar oficial y paralelo</label>
+          <label id="grupoLado" class="selector" hidden>
+            Predecir:
+            <select id="ladoSerie">
+              <option value="compra">Precio de compra</option>
+              <option value="venta">Precio de venta</option>
+            </select>
+          </label>
+        </div>
+        <div class="caja-grafico">
+          <canvas id="grafico" aria-label="Gráfico del tipo de cambio" role="img"></canvas>
+          <p id="avisoGrafico" class="aviso-dato" hidden>No se pudo cargar la librería de gráficos (Chart.js). Verifique su conexión a internet y recargue la página. El resto de la herramienta funciona igual.</p>
+        </div>
+        <p class="nota">En el paralelo, los puntos son los días con dato real; la línea que los une es solo una ayuda visual. La línea punteada es la predicción y la zona sombreada su rango.</p>
+      </div>
+
+      <!-- Predicciones a 1, 7 y 30 días -->
+      <div class="tarjeta">
+        <h2>Predicción a 1, 7 y 30 días</h2>
+        <!-- Resumen en palabras de lo que se espera (lo escribe app.js) -->
+        <p id="resumenTendencia" class="resumen-tendencia" hidden></p>
+        <div id="predicciones" class="grid-3"></div>
+        <p id="metodoElegido" class="nota"></p>
+
+        <!-- Lo que predice cada método, para comparar tendencias -->
+        <h3>¿Qué predice cada método?</h3>
+        <p class="nota">Cada método ve el futuro de forma distinta: unos siguen la tendencia reciente (▲ sube, ▼ baja) y otros no. En cada plazo se usa el que menos se equivocó en el pasado (marcado como <strong>Usado</strong>).</p>
+        <div class="tabla-scroll">
+          <table id="tablaMetodos" class="tabla"></table>
+        </div>
+      </div>
+
+      <!-- Tabla de comparación de métodos (backtest) -->
+      <div class="tarjeta">
+        <h2>Comparación de métodos (backtest)</h2>
+        <p class="nota">Cada método se probó "prediciendo el pasado" y se midió su error con el MAPE (error porcentual absoluto medio). <strong>Menor MAPE = mejor.</strong> Para cada plazo se elige automáticamente el método de menor MAPE.</p>
+        <div class="tabla-scroll">
+          <table id="tablaBacktest" class="tabla"></table>
+        </div>
+        <p id="notaBacktest" class="nota"></p>
+      </div>
+    </section>
+
+    <!-- ============ 2. CALCULADORA ============ -->
+    <section id="calculadora" class="seccion apartado" hidden>
+      <div class="tarjeta">
+        <h2>¿Compro hoy o espero?</h2>
+        <p class="nota">Ingrese cuántos dólares necesita su empresa (para importaciones, proveedores, alquileres, etc.) y en qué mercado los compraría.</p>
+        <form id="formCalculadora" class="formulario">
+          <label>
+            Monto que necesita (USD)
+            <input type="text" id="montoUSD" inputmode="decimal" placeholder="Ej.: 10.000" autocomplete="off">
+          </label>
+          <label>
+            Mercado
+            <select id="mercadoCalc">
+              <option value="oficial">Oficial (BCB)</option>
+              <option value="compra">Paralelo (precio de compra)</option>
+            </select>
+          </label>
+          <button type="submit" class="boton">Calcular</button>
+        </form>
+        <div id="resultadoCalc" class="resultado"></div>
+      </div>
+    </section>
+
+    <!-- ============ NOTICIAS E IMPACTO EN EL DÓLAR ============ -->
+    <section id="noticias" class="seccion apartado" hidden>
+      <div class="tarjeta">
+        <h2>Noticias e impacto en el dólar</h2>
+        <p class="nota">Noticias económicas clave y cuánto se movió el dólar oficial en los <strong>5 días siguientes</strong> a cada una, comparado con un movimiento normal de 5 días (hoy: <strong id="textoNormal">—</strong>). Las fechas de las noticias también aparecen como rombos amarillos en el gráfico de “Cotización y predicción”.</p>
+
+        <!-- Leyenda de los niveles de la barra -->
+        <div class="leyenda-impacto">
+          <span><i class="punto normal"></i> Normal: menos de 1 vez el movimiento habitual</span>
+          <span><i class="punto moderado"></i> Moderado: de 1 a 2,5 veces</span>
+          <span><i class="punto fuerte"></i> Fuerte: 2,5 veces o más</span>
+          <span><i class="punto sube"></i> rojo = el dólar subió · <i class="punto baja"></i> verde = bajó</span>
+        </div>
+
+        <p class="aviso-dato">Importante: que el dólar se mueva cerca de una noticia <strong>no prueba</strong> que la noticia lo haya causado; en esos días pudieron influir otros hechos. La barra muestra coincidencia en el tiempo.</p>
+
+        <!-- Fecha de la última búsqueda automática (la escribe app.js) -->
+        <p id="estadoNoticias" class="estado-noticias"></p>
+
+        <!-- Filtros: qué tipo de noticias mostrar -->
+        <div class="filtro-noticias" role="group" aria-label="Filtrar noticias">
+          <button type="button" data-filtro="todas" class="activo">Todas</button>
+          <button type="button" data-filtro="clave">Clave</button>
+          <button type="button" data-filtro="automatica">Automáticas</button>
+          <button type="button" data-filtro="propia">Mías</button>
+        </div>
+
+        <!-- Lista de noticias (la escribe app.js) -->
+        <div id="listaNoticias" class="lista-noticias"></div>
+      </div>
+
+      <div class="tarjeta">
+        <h2>Agregar una noticia</h2>
+        <p class="nota">Las noticias automáticas llegan solas de Google News (si activó la búsqueda diaria). Use este formulario para hechos que la búsqueda no encuentre —en Bolivia o en el mundo: decisiones del BCB, del Gobierno, del FMI, precios del petróleo, tasas de interés de EE. UU.—. Su impacto se calcula automáticamente.</p>
+        <form id="formNoticia" class="formulario formulario-noticia">
+          <label>
+            Fecha
+            <input type="date" id="notFecha" required>
+          </label>
+          <label class="ancho-doble">
+            Titular
+            <input type="text" id="notTitular" maxlength="200" placeholder="Ej.: El BCB anuncia nueva medida cambiaria" autocomplete="off">
+          </label>
+          <label>
+            Fuente
+            <input type="text" id="notFuente" maxlength="80" placeholder="Ej.: El Deber" autocomplete="off">
+          </label>
+          <label class="ancho-doble">
+            Enlace (opcional)
+            <input type="text" id="notEnlace" placeholder="https://..." autocomplete="off">
+          </label>
+          <label class="ancho-completo">
+            Resumen (opcional)
+            <textarea id="notResumen" rows="2" maxlength="500" placeholder="En pocas palabras, qué pasó"></textarea>
+          </label>
+          <button type="submit" class="boton">Agregar noticia</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============ 3. REGISTRO DE COTIZACIONES ============ -->
+    <section id="registro" class="seccion apartado" hidden>
+      <div class="tarjeta">
+        <h2>Registrar cotizaciones</h2>
+        <p class="nota">Cada vez que abre la herramienta con internet, las cotizaciones del día se descargan y guardan solas (aparecen abajo como “Automático”). Use este formulario solo para corregir un valor o completar un día que falte. Escriba con coma decimal (11,70). Los datos se guardan en este navegador y las predicciones se recalculan al instante.</p>
+        <form id="formRegistro" class="formulario">
+          <label>
+            Fecha
+            <input type="date" id="regFecha" required>
+          </label>
+          <label>
+            Oficial BCB (Bs)
+            <input type="text" id="regOficial" inputmode="decimal" placeholder="Ej.: 11,70" autocomplete="off">
+          </label>
+          <label>
+            Paralelo compra (Bs)
+            <input type="text" id="regCompra" inputmode="decimal" placeholder="Ej.: 11,85" autocomplete="off">
+          </label>
+          <label>
+            Paralelo venta (Bs)
+            <input type="text" id="regVenta" inputmode="decimal" placeholder="Ej.: 11,83" autocomplete="off">
+          </label>
+          <button type="submit" class="boton">Guardar cotización</button>
+        </form>
+
+        <div class="barra-botones">
+          <button type="button" id="btnExportar" class="boton secundario">Exportar CSV</button>
+          <button type="button" id="btnImportar" class="boton secundario">Importar CSV</button>
+          <button type="button" id="btnBorrarTodo" class="boton peligro">Borrar mis registros</button>
+          <!-- Selector de archivo oculto; se abre con el botón "Importar CSV" -->
+          <input type="file" id="archivoCSV" accept=".csv,text/csv" hidden>
+        </div>
+        <p id="resumenDatos" class="nota"></p>
+
+        <h3>Datos nuevos guardados (automáticos y manuales)</h3>
+        <div class="tabla-scroll">
+          <table class="tabla">
+            <thead>
+              <tr><th>Fecha</th><th>Oficial</th><th>Paralelo compra</th><th>Paralelo venta</th><th>Origen</th><th></th></tr>
+            </thead>
+            <tbody id="cuerpoRegistros"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4. METODOLOGÍA ============ -->
+    <section id="metodologia" class="seccion apartado" hidden>
+      <div class="tarjeta texto">
+        <h2>Metodología</h2>
+
+        <h3>Contexto</h3>
+        <p>Desde el 29 de junio de 2026 Bolivia aplica un régimen de tipo de cambio flexible; ya no rige el tipo fijo de Bs 6,96. El Banco Central de Bolivia (BCB) publica cada día hábil a las 20:00 el <strong>Tipo de Cambio Oficial (TCO)</strong>, calculado con las operaciones de compra de dólares de los bancos; los fines de semana se mantiene el valor del viernes. Paralelamente existe el <strong>dólar paralelo</strong> (mercado informal / plataformas P2P), con precio de compra y de venta.</p>
+
+        <h3>Fuentes de datos</h3>
+        <ul>
+          <li><strong>Oficial:</strong> TCO publicado por el BCB (<em>bcb.gob.bo</em>), dato diario desde el 27/06/2026.</li>
+          <li><strong>Paralelo:</strong> cierres reportados en prensa (dolarboliviahoy.com vía Red Uno, EJU, Correo del Sur; dolaresabolivianos.com / paralelo.bo para algunos días de septiembre). Hay días sin dato: no se inventan valores; los modelos usan solo los días con dato.</li>
+          <li><strong>Actualización automática (desde el 15/10/2026):</strong> al abrirse, la herramienta consulta <em>DolarApi Bolivia</em> (bo.dolarapi.com), un servicio público y gratuito. De ahí toma el TCO del BCB (verificado contra bcb.gob.bo) y, como dólar paralelo, el precio de referencia del mercado P2P en bolivianos que reporta ese servicio (el 15/10/2026 coincidía con el publicado por dolarboliviahoy.com, fuente de la serie histórica). Como precio de <em>compra</em> se toma el mayor de sus dos valores (lo que se paga por 1 USD) y como <em>venta</em> el menor. Cada dato se guarda con su fecha; si la herramienta se abre varias veces el mismo día, se conserva el último valor. El servicio no ofrece historia: los días en que no se abre la herramienta quedan sin dato (pueden completarse a mano).</li>
+          <li><strong>Registros manuales:</strong> correcciones o días faltantes que el usuario agrega en la sección “Registrar cotizaciones”.</li>
+        </ul>
+
+        <h3>Métodos de predicción</h3>
+        <dl class="metodos">
+          <dt>1. Promedio móvil</dt>
+          <dd>Promedia los últimos <em>k</em> valores (k = 7 en el oficial, 3 en el paralelo). Suaviza los saltos, pero no sigue tendencias: predice el mismo valor para todos los plazos.
+            <div class="formula">Ŷ = (y<sub>t</sub> + y<sub>t−1</sub> + … + y<sub>t−k+1</sub>) / k</div></dd>
+
+          <dt>2. Regresión lineal</dt>
+          <dd>Traza la recta que mejor se ajusta a los datos de los últimos 30 días (mínimos cuadrados) y la prolonga hacia el futuro. Capta tendencias, pero supone que continúan en línea recta.
+            <div class="formula">Ŷ = a + b · t &nbsp;&nbsp; donde &nbsp; b = Σ(t − t̄)(y − ȳ) / Σ(t − t̄)² &nbsp; y &nbsp; a = ȳ − b · t̄</div></dd>
+
+          <dt>3. Suavizamiento exponencial doble (método de Holt)</dt>
+          <dd>Actualiza con cada dato un <em>nivel</em> (L) y una <em>tendencia</em> (T), dando más peso a lo reciente. Los parámetros α y β se eligen automáticamente probando combinaciones y quedándose con la de menor error.
+            <div class="formula">L<sub>t</sub> = α · y<sub>t</sub> + (1 − α) · (L<sub>t−1</sub> + T<sub>t−1</sub>)<br>T<sub>t</sub> = β · (L<sub>t</sub> − L<sub>t−1</sub>) + (1 − β) · T<sub>t−1</sub><br>Ŷ<sub>t+h</sub> = L<sub>t</sub> + h · T<sub>t</sub></div>
+            <span class="nota">Como el paralelo no tiene dato diario, la tendencia se mide “por día” teniendo en cuenta los días transcurridos entre datos.</span></dd>
+
+          <dt>4. Holt amortiguado</dt>
+          <dd>Variante de Holt en la que la tendencia se va “frenando” con el tiempo según un factor φ (entre 0 y 1). A 1 día sigue la tendencia reciente; a 30 días no la prolonga sin límite, lo que evita predicciones exageradas (Gardner y McKenzie, 1985). α, β y φ se eligen automáticamente.
+            <div class="formula">Ŷ<sub>t+h</sub> = L<sub>t</sub> + (φ + φ² + … + φ<sup>h</sup>) · T<sub>t</sub></div></dd>
+
+          <dt>5. Combinación de métodos</dt>
+          <dd>Promedio del promedio móvil (nivel estable) y de Holt amortiguado (tendencia). Combinar pronósticos de métodos distintos suele reducir el error, porque sus equivocaciones se compensan (Bates y Granger, 1969).
+            <div class="formula">Ŷ = (Ŷ<sub>promedio móvil</sub> + Ŷ<sub>Holt amortiguado</sub>) / 2</div></dd>
+
+          <dt>Referencia: último valor (modelo ingenuo)</dt>
+          <dd>Supone que el dólar seguirá igual que en el último dato (Ŷ = y<sub>t</sub>). Se incluye solo como punto de comparación (no se elige para predecir): un modelo aporta valor si se equivoca menos que esta regla simple. Si la referencia gana, es señal de que el tipo de cambio se comporta casi como una “caminata aleatoria”.</dd>
+        </dl>
+
+        <h3>Evaluación: backtest y MAPE</h3>
+        <p>Para cada fecha del pasado se ocultan los datos posteriores, se predice el valor a 1, 7 y 30 días y se compara con lo que realmente ocurrió. El error se resume con el <strong>MAPE</strong> (error porcentual absoluto medio):</p>
+        <div class="formula grande">MAPE = (1 / n) · Σ | (Real − Pronóstico) / Real | × 100 %</div>
+        <p><strong>Para cada plazo (1, 7 y 30 días) se elige automáticamente el método con menor MAPE en ese plazo.</strong> Un método puede ser el mejor para mañana y otro para dentro de un mes: seguir la tendencia suele ayudar a muy corto plazo, mientras que a 30 días conviene no exagerarla. En el gráfico, la línea de predicción pasa suavemente del método de un plazo al del siguiente (promedio ponderado por la distancia en días), para que no dé saltos.</p>
+        <p>Cuando el mercado no muestra una tendencia clara, los métodos más precisos dan valores parecidos en los tres plazos: es el resultado correcto (inventar subidas o bajadas aumentaría el error). En ese caso, la información más útil es el <strong>rango</strong>, que se amplía a medida que el plazo es más largo. Por ejemplo, un MAPE de 2 % significa que, en promedio, las predicciones se equivocaron en un 2 % (unos Bs 0,24 con un dólar a Bs 12).</p>
+
+        <h3>Rango de la predicción</h3>
+        <p>La predicción se presenta como un rango y no como un número exacto. Con los errores relativos del método elegido en el backtest, e = (Real − Pronóstico) / Real, se calcula su desviación σ = √(promedio de e²) para cada plazo, y:</p>
+        <div class="formula">Mínimo = Esperado × (1 − 1,28 σ) &nbsp;&nbsp;·&nbsp;&nbsp; Máximo = Esperado × (1 + 1,28 σ)</div>
+        <p>El factor 1,28 corresponde aproximadamente a un 80 % de confianza si los errores fueran normales. Cuando el ancho del rango supera el 5 % del valor esperado, la herramienta advierte <strong>“alta incertidumbre”</strong>. Si para un plazo hubo menos de 3 comparaciones (caso del paralelo a 30 días), σ se estima a partir del plazo más corto multiplicándolo por √(plazo largo / plazo corto). Además, el rango de un plazo largo nunca se toma más angosto que el de un plazo más corto.</p>
+
+        <h3>Regla de recomendación</h3>
+        <p>Si el valor esperado cambia más de ±0,5 % respecto al último dato, se considera subida o bajada; si no, estabilidad. Si además hay alta incertidumbre, se informa el costo en el peor caso (máximo del rango) y se sugiere la compra escalonada. El ahorro o costo estimado es: <em>monto en USD × (tipo de cambio esperado − tipo de cambio de hoy)</em>.</p>
+
+        <h3>Noticias e impacto (estudio de eventos)</h3>
+        <p>Para cada noticia se compara el dólar oficial del día anterior con el del quinto día posterior, y ese cambio se divide entre el movimiento “normal” de 5 días (la mediana de todos los cambios de 5 días de la serie):</p>
+        <div class="formula">Cambio = (TCO<sub>t+5</sub> − TCO<sub>t−1</sub>) / TCO<sub>t−1</sub> &nbsp;&nbsp;·&nbsp;&nbsp; Intensidad = |Cambio| / Mediana(|cambios de 5 días|)</div>
+        <p>Intensidad menor a 1: movimiento normal; de 1 a 2,5: moderado; 2,5 o más: fuerte. Hay tres tipos de noticias: <strong>clave</strong> (seleccionadas a mano, con enlace a la nota original en El Deber, Opinión, Infobae/EFE y France 24), <strong>automáticas</strong> (un programa en la computadora busca dos veces al día en Google News titulares de Bolivia sobre dólar, tipo de cambio, BCB, FMI y reservas; descarta las notas de rutina que solo informan la cotización del día y las repetidas) y <strong>propias</strong> (agregadas por el usuario). Este método mide <strong>coincidencia en el tiempo, no causalidad</strong>: varios hechos pueden ocurrir en la misma ventana de días.</p>
+
+        <h3>Limitaciones</h3>
+        <ul>
+          <li>El régimen flexible es muy reciente: hay pocos meses de historia y episodios de alta volatilidad (por ejemplo, mediados de septiembre de 2026), lo que limita la precisión.</li>
+          <li>Los modelos son estadísticos y solo usan valores pasados: no consideran noticias, medidas del gobierno o del BCB, reservas internacionales, inflación ni expectativas del mercado.</li>
+          <li>El paralelo tiene pocos datos y fechas irregulares; su backtest se basa en pocas comparaciones.</li>
+          <li>La actualización automática depende de un servicio externo (DolarApi Bolivia) y de tener internet. Si el servicio falla o cambia, la herramienta sigue funcionando con los datos guardados y se puede registrar a mano.</li>
+          <li>El TCO es un valor de referencia: los bancos pueden aplicar márgenes o comisiones adicionales.</li>
+          <li>La búsqueda automática de noticias funciona solo en la computadora donde se activó y cuando está encendida; el filtro por palabras clave puede dejar pasar alguna nota poco relevante u omitir otra importante (por eso existen las noticias clave y las propias). El impacto medido no prueba que la noticia haya causado el movimiento.</li>
+          <li>Los datos registrados se guardan solo en el navegador usado; conviene exportar un CSV como respaldo.</li>
+        </ul>
+        <p id="resumenMetodologia" class="nota"></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ PIE DE PÁGINA ============ -->
+  <footer class="pie">
+    <div class="contenedor">
+      <p><strong>Herramienta de apoyo a la toma de decisiones. Las predicciones son estimaciones y no garantizan valores futuros.</strong></p>
+      <p>LeoFX · Bolivia, 2026</p>
+    </div>
+  </footer>
+
+  <!-- Mensajes temporales (los muestra app.js) -->
+  <div id="mensaje" class="mensaje" role="status" aria-live="polite"></div>
+
+  <!-- Primero los datos y después la lógica (el orden importa) -->
+  <script>
+/* =====================================================================
+   LeoFX — datos.js
+   ---------------------------------------------------------------------
+   Aquí están los DATOS HISTÓRICOS "de fábrica" de la herramienta.
+
+   - Están escritos como "arrays" (listas) de JavaScript.
+   - Cada elemento de la lista es un "objeto" con llaves { }, que agrupa
+     varios datos con nombre (por ejemplo: fecha y valor).
+   - Las fechas van en formato AAAA-MM-DD (año-mes-día) porque así se
+     ordenan solas de forma correcta.
+   - Los números van con PUNTO decimal (9.73) porque así los entiende
+     JavaScript. En pantalla se muestran con coma (9,73).
+
+   IMPORTANTE: los datos nuevos (los que la página descarga sola de
+   internet al abrirse y los que usted registra a mano) NO se guardan en
+   este archivo, sino en el navegador (localStorage). Este archivo solo
+   cambia si usted lo edita a mano.
+   ===================================================================== */
+
+
+/* ---------------------------------------------------------------------
+   1) TIPO DE CAMBIO OFICIAL (TCO) DEL BCB
+   Fuente: Banco Central de Bolivia — www.bcb.gob.bo
+   Valor en bolivianos (Bs) por 1 dólar estadounidense.
+   Los fines de semana el BCB mantiene el valor del viernes.
+   --------------------------------------------------------------------- */
+const DATOS_OFICIAL = [
+  { fecha: "2026-06-27", valor: 9.73 },
+  { fecha: "2026-06-28", valor: 9.73 },
+  { fecha: "2026-06-29", valor: 9.73 },
+  { fecha: "2026-06-30", valor: 9.76 },
+  { fecha: "2026-07-01", valor: 9.76 },
+  { fecha: "2026-07-02", valor: 9.78 },
+  { fecha: "2026-07-03", valor: 9.80 },
+  { fecha: "2026-07-04", valor: 9.83 },
+  { fecha: "2026-07-05", valor: 9.83 },
+  { fecha: "2026-07-06", valor: 9.83 },
+  { fecha: "2026-07-07", valor: 9.89 },
+  { fecha: "2026-07-08", valor: 9.96 },
+  { fecha: "2026-07-09", valor: 10.10 },
+  { fecha: "2026-07-10", valor: 10.24 },
+  { fecha: "2026-07-11", valor: 10.40 },
+  { fecha: "2026-07-12", valor: 10.40 },
+  { fecha: "2026-07-13", valor: 10.40 },
+  { fecha: "2026-07-14", valor: 10.50 },
+  { fecha: "2026-07-15", valor: 10.70 },
+  { fecha: "2026-07-16", valor: 10.75 },
+  { fecha: "2026-07-17", valor: 10.75 },
+  { fecha: "2026-07-18", valor: 10.85 },
+  { fecha: "2026-07-19", valor: 10.85 },
+  { fecha: "2026-07-20", valor: 10.85 },
+  { fecha: "2026-07-21", valor: 10.90 },
+  { fecha: "2026-07-22", valor: 11.00 },
+  { fecha: "2026-07-23", valor: 11.13 },
+  { fecha: "2026-07-24", valor: 11.21 },
+  { fecha: "2026-07-25", valor: 11.37 },
+  { fecha: "2026-07-26", valor: 11.37 },
+  { fecha: "2026-07-27", valor: 11.37 },
+  { fecha: "2026-07-28", valor: 11.54 },
+  { fecha: "2026-07-29", valor: 11.80 },
+  { fecha: "2026-07-30", valor: 11.89 },
+  { fecha: "2026-07-31", valor: 12.15 },
+  { fecha: "2026-08-01", valor: 12.13 },
+  { fecha: "2026-08-02", valor: 12.13 },
+  { fecha: "2026-08-03", valor: 12.13 },
+  { fecha: "2026-08-04", valor: 12.08 },
+  { fecha: "2026-08-05", valor: 12.02 },
+  { fecha: "2026-08-06", valor: 11.86 },
+  { fecha: "2026-08-07", valor: 11.86 },
+  { fecha: "2026-08-08", valor: 11.86 },
+  { fecha: "2026-08-09", valor: 11.86 },
+  { fecha: "2026-08-10", valor: 11.86 },
+  { fecha: "2026-08-11", valor: 11.77 },
+  { fecha: "2026-08-12", valor: 11.71 },
+  { fecha: "2026-08-13", valor: 11.66 },
+  { fecha: "2026-08-14", valor: 11.62 },
+  { fecha: "2026-08-15", valor: 11.58 },
+  { fecha: "2026-08-16", valor: 11.58 },
+  { fecha: "2026-08-17", valor: 11.58 },
+  { fecha: "2026-08-18", valor: 11.55 },
+  { fecha: "2026-08-19", valor: 11.52 },
+  { fecha: "2026-08-20", valor: 11.52 },
+  { fecha: "2026-08-21", valor: 11.52 },
+  { fecha: "2026-08-22", valor: 11.50 },
+  { fecha: "2026-08-23", valor: 11.50 },
+  { fecha: "2026-08-24", valor: 11.50 },
+  { fecha: "2026-08-25", valor: 11.54 },
+  { fecha: "2026-08-26", valor: 11.57 },
+  { fecha: "2026-08-27", valor: 11.71 },
+  { fecha: "2026-08-28", valor: 11.83 },
+  { fecha: "2026-08-29", valor: 11.92 },
+  { fecha: "2026-08-30", valor: 11.92 },
+  { fecha: "2026-08-31", valor: 11.92 },
+  { fecha: "2026-09-01", valor: 12.12 },
+  { fecha: "2026-09-02", valor: 12.26 },
+  { fecha: "2026-09-03", valor: 12.32 },
+  { fecha: "2026-09-04", valor: 12.45 },
+  { fecha: "2026-09-05", valor: 12.58 },
+  { fecha: "2026-09-06", valor: 12.58 },
+  { fecha: "2026-09-07", valor: 12.58 },
+  { fecha: "2026-09-08", valor: 12.60 },
+  { fecha: "2026-09-09", valor: 12.64 },
+  { fecha: "2026-09-10", valor: 12.42 },
+  { fecha: "2026-09-11", valor: 12.04 },
+  { fecha: "2026-09-12", valor: 11.53 },
+  { fecha: "2026-09-13", valor: 11.53 },
+  { fecha: "2026-09-14", valor: 11.53 },
+  { fecha: "2026-09-15", valor: 10.99 },
+  { fecha: "2026-09-16", valor: 10.15 },
+  { fecha: "2026-09-17", valor: 9.83 },
+  { fecha: "2026-09-18", valor: 10.01 },
+  { fecha: "2026-09-19", valor: 11.00 },
+  { fecha: "2026-09-20", valor: 11.00 },
+  { fecha: "2026-09-21", valor: 11.00 },
+  { fecha: "2026-09-22", valor: 11.90 },
+  { fecha: "2026-09-23", valor: 12.06 },
+  { fecha: "2026-09-24", valor: 12.26 },
+  { fecha: "2026-09-25", valor: 12.22 },
+  { fecha: "2026-09-26", valor: 12.05 },
+  { fecha: "2026-09-27", valor: 12.05 },
+  { fecha: "2026-09-28", valor: 12.05 },
+  { fecha: "2026-09-29", valor: 12.02 },
+  { fecha: "2026-09-30", valor: 12.02 },
+  { fecha: "2026-10-01", valor: 12.00 },
+  { fecha: "2026-10-02", valor: 11.90 },
+  { fecha: "2026-10-03", valor: 12.00 },
+  { fecha: "2026-10-04", valor: 12.00 },
+  { fecha: "2026-10-05", valor: 12.00 },
+  { fecha: "2026-10-06", valor: 11.97 },
+  { fecha: "2026-10-07", valor: 11.97 },
+  { fecha: "2026-10-08", valor: 11.85 },
+  { fecha: "2026-10-09", valor: 11.85 },
+  { fecha: "2026-10-10", valor: 11.73 },
+  { fecha: "2026-10-11", valor: 11.73 },
+  { fecha: "2026-10-12", valor: 11.73 },
+  { fecha: "2026-10-13", valor: 11.70 },
+  { fecha: "2026-10-14", valor: 11.70 }
+];
+
+
+/* ---------------------------------------------------------------------
+   2) DÓLAR PARALELO (mercado informal / plataformas P2P como Binance)
+   Cierres reportados en prensa.
+   Fuentes: dolarboliviahoy.com vía Red Uno, EJU, Correo del Sur;
+            dolaresabolivianos.com / paralelo.bo (algunos días de septiembre).
+
+   - compra: precio que se paga para COMPRAR 1 dólar (en Bs).
+   - venta:  precio que se recibe al VENDER 1 dólar (en Bs).
+
+   Hay días SIN dato. No se inventan valores: el gráfico une los puntos
+   con una línea solo como ayuda visual, y los modelos de predicción usan
+   únicamente los días que sí tienen dato.
+   --------------------------------------------------------------------- */
+const DATOS_PARALELO = [
+  { fecha: "2026-07-23", compra: 11.56, venta: 11.49 },
+  { fecha: "2026-07-24", compra: 11.75, venta: 11.69 },
+  { fecha: "2026-07-31", compra: 11.98, venta: 11.96 },
+  { fecha: "2026-08-01", compra: 11.80, venta: 11.71 },
+  { fecha: "2026-08-15", compra: 11.43, venta: 11.40 },
+  { fecha: "2026-09-07", compra: 12.48, venta: 12.44 },
+  { fecha: "2026-09-11", compra: 11.84, venta: 11.67 },
+  { fecha: "2026-09-14", compra: 12.00, venta: 11.66 },
+  { fecha: "2026-09-20", compra: 11.95, venta: 11.91 },
+  { fecha: "2026-09-21", compra: 12.06, venta: 12.00 },
+  { fecha: "2026-09-25", compra: 12.22, venta: 12.00 },
+  { fecha: "2026-09-29", compra: 12.03, venta: 12.00 },
+  { fecha: "2026-09-30", compra: 12.04, venta: 11.86 },
+  { fecha: "2026-10-02", compra: 11.99, venta: 11.96 },
+  { fecha: "2026-10-07", compra: 11.90, venta: 11.88 },
+  { fecha: "2026-10-09", compra: 11.87, venta: 11.86 },
+  { fecha: "2026-10-10", compra: 11.84, venta: 11.81 },
+  { fecha: "2026-10-12", compra: 11.85, venta: 11.86 },
+  { fecha: "2026-10-13", compra: 11.88, venta: 11.86 },
+  { fecha: "2026-10-14", compra: 11.85, venta: 11.83 }
+];
+
+
+/* ---------------------------------------------------------------------
+   3) NOTICIAS CLAVE (para el apartado "Noticias e impacto")
+   Hechos económicos con fecha y fuente verificable. El resumen está
+   escrito con palabras propias; el enlace lleva a la nota original.
+
+   - fecha:   día en que se conoció la noticia (AAAA-MM-DD).
+   - titular, resumen, fuente, enlace: lo que se muestra en pantalla.
+   - referenciaPrevia (opcional): valor del dólar oficial ANTES de la
+     noticia cuando no está en la serie (solo en el cambio de régimen,
+     porque la serie empieza el 27/06/2026).
+
+   El "impacto" NO se escribe aquí: la herramienta lo calcula sola
+   comparando el dólar antes y después de cada fecha.
+   Usted puede agregar más noticias desde la página.
+   --------------------------------------------------------------------- */
+const DATOS_NOTICIAS = [
+  {
+    fecha: "2026-06-26",
+    titular: "Bolivia deja el tipo de cambio fijo: el BCB fija el primer dólar flexible en Bs 9,73",
+    resumen: "Con la Resolución Ministerial 245, el Gobierno adopta un régimen cambiario flexible y encarga la transición al BCB. El tipo oficial, fijo en Bs 6,96 desde 2011, pasa a calcularse cada día con las compras de dólares de los bancos.",
+    fuente: "El Deber",
+    enlace: "https://eldeber.com.bo/economia/bcb-establece-partir-lunes-29-junio-entra-vigencia-tipo-cambio-flexible_1782520030",
+    referenciaPrevia: { valor: 6.96, descripcion: "tipo fijo vigente hasta el 26/06/2026" }
+  },
+  {
+    fecha: "2026-07-30",
+    titular: "Bolivia pacta un crédito con el FMI, el primero en dos décadas",
+    resumen: "El Gobierno alcanza un acuerdo de financiamiento con el Fondo Monetario Internacional para respaldar las reservas internacionales en medio de la crisis económica.",
+    fuente: "France 24",
+    enlace: "https://www.france24.com/es/programas/econom%C3%ADa/20260730-bolivia-pacta-cr%C3%A9dito-millonario-con-el-fmi-el-primero-tras-dos-d%C3%A9cadas-y-en-medio-de-una-crisis-econ%C3%B3mica"
+  },
+  {
+    fecha: "2026-09-04",
+    titular: "El Gobierno envía al Parlamento el acuerdo con el FMI por USD 1.900 millones",
+    resumen: "El acuerdo de financiamiento pasa a la Asamblea Legislativa para su análisis y eventual aprobación.",
+    fuente: "Infobae",
+    enlace: "https://www.infobae.com/america/america-latina/2026/09/04/el-gobierno-de-bolivia-envio-al-parlamento-el-acuerdo-con-el-fmi-por-usd-1900-millones-para-su-analisis-y-eventual-aprobacion/"
+  },
+  {
+    fecha: "2026-09-07",
+    titular: "El BCB suspende la compra de dólares y crea una reserva obligatoria para los bancos",
+    resumen: "Para frenar la presión sobre el tipo de cambio, el BCB pausa sus nuevas compras de dólares y, desde el 8 de septiembre, exige a los bancos inmovilizar el 3 % de sus depósitos en bolivianos (Reserva Monetaria Restringida).",
+    fuente: "Opinión",
+    enlace: "https://www.opinion.com.bo/articulo/pais/bcb-dispone-medidas-reducir-presion-mercado-dolares/20260907230747995864.html"
+  },
+  {
+    fecha: "2026-09-19",
+    titular: "La Asamblea Legislativa aprueba el acuerdo con el FMI por USD 1.900 millones",
+    resumen: "Ambas cámaras aprueban el financiamiento; el presidente promulga la ley al día siguiente.",
+    fuente: "Infobae",
+    enlace: "https://www.infobae.com/america/america-latina/2026/09/19/el-congreso-de-bolivia-aprobo-el-acuerdo-de-financiamiento-con-el-fmi-por-usd-1900-millones/"
+  },
+  {
+    fecha: "2026-10-06",
+    titular: "El BCB recibe el primer desembolso del FMI: USD 211,3 millones",
+    resumen: "El primer tramo del programa con el FMI llega a las reservas internacionales para apoyar la balanza de pagos.",
+    fuente: "Infobae / EFE",
+    enlace: "https://www.infobae.com/america/agencias/2026/10/06/banco-central-de-bolivia-confirma-primer-desembolso-de-2113-millones-de-dolares-del-fmi/"
+  }
+];
+
+</script>
+  <!-- Cotizaciones y noticias guardadas por la tarea diaria de Windows -->
+  <script>
+/* LeoFX — cotizaciones_auto.js
+   ARCHIVO GENERADO AUTOMÁTICAMENTE por guardar_cotizaciones.ps1 (no lo edite).
+   Cotizaciones guardadas cada día por la tarea de Windows (fuente: DolarApi Bolivia). */
+const COTIZACIONES_AUTOMATICAS_FECHA = "2026-10-22T12:16";
+const COTIZACIONES_AUTOMATICAS = [
+    {
+        "fecha":  "2026-10-22",
+        "oficial":  11.75,
+        "compra":  11.91,
+        "venta":  11.88
+    }
+];
+
+</script>
+  <script>
+/* LeoFX — noticias_auto.js
+   ARCHIVO GENERADO AUTOMÁTICAMENTE por buscar_noticias.ps1 (no lo edite).
+   Noticias de Google News relacionadas con el dólar en Bolivia. */
+const NOTICIAS_AUTOMATICAS_FECHA = "2026-10-22T12:16";
+const NOTICIAS_AUTOMATICAS = [
+    {
+        "fecha":  "2026-10-22",
+        "titular":  "Decreto Supremo 5750: así cambiaría tu factura de electricidad si pagas Bs 100 al mes",
+        "fuente":  "Bolivia.com",
+        "enlace":  "https://news.google.com/rss/articles/CBMixwFBVV95cUxPaGZqUWI1NFkzSnV6aUQtN2N5Q08wRVpjdlNCMHlJY0VwT1BlMy1mUjhmeGRZdXR0RXJSb09VdHRtNzVnN2FYY3pXSlhuQ2NfVmpzSHctbFFLd1FCTGZmRzY0VE4ya1FHZjQxV1lBWHIzTmJMVlRiOGhfUWJMOHdONFREQ05kVFdCNlJUdkhFQ3J1bVJqVVhjUkFFek8zRzdQYV9iMV9pMEV4TVpnSUFlVXhQd194NFZLYVJwY05EX21ibnFKSmpr?oc=5"
+    },
+    {
+        "fecha":  "2026-10-21",
+        "titular":  "Tether invierte para impulsar pagos internacionales USDT de empresas en Bolivia",
+        "fuente":  "eju.tv",
+        "enlace":  "https://news.google.com/rss/articles/CBMipgFBVV95cUxObVBrNklHZzNtYjhTdU1yZHJPMHQ4U0lRQW1nZW8xQkZpRno2aVVYcWFwd2xPWERRMjdqZjdmalU1dXRDVjdJTG5RLVZvSXVnODNUSldhcDN0djViNFpjWFBtTWt4M192VUZNb0NhbEZqaXlpWGh0RENGa3JCT3oyelZwMVM1cUd2Z2tkRGRBTXVmZEtWNWR0Z0NmV2hHM0p0SmQ0RGRB?oc=5"
+    },
+    {
+        "fecha":  "2026-10-21",
+        "titular":  "USDT en Bolivia: Tether invierte en Peso para llevar pagos con stablecoins al delivery y la banca en cuatro países",
+        "fuente":  "Criptotendencias",
+        "enlace":  "https://news.google.com/rss/articles/CBMifkFVX3lxTFBoelNab1VqbzUwZTlEWlZ2ZF9BNTNBV0ljSklDRU9heU4tV2hvZFlKMlJfMjF0UDgyZ1lvTHI0REhmOFFfdXBOUjlENFoxYm1wcWpBZEItMDgwQm5DVmE3OWJZMXF4S2tFcW85YThLdWU3N1ZheXdmZXZxOFVMUQ?oc=5"
+    },
+    {
+        "fecha":  "2026-10-21",
+        "titular":  "Evolución del déficit fiscal y FMI",
+        "fuente":  "Economy",
+        "enlace":  "https://news.google.com/rss/articles/CBMisgFBVV95cUxQcDJISWVtSm1pWWdjcnZZTmt4ZVllREMzMzJFLXFjOVN6c0picWF1RThlc2h0ZnZBTkdNc0NCaFdKNWx3SXZvcVpkSTAwcmZqS2lMaHBETFE5dXZGVXBrRXVXOS1ETV9HY08xT1A4Wl9lTjhoWmw1bjFST2pfaGlvSHNnT3BqM2xrdzZkZVJEbUlqVnhXOWRXZzFWakxIV253emRfeU9KeVRTcDFRcmlBeVNn0gGyAUFVX3lxTFBwMkhJZW1KbWlZZ2NydllOa3hlWWVEQzMzMkUtcWM5U3pzSmJxYXVFOGVzaHRmdkFOR01zQ0JoV0o1bHdJdm9xWmRJMDByZmpLaUxocERMUTl1dkZVcGtFdVc5LURNX0djTzFPUDhaX2VOOGhabDVuMVJPal9oaW9Ic2dPcGozbGt3NmRlUkRtSWpWeFc5ZFdnMVZqTEhXbnd6ZF95T0p5VFNwMVFyaUF5U2c?oc=5"
+    },
+    {
+        "fecha":  "2026-10-21",
+        "titular":  "Las tarifas eléctricas no subirán automáticamente con el precio del dólar",
+        "fuente":  "Prensa Mercosur",
+        "enlace":  "https://news.google.com/rss/articles/CBMisgFBVV95cUxPT0JJOTJ2VHNNTDBVNlpZM0R6MjZYUUFLV1N1RjhlSkpzM1V1N3ZBTWREZENPaVhoZEkyUlc1N0VMOXpGd3lOa0pkU1p3clRLV3FhZHRNTC15bmdYckxkMm1PMHVNN3RUZ2J1UkpycUZkN0R6YXNGdnUweWFLR3JjajZZbUlhckt4TGRCaTFQZUM1T3BxYWZsVUFDeU1BbHlscERIQXRuLTREVlhUV3dyeDVR?oc=5"
+    },
+    {
+        "fecha":  "2026-10-21",
+        "titular":  "Banco Central de Bolivia vende $us 35 millones a bancos a un tipo de cambio inferior al de la cotización diaria",
+        "fuente":  "ANF Agencia de Noticias Fides Bolivia",
+        "enlace":  "https://news.google.com/rss/articles/CBMi4wFBVV95cUxPQ2JTRVUzMjh5MDQ5UEpCakdyX2QzYTZseTREQUZCRW1kdEM0LUFENUtjRGZJTmo2YjVWOGt4eGFha19Hekc5dWc3RHdHZWQ3TmZoMUtMbGI2VmFTQUN2MkZZTFJleEtyWkNFWmtwM2ttZVJVaG9GR2JkeENkdGxGbXFnWHl6Y2d2Z1Y2TkNqTUJnMDdGSGhHNzBOR0hfejh4d2NNb21GUjB5c2lHNC1XaTJ0NGctVTJwYUxrUktad0FUUUV5eUxCRDhvRVZDdURnY3hHTS1VOXZ6X1ZiT2RrcjFQRQ?oc=5"
+    },
+    {
+        "fecha":  "2026-10-21",
+        "titular":  "Municipios piden devolución de $us 701 millones al Banco Central",
+        "fuente":  "eju.tv",
+        "enlace":  "https://news.google.com/rss/articles/CBMikAFBVV95cUxNVXpqZlZjdTEwRTc5Mmc4T0JacVhmZnoyemlOcU52SGwxRk8xSEJDX1pfcGJXVTQ1NTlsemVJQ0N6b0VBUW5VSGZBbkk5RnVweU9zWU11MU56WjljbWwzYTNWVm51dWNYQUVDUmNfNDBxNHNKM1BWdGk4Q0RkVUZjaFJFM0RhdzliOWhuMHo2Yjk?oc=5"
+    },
+    {
+        "fecha":  "2026-10-20",
+        "titular":  "Gobierno reafirma apuesta por reformas ante el FMI y BM",
+        "fuente":  "El Mundo Bolivia",
+        "enlace":  "https://news.google.com/rss/articles/CBMihgFBVV95cUxPTFdnbXpLMVRTVDVTTjJnZG5YVU5jcmJDQTdPT0VMSi0yZ28yUTVTYmdHUG5wajZ2MERMQnVtWUhiQVFFTHBjRThMU0o0Szh5bm9fLWdNZTRzN0RyLTlNa1BwRGI2UV9scksyZG81RkR2QUlQOEp5dlN6MzdLZlBTbW5ybTNTQQ?oc=5"
+    },
+    {
+        "fecha":  "2026-10-19",
+        "titular":  "La Aduana y el FMI revisarán la valoración de mercancías y los tiempos de atención",
+        "fuente":  "El Deber",
+        "enlace":  "https://news.google.com/rss/articles/CBMipAFBVV95cUxPVFZ2Smp6cl96NDl3bzZJdGh4Q2s2OUN6ZTltcEhmTlBENVF4Tk9xMjNRQzNLREQzM1Q1c1Rzay11OVVTV01heEwtWW5xRzlVV1FNakxQS1p6djBiZnY2SjFIajA2TVhCQkJJTmNYOTB6SjRxWlVjQndjVF9iM0c2NnZRNjg5MmFVakNhVklHUjBqTkRFaXpjb0NBMnZ3bmZ2ZDdPWQ?oc=5"
+    },
+    {
+        "fecha":  "2026-10-19",
+        "titular":  "El dólar baja en Brasil y Bolivia mira su mercado cambiario",
+        "fuente":  "Identidad Correntina",
+        "enlace":  "https://news.google.com/rss/articles/CBMitgFBVV95cUxNV3VoRjZSb1doLTNHQ2N1VDQ2eG9mWG1HbFRvanVaVzJzclZSNHBEMTJfalV3RVVvZXVvRlczZGRSYnhvd2tlR242d1JLd1h3Q09hRzN5VGMtbDkySHRBZ1hBTldyTGFOdUlCOGFVOU9EVjZyb01ZT3lmOEdPMHJtWFl1am9XSEhHODd1bnZWMXM3WWQ4XzZ4U0Z5eFR0YUl4SzFRbDFoOTJqWmM2NWl3MHozd1IyUQ?oc=5"
+    },
+    {
+        "fecha":  "2026-10-18",
+        "titular":  "Bolivia rinde su primer examen ante el FMI luego de la aprobación del crédito de $us 1.900 millones y el primer desembolso",
+        "fuente":  "eju.tv",
+        "enlace":  "https://news.google.com/rss/articles/CBMi3gFBVV95cUxNc0oyWGpTcUtyR0YtYzE4akZuNzh3MDR0UVVmSWRUc1FQZk9SclFHaWRRME9maENzSDRlc2ctZ0tNVmxmUGsyVmF2TmZhVEN2dVRibUZ1WWVKWDdsX0IydnRfc3BoYXBES19fN2FrSXoxbHpwZTV2Q182STNDb3pOS2RfX2dfNWtDeWVQcmRYWk5FTzR6MURuS29Zei1Nb2dGLU1OYTBSVWlvcFVrV0NMOHFJX1VZT1hNQjBDNnktSHpIX2NxdjVMMmlpTENFWVpuNFhuc05May16R1VyX3c?oc=5"
+    },
+    {
+        "fecha":  "2026-10-18",
+        "titular":  "FMI y Banco Mundial amplían su actividad en América Latina mientras gobiernos giran al mercado",
+        "fuente":  "DiarioBitcoin",
+        "enlace":  "https://news.google.com/rss/articles/CBMi0AFBVV95cUxOaGhEVElTNGJpNVdUS3M4ZGt4THJweW9EemJwMHg0QXFWdEF0bEwtdlJ3SkZJV3JqNXFBaVZJalRZa0E0S2hYYUZGUDQ3a3VtVGJPcldQclNXZWxLeFhFcFkxZHZmVmNBTF9XSWo0cXlDQnlIdzZ4RGpZSlNhZEE5RHZ6X1ZobWdCMWJEUi1aZFlPTUhmRnhNSE15MUFZakVfeEZhOTEyeTZHaWVsN09yd3RDdmFaZmtCN3dQemE2S2FKSjFtUTEzT1hvYWx6cElR?oc=5"
+    },
+    {
+        "fecha":  "2026-10-18",
+        "titular":  "El presidente del BCB asegura que no volverá a haber “corralitos” en dólares en Bolivia",
+        "fuente":  "ANF Agencia de Noticias Fides Bolivia",
+        "enlace":  "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPcTZmdFNjc09LcHhVYjB6eTR6d25yZExRN3NtQm5rSTBCLXBKc2xsWVNxWkYtUUlVZjBScUZBSUhLRS10UkVBekJfWEJCZWl2VlpmYmJXVmpnSExaUWxKbkJSOGdoLWNKTUk0Z0g1QXhiZG0xZU1uRmhPaDBIN1RhSWhFc2xOeG5MdXQwUDBFVEdmTWR3dng2NHFjbWpNY1otZzcxSll2aUdEU1Mxd0M5Y2hZNEw2anlqVklzVmpWSkZMZw?oc=5"
+    },
+    {
+        "fecha":  "2026-10-18",
+        "titular":  "Ministro de Economía presenta al FMI los avances de las reformas tras acuerdo por $us 1.900 millones",
+        "fuente":  "FmBolivia",
+        "enlace":  "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPV2pXWEoyNjVlZ3JzTE9TUlBSVlVVVWFJeWFhWlZ6dzdpdklXUU5iQkpxT2FpTF9xNzFXSXlra2pRaHpRUmNCaTc2Z0lVUE9RNVF4ekt4T3hwcWpSc3p0ZjVheHFQcERsNXNiQzJIZzFlbWlqNDlaSXZFeThuU0lnaER1a2s5LXpKSUQ5V01rX3RqTVJaM1gwTVFrR0dGLXZ5cVdsNEMyRFV0TWZxRHZBTnVzc2YwNUt3czFhUDR5Y1duYncxTmhiUkJqWjV6WFpvTFctcTNR?oc=5"
+    },
+    {
+        "fecha":  "2026-10-18",
+        "titular":  "¿Qué dijo el presidente del BCB sobre las restricciones a los ahorros en dólares?",
+        "fuente":  "El Potosí",
+        "enlace":  "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNN1Iza09ERXVxQVFyaTloQmxJejRsUU1rcEJ6ejlLV01Zb1lURW5wWVpNU1JvaFREX2s0U2s5SVU3eEdERmVQZk1rSVVIVlZJbWRxbm1SRmlrdWJ2US1QU2xIdF9RTXE5RlFSOFNXVkxjeC04V095emtUR2R5cDUyVDVrRTMxaFIyYjF4Mm1JS09fYjlFSUVWSzljNUp3VEZXVDd2NFNBRWNpdHVVelZSY25XTWlCMEFSY1BSd3ByWlI?oc=5"
+    },
+    {
+        "fecha":  "2026-10-17",
+        "titular":  "Austeridad del FMI: países con deuda enfrentan mayor vulnerabilidad",
+        "fuente":  "Mundo Empresarial AR",
+        "enlace":  "https://news.google.com/rss/articles/CBMimwFBVV95cUxPcG5aQmdyQTc0ak1pSGJSbUZMOE5WNU85T1I1TTB1dVh0bktUMlhhUjRhM3ZDVGhpVWRfQXFHT09pSTFfc1R6SUxtN1BfeTBFTGZ2amhsVDRPZjYzaGswaTZXeUpPdVowTFVPYWNJOTdRTkNHUkE5VjlhbFlIdzJReXJyVjhhcDZNb3dFQmwxUE1SMmVxOGRwb0xxNA?oc=5"
+    },
+    {
+        "fecha":  "2026-10-17",
+        "titular":  "BCB asegura que no volverán los “corralitos” en dólares y promete proteger los ahorros",
+        "fuente":  "FmBolivia",
+        "enlace":  "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOZ1g5bklRcE5lelJmX3RmVnFmckJPQ0s2eEtWZ1E0X2tJQ2FMSDg2ZFFfTXo5a19ZMEVoQ2piU2V6ay1adXZXZ1VURTJPclVRU0pPc0F4dEJyOWl2dll5bXJiejltYWN6Wi04MmJWemk5Vm9PYnFyNkVpRzdDSXdxZkpCVk9NMzNRbWtzT0NsYkIwYThFNkpuRVBhYUJIbTRMMDlRWnN3Vmp6QURmWlJtbHJtTTk5WjlYLTVaMTh1Y3hJZw?oc=5"
+    },
+    {
+        "fecha":  "2026-10-17",
+        "titular":  "El FMI alerta sobre tres riesgos globales que también acechan a Bolivia",
+        "fuente":  "La Razón Digital Bolivia",
+        "enlace":  "https://news.google.com/rss/articles/CBMivAFBVV95cUxNUFY0dkZFUEZiQmJLTlZsMlNnN2E3V3ZOSU9McW9aMTVpNlNBUDltelZHOTcwd1JCN3M4aS11T1FCYWlpQ0taRUZCaVRQbWRaVnFWVnFfQXZfTHNEcGhkQy1iX2EzT1R0eWl6REZRVmM2T3hjT2ZBVnhpLUwxWnVwNF9tTzExT0cyVmRfVkl1MmM1UUgzZERvaThxVDVabE5lZ3I4VE1ZYmlaSkZGX1dGbC1TOF8tN2VPMEN6cA?oc=5"
+    },
+    {
+        "fecha":  "2026-10-17",
+        "titular":  "Reconstruir reservas internacionales: el corazón del acuerdo con el FMI",
+        "fuente":  "El Diario - Bolivia",
+        "enlace":  "https://news.google.com/rss/articles/CBMitAFBVV95cUxQeXVUaVczd2QyOXFlakdIbVdPX013NGJLeEhqRVBjczM1Wk1DSnR2d3FtZldScExYSUJJQjdFLVhPQzFmNFpZYWhtLUxyZ3FyNl9nWk1RcW50cWEwUG5ZMHVkZjJhSW45cXo4Vm9TZ0hVSVhvVWhJY1FXbG5xVTNZOERITnhmZ2VIVG9vaExic0tMVDIxU2QyVVhqdnlMWXJNaXJzMm9lWGE1bWxHNHZYMHIxQmk?oc=5"
+    },
+    {
+        "fecha":  "2026-10-17",
+        "titular":  "BCB asegura que no se repetirán los “corralitos” en dólares ni el empeño de reservas de oro",
+        "fuente":  "Red Uno",
+        "enlace":  "https://news.google.com/rss/articles/CBMi1gFBVV95cUxQaFZ6Qkx1czU5VXpTREZ2MHkxQ3VnTWI0NEgyZXJSd2ZDdWcxd2d0Vk9QU3hrbWNiVERibVdXcDdtblNzY21tX29CeHpMeTlBNW9VVVItV2pSWG9ZOEdOVzFhdVJxRGNwdDlocFBnOEZoWDJ1X3FVdnE5Y1lhZW82LWVnVUE1MHg0eFRuTUtwVW50c1NETXc4ZEdmOWhNdzZidmhheUp4X09RWGZETE4tMTNMRjZkYW9sNk9Jc0xhRXJvVmp3Ry1DVVh4NmRNdmhqeU5wejN3?oc=5"
+    },
+    {
+        "fecha":  "2026-10-16",
+        "titular":  "Acuerdo con el FMI: economista de Cainco anticipa dos años de ajuste económico en Bolivia",
+        "fuente":  "Asuntos Centrales",
+        "enlace":  "https://news.google.com/rss/articles/CBMiugFBVV95cUxOaXpuRHJ6R3JybmRsSVBzMFNPSWNfZGRxM1pnS0J3SUE4MU1uRTJSd3JrYUppbVZfZlBCRnQ5SjJ4eFpVRnAxUm5BY0MtNGtjdlc4V3A0Ymd0U2czU29rS1ppalVKcU5EdG00Y1ZRSVQwaF9fYW16V1F4ODhVWGkyOC1vVzNhWlZ1dTNvNWlGdEIwUURlYVFFNHlEWlRwTFVMeVhxcmhqeVFNT0hfRmI3Z1E2TDAtb3NNdlE?oc=5"
+    },
+    {
+        "fecha":  "2026-10-16",
+        "titular":  "DS 5750: analista prevé ajustes en las tarifas eléctricas según el consumo y el dólar",
+        "fuente":  "Red Uno",
+        "enlace":  "https://news.google.com/rss/articles/CBMizwFBVV95cUxQUU1VQzNGdlNudWNlQ1lfTmZoUnliRHB3NWV2SXpCZENaYmNqSV80UmZnVHVOWlFsbE5Ra1lLWG9Rd3ZGYzBOb05YV0R4bHpYLS00cjcwcnVaTDlwYlQ5Y0VKVWhic3RBVWpnVGVUSzExMFhmRk5iQm9nSFFOY093WU5nOEZfTkhPdXpaSnQzUVAxNWFhSGxYaDFUaDMtRFlJLUtPcC1IYV9fa2otcy1HUXFlSThzaTRGVzdzdnp3QTB2NjM5bjdZMGpVaXQ5SWs?oc=5"
+    },
+    {
+        "fecha":  "2026-10-15",
+        "titular":  "Exportación de oro en Bolivia: qué exige el Decreto 5747 sobre las divisas",
+        "fuente":  "Visión 360",
+        "enlace":  "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPSUZWZjdWY2c3WEQ3YkR4RUE4QmFyY0s3TUV0WUFEa3FsNnZwTlRCVFlxTEpZdFU1NVppN3QyUXlBdU9lUnNrRVRaRV9yLXZoSlRyRDB3N1N5cnZNTF9sck9RLUFqNXlGcDB4QUctUjNQUWZaZDd2aHM0R2JUaWNkLTBvQXJqXzVYdmdheGNvNVZWbmp6NnRoVG8xNVlyX3d2MTJsLWVDYmx0OXVBUUhFZnhoQkdRMTNvNktBTFl0NThMd9IBxwFBVV95cUxOMmd4Zk95cHh3ZUhnZVdXZWl5YmUxNnN4VmZBek1FVGljcy1Va3l6Z3dmVGF1MXoxRVRQMUt3Y1JWRTZOdHVGbzd4T2RTMGVmcHZ6WXhCeW1mRTZ3bWJYNTNJOE9PeEFoZUZaT05LWUxJZ3ljd3B6ZjdBNkJ4WjV0ejVQNkhuRk84RTZidUd3dkZHMlhtM2dDZWdybXFkTUdSeUd0Q29TN0NfdmhydExwNXZGWGtwNmNIU2VYMG8yWkZ6MWJnM3J3?oc=5"
+    },
+    {
+        "fecha":  "2026-10-15",
+        "titular":  "Bolivia reforma el mercado de exportación de oro para mejorar el acceso de su sistema financiero al dólar",
+        "fuente":  "Forbes España",
+        "enlace":  "https://news.google.com/rss/articles/CBMi3AFBVV95cUxQM0duOWs2Z0JkYTRSSlQxczhKaWFwdXNfYldfczdCWDdwd2hGeHdrOWs4bmtvejlUMGc2dmZRMGNjR05HNGR3Q1lIb0Y2Y3IzQXpJZzFTVF9qbjdfRGR4eGRjNW9lSjFVY0E4aGFhVVJPZm13YjI4SVJvTnlma1V3VmFFaURrMmpEdFZNeDI5UTc4R0hnX2JRQUNycWtOTDlhdVlCcklodHAyVks1Wm5OZVZtQmVOUFVxSjYtUlNBMl8yTV9Uc0VoeDVQVFVuTUQ5SElRVGx2c09WWEdU?oc=5"
+    },
+    {
+        "fecha":  "2026-10-15",
+        "titular":  "BCB inicia devolución de depósitos en dólares de entre $us 8.001 y $us 10.000",
+        "fuente":  "eju.tv",
+        "enlace":  "https://news.google.com/rss/articles/CBMioAFBVV95cUxOLURKVzJBdU9mS0ljcmI3dkJ4T2ZEZnhhOXg5aWtrTEtuTkE0cmUwQUJtQmJtWHBWcDdCUlMzdDVoX1B0OXhpaERESS1ncFhOOW12Q09pVWtoWFdXdWFXTzM4dEJWOE5GaGpmYWtMdGFsSkRpRTd0ZXUyLV94NDNaSnZYcmJpUjNsT3UwMXdCeVgxRUxUcU83TVpOWjJNSzht?oc=5"
+    },
+    {
+        "fecha":  "2026-10-15",
+        "titular":  "Ministro Morales presenta el potencial y la visión económica de Bolivia ante el FMI y el Banco Mundial",
+        "fuente":  "Economy",
+        "enlace":  "https://news.google.com/rss/articles/CBMi4wFBVV95cUxPY3pNV0M5Y3Voa2R3TnRpWHZEUC1TMXRTeEM0LTFsWkpMYmtvVlJxSmVHLWo5cVhZRnZQQ245aU96SkZEb1V6UEh3amdxZjdTbXREYXBPWEJpZU9GWlIzaTB2RFhIR1J4bGRER1pVVkIydW5DY3pJNnVfY1paMjFmc1REOWJjSDNlLUJFTWxzS3FIUVNoemlxbHBOYXRFeE90TTFDUGo2Rko2THZjeVFzMGkzcW9YOGNQbWNrZjkzN0VTLVFNVUFZOFNpaWQ0WEJYemRWU3dwT2tlOEhPanZaWlVta9IB6AFBVV95cUxNZ1VjOXVwRzNhUE9oWUtHelpia0xWMDk5RWtZM2hJNnljdmpvN0taUldjVFpzeURCcVVTQ0hzeVdyMzE0dDQxWXlwUXlpQmlUeVRiVWkyUmwycFdIbnY5anZOWnluaTUxOTZKMmFhZUNwcERSVmU4VjlaRzFyS3l2YkEwNGtnWEVZbVp6UEd6Y0ZQeWN6TU00S2dTdmFJQVhBcUhWbkJFWkk1UmY2NTdlNHp6ZC1qOVVjX0tHTW01S2c4WVNuazBpMXBRQmVzaFRYbjdISHZDLThiZXQwRlpyWjBZUlVTV2g4?oc=5"
+    },
+    {
+        "fecha":  "2026-10-15",
+        "titular":  "Análisis económico del DS 5747: Exportación de oro, captación de divisas en Bolivia y como generar dólares sin intervenir al sector privado",
+        "fuente":  "El País Tarija",
+        "enlace":  "https://news.google.com/rss/articles/CBMiiAJBVV95cUxOZ053M3ppOWtLRlRkTkl3Z3pPZzg3WWZCRFVyVVlWSm13NVd4TmpTQk4zUWY5Q004aVQ5TFJWMXVKSzhWS0l6ZVdTNnl5Vms0LUhpaUVBQXFEMXVLQlF5RWI0S1VqUUlkd1hzZE5QS2ZOZnBhQ1RqczdMSVNTRFVoandNVU9fQTZFNHFOU2tsWjFTRnZ5WUphalRzc18wWWpHS2Rvdno0WUtJWGFNVVduVHN3enZWOFQ2emswaTJXdzVqa0VDTk43ekJjUFdvbl9SblRsTlJMWm4zVWxNUzA2NXFJM2dRZC1adFNrU29yUWd6cjRJRUcxLXlWS2NzMDViYUxGZlR3cGY?oc=5"
+    }
+];
+
+</script>
+  <script>
+/* =====================================================================
+   LeoFX — app.js
+   ---------------------------------------------------------------------
+   Este archivo contiene TODA la lógica de la herramienta:
+
+     1. Configuración general (parámetros que usted puede ajustar).
+     2. Utilidades: fechas y formato de números al estilo boliviano.
+     3. Datos: unir los históricos (datos.js) con los que usted registra
+        (guardados en el navegador con localStorage).
+     4. Modelos de predicción: promedio móvil, regresión lineal, Holt
+        y el "último valor" como referencia.
+     5. Backtest: probar cada modelo con datos pasados y medir su error
+        (MAPE). Elegir el mejor y calcular el rango de la predicción.
+     6. Interfaz: dibujar tarjetas, gráfico, tablas y calculadora.
+     7. Registro de cotizaciones, exportar e importar CSV.
+     8. Actualización automática: descargar las cotizaciones del día.
+     9. Noticias e impacto: cuánto se movió el dólar en cada noticia.
+    10. Navegación: menú lateral y un apartado a la vez.
+    11. Arranque: lo que se ejecuta al abrir la página.
+
+   Consejo para leerlo: cada "function" es una pequeña receta con un
+   nombre. Primero se definen las recetas y al final (sección 11) se usan.
+   ===================================================================== */
+
+"use strict"; // Modo estricto: JavaScript avisa de más errores comunes.
+
+
+/* =====================================================================
+   1. CONFIGURACIÓN GENERAL
+   Si quiere cambiar algún parámetro del análisis, hágalo aquí.
+   ===================================================================== */
+const CONFIG = {
+  // Plazos de predicción, en días calendario.
+  horizontes: [1, 7, 30],
+
+  // Promedio móvil: cuántas observaciones recientes se promedian.
+  // El oficial tiene dato diario; el paralelo tiene menos datos y en
+  // fechas irregulares, por eso se usa una ventana más corta.
+  ventanaPromedio: { oficial: 7, paralelo: 3 },
+
+  // Regresión lineal: solo se usan los datos de los últimos N días,
+  // para que la recta refleje la tendencia reciente y no la de julio.
+  ventanaRegresionDias: 30,
+
+  // Backtest: cuántas observaciones como mínimo debe tener la historia
+  // antes de empezar a "predecir el pasado".
+  minimoHistorial: { oficial: 14, paralelo: 4 },
+
+  // Tolerancia del backtest (en días). Como el paralelo no tiene dato
+  // todos los días, se acepta comparar con el dato real más cercano al
+  // plazo, dentro de esta tolerancia. La predicción se hace para la
+  // fecha exacta de ese dato real.
+  tolerancia: { 1: 0, 7: 1, 30: 3 },
+
+  // ¿Puede el modelo de referencia ("último valor") ser elegido como
+  // ganador? false = solo compite entre los 3 métodos del proyecto y la
+  // referencia se muestra únicamente para comparar. Cambie a true si
+  // quiere que también pueda ser elegido.
+  referenciaPuedeGanar: false,
+
+  // Factor del rango: esperado ± z × desviación de los errores.
+  // z = 1,28 equivale aproximadamente a un 80 % de confianza.
+  z: 1.28,
+
+  // Si el dólar esperado cambia menos de este porcentaje, se considera
+  // "estable" (0,005 = 0,5 %).
+  umbralCambio: 0.005,
+
+  // Si el ancho del rango (máximo − mínimo) supera este porcentaje del
+  // valor esperado, se avisa "alta incertidumbre" (0,05 = 5 %).
+  umbralIncertidumbre: 0.05,
+
+  // Nombre con el que se guardan sus registros en el navegador.
+  // (Conserva el nombre anterior del proyecto a propósito: si se cambia,
+  // el navegador no encontraría los datos ya guardados.)
+  claveAlmacen: "proyectoLeo_registros_v1",
+
+  // Noticias e impacto:
+  noticias: {
+    diasDespues: 5,     // se mide el dólar hasta 5 días después de la noticia
+    diasParalelo: 7,    // el paralelo tiene huecos: se busca dato hasta 7 días
+    moderado: 1,        // movimiento ≥ 1 vez el normal → "moderado"
+    fuerte: 2.5,        // movimiento ≥ 2,5 veces el normal → "fuerte"
+    claveAlmacen: "leofx_noticias_v1"  // noticias agregadas por el usuario
+  }
+};
+
+
+/* ---------------------------------------------------------------------
+   MERCADOS Y SERIES
+   - Un MERCADO es cada pestaña: Oficial y Paralelo.
+   - Una SERIE es cada línea de datos que se predice por separado
+     (por ejemplo, "Paralelo – compra").
+   La "clave" de cada serie (oficial, compra, venta) es también el
+   nombre del campo en la tabla de datos.
+   "perfil" indica qué parámetros de CONFIG usa (ver ventanaPromedio).
+   Para agregar otro mercado en el futuro, se añade aquí y en datos.js.
+   --------------------------------------------------------------------- */
+const SERIES = {
+  oficial:       { nombre: "Oficial (BCB)",         tarjeta: "Tipo de Cambio Oficial (TCO) — 1 USD",   mercado: "oficial",  perfil: "oficial",  color: "#059669" },
+  compra:        { nombre: "Paralelo – compra",     tarjeta: "Paralelo — precio de COMPRA de 1 USD",   mercado: "paralelo", perfil: "paralelo", color: "#0d9488" },
+  venta:         { nombre: "Paralelo – venta",      tarjeta: "Paralelo — precio de VENTA de 1 USD",    mercado: "paralelo", perfil: "paralelo", color: "#65a30d" }
+};
+
+const MERCADOS = {
+  oficial: {
+    titulo: "Evolución del tipo de cambio oficial (BCB)",
+    descripcion: "Tipo de Cambio Oficial (TCO) publicado por el Banco Central de Bolivia cada día hábil a las 20:00.",
+    series: ["oficial"]
+  },
+  paralelo: {
+    titulo: "Evolución del dólar paralelo",
+    descripcion: "Dólar del mercado informal, según cierres reportados en prensa. Precio de compra y de venta.",
+    series: ["compra", "venta"]
+  }
+};
+
+// Lista de todos los campos con valores (en el orden de las columnas del CSV).
+const CAMPOS = Object.keys(SERIES); // ["oficial", "compra", "venta"]
+
+
+/* =====================================================================
+   2. UTILIDADES: FECHAS Y NÚMEROS
+   ===================================================================== */
+
+// Milisegundos que tiene un día (24 h × 60 min × 60 s × 1000 ms).
+const MS_DIA = 86400000;
+
+// Convierte "2026-10-14" en un número de día (días desde 01/01/1970).
+// Así es fácil restar fechas: día2 − día1 = días de diferencia.
+function fechaADia(fechaISO) {
+  const partes = fechaISO.split("-").map(Number); // [2026, 10, 14]
+  return Math.round(Date.UTC(partes[0], partes[1] - 1, partes[2]) / MS_DIA);
+}
+
+// Lo inverso: convierte un número de día en texto "AAAA-MM-DD".
+function diaAFecha(dia) {
+  return new Date(dia * MS_DIA).toISOString().slice(0, 10);
+}
+
+// Suma (o resta) días a una fecha en texto.
+function sumarDias(fechaISO, n) {
+  return diaAFecha(fechaADia(fechaISO) + n);
+}
+
+// "2026-10-14" → "14/10/2026" (formato boliviano).
+function formatoFecha(fechaISO) {
+  const p = fechaISO.split("-");
+  return p[2] + "/" + p[1] + "/" + p[0];
+}
+
+// "2026-10-14" → "14/10" (corto, para el eje del gráfico).
+function formatoFechaCorta(fechaISO) {
+  const p = fechaISO.split("-");
+  return p[2] + "/" + p[1];
+}
+
+// Fecha de HOY según el reloj de la computadora, en "AAAA-MM-DD".
+function fechaHoyLocal() {
+  const h = new Date();
+  const mes = String(h.getMonth() + 1).padStart(2, "0");
+  const dia = String(h.getDate()).padStart(2, "0");
+  return h.getFullYear() + "-" + mes + "-" + dia;
+}
+
+// Formateador de números al estilo boliviano: coma decimal y punto de miles.
+// Intl.NumberFormat es una herramienta que ya viene en el navegador.
+const FORMATO_2 = new Intl.NumberFormat("es-BO", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+  useGrouping: "always" // para que 1000 se escriba 1.000
+});
+
+// 11.7 → "11,70"
+function num(n) {
+  return FORMATO_2.format(n);
+}
+
+// 11.7 → "Bs 11,70"
+function bs(n) {
+  return "Bs " + FORMATO_2.format(n);
+}
+
+// 0.0125 → "1,25 %"  (recibe una fracción)
+function pct(fraccion) {
+  return FORMATO_2.format(fraccion * 100) + " %";
+}
+
+// Igual que pct pero con signo: +1,25 % / −0,40 %
+function pctConSigno(fraccion) {
+  const signo = fraccion > 0 ? "+" : fraccion < 0 ? "−" : "";
+  return signo + pct(Math.abs(fraccion));
+}
+
+// Igual que bs pero con signo: +Bs 0,12 / −Bs 0,05
+function bsConSigno(n) {
+  const signo = n > 0 ? "+" : n < 0 ? "−" : "";
+  return signo + bs(Math.abs(n));
+}
+
+// Convierte el texto que escribe el usuario en número.
+// Acepta formato boliviano ("11,70", "10.000", "10.000,50")
+// y también formato con punto decimal ("11.70").
+// Devuelve NaN ("no es un número") si el texto no es válido.
+function leerNumero(texto) {
+  let t = String(texto).trim().replace(/\s/g, "").replace(/^Bs/i, "");
+  if (t === "") return NaN;
+  if (t.includes(",")) {
+    // Hay coma: la coma es el decimal y los puntos son miles.
+    t = t.replace(/\./g, "").replace(",", ".");
+  } else if (/^\d{1,3}(\.\d{3})+$/.test(t)) {
+    // Solo puntos en grupos de 3 cifras (ej. 10.000): son miles.
+    t = t.replace(/\./g, "");
+  }
+  // Number() devuelve NaN si el texto todavía no es un número válido.
+  return /^-?\d+(\.\d+)?$/.test(t) ? Number(t) : NaN;
+}
+
+// Acepta fechas "2026-10-14" o "14/10/2026" y devuelve "2026-10-14".
+// Devuelve null si el texto no es una fecha válida.
+function leerFecha(texto) {
+  const t = String(texto).trim();
+  let a, m, d;
+  let r = t.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if (r) { a = +r[1]; m = +r[2]; d = +r[3]; }
+  r = t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (r) { d = +r[1]; m = +r[2]; a = +r[3]; }
+  if (!a) return null;
+  const iso = a + "-" + String(m).padStart(2, "0") + "-" + String(d).padStart(2, "0");
+  // Comprobamos que la fecha exista de verdad (ej. no 31/02).
+  return diaAFecha(fechaADia(iso)) === iso ? iso : null;
+}
+
+// Promedio de una lista de números.
+function promedio(lista) {
+  let suma = 0;
+  for (const x of lista) suma += x;
+  return suma / lista.length;
+}
+
+// Evita que un texto escrito por el usuario se interprete como HTML.
+function escaparHTML(texto) {
+  return String(texto).replace(/[&<>"']/g, (c) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  }[c]));
+}
+
+
+/* =====================================================================
+   3. DATOS: HISTÓRICOS + REGISTROS DEL USUARIO
+   ---------------------------------------------------------------------
+   localStorage es una pequeña "memoria" del navegador. Lo que se guarda
+   ahí sigue disponible aunque cierre la página, pero SOLO en ese
+   navegador y esa computadora. Por eso existe el botón "Exportar CSV"
+   para hacer respaldos.
+   ===================================================================== */
+
+// Lee la lista de registros que el usuario agregó (o lista vacía).
+// try/catch: si el navegador bloquea localStorage, no se rompe la página.
+function leerRegistrosUsuario() {
+  try {
+    const texto = localStorage.getItem(CONFIG.claveAlmacen);
+    const lista = texto ? JSON.parse(texto) : [];
+    return Array.isArray(lista) ? lista : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+// Guarda la lista de registros del usuario. Devuelve true si funcionó.
+function guardarRegistrosUsuario(lista) {
+  try {
+    lista.sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
+    localStorage.setItem(CONFIG.claveAlmacen, JSON.stringify(lista));
+    return true;
+  } catch (e) {
+    mostrarMensaje("No se pudo guardar en este navegador (almacenamiento bloqueado). Use “Exportar CSV” para no perder sus datos.", "error");
+    return false;
+  }
+}
+
+// Crea una fila vacía para una fecha: todos los campos en null
+// (null significa "sin dato ese día").
+function filaVacia(fecha) {
+  const f = { fecha: fecha, origen: "Histórico" };
+  for (const campo of CAMPOS) f[campo] = null;
+  return f;
+}
+
+// Lee SOLO los datos históricos de datos.js y los pone en un Map
+// (un Map es como un diccionario: fecha → fila).
+function datosHistoricos() {
+  const mapa = new Map();
+  function fila(fecha) {
+    if (!mapa.has(fecha)) mapa.set(fecha, filaVacia(fecha));
+    return mapa.get(fecha);
+  }
+
+  for (const d of DATOS_OFICIAL) fila(d.fecha).oficial = d.valor;
+  for (const d of DATOS_PARALELO) {
+    const f = fila(d.fecha);
+    f.compra = d.compra;
+    f.venta = d.venta;
+  }
+  return mapa;
+}
+
+// Datos AUTOMÁTICOS: cotizaciones y noticias que guarda la actualización
+// diaria (en GitHub o en la computadora). Empiezan con lo que trae este
+// archivo y se reemplazan si al abrir la página se descarga de internet
+// una versión más nueva (ver sección 8). "typeof" evita errores si esos
+// archivos no existen.
+const datosAutomaticos = {
+  cotizaciones: typeof COTIZACIONES_AUTOMATICAS !== "undefined" && Array.isArray(COTIZACIONES_AUTOMATICAS) ? COTIZACIONES_AUTOMATICAS : [],
+  fechaCotizaciones: typeof COTIZACIONES_AUTOMATICAS_FECHA !== "undefined" ? COTIZACIONES_AUTOMATICAS_FECHA : null,
+  noticias: typeof NOTICIAS_AUTOMATICAS !== "undefined" && Array.isArray(NOTICIAS_AUTOMATICAS) ? NOTICIAS_AUTOMATICAS : [],
+  fechaNoticias: typeof NOTICIAS_AUTOMATICAS_FECHA !== "undefined" ? NOTICIAS_AUTOMATICAS_FECHA : null,
+  desdeInternet: false   // true cuando se usan los datos descargados de GitHub
+};
+
+// Une los datos históricos (datos.js) con los registros del usuario.
+// Resultado: una tabla ordenada por fecha, una fila por día:
+// { fecha, oficial, compra, venta, origen }
+function combinarDatos() {
+  const mapa = datosHistoricos();
+
+  // Cotizaciones guardadas por la actualización diaria (en GitHub o en la
+  // computadora), aunque ese día no se haya abierto la página.
+  for (const c of datosAutomaticos.cotizaciones) {
+    if (!leerFecha(c.fecha)) continue;
+    if (!mapa.has(c.fecha)) mapa.set(c.fecha, filaVacia(c.fecha));
+    const f = mapa.get(c.fecha);
+    for (const campo of CAMPOS) {
+      if (c[campo] != null && valorRazonable(c[campo])) f[campo] = c[campo];
+    }
+    f.origen = "Automático";
+  }
+
+  // Los registros del usuario se aplican al final: si coinciden con una
+  // fecha histórica, el valor del usuario reemplaza al histórico.
+  for (const u of leerRegistrosUsuario()) {
+    if (!mapa.has(u.fecha)) mapa.set(u.fecha, filaVacia(u.fecha));
+    const f = mapa.get(u.fecha);
+    for (const campo of CAMPOS) {
+      if (u[campo] != null) f[campo] = u[campo];
+    }
+    f.origen = u.origen || "Manual"; // "Automático" (de internet) o "Manual"
+  }
+
+  return Array.from(mapa.values()).sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
+}
+
+// De la tabla completa, extrae una "serie" (solo los días con dato) de un
+// campo: "oficial", "compra" o "venta".
+// Cada punto: { fecha, t (número de día), y (valor) }.
+function crearSerie(tabla, campo) {
+  return tabla
+    .filter((fila) => fila[campo] != null)
+    .map((fila) => ({ fecha: fila.fecha, t: fechaADia(fila.fecha), y: fila[campo] }));
+}
+
+
+/* =====================================================================
+   4. MODELOS DE PREDICCIÓN
+   ---------------------------------------------------------------------
+   Todos los modelos reciben:
+     - historia: lista de puntos {t, y} ordenados por fecha (solo pasado).
+     - d: cuántos días hacia adelante (desde el último dato) se predice.
+     - opciones: parámetros (por ejemplo, el tamaño de la ventana).
+   Y devuelven un número: el valor esperado del dólar en ese día.
+
+   Se usa "t" (número de día) en lugar de la posición en la lista porque
+   el paralelo no tiene dato todos los días: así los modelos respetan la
+   distancia real en días entre los datos.
+   ===================================================================== */
+
+// ---- 4.1 Último valor (modelo "ingenuo", sirve de REFERENCIA) --------
+// Supone que mañana el dólar estará igual que hoy. Un buen modelo
+// debería equivocarse menos que esta regla tan simple.
+function predecirUltimoValor(historia) {
+  return historia[historia.length - 1].y;
+}
+
+// ---- 4.2 Promedio móvil ----------------------------------------------
+// Promedia las últimas k observaciones. Suaviza los saltos diarios,
+// pero no sigue tendencias: predice el mismo valor para cualquier plazo.
+function predecirPromedioMovil(historia, d, opciones) {
+  const k = Math.min(opciones.ventanaPromedio, historia.length);
+  const ultimos = historia.slice(-k).map((p) => p.y);
+  return promedio(ultimos);
+}
+
+// ---- 4.3 Regresión lineal --------------------------------------------
+// Dibuja la recta que mejor pasa por los datos recientes (mínimos
+// cuadrados):  y = a + b·t   (a = intercepto, b = pendiente por día)
+// y la prolonga hacia el futuro.
+function ajustarRecta(puntos) {
+  const n = puntos.length;
+  const mediaT = promedio(puntos.map((p) => p.t));
+  const mediaY = promedio(puntos.map((p) => p.y));
+  let sumaXY = 0;
+  let sumaXX = 0;
+  for (const p of puntos) {
+    sumaXY += (p.t - mediaT) * (p.y - mediaY);
+    sumaXX += (p.t - mediaT) * (p.t - mediaT);
+  }
+  // Si todos los puntos tienen la misma fecha no hay pendiente.
+  const b = n > 1 && sumaXX > 0 ? sumaXY / sumaXX : 0;
+  const a = mediaY - b * mediaT;
+  return { a: a, b: b };
+}
+
+function predecirRegresion(historia, d) {
+  const ultimo = historia[historia.length - 1];
+  // Solo los puntos de los últimos N días...
+  let puntos = historia.filter((p) => p.t > ultimo.t - CONFIG.ventanaRegresionDias);
+  // ...pero al menos 3 puntos, para que la recta tenga sentido.
+  if (puntos.length < 3) puntos = historia.slice(-3);
+  const recta = ajustarRecta(puntos);
+  return recta.a + recta.b * (ultimo.t + d);
+}
+
+// ---- 4.4 Suavizamiento exponencial doble (método de Holt) -------------
+// Lleva dos "memorias" que se actualizan con cada dato nuevo:
+//   Nivel (L): el valor "de fondo" del dólar.
+//   Tendencia (T): cuánto sube o baja por día.
+// Ecuaciones (Δt = días desde el dato anterior):
+//   L_t = α·y_t + (1 − α)·(L_{t−1} + T_{t−1}·Δt)
+//   T_t = β·(L_t − L_{t−1})/Δt + (1 − β)·T_{t−1}
+//   Predicción a d días = L + T·d
+// α y β (entre 0 y 1) dicen cuánto peso se da a lo más reciente.
+function ajustarHolt(historia, alfa, beta) {
+  let nivel = historia[0].y;
+  let tendencia = 0;
+  if (historia.length > 1) {
+    tendencia = (historia[1].y - historia[0].y) / (historia[1].t - historia[0].t);
+  }
+  let sumaErrores2 = 0; // suma de errores al cuadrado (para elegir α y β)
+
+  for (let i = 1; i < historia.length; i++) {
+    const dt = historia[i].t - historia[i - 1].t;
+    const pronostico = nivel + tendencia * dt; // lo que el modelo esperaba
+    const error = historia[i].y - pronostico;
+    if (i > 1) sumaErrores2 += error * error;   // el dato 1 se usó para iniciar
+
+    const nivelAnterior = nivel;
+    nivel = alfa * historia[i].y + (1 - alfa) * pronostico;
+    tendencia = beta * (nivel - nivelAnterior) / dt + (1 - beta) * tendencia;
+  }
+  return { nivel: nivel, tendencia: tendencia, sumaErrores2: sumaErrores2 };
+}
+
+// Prueba varias combinaciones de α y β y se queda con la que comete
+// menos error al predecir el día siguiente dentro de la historia.
+function optimizarHolt(historia) {
+  let mejor = null;
+  for (let alfa = 0.1; alfa <= 0.91; alfa += 0.1) {
+    for (let beta = 0.05; beta <= 0.51; beta += 0.05) {
+      const ajuste = ajustarHolt(historia, alfa, beta);
+      if (!mejor || ajuste.sumaErrores2 < mejor.sumaErrores2) {
+        mejor = { alfa: alfa, beta: beta, nivel: ajuste.nivel, tendencia: ajuste.tendencia, sumaErrores2: ajuste.sumaErrores2 };
+      }
+    }
+  }
+  return mejor;
+}
+
+// Memoria temporal de ajustes ya calculados. Ajustar Holt exige probar
+// muchas combinaciones de parámetros; como el backtest pide varias veces
+// la misma historia, se guarda el resultado para no repetir el cálculo.
+// Se vacía al empezar a analizar cada serie (ver analizarSerie).
+const memoriaAjustes = new Map();
+
+function predecirHolt(historia, d) {
+  if (historia.length < 2) return historia[historia.length - 1].y;
+  const clave = "holt|" + historia.length;
+  if (!memoriaAjustes.has(clave)) memoriaAjustes.set(clave, optimizarHolt(historia));
+  const ajuste = memoriaAjustes.get(clave);
+  return ajuste.nivel + ajuste.tendencia * d;
+}
+
+// ---- 4.5 Holt amortiguado (tendencia que se "frena") -------------------
+// Igual que Holt, pero la tendencia se va apagando con el tiempo según un
+// factor φ (phi, entre 0 y 1). Así, a 1 día sigue la tendencia reciente y
+// a 30 días no la prolonga sin límite. Es una mejora clásica de Holt
+// (Gardner y McKenzie, 1985) que suele predecir mejor a plazos largos.
+//   Predicción a d días = L + T·(φ + φ² + … + φ^d)
+// Suma φ + φ² + … + φ^d (cuánto "pesa" la tendencia en d días).
+function sumaAmortiguada(phi, d) {
+  return phi === 1 ? d : phi * (1 - Math.pow(phi, d)) / (1 - phi);
+}
+
+function ajustarHoltAmortiguado(historia, alfa, beta, phi) {
+  let nivel = historia[0].y;
+  let tendencia = (historia[1].y - historia[0].y) / (historia[1].t - historia[0].t);
+  let sumaErrores2 = 0;
+
+  for (let i = 1; i < historia.length; i++) {
+    const dt = historia[i].t - historia[i - 1].t;
+    const pronostico = nivel + tendencia * sumaAmortiguada(phi, dt);
+    const error = historia[i].y - pronostico;
+    if (i > 1) sumaErrores2 += error * error;
+
+    const nivelAnterior = nivel;
+    nivel = alfa * historia[i].y + (1 - alfa) * pronostico;
+    tendencia = beta * (nivel - nivelAnterior) / dt + (1 - beta) * Math.pow(phi, dt) * tendencia;
+  }
+  return { nivel: nivel, tendencia: tendencia, sumaErrores2: sumaErrores2 };
+}
+
+// Prueba combinaciones de α, β y φ y se queda con la de menor error.
+function optimizarHoltAmortiguado(historia) {
+  let mejor = null;
+  for (let alfa = 0.1; alfa <= 0.91; alfa += 0.1) {
+    for (let beta = 0.05; beta <= 0.51; beta += 0.05) {
+      for (const phi of [0.8, 0.85, 0.9, 0.95, 0.98]) {
+        const ajuste = ajustarHoltAmortiguado(historia, alfa, beta, phi);
+        if (!mejor || ajuste.sumaErrores2 < mejor.sumaErrores2) {
+          mejor = { alfa: alfa, beta: beta, phi: phi, nivel: ajuste.nivel, tendencia: ajuste.tendencia, sumaErrores2: ajuste.sumaErrores2 };
+        }
+      }
+    }
+  }
+  return mejor;
+}
+
+function predecirHoltAmortiguado(historia, d) {
+  if (historia.length < 2) return historia[historia.length - 1].y;
+  const clave = "amortiguado|" + historia.length;
+  if (!memoriaAjustes.has(clave)) memoriaAjustes.set(clave, optimizarHoltAmortiguado(historia));
+  const ajuste = memoriaAjustes.get(clave);
+  return ajuste.nivel + ajuste.tendencia * sumaAmortiguada(ajuste.phi, d);
+}
+
+// ---- 4.6 Combinación de métodos -----------------------------------------
+// Promedio de dos métodos que se complementan: el promedio móvil (nivel
+// estable, sin tendencia) y Holt amortiguado (sigue la tendencia). Combinar
+// pronósticos suele reducir el error (Bates y Granger, 1969).
+function predecirCombinacion(historia, d, opciones) {
+  return (predecirPromedioMovil(historia, d, opciones) + predecirHoltAmortiguado(historia, d)) / 2;
+}
+
+// Lista de métodos que se comparan. Para agregar otro método, basta con
+// añadir un elemento aquí. "referencia: true" marca el modelo que solo
+// sirve de punto de comparación (ver CONFIG.referenciaPuedeGanar).
+// "corto" es un nombre breve para las tarjetas de predicción.
+const METODOS = [
+  { id: "promedio",    nombre: "Promedio móvil",                          corto: "Promedio móvil",   predecir: predecirPromedioMovil },
+  { id: "regresion",   nombre: "Regresión lineal",                        corto: "Regresión lineal", predecir: predecirRegresion },
+  { id: "holt",        nombre: "Suavizamiento exponencial doble (Holt)",  corto: "Holt",             predecir: predecirHolt },
+  { id: "amortiguado", nombre: "Holt amortiguado",                        corto: "Holt amortiguado", predecir: predecirHoltAmortiguado },
+  { id: "combinacion", nombre: "Combinación (promedio móvil + Holt amortiguado)", corto: "Combinación", predecir: predecirCombinacion },
+  { id: "ingenuo",     nombre: "Último valor (referencia)",               corto: "Último valor",     predecir: predecirUltimoValor, referencia: true }
+];
+
+
+/* =====================================================================
+   5. BACKTEST, ELECCIÓN DEL MEJOR MÉTODO Y RANGO DE PREDICCIÓN
+   ---------------------------------------------------------------------
+   Backtest = "predecir el pasado". Para cada día de la historia:
+     1) se esconden los datos posteriores a ese día,
+     2) el modelo predice el valor a 1, 7 o 30 días,
+     3) se compara con lo que realmente pasó.
+   Con todas esas comparaciones se calcula el MAPE:
+     MAPE = promedio de |real − predicho| / real × 100
+   ===================================================================== */
+
+function backtest(serie, metodo, h, opciones) {
+  const tolerancia = CONFIG.tolerancia[h];
+  const comparaciones = [];
+
+  for (let i = opciones.minimoHistorial - 1; i < serie.length - 1; i++) {
+    const origen = serie[i];
+
+    // Buscar el dato real más cercano a "origen + h días".
+    let elegido = null;
+    for (let j = i + 1; j < serie.length; j++) {
+      const dias = serie[j].t - origen.t;
+      if (dias > h + tolerancia) break; // ya nos pasamos del plazo
+      if (Math.abs(dias - h) <= tolerancia &&
+          (!elegido || Math.abs(dias - h) < Math.abs(elegido.dias - h))) {
+        elegido = { j: j, dias: dias };
+      }
+    }
+    if (!elegido) continue; // no hay dato real para comparar
+
+    const historia = serie.slice(0, i + 1); // solo el pasado
+    const predicho = metodo.predecir(historia, elegido.dias, opciones);
+    const real = serie[elegido.j].y;
+    comparaciones.push({ real: real, predicho: predicho });
+  }
+
+  const n = comparaciones.length;
+  if (n === 0) return { n: 0, mape: NaN, desviacion: NaN };
+
+  // MAPE (error porcentual absoluto medio), en %.
+  const mape = promedio(comparaciones.map((c) => Math.abs(c.real - c.predicho) / c.real)) * 100;
+
+  // Desviación de los errores relativos: raíz del promedio de los
+  // errores relativos al cuadrado. Sirve para construir el rango.
+  const desviacion = Math.sqrt(promedio(comparaciones.map((c) => {
+    const e = (c.real - c.predicho) / c.real;
+    return e * e;
+  })));
+
+  return { n: n, mape: mape, desviacion: desviacion };
+}
+
+// Analiza una serie completa: backtest de todos los métodos, elección
+// del mejor método PARA CADA PLAZO y predicción para los próximos 30 días
+// con su rango.
+// tipo: "oficial" o "paralelo" (el "perfil" de la serie, para usar la
+// configuración que le toca).
+function analizarSerie(serie, tipo) {
+  if (serie.length < 3) return null; // muy pocos datos para analizar
+  memoriaAjustes.clear(); // la memoria de ajustes es de la serie anterior
+
+  const opciones = {
+    ventanaPromedio: CONFIG.ventanaPromedio[tipo],
+    minimoHistorial: Math.min(CONFIG.minimoHistorial[tipo], serie.length - 1)
+  };
+
+  // 5.1 Backtest de cada método en cada plazo.
+  const resultados = METODOS.map((metodo) => {
+    const porPlazo = {};
+    for (const h of CONFIG.horizontes) porPlazo[h] = backtest(serie, metodo, h, opciones);
+    const mapes = CONFIG.horizontes.map((h) => porPlazo[h].mape).filter((x) => isFinite(x));
+    return {
+      metodo: metodo,
+      porPlazo: porPlazo,
+      mapePromedio: mapes.length ? promedio(mapes) : NaN
+    };
+  });
+
+  // 5.2 Ganador DE CADA PLAZO = el método con menor MAPE en ese plazo.
+  // Un método puede ser el mejor para mañana y otro para dentro de un mes
+  // (por ejemplo, seguir la tendencia ayuda a 1 día, pero a 30 días suele
+  // ser mejor no exagerarla). Por eso se elige uno por plazo.
+  // (La referencia solo compite si CONFIG.referenciaPuedeGanar es true.)
+  const candidatos = resultados.filter((r) => !r.metodo.referencia || CONFIG.referenciaPuedeGanar);
+  const ganadores = {};
+  for (const h of CONFIG.horizontes) {
+    let mejor = null;
+    for (const r of candidatos) {
+      if (isFinite(r.porPlazo[h].mape) && (!mejor || r.porPlazo[h].mape < mejor.porPlazo[h].mape)) mejor = r;
+    }
+    // Si en un plazo no hubo con qué comparar, se usa el ganador del plazo anterior.
+    const previo = CONFIG.horizontes.filter((k) => k < h).pop();
+    ganadores[h] = mejor || (previo ? ganadores[previo] : resultados.find((r) => r.metodo.id === "promedio"));
+  }
+
+  // ¿La referencia se equivocó menos que el mejor método en todos los
+  // plazos? (dato útil para la tesis)
+  const referencia = resultados.find((r) => r.metodo.referencia);
+  const referenciaMejor = !!referencia && CONFIG.horizontes.every((h) =>
+    ganadores[h] !== referencia && isFinite(referencia.porPlazo[h].mape) &&
+    referencia.porPlazo[h].mape < ganadores[h].porPlazo[h].mape);
+
+  // 5.3 Desviación de errores del ganador de cada plazo.
+  // Si en algún plazo hubo menos de 3 comparaciones (pasa en el paralelo
+  // a 30 días), se estima a partir del plazo más corto disponible,
+  // creciendo con la raíz del tiempo (regla habitual en finanzas).
+  const desviaciones = {};
+  const desviacionEstimada = {};
+  for (const h of CONFIG.horizontes) {
+    const b = ganadores[h].porPlazo[h];
+    if (b.n >= 3) {
+      desviaciones[h] = b.desviacion;
+      desviacionEstimada[h] = false;
+    } else {
+      const base = CONFIG.horizontes.filter((k) => k < h && desviaciones[k] != null).pop();
+      desviaciones[h] = base ? desviaciones[base] * Math.sqrt(h / base) : 0.01 * Math.sqrt(h);
+      desviacionEstimada[h] = true;
+    }
+    // La incertidumbre no puede ser menor a un plazo más largo: si con
+    // pocos datos sale más chica, se usa la del plazo anterior.
+    const previo = CONFIG.horizontes.filter((k) => k < h).pop();
+    if (previo && desviaciones[h] < desviaciones[previo]) desviaciones[h] = desviaciones[previo];
+  }
+
+  // Desviación para cualquier día d entre 0 y 30, interpolando en línea
+  // recta entre los plazos conocidos (en el día 0 la desviación es 0).
+  function desviacionDia(d) {
+    const puntos = [[0, 0]].concat(CONFIG.horizontes.map((h) => [h, desviaciones[h]]));
+    for (let i = 1; i < puntos.length; i++) {
+      if (d <= puntos[i][0]) {
+        const [x0, y0] = puntos[i - 1];
+        const [x1, y1] = puntos[i];
+        return y0 + (y1 - y0) * (d - x0) / (x1 - x0);
+      }
+    }
+    return puntos[puntos.length - 1][1];
+  }
+
+  // 5.4 Predicción día por día (0 a 30).
+  // En cada plazo (1, 7, 30) se usa exactamente su método ganador. Entre
+  // plazos, la curva pasa suavemente de un método al siguiente (mezcla
+  // ponderada), para que la línea del gráfico no dé saltos.
+  //   Ejemplo, día 4: está a mitad de camino entre 1 y 7 → 50 % el
+  //   método del día 1 y 50 % el del día 7.
+  function esperadoDia(d) {
+    const plazos = CONFIG.horizontes;
+    if (d <= plazos[0]) return ganadores[plazos[0]].metodo.predecir(serie, d, opciones);
+    for (let i = 1; i < plazos.length; i++) {
+      if (d <= plazos[i]) {
+        const peso = (d - plazos[i - 1]) / (plazos[i] - plazos[i - 1]);
+        const antes = ganadores[plazos[i - 1]].metodo.predecir(serie, d, opciones);
+        const despues = ganadores[plazos[i]].metodo.predecir(serie, d, opciones);
+        return (1 - peso) * antes + peso * despues;
+      }
+    }
+    return ganadores[plazos[plazos.length - 1]].metodo.predecir(serie, d, opciones);
+  }
+
+  const ultimo = serie[serie.length - 1];
+  const maxPlazo = Math.max.apply(null, CONFIG.horizontes);
+  const curva = [];
+  for (let d = 0; d <= maxPlazo; d++) {
+    const esperado = d === 0 ? ultimo.y : esperadoDia(d);
+    const s = desviacionDia(d);
+    curva.push({
+      d: d,
+      fecha: sumarDias(ultimo.fecha, d),
+      esperado: esperado,
+      minimo: esperado * (1 - CONFIG.z * s),
+      maximo: esperado * (1 + CONFIG.z * s)
+    });
+  }
+
+  // Lo que predice CADA método para 1, 7 y 30 días (para mostrar la
+  // tabla "¿Qué predice cada método?").
+  const prediccionesPorMetodo = resultados.map((r) => ({
+    metodo: r.metodo,
+    valores: CONFIG.horizontes.map((h) => r.metodo.predecir(serie, h, opciones))
+  }));
+
+  // Parámetros de Holt y Holt amortiguado con toda la serie (para mostrarlos).
+  const holt = serie.length >= 2 ? optimizarHolt(serie) : null;
+  const amortiguado = serie.length >= 2 ? optimizarHoltAmortiguado(serie) : null;
+
+  return {
+    tipo: tipo,
+    serie: serie,
+    ultimo: ultimo,
+    anterior: serie.length > 1 ? serie[serie.length - 2] : null,
+    resultados: resultados,
+    ganadores: ganadores,
+    prediccionesPorMetodo: prediccionesPorMetodo,
+    referenciaMejor: referenciaMejor,
+    curva: curva,
+    desviacionEstimada: desviacionEstimada,
+    holt: holt,
+    amortiguado: amortiguado,
+    opciones: opciones
+  };
+}
+
+// Extrae de la curva la predicción para un plazo concreto (1, 7 o 30).
+function prediccionPlazo(analisis, h) {
+  return analisis.curva[h];
+}
+
+
+/* =====================================================================
+   6. INTERFAZ (lo que se ve en pantalla)
+   ===================================================================== */
+
+// "Estado" de la página: lo que el usuario eligió en este momento.
+const estado = {
+  mercado: "oficial",      // pestaña activa: "oficial" o "paralelo"
+  lado: "compra",          // en el paralelo: predecir "compra" o "venta"
+  comparar: false,         // mostrar los otros mercados en el gráfico
+  mostrarPrediccion: true, // dibujar la predicción en el gráfico
+  tabla: [],               // todos los datos combinados
+  series: {},              // puntos con dato de cada serie (clave → lista)
+  analisis: {},            // resultados del análisis de cada serie
+  grafico: null            // el objeto del gráfico de Chart.js
+};
+
+// Atajo para buscar un elemento de la página por su id.
+function $(id) {
+  return document.getElementById(id);
+}
+
+// Convierte un color "#rrggbb" en uno semitransparente.
+function transparente(hex, alfa) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return "rgba(" + r + "," + g + "," + b + "," + alfa + ")";
+}
+
+// Relleno degradado bajo una línea del gráfico: el color de la línea,
+// semitransparente arriba y transparente abajo. Chart.js llama a esta
+// función cuando ya conoce el tamaño del gráfico (chartArea).
+function degradadoBajoLinea(color) {
+  return (contexto) => {
+    const { ctx, chartArea } = contexto.chart;
+    if (!chartArea) return transparente(color, 0.1); // todavía no se dibujó
+    const degradado = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+    degradado.addColorStop(0, transparente(color, 0.28));
+    degradado.addColorStop(1, transparente(color, 0));
+    return degradado;
+  };
+}
+
+// Nombre legible de cada serie (ej. "Paralelo – compra").
+function nombreSerie(clave) {
+  return SERIES[clave].nombre;
+}
+
+// Serie que se predice en la pestaña activa.
+// En el oficial hay una sola; en el paralelo depende de "lado".
+function claveSerieActiva() {
+  const lista = MERCADOS[estado.mercado].series;
+  if (lista.length === 1) return lista[0];
+  return estado.lado === "compra" ? lista[0] : lista[1];
+}
+
+// Muestra un mensaje temporal abajo de la pantalla.
+let temporizadorMensaje = null;
+function mostrarMensaje(texto, tipo) {
+  const caja = $("mensaje");
+  if (!caja) return;
+  caja.textContent = texto;
+  caja.className = "mensaje visible " + (tipo || "ok");
+  clearTimeout(temporizadorMensaje);
+  temporizadorMensaje = setTimeout(() => { caja.className = "mensaje"; }, 4500);
+}
+
+// Recalcula TODO a partir de los datos (se llama al abrir la página y
+// cada vez que se agregan, borran o importan datos).
+function recalcular() {
+  estado.tabla = combinarDatos();
+  for (const clave of CAMPOS) {
+    estado.series[clave] = crearSerie(estado.tabla, clave);
+    estado.analisis[clave] = analizarSerie(estado.series[clave], SERIES[clave].perfil);
+  }
+  dibujarTodo();
+}
+
+function dibujarTodo() {
+  dibujarPestanas();
+  dibujarAvisoDatos();
+  dibujarTarjetaHoy();
+  dibujarGrafico();
+  dibujarPredicciones();
+  dibujarBacktest();
+  dibujarRegistros();
+  dibujarNoticias();
+  dibujarMetodologiaDinamica();
+  if (calculadoraUsada) calcular(); // actualiza la calculadora si ya se usó
+}
+
+// ---- 6.1 Pestañas ----------------------------------------------------
+function dibujarPestanas() {
+  document.querySelectorAll(".pestana").forEach((boton) => {
+    const activa = boton.dataset.mercado === estado.mercado;
+    boton.classList.toggle("activa", activa);
+    boton.setAttribute("aria-selected", activa ? "true" : "false");
+  });
+  const m = MERCADOS[estado.mercado];
+  // El selector compra/venta solo tiene sentido si el mercado tiene dos series.
+  $("grupoLado").hidden = m.series.length === 1;
+  $("tituloGrafico").textContent = m.titulo;
+  $("descripcionMercado").textContent = m.descripcion;
+}
+
+// ---- 6.2 Avisos: pocos datos o datos desactualizados -------------------
+function dibujarAvisoDatos() {
+  const clave = claveSerieActiva();
+  const serie = estado.series[clave];
+  const caja = $("avisoDesactualizado");
+
+  if (serie.length < 3) {
+    caja.hidden = false;
+    caja.textContent = (serie.length === 0
+      ? "Todavía no hay datos de " + nombreSerie(clave) + "."
+      : "Solo hay " + serie.length + " dato(s) de " + nombreSerie(clave) + ".") +
+      " Regístrelos en la sección “Registrar cotizaciones”: se necesitan al menos 3 para predecir, y con 15 o más el backtest es más confiable.";
+    return;
+  }
+
+  // ¿Cuántos días de atraso tiene el último dato?
+  // En el oficial solo cuentan los días hábiles (el BCB no publica sábados
+  // ni domingos); el paralelo opera todos los días.
+  const ultimo = serie[serie.length - 1];
+  const hoy = fechaADia(fechaHoyLocal());
+  const atraso = SERIES[clave].perfil === "oficial" ? diasHabilesEntre(ultimo.t, hoy) : hoy - ultimo.t;
+  if (atraso >= 1) {
+    caja.hidden = false;
+    caja.textContent = "El último dato de " + nombreSerie(clave) + " es del " + formatoFecha(ultimo.fecha) +
+      ". Pulse “Actualizar ahora” (necesita internet) o registre el valor de hoy en la sección “Registrar cotizaciones”.";
+  } else {
+    caja.hidden = true;
+  }
+}
+
+// Cuenta los días hábiles (lunes a viernes) después de diaDesde y hasta
+// diaHasta, inclusive. Recibe números de día (ver fechaADia).
+function diasHabilesEntre(diaDesde, diaHasta) {
+  let n = 0;
+  for (let d = diaDesde + 1; d <= diaHasta; d++) {
+    if (!esFinDeSemana(d)) n++;
+  }
+  return n;
+}
+
+// true si el número de día cae en sábado o domingo.
+function esFinDeSemana(dia) {
+  const diaSemana = new Date(dia * MS_DIA).getUTCDay(); // 0 = domingo, 6 = sábado
+  return diaSemana === 0 || diaSemana === 6;
+}
+
+// ---- 6.3 Tarjeta "Cotización de hoy" -----------------------------------
+// Devuelve el HTML de una tarjeta con valor, variación y flecha.
+// Usa directamente la serie, así funciona aunque haya 1 o 2 datos.
+function htmlTarjetaValor(clave) {
+  const serie = estado.series[clave];
+  const titulo = SERIES[clave].tarjeta;
+  // El color de la serie se pasa al CSS como variable (--color-serie):
+  // pinta la franja superior y el brillo de la tarjeta.
+  const borde = ' style="--color-serie:' + SERIES[clave].color + '"';
+
+  if (!serie.length) {
+    return '<div class="tarjeta-valor"' + borde + '><div class="tv-titulo">' + titulo + "</div>" +
+      '<div class="tv-numero vacio">—</div><p class="nota">Sin datos todavía.</p></div>';
+  }
+  const ultimo = serie[serie.length - 1];
+  const anterior = serie.length > 1 ? serie[serie.length - 2] : null;
+
+  let variacionHTML = '<div class="tv-variacion neutra">Sin dato anterior</div>';
+  if (anterior) {
+    const dif = ultimo.y - anterior.y;
+    const rel = dif / anterior.y;
+    // Flecha: ▲ sube (rojo), ▼ baja (verde), ▬ sin cambio (gris).
+    const clase = dif > 0 ? "sube" : dif < 0 ? "baja" : "neutra";
+    const flecha = dif > 0 ? "▲" : dif < 0 ? "▼" : "▬";
+    const texto = dif === 0 ? "Sin cambio" : bsConSigno(dif) + " (" + pctConSigno(rel) + ")";
+    variacionHTML =
+      '<div class="tv-variacion ' + clase + '"><span class="flecha" aria-hidden="true">' + flecha + "</span> " + texto + "</div>" +
+      '<div class="tv-pie">respecto al ' + formatoFecha(anterior.fecha) + " (" + bs(anterior.y) + ")</div>";
+  }
+  return '<div class="tarjeta-valor"' + borde + ">" +
+    '<div class="tv-titulo">' + titulo + "</div>" +
+    '<div class="tv-numero">' + bs(ultimo.y) + "</div>" +
+    '<div class="tv-fecha">Dato del ' + formatoFecha(ultimo.fecha) + "</div>" +
+    variacionHTML + "</div>";
+}
+
+function dibujarTarjetaHoy() {
+  const contenedor = $("tarjetaHoy");
+  const lista = MERCADOS[estado.mercado].series;
+  contenedor.className = "grid-hoy " + (lista.length === 1 ? "una" : "dos");
+  let html = lista.map(htmlTarjetaValor).join("");
+
+  // Brecha: cuánto más caro está este mercado (compra) que el oficial ese día.
+  if (estado.mercado !== "oficial") {
+    const serie = estado.series[lista[0]];
+    const ultimo = serie[serie.length - 1];
+    const filaOficial = ultimo ? estado.tabla.find((f) => f.fecha === ultimo.fecha && f.oficial != null) : null;
+    if (filaOficial) {
+      const brecha = (ultimo.y - filaOficial.oficial) / filaOficial.oficial;
+      html += '<p class="nota brecha">Brecha del precio de compra frente al oficial el ' + formatoFecha(ultimo.fecha) +
+        ": <strong>" + pctConSigno(brecha) + "</strong> (oficial " + bs(filaOficial.oficial) + ").</p>";
+    }
+  }
+  contenedor.innerHTML = html;
+}
+
+// ---- 6.4 Gráfico histórico con predicción ------------------------------
+function dibujarGrafico() {
+  const lienzo = $("grafico");
+
+  // Si Chart.js no cargó (por ejemplo, sin internet), se avisa.
+  if (typeof Chart === "undefined") {
+    $("avisoGrafico").hidden = false;
+    lienzo.hidden = true;
+    return;
+  }
+
+  // Series que se dibujan: las del mercado activo y, si se pide comparar,
+  // la serie principal (oficial o compra) de los otros mercados.
+  const series = MERCADOS[estado.mercado].series.slice();
+  if (estado.comparar) {
+    for (const nombre in MERCADOS) {
+      if (nombre !== estado.mercado) series.push(MERCADOS[nombre].series[0]);
+    }
+  }
+  const claveActiva = claveSerieActiva();
+  const analisisActivo = estado.analisis[claveActiva];
+
+  // Eje X: todos los días desde el primer dato hasta el último (+30 días
+  // si se muestra la predicción).
+  const fechas = estado.tabla.map((f) => f.fecha);
+  if (!fechas.length) return;
+  let fin = fechas[fechas.length - 1];
+  if (estado.mostrarPrediccion && analisisActivo) {
+    const finPred = analisisActivo.curva[analisisActivo.curva.length - 1].fecha;
+    if (finPred > fin) fin = finPred;
+  }
+  const etiquetas = [];
+  for (let f = fechas[0]; f <= fin; f = sumarDias(f, 1)) etiquetas.push(f);
+  const posicion = {}; // fecha → posición en el eje
+  etiquetas.forEach((f, i) => { posicion[f] = i; });
+
+  // Crea un arreglo del largo del eje con los valores (null = sin dato).
+  function arregloDeSerie(clave) {
+    const datos = new Array(etiquetas.length).fill(null);
+    for (const p of estado.series[clave]) datos[posicion[p.fecha]] = p.y;
+    return datos;
+  }
+
+  const datasets = [];
+  for (const clave of series) {
+    if (!estado.series[clave].length) continue; // sin datos, no se dibuja
+    const diario = SERIES[clave].perfil === "oficial";
+    const color = SERIES[clave].color;
+    // La serie principal de la pestaña lleva una sombra de color debajo.
+    const principal = clave === claveActiva;
+    datasets.push({
+      label: nombreSerie(clave),
+      data: arregloDeSerie(clave),
+      borderColor: color,
+      backgroundColor: principal ? degradadoBajoLinea(color) : color,
+      pointBackgroundColor: color,
+      pointBorderColor: "#fff",
+      fill: principal ? "start" : false,
+      borderWidth: principal ? 2.5 : 2,
+      // En el paralelo se marcan los días con dato real; la línea
+      // entre ellos es solo una unión visual (spanGaps).
+      pointRadius: diario ? 0 : 3.5,
+      pointHoverRadius: 6,
+      spanGaps: true,
+      // Curva suave que nunca "se pasa" de los valores reales.
+      cubicInterpolationMode: "monotone"
+    });
+  }
+
+  // Predicción: línea punteada + banda sombreada (mínimo a máximo).
+  if (estado.mostrarPrediccion && analisisActivo) {
+    const esperado = new Array(etiquetas.length).fill(null);
+    const minimo = new Array(etiquetas.length).fill(null);
+    const maximo = new Array(etiquetas.length).fill(null);
+    for (const p of analisisActivo.curva) {
+      const i = posicion[p.fecha];
+      esperado[i] = p.esperado;
+      minimo[i] = p.minimo;
+      maximo[i] = p.maximo;
+    }
+    const color = SERIES[claveActiva].color;
+    datasets.push({
+      label: "Rango mínimo", esBanda: true,
+      data: minimo, borderWidth: 0, pointRadius: 0, fill: false
+    });
+    datasets.push({
+      label: "Rango de predicción (mín.–máx.)", esBanda: true,
+      data: maximo, borderWidth: 0, pointRadius: 0,
+      fill: "-1", // rellena hasta el conjunto anterior (el mínimo)
+      backgroundColor: transparente(color, 0.15)
+    });
+    datasets.push({
+      label: "Predicción (mejor método por plazo)", esPrediccion: true,
+      data: esperado, borderColor: color, backgroundColor: color,
+      borderWidth: 2.5, borderDash: [7, 6], pointRadius: 0, pointHoverRadius: 5
+    });
+  }
+
+  // Noticias: un rombo amarillo sobre la línea principal en la fecha de
+  // cada noticia (al pasar el mouse se ve el titular).
+  const lineaBase = estado.series[MERCADOS[estado.mercado].series[0]];
+  const marcas = new Array(etiquetas.length).fill(null);
+  const titulares = new Array(etiquetas.length).fill(null);
+  // (Solo las noticias clave y las del usuario; las automáticas son muchas
+  // y llenarían el gráfico de rombos.)
+  for (const n of todasLasNoticias()) {
+    if (n.tipo === "automatica") continue;
+    const i = posicion[n.fecha];
+    if (i == null) continue;                             // fuera del gráfico
+    const dato = datoAntes(lineaBase, fechaADia(n.fecha) + 1, 7); // valor de ese día o el anterior
+    if (!dato) continue;
+    marcas[i] = dato.y;
+    titulares[i] = titulares[i] ? titulares[i] + " | " + n.titular : n.titular;
+  }
+  if (marcas.some((m) => m != null)) {
+    datasets.push({
+      label: "Noticias", esNoticia: true, titulares: titulares,
+      data: marcas, showLine: false,
+      pointStyle: "rectRot", pointRadius: 7, pointHoverRadius: 9,
+      backgroundColor: "#f59e0b", borderColor: "#ffffff", borderWidth: 2
+    });
+  }
+
+  // Si ya había un gráfico, se destruye para dibujar uno nuevo.
+  if (estado.grafico) estado.grafico.destroy();
+
+  // Letra y color de los textos del gráfico, iguales a los de la página.
+  Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
+  Chart.defaults.color = "#64748b";
+
+  estado.grafico = new Chart(lienzo, {
+    type: "line",
+    data: { labels: etiquetas, datasets: datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      animation: { duration: 900, easing: "easeOutQuart" },
+      plugins: {
+        legend: {
+          position: "bottom",
+          labels: {
+            usePointStyle: true,
+            boxHeight: 6,
+            // No mostrar el borde inferior de la banda en la leyenda.
+            filter: (item, datos) => datos.datasets[item.datasetIndex].label !== "Rango mínimo"
+          }
+        },
+        tooltip: {
+          // Ventanita oscura con esquinas redondeadas.
+          backgroundColor: "rgba(2, 44, 34, 0.94)",
+          padding: 12,
+          cornerRadius: 10,
+          titleFont: { weight: "700" },
+          usePointStyle: true,
+          boxPadding: 4,
+          // No repetir las líneas de la banda en la ventanita.
+          filter: (item) => !item.dataset.esBanda && item.raw != null,
+          callbacks: {
+            title: (items) => (items.length ? formatoFecha(etiquetas[items[0].dataIndex]) : ""),
+            label: (item) => {
+              // Rombo de noticia: se muestra el titular (recortado si es largo).
+              if (item.dataset.esNoticia) {
+                const t = item.dataset.titulares[item.dataIndex] || "";
+                return "Noticia: " + (t.length > 70 ? t.slice(0, 67) + "…" : t);
+              }
+              let texto = item.dataset.label + ": " + bs(item.raw);
+              if (item.dataset.esPrediccion) {
+                const p = analisisActivo.curva.find((c) => c.fecha === etiquetas[item.dataIndex]);
+                if (p && p.d > 0) texto += "  (rango " + num(p.minimo) + " – " + num(p.maximo) + ")";
+              }
+              return texto;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            // Menos fechas en pantallas angostas (celular) para que no se amontonen.
+            maxTicksLimit: window.innerWidth < 600 ? 5 : 10,
+            autoSkipPadding: 12,
+            maxRotation: 0,
+            callback: function (valor) { return formatoFechaCorta(this.getLabelForValue(valor)); }
+          },
+          grid: { display: false },
+          border: { display: false }
+        },
+        y: {
+          ticks: { callback: (valor) => num(valor) },
+          title: { display: true, text: "Bs por 1 USD" },
+          grid: { color: "rgba(5, 150, 105, 0.08)" },
+          border: { display: false }
+        }
+      }
+    }
+  });
+}
+
+// ---- 6.5 Tarjetas de predicción a 1, 7 y 30 días -----------------------
+function dibujarPredicciones() {
+  const clave = claveSerieActiva();
+  const a = estado.analisis[clave];
+  const contenedor = $("predicciones");
+  if (!a) {
+    contenedor.innerHTML = '<p class="nota">No hay datos suficientes para predecir ' + nombreSerie(clave) +
+      " (hay " + estado.series[clave].length + "; se necesitan al menos 3).</p>";
+    $("metodoElegido").textContent = "";
+    $("resumenTendencia").hidden = true;
+    $("tablaMetodos").innerHTML = "";
+    return;
+  }
+
+  // Texto de un plazo: "1 día" / "7 días".
+  const textoPlazo = (h) => h + (h === 1 ? " día" : " días");
+
+  // --- Tarjetas: una por plazo, cada una con su propio método ---
+  let html = "";
+  const cambios = [];
+  for (const h of CONFIG.horizontes) {
+    const p = prediccionPlazo(a, h);
+    const difBs = p.esperado - a.ultimo.y;
+    const cambio = difBs / a.ultimo.y;
+    cambios.push(cambio);
+    const clase = cambio > CONFIG.umbralCambio ? "sube" : cambio < -CONFIG.umbralCambio ? "baja" : "neutra";
+    const flecha = difBs > 0.005 ? "▲" : difBs < -0.005 ? "▼" : "▬";
+    const ancho = (p.maximo - p.minimo) / p.esperado;
+    const incierto = ancho > CONFIG.umbralIncertidumbre;
+    html += '<div class="tarjeta-pred">' +
+      '<div class="tp-plazo">' + (h === 1 ? "Mañana (1 día)" : "En " + h + " días") +
+      ' <span class="tp-fecha">' + formatoFecha(p.fecha) + "</span></div>" +
+      '<div class="tp-esperado">' + bs(p.esperado) + "</div>" +
+      '<div class="tv-variacion ' + clase + '"><span class="flecha" aria-hidden="true">' + flecha + "</span> " +
+        bsConSigno(difBs) + " (" + pctConSigno(cambio) + ")</div>" +
+      '<div class="tp-rango"><span>Mín. ' + num(p.minimo) + "</span><span>Máx. " + num(p.maximo) + "</span></div>" +
+      '<div class="tp-metodo">Método: <strong>' + a.ganadores[h].metodo.corto + "</strong></div>" +
+      (incierto ? '<div class="etiqueta-alerta">Alta incertidumbre</div>' : "") +
+      (a.desviacionEstimada[h] ? '<div class="nota">Rango estimado: pocos datos para medir el error a ' + textoPlazo(h) + ".</div>" : "") +
+      "</div>";
+  }
+  contenedor.innerHTML = html;
+
+  // --- Resumen en palabras: ¿qué se espera? ---
+  const p30 = prediccionPlazo(a, CONFIG.horizontes[CONFIG.horizontes.length - 1]);
+  let resumen;
+  if (cambios.every((c) => Math.abs(c) <= CONFIG.umbralCambio)) {
+    resumen = "<strong>Sin tendencia fuerte:</strong> los métodos más precisos esperan que el dólar se mantenga cerca de " +
+      bs(a.ultimo.y) + " (cambios menores a ±" + pct(CONFIG.umbralCambio) + "). Lo que más cambia con el plazo es la " +
+      "<strong>incertidumbre</strong>: en 30 días podría estar entre " + bs(p30.minimo) + " y " + bs(p30.maximo) + ".";
+  } else {
+    const ultimoCambio = cambios[cambios.length - 1];
+    resumen = "<strong>Tendencia " + (ultimoCambio > 0 ? "al alza" : "a la baja") + ":</strong> se espera que el dólar pase de " +
+      bs(a.ultimo.y) + " a " + bs(p30.esperado) + " en 30 días (" + pctConSigno(ultimoCambio) + "), dentro de un rango de " +
+      bs(p30.minimo) + " a " + bs(p30.maximo) + ".";
+  }
+  $("resumenTendencia").hidden = false;
+  $("resumenTendencia").innerHTML = resumen;
+
+  $("metodoElegido").innerHTML = "Serie: <strong>" + nombreSerie(clave) + "</strong>. Para cada plazo se usa el método que " +
+    "tuvo <strong>menor error</strong> en el backtest. El rango es el valor esperado ± " + num(CONFIG.z) +
+    " veces la desviación de los errores pasados (≈ 80 % de confianza).";
+
+  // --- Tabla: qué predice cada método en cada plazo ---
+  let tabla = "<thead><tr><th>Método</th>";
+  for (const h of CONFIG.horizontes) tabla += "<th>" + (h === 1 ? "Mañana" : "En " + textoPlazo(h)) + "</th>";
+  tabla += "</tr></thead><tbody>";
+  for (const fila of a.prediccionesPorMetodo) {
+    tabla += '<tr class="' + (fila.metodo.referencia ? "referencia" : "") + '"><td>' + fila.metodo.nombre + "</td>";
+    CONFIG.horizontes.forEach((h, i) => {
+      const valor = fila.valores[i];
+      const dif = valor - a.ultimo.y;
+      const flecha = dif > 0.005 ? '<span class="sube">▲</span>' : dif < -0.005 ? '<span class="baja">▼</span>' : '<span class="neutra">▬</span>';
+      const elegido = a.ganadores[h].metodo === fila.metodo;
+      tabla += '<td class="' + (elegido ? "celda-elegida" : "") + '">' + flecha + " " + num(valor) +
+        (elegido ? ' <span class="insignia">Usado</span>' : "") + "</td>";
+    });
+    tabla += "</tr>";
+  }
+  $("tablaMetodos").innerHTML = tabla + "</tbody>";
+}
+
+// ---- 6.6 Tabla del backtest ---------------------------------------------
+function dibujarBacktest() {
+  const clave = claveSerieActiva();
+  const a = estado.analisis[clave];
+  const tabla = $("tablaBacktest");
+  if (!a) {
+    tabla.innerHTML = "";
+    $("notaBacktest").textContent = "El backtest se mostrará cuando haya datos suficientes de " + nombreSerie(clave) + ".";
+    return;
+  }
+
+  // Menor MAPE de cada columna (para resaltarlo en negrita).
+  const mejores = {};
+  for (const h of CONFIG.horizontes) {
+    mejores[h] = Math.min.apply(null, a.resultados.map((r) => r.porPlazo[h].mape).filter((x) => isFinite(x)));
+  }
+
+  let html = "<thead><tr><th>Método</th>";
+  for (const h of CONFIG.horizontes) html += "<th>MAPE " + h + (h === 1 ? " día" : " días") + "</th>";
+  html += "<th>MAPE promedio</th></tr></thead><tbody>";
+
+  for (const r of a.resultados) {
+    html += '<tr class="' + (r.metodo.referencia ? "referencia" : "") + '"><td>' + r.metodo.nombre + "</td>";
+    for (const h of CONFIG.horizontes) {
+      const b = r.porPlazo[h];
+      const texto = isFinite(b.mape) ? num(b.mape) + " %" : "—";
+      const negrita = isFinite(b.mape) && b.mape === mejores[h];
+      // La celda del método elegido para ese plazo se resalta en verde.
+      const elegido = a.ganadores[h] === r;
+      html += '<td class="' + (elegido ? "celda-elegida" : "") + '">' + (negrita ? "<strong>" + texto + "</strong>" : texto) +
+        (elegido ? ' <span class="insignia">Elegido</span>' : "") + "</td>";
+    }
+    html += "<td>" + (isFinite(r.mapePromedio) ? num(r.mapePromedio) + " %" : "—") + "</td></tr>";
+  }
+
+  // Fila con la cantidad de comparaciones realizadas en cada plazo.
+  html += '<tr class="fila-n"><td>Comparaciones (n)</td>';
+  for (const h of CONFIG.horizontes) html += "<td>" + a.resultados[0].porPlazo[h].n + "</td>";
+  html += "<td></td></tr></tbody>";
+  tabla.innerHTML = html;
+
+  let nota = "Datos usados: " + a.serie.length + " observaciones de " + nombreSerie(clave) +
+    " (" + formatoFecha(a.serie[0].fecha) + " al " + formatoFecha(a.ultimo.fecha) + "). " +
+    "Promedio móvil de " + a.opciones.ventanaPromedio + " observaciones; regresión con los últimos " +
+    CONFIG.ventanaRegresionDias + " días";
+  if (a.holt) nota += "; Holt con α = " + num(a.holt.alfa) + " y β = " + num(a.holt.beta);
+  if (a.amortiguado) nota += "; Holt amortiguado con α = " + num(a.amortiguado.alfa) + ", β = " + num(a.amortiguado.beta) +
+    " y φ = " + num(a.amortiguado.phi);
+  nota += " (parámetros optimizados). En verde, el método elegido para cada plazo (el de menor error). " +
+    "El “último valor” es solo una referencia y no se elige.";
+  if (a.referenciaMejor) {
+    nota += " Observación: la referencia tuvo menor error que el mejor método en todos los plazos. Esto sugiere que, con la historia disponible, " +
+      "el tipo de cambio se comporta casi como una “caminata aleatoria” (el mejor pronóstico simple es el último valor), algo frecuente en mercados cambiarios.";
+  }
+  if (SERIES[clave].perfil !== "oficial") {
+    nota += " Como este mercado no tiene dato todos los días, cada predicción se compara con el dato real más cercano al plazo (±" +
+      CONFIG.tolerancia[7] + " día a 7 días, ±" + CONFIG.tolerancia[30] + " días a 30 días); si n es pequeño, los resultados deben leerse con cautela.";
+  }
+  $("notaBacktest").textContent = nota;
+}
+
+// ---- 6.7 Calculadora "¿Compro hoy o espero?" ----------------------------
+let calculadoraUsada = false;
+
+// Clasifica lo que se espera para un plazo y redacta un texto sencillo.
+function recomendacionPlazo(monto, hoy, p, h) {
+  const cambio = (p.esperado - hoy) / hoy;
+  const ancho = (p.maximo - p.minimo) / p.esperado;
+  const incierto = ancho > CONFIG.umbralIncertidumbre;
+  const difEsperada = monto * (p.esperado - hoy); // + = esperar cuesta más
+  const plazo = h + " días";
+  let tipo;
+  let texto;
+
+  if (cambio > CONFIG.umbralCambio) {
+    tipo = "sube";
+    texto = "En " + plazo + " se espera que el dólar suba de " + bs(hoy) + " a " + bs(p.esperado) + " (" + pctConSigno(cambio) + "). " +
+      "Comprar hoy te ahorraría aproximadamente <strong>" + bs(difEsperada) + "</strong>.";
+    if (p.minimo < hoy) {
+      texto += " Aun así, el rango incluye la posibilidad de que baje (hasta " + bs(p.minimo) + ").";
+    }
+  } else if (cambio < -CONFIG.umbralCambio) {
+    tipo = "baja";
+    texto = "En " + plazo + " se espera que el dólar baje de " + bs(hoy) + " a " + bs(p.esperado) + " (" + pctConSigno(cambio) + "). " +
+      "Esperar podría ahorrarte aproximadamente <strong>" + bs(-difEsperada) + "</strong>.";
+    if (p.maximo > hoy) {
+      texto += " Riesgo: si el dólar llega al máximo del rango (" + bs(p.maximo) + "), pagarías " + bs(monto * (p.maximo - hoy)) + " más que hoy.";
+    }
+  } else if (!incierto) {
+    tipo = "estable";
+    texto = "En " + plazo + " se espera estabilidad (cambio esperado de " + pctConSigno(cambio) + "). " +
+      "Puedes esperar sin mucho riesgo: la diferencia esperada es de unos " + bs(Math.abs(difEsperada)) + ".";
+  } else {
+    // Sin tendencia clara, pero con un rango amplio: esperar NO es "sin riesgo".
+    tipo = "estable";
+    texto = "En " + plazo + " no se espera una tendencia clara (cambio esperado de " + pctConSigno(cambio) + "), " +
+      "pero el dólar podría moverse bastante en cualquier dirección.";
+  }
+
+  if (incierto) {
+    texto += " <span class=\"etiqueta-alerta\">Alta incertidumbre</span> El rango posible es amplio (de " + bs(p.minimo) + " a " + bs(p.maximo) +
+      " por dólar). En el peor caso pagarías " + bs(monto * (p.maximo - hoy)) + " más que hoy. " +
+      "Considera comprar por partes (compra escalonada) para repartir el riesgo.";
+  }
+  return { tipo: tipo, texto: texto, incierto: incierto };
+}
+
+// Junta las señales de 7 y 30 días en una recomendación principal.
+function recomendacionGeneral(r7, r30) {
+  if (r7.tipo === "sube" && r30.tipo === "sube") {
+    return { clase: "sube", titulo: "Conviene comprar hoy", texto: "Los modelos esperan que el dólar suba tanto en 7 como en 30 días." };
+  }
+  if (r7.tipo === "baja" && r30.tipo === "baja") {
+    return { clase: "baja", titulo: "Podrías esperar", texto: "Los modelos esperan que el dólar baje en 7 y en 30 días. Revisa la predicción cada día antes de decidir." };
+  }
+  if (r7.tipo === "estable" && r30.tipo === "estable") {
+    if (r7.incierto || r30.incierto) {
+      return { clase: "neutra", titulo: "Sin tendencia clara, pero con alta incertidumbre",
+        texto: "No se espera que el dólar suba ni baje de forma marcada, pero el rango posible es amplio. " +
+          "Si el pago es importante, una opción prudente es comprar una parte hoy y el resto en los próximos días." };
+    }
+    return { clase: "neutra", titulo: "Sin urgencia: se espera estabilidad", texto: "No se esperan cambios importantes. Compra cuando lo necesites." };
+  }
+  if (r7.tipo === "sube" || r30.tipo === "sube") {
+    return { clase: "sube", titulo: "Señales de subida: considera comprar al menos una parte hoy", texto: "Al menos uno de los plazos muestra tendencia al alza." };
+  }
+  return { clase: "neutra", titulo: "Señales mixtas", texto: "Los plazos no coinciden. Una opción prudente es comprar una parte hoy y el resto más adelante." };
+}
+
+// Nota al pie de la calculadora según el mercado elegido.
+const NOTAS_CALCULADORA = {
+  oficial: "El TCO es una referencia: su banco puede aplicar un margen o comisión adicional.",
+  compra: "En el paralelo se usa el precio de compra (lo que usted paga por cada dólar)."
+};
+
+function calcular() {
+  const monto = leerNumero($("montoUSD").value);
+  const mercado = $("mercadoCalc").value; // "oficial" o "compra"
+  const salida = $("resultadoCalc");
+
+  if (!isFinite(monto) || monto <= 0) {
+    salida.innerHTML = '<p class="error-texto">Ingrese un monto válido en dólares (por ejemplo: 10.000).</p>';
+    return;
+  }
+  const a = estado.analisis[mercado];
+  if (!a) {
+    salida.innerHTML = '<p class="error-texto">No hay datos suficientes de ' + nombreSerie(mercado) +
+      " para calcular (hay " + estado.series[mercado].length + "; se necesitan al menos 3). Regístrelos en “Registrar cotizaciones”.</p>";
+    return;
+  }
+  calculadoraUsada = true;
+
+  const hoy = a.ultimo.y;
+  const p7 = prediccionPlazo(a, 7);
+  const p30 = prediccionPlazo(a, 30);
+  const r7 = recomendacionPlazo(monto, hoy, p7, 7);
+  const r30 = recomendacionPlazo(monto, hoy, p30, 30);
+  const general = recomendacionGeneral(r7, r30);
+
+  // Fila de la tabla de costos.
+  function fila(etiqueta, fecha, precio, minimo, maximo) {
+    const total = monto * precio;
+    const dif = total - monto * hoy;
+    const rango = minimo != null
+      ? '<div class="sub">Rango: ' + bs(monto * minimo) + " – " + bs(monto * maximo) + "</div>" : "";
+    const difTexto = minimo != null
+      ? '<span class="' + (dif > 0 ? "sube" : dif < 0 ? "baja" : "") + '">' + bsConSigno(dif) + "</span>" : "—";
+    return "<tr><td>" + etiqueta + '<div class="sub">' + formatoFecha(fecha) + "</div></td>" +
+      "<td>" + bs(precio) + (minimo != null ? '<div class="sub">' + num(minimo) + " – " + num(maximo) + "</div>" : "") + "</td>" +
+      "<td><strong>" + bs(total) + "</strong>" + rango + "</td><td>" + difTexto + "</td></tr>";
+  }
+
+  const usd = "USD " + FORMATO_2.format(monto);
+  salida.innerHTML =
+    '<div class="recomendacion ' + general.clase + '"><div class="rec-titulo">' + general.titulo + "</div><p>" + general.texto + "</p></div>" +
+    '<div class="tabla-scroll"><table class="tabla">' +
+    "<thead><tr><th>Momento de compra</th><th>Tipo de cambio</th><th>Costo de " + usd + "</th><th>Diferencia vs. hoy</th></tr></thead><tbody>" +
+    fila("Hoy (último dato)", a.ultimo.fecha, hoy, null, null) +
+    fila("Esperar 7 días", p7.fecha, p7.esperado, p7.minimo, p7.maximo) +
+    fila("Esperar 30 días", p30.fecha, p30.esperado, p30.minimo, p30.maximo) +
+    "</tbody></table></div>" +
+    '<ul class="lista-rec"><li class="' + r7.tipo + '">' + r7.texto + '</li><li class="' + r30.tipo + '">' + r30.texto + "</li></ul>" +
+    '<p class="nota">Cálculo con ' + nombreSerie(mercado) + ". Métodos usados: " + a.ganadores[7].metodo.corto +
+    " (7 días) y " + a.ganadores[30].metodo.corto + " (30 días). " +
+    NOTAS_CALCULADORA[mercado] + "</p>";
+}
+
+// ---- 6.8 Tabla de registros del usuario --------------------------------
+function dibujarRegistros() {
+  const lista = leerRegistrosUsuario();
+  const cuerpo = $("cuerpoRegistros");
+  $("resumenDatos").textContent = "Total de días con datos: " + estado.tabla.length +
+    " · Días nuevos guardados en este navegador: " + lista.length + ".";
+  if (!lista.length) {
+    cuerpo.innerHTML = '<tr><td colspan="' + (CAMPOS.length + 3) + '" class="vacio">Todavía no hay datos nuevos. Los datos históricos vienen de datos.js; los de cada día se descargan solos al abrir la herramienta con internet.</td></tr>';
+    return;
+  }
+  const v = (x) => (x == null ? "—" : num(x));
+  // Los más recientes primero.
+  cuerpo.innerHTML = lista.slice().reverse().map((r) =>
+    "<tr><td>" + formatoFecha(r.fecha) + "</td>" +
+    CAMPOS.map((campo) => "<td>" + v(r[campo]) + "</td>").join("") +
+    "<td>" + escaparHTML(r.origen || "Manual") + "</td>" +
+    '<td><button type="button" class="boton-link" data-borrar="' + escaparHTML(r.fecha) + '">Eliminar</button></td></tr>'
+  ).join("");
+}
+
+// ---- 6.9 Datos dinámicos de la sección Metodología ----------------------
+function dibujarMetodologiaDinamica() {
+  const partes = [];
+  for (const clave of CAMPOS) {
+    const a = estado.analisis[clave];
+    partes.push(nombreSerie(clave) + ": " + estado.series[clave].length + " observaciones" +
+      (a ? ", métodos elegidos: " + CONFIG.horizontes.map((h) => a.ganadores[h].metodo.corto + " (" + h + " d)").join(", ")
+         : ", sin predicción todavía"));
+  }
+  $("resumenMetodologia").textContent = "Situación actual — " + partes.join(" · ") + ".";
+}
+
+
+/* =====================================================================
+   7. REGISTRO DE COTIZACIONES, EXPORTAR E IMPORTAR CSV
+   ===================================================================== */
+
+// Agrega o actualiza el registro de una fecha. Los campos null no
+// borran valores que ya existían ese día.
+// origen: "Manual" (formulario o CSV) o "Automático" (descargado de internet).
+function guardarRegistro(nuevo, origen) {
+  const lista = leerRegistrosUsuario();
+  let existente = lista.find((r) => r.fecha === nuevo.fecha);
+  if (!existente) {
+    existente = { fecha: nuevo.fecha };
+    for (const campo of CAMPOS) existente[campo] = null;
+    lista.push(existente);
+  }
+  for (const campo of CAMPOS) {
+    if (nuevo[campo] != null) existente[campo] = nuevo[campo];
+  }
+  existente.origen = origen || "Manual";
+  return guardarRegistrosUsuario(lista);
+}
+
+// Comprueba que un tipo de cambio sea razonable (evita errores de tipeo
+// como 117 en lugar de 11,7).
+function valorRazonable(x) {
+  return isFinite(x) && x >= 3 && x <= 50;
+}
+
+// Campos del formulario de registro: id del cuadro de texto → campo.
+const CAMPOS_FORMULARIO = {
+  regOficial: "oficial",
+  regCompra: "compra",
+  regVenta: "venta"
+};
+
+// Se ejecuta al pulsar "Guardar cotización".
+function alEnviarRegistro(evento) {
+  evento.preventDefault(); // evita que la página se recargue
+  const fecha = leerFecha($("regFecha").value);
+  if (!fecha) return mostrarMensaje("Ingrese una fecha válida.", "error");
+
+  // Leer los textos escritos en cada cuadro.
+  const textos = {};
+  for (const id in CAMPOS_FORMULARIO) textos[CAMPOS_FORMULARIO[id]] = $(id).value.trim();
+
+  if (CAMPOS.every((campo) => !textos[campo])) {
+    return mostrarMensaje("Ingrese al menos el valor oficial o el paralelo.", "error");
+  }
+  // En el paralelo, compra y venta van juntas.
+  if (!textos.compra !== !textos.venta) return mostrarMensaje("Para el paralelo ingrese compra y venta.", "error");
+
+  const nuevo = { fecha: fecha };
+  for (const campo of CAMPOS) {
+    nuevo[campo] = textos[campo] ? leerNumero(textos[campo]) : null;
+    if (nuevo[campo] != null && !valorRazonable(nuevo[campo])) {
+      return mostrarMensaje("Revise los valores: deben ser números entre 3 y 50 (por ejemplo 11,70).", "error");
+    }
+  }
+
+  if (guardarRegistro(nuevo, "Manual")) {
+    for (const id in CAMPOS_FORMULARIO) $(id).value = "";
+    recalcular();
+    mostrarMensaje("Cotización del " + formatoFecha(fecha) + " guardada. Predicciones actualizadas.", "ok");
+  }
+}
+
+// Borra el registro de una fecha (los datos históricos no se tocan).
+function borrarRegistro(fecha) {
+  if (!confirm("¿Eliminar su registro del " + formatoFecha(fecha) + "?")) return;
+  const lista = leerRegistrosUsuario().filter((r) => r.fecha !== fecha);
+  if (guardarRegistrosUsuario(lista)) {
+    recalcular();
+    mostrarMensaje("Registro eliminado.", "ok");
+  }
+}
+
+// Exporta TODOS los datos (históricos + registrados) a un archivo CSV.
+// Se usa punto y coma (;) y coma decimal para que Excel en español lo
+// abra correctamente en columnas.
+function exportarCSV() {
+  const v = (x) => (x == null ? "" : num(x).replace(/\./g, "")); // sin punto de miles
+  const lineas = ["fecha;oficial_bcb;paralelo_compra;paralelo_venta;origen"];
+  for (const f of estado.tabla) {
+    lineas.push([f.fecha].concat(CAMPOS.map((campo) => v(f[campo])), [f.origen]).join(";"));
+  }
+  // "﻿" (BOM) ayuda a Excel a reconocer tildes y eñes.
+  const blob = new Blob(["﻿" + lineas.join("\r\n")], { type: "text/csv;charset=utf-8" });
+  const enlace = document.createElement("a");
+  enlace.href = URL.createObjectURL(blob);
+  enlace.download = "leofx_tipo_cambio_" + fechaHoyLocal() + ".csv";
+  document.body.appendChild(enlace);
+  enlace.click();
+  enlace.remove();
+  setTimeout(() => URL.revokeObjectURL(enlace.href), 1000);
+  mostrarMensaje("Archivo CSV generado.", "ok");
+}
+
+// Lee un archivo CSV y guarda sus filas como registros del usuario.
+// Columnas: fecha; oficial; paralelo compra; paralelo venta
+//           (la columna "origen" se ignora).
+// Acepta separador ";" (Excel en español) o "," con punto decimal.
+function importarCSV(archivo) {
+  const lector = new FileReader();
+  lector.onload = () => {
+    const texto = String(lector.result).replace(/^﻿/, "");
+    const lineas = texto.split(/\r?\n/).filter((l) => l.trim() !== "");
+    const historicos = datosHistoricos();
+
+    let importadas = 0;
+    let omitidas = 0;
+    const lista = leerRegistrosUsuario();
+
+    for (const linea of lineas) {
+      const sep = linea.includes(";") ? ";" : ",";
+      const celdas = linea.split(sep).map((c) => c.trim().replace(/^"|"$/g, ""));
+      const fecha = leerFecha(celdas[0]);
+      if (!fecha) { omitidas++; continue; } // encabezado o línea inválida
+
+      // Con separador "," los números vienen con punto decimal.
+      // Un texto (como "Histórico") se lee como "sin dato".
+      const leer = (c) => {
+        if (c == null || c === "") return null;
+        const x = sep === "," ? Number(c) : leerNumero(c);
+        return valorRazonable(x) ? x : null;
+      };
+      const fila = { fecha: fecha };
+      CAMPOS.forEach((campo, i) => { fila[campo] = leer(celdas[i + 1]); });
+      if (CAMPOS.every((campo) => fila[campo] == null)) { omitidas++; continue; }
+
+      // Si el dato es idéntico al histórico, no hace falta guardarlo.
+      const h = historicos.get(fecha) || filaVacia(fecha);
+      const igual = (x, y) => x == null || (y != null && Math.abs(x - y) < 1e-9);
+      if (CAMPOS.every((campo) => igual(fila[campo], h[campo]))) continue;
+
+      let existente = lista.find((r) => r.fecha === fecha);
+      if (!existente) {
+        existente = filaVacia(fecha);
+        delete existente.origen;
+        lista.push(existente);
+      }
+      for (const campo of CAMPOS) {
+        if (fila[campo] != null) existente[campo] = fila[campo];
+      }
+      // Se conserva el origen indicado en el CSV (columna después de los valores).
+      existente.origen = celdas[CAMPOS.length + 1] === "Automático" ? "Automático" : "Manual";
+      importadas++;
+    }
+
+    if (guardarRegistrosUsuario(lista)) {
+      recalcular();
+      mostrarMensaje("Importación terminada: " + importadas + " fila(s) nuevas o modificadas" +
+        (omitidas > 1 ? ", " + (omitidas - 1) + " línea(s) omitidas" : "") + ".", "ok");
+    }
+  };
+  lector.onerror = () => mostrarMensaje("No se pudo leer el archivo.", "error");
+  lector.readAsText(archivo, "utf-8");
+}
+
+// Borra todos los registros del usuario (vuelve a los datos de fábrica).
+function borrarTodosRegistros() {
+  if (!confirm("¿Borrar TODOS sus registros guardados en este navegador? Se recomienda exportar un CSV antes. Los datos históricos no se borran.")) return;
+  if (guardarRegistrosUsuario([])) {
+    recalcular();
+    mostrarMensaje("Se borraron sus registros.", "ok");
+  }
+}
+
+
+/* =====================================================================
+   8. ACTUALIZACIÓN AUTOMÁTICA DESDE INTERNET
+   ---------------------------------------------------------------------
+   Al abrir la página (y cada 30 minutos mientras siga abierta) se
+   consultan las cotizaciones del día en DolarApi Bolivia, un servicio
+   público y gratuito que permite ser leído desde una página web.
+
+   Ejemplo real de su respuesta (15/10/2026):
+     [ { "casa": "oficial", "compra": 11.68, "venta": 11.68,
+         "fechaActualizacion": "2026-10-15T00:00:00.000Z" },
+       { "casa": "binance", "compra": 11.78, "venta": 11.80,
+         "fechaActualizacion": "2026-10-15T20:01:40.139Z" } ]
+
+   - "oficial": TCO del BCB (se comprobó que coincide con bcb.gob.bo).
+   - "binance": precio de referencia del mercado P2P en bolivianos; se
+     usa como dólar PARALELO (coincide con dolarboliviahoy.com, la fuente
+     de la serie histórica del paralelo).
+
+   Los valores descargados se guardan en el navegador como registros
+   "Automático", igual que los manuales, y las predicciones se recalculan.
+   Si no hay internet, la página funciona igual con los datos guardados.
+   ===================================================================== */
+const FUENTE_EN_LINEA = {
+  nombre: "DolarApi Bolivia (bo.dolarapi.com)",
+  url: "https://bo.dolarapi.com/v1/dolares",
+  esperaMaximaMs: 10000,           // si tarda más de 10 segundos, se cancela
+  repetirCadaMs: 30 * 60 * 1000    // volver a consultar cada 30 minutos
+};
+
+// ---- Datos de LeoFX publicados en internet (GitHub) ----------------------
+// La actualización diaria en GitHub guarda dos veces al día las noticias
+// y las cotizaciones en la carpeta "datos-en-linea". Al abrirse, TODAS las
+// copias de LeoFX.html (la del celular, las que se envían a otras
+// personas…) descargan esos archivos; si son más nuevos que los que trae
+// la copia, los usan. Así nadie tiene que volver a recibir el archivo.
+const DATOS_EN_LINEA = {
+  url: "https://raw.githubusercontent.com/mamaninogalesleonel-sudo/leofx/main/datos-en-linea/",
+  claveCache: "leofx_datos_en_linea_v1"   // copia guardada para usar sin internet
+};
+
+// Usa un paquete { noticias, cotizaciones } si es más nuevo que lo que ya hay.
+// Devuelve true si algo cambió. (Las fechas "AAAA-MM-DDTHH:MM" se pueden
+// comparar como texto: la mayor es la más reciente.)
+function aplicarDatosEnLinea(paquete) {
+  let cambio = false;
+  const n = paquete && paquete.noticias;
+  if (n && typeof n.actualizado === "string" && Array.isArray(n.noticias) &&
+      (!datosAutomaticos.fechaNoticias || n.actualizado > datosAutomaticos.fechaNoticias)) {
+    datosAutomaticos.noticias = n.noticias;
+    datosAutomaticos.fechaNoticias = n.actualizado;
+    cambio = true;
+  }
+  const c = paquete && paquete.cotizaciones;
+  if (c && typeof c.actualizado === "string" && Array.isArray(c.cotizaciones) &&
+      (!datosAutomaticos.fechaCotizaciones || c.actualizado > datosAutomaticos.fechaCotizaciones)) {
+    datosAutomaticos.cotizaciones = c.cotizaciones;
+    datosAutomaticos.fechaCotizaciones = c.actualizado;
+    cambio = true;
+  }
+  if (cambio) datosAutomaticos.desdeInternet = true;
+  return cambio;
+}
+
+// Descarga un archivo JSON de la carpeta datos-en-linea (máximo 10 s).
+async function descargarJSON(nombre) {
+  const control = new AbortController();
+  const reloj = setTimeout(() => control.abort(), 10000);
+  try {
+    // "?t=..." evita que el navegador muestre una versión vieja guardada.
+    const respuesta = await fetch(DATOS_EN_LINEA.url + nombre + "?t=" + Date.now(), { signal: control.signal, cache: "no-store" });
+    if (!respuesta.ok) throw new Error("error " + respuesta.status);
+    return await respuesta.json();
+  } finally {
+    clearTimeout(reloj);
+  }
+}
+
+// Al abrir la página (y cada 30 minutos): descargar noticias y cotizaciones.
+async function cargarDatosEnLinea() {
+  if (DATOS_EN_LINEA.url.includes("USUARIO")) return; // todavía no se publicó en GitHub
+  try {
+    const [noticias, cotizaciones] = await Promise.all([descargarJSON("noticias.json"), descargarJSON("cotizaciones.json")]);
+    const paquete = { noticias: noticias, cotizaciones: cotizaciones };
+    try { localStorage.setItem(DATOS_EN_LINEA.claveCache, JSON.stringify(paquete)); } catch (e) { /* sin espacio: no pasa nada */ }
+    if (aplicarDatosEnLinea(paquete)) recalcular();
+  } catch (e) {
+    // Sin internet o GitHub no responde: se sigue con lo que ya había.
+  }
+}
+
+// Sin internet: usar la última versión descargada en otra ocasión.
+function cargarDatosEnLineaGuardados() {
+  try {
+    const texto = localStorage.getItem(DATOS_EN_LINEA.claveCache);
+    if (texto) aplicarDatosEnLinea(JSON.parse(texto));
+  } catch (e) { /* copia dañada: se ignora */ }
+}
+
+// Bolivia está siempre en UTC−4 (no cambia de horario en el año).
+const DESFASE_BOLIVIA_MS = -4 * 3600 * 1000;
+
+// "2026-10-15T20:01:40Z" (hora universal) → "2026-10-15" (fecha en Bolivia).
+function fechaBolivia(marcaISO) {
+  return new Date(Date.parse(marcaISO) + DESFASE_BOLIVIA_MS).toISOString().slice(0, 10);
+}
+
+// "2026-10-15T20:01:40Z" (hora universal) → "16:01" (hora en Bolivia).
+function horaBolivia(marcaISO) {
+  return new Date(Date.parse(marcaISO) + DESFASE_BOLIVIA_MS).toISOString().slice(11, 16);
+}
+
+// Regla del BCB: los fines de semana se mantiene el valor del viernes.
+// Si entre el último oficial guardado y el nuevo solo hay sábados y
+// domingos, se completan esos días con el valor anterior, como en la
+// serie histórica. Si falta algún día hábil, NO se rellena nada (no se
+// inventan valores; puede completarse a mano).
+function rellenarFinDeSemanaOficial(fechaNueva) {
+  const anterior = estado.series.oficial.filter((p) => p.fecha < fechaNueva).pop();
+  if (!anterior) return;
+  const huecos = [];
+  for (let d = anterior.t + 1; d < fechaADia(fechaNueva); d++) huecos.push(d);
+  if (huecos.length && huecos.every(esFinDeSemana)) {
+    for (const d of huecos) guardarRegistro({ fecha: diaAFecha(d), oficial: anterior.y }, "Automático");
+  }
+}
+
+// Consulta internet y guarda los valores del día.
+// "async" significa que la función espera (await) la respuesta de
+// internet sin congelar la página mientras tanto.
+let actualizando = false;
+async function actualizarDesdeInternet() {
+  if (actualizando) return; // evita dos consultas al mismo tiempo
+  actualizando = true;
+  const caja = $("estadoActualizacion");
+  const boton = $("btnActualizar");
+  caja.className = "estado-actualizacion cargando";
+  caja.textContent = "Buscando las cotizaciones de hoy en internet…";
+  boton.disabled = true;
+
+  try {
+    // 1) Descargar los datos (con tiempo máximo de espera).
+    const control = new AbortController();
+    const reloj = setTimeout(() => control.abort(), FUENTE_EN_LINEA.esperaMaximaMs);
+    let datos;
+    try {
+      const respuesta = await fetch(FUENTE_EN_LINEA.url, { signal: control.signal, cache: "no-store" });
+      if (!respuesta.ok) throw new Error("el servicio respondió con error " + respuesta.status);
+      datos = await respuesta.json();
+    } finally {
+      clearTimeout(reloj);
+    }
+    if (!Array.isArray(datos)) throw new Error("el servicio respondió con un formato inesperado");
+
+    const partes = []; // textos para el mensaje de estado
+
+    // 2) Tipo de cambio oficial (BCB).
+    const oficial = datos.find((x) => x.casa === "oficial");
+    if (oficial && oficial.fechaActualizacion) {
+      const valor = Number(oficial.venta != null ? oficial.venta : oficial.compra);
+      if (valorRazonable(valor)) {
+        // El TCO viene con fecha "AAAA-MM-DDT00:00:00Z": se usa la fecha tal cual.
+        const fecha = String(oficial.fechaActualizacion).slice(0, 10);
+        rellenarFinDeSemanaOficial(fecha);
+        guardarRegistro({ fecha: fecha, oficial: valor }, "Automático");
+        partes.push("Oficial BCB del " + formatoFecha(fecha) + ": <strong>" + bs(valor) + "</strong>");
+      }
+    }
+
+    // 3) Dólar paralelo (referencia P2P).
+    const paralelo = datos.find((x) => x.casa === "binance");
+    if (paralelo && paralelo.fechaActualizacion && valorRazonable(paralelo.compra) && valorRazonable(paralelo.venta)) {
+      const fecha = fechaBolivia(paralelo.fechaActualizacion);
+      // En esta herramienta "compra" es lo que se PAGA por 1 USD (el valor
+      // mayor) y "venta" lo que se RECIBE (el menor), como en la serie histórica.
+      const compra = Math.max(paralelo.compra, paralelo.venta);
+      const venta = Math.min(paralelo.compra, paralelo.venta);
+      guardarRegistro({ fecha: fecha, compra: compra, venta: venta }, "Automático");
+      partes.push("Paralelo (" + formatoFecha(fecha) + ", " + horaBolivia(paralelo.fechaActualizacion) + "): compra <strong>" +
+        bs(compra) + "</strong>, venta " + bs(venta));
+    }
+
+    if (!partes.length) throw new Error("el servicio no trajo valores válidos");
+
+    // 4) Recalcular todo con los datos nuevos y avisar.
+    recalcular();
+    const ahora = new Date();
+    const hora = String(ahora.getHours()).padStart(2, "0") + ":" + String(ahora.getMinutes()).padStart(2, "0");
+    caja.className = "estado-actualizacion ok";
+    caja.innerHTML = "<strong>En vivo</strong> · actualizado a las " + hora + " · " + partes.join(" · ") +
+      ' <span class="fuente">Fuente: ' + FUENTE_EN_LINEA.nombre + "</span>";
+  } catch (error) {
+    // Mensaje entendible según el tipo de problema.
+    let motivo = error.message;
+    if (error.name === "AbortError") motivo = "el servicio tardó demasiado en responder";
+    else if (error instanceof TypeError) motivo = "no se pudo conectar; revise su conexión a internet";
+    caja.className = "estado-actualizacion error";
+    caja.textContent = "No se pudo actualizar desde internet (" + motivo + "). Se muestran los últimos datos guardados; " +
+      "puede intentar de nuevo o registrar el valor a mano.";
+  } finally {
+    actualizando = false;
+    boton.disabled = false;
+  }
+}
+
+
+/* =====================================================================
+   9. NOTICIAS E IMPACTO EN EL DÓLAR
+   ---------------------------------------------------------------------
+   Para cada noticia se mide cuánto se movió el dólar oficial alrededor
+   de su fecha (método de "estudio de eventos"):
+
+     antes   = último dato ANTERIOR al día de la noticia
+     después = último dato dentro de los 5 días SIGUIENTES
+     cambio  = (después − antes) / antes
+
+   Ese cambio se compara con un movimiento "normal": la mediana de todos
+   los cambios de 5 días de la serie. Si el cambio es 2,5 veces el normal
+   o más, se califica como "fuerte"; desde 1 vez, "moderado".
+
+   IMPORTANTE: que el dólar se mueva cerca de una noticia NO prueba que
+   la noticia lo haya causado (pudo haber otros factores). La barra
+   muestra coincidencia en el tiempo, no causa y efecto.
+   ===================================================================== */
+
+// Noticias que el usuario agregó (guardadas en el navegador).
+function leerNoticiasUsuario() {
+  try {
+    const texto = localStorage.getItem(CONFIG.noticias.claveAlmacen);
+    const lista = texto ? JSON.parse(texto) : [];
+    return Array.isArray(lista) ? lista : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function guardarNoticiasUsuario(lista) {
+  try {
+    localStorage.setItem(CONFIG.noticias.claveAlmacen, JSON.stringify(lista));
+    return true;
+  } catch (e) {
+    mostrarMensaje("No se pudo guardar la noticia en este navegador.", "error");
+    return false;
+  }
+}
+
+// Todas las noticias, la más reciente primero. Son de tres tipos:
+//   - clave:       las seleccionadas a mano en datos.js (con resumen).
+//   - automática:  las que trae buscar_noticias.ps1 de Google News
+//                  (archivo noticias_auto.js).
+//   - propia:      las que el usuario agregó con el formulario.
+// "typeof" evita errores si alguno de esos archivos no existe.
+function todasLasNoticias() {
+  const clave = typeof DATOS_NOTICIAS !== "undefined" ? DATOS_NOTICIAS : [];
+  const automaticas = datosAutomaticos.noticias;
+  return clave.map((n) => Object.assign({ tipo: "clave" }, n))
+    .concat(automaticas.map((n) => Object.assign({ tipo: "automatica" }, n)))
+    .concat(leerNoticiasUsuario().map((n) => Object.assign({ tipo: "propia" }, n)))
+    .sort((a, b) => (a.fecha < b.fecha ? 1 : -1));
+}
+
+// Filtro elegido en los botones de arriba de la lista.
+let filtroNoticias = "todas";
+
+// Último dato de la serie ANTES del día indicado (hasta "maxDias" atrás).
+function datoAntes(serie, dia, maxDias) {
+  let encontrado = null;
+  for (const p of serie) {
+    if (p.t < dia && p.t >= dia - maxDias) encontrado = p;
+  }
+  return encontrado;
+}
+
+// Último dato de la serie DESPUÉS del día indicado (hasta "dias" después).
+function datoDespues(serie, dia, dias) {
+  let encontrado = null;
+  for (const p of serie) {
+    if (p.t > dia && p.t <= dia + dias) encontrado = p;
+  }
+  return encontrado;
+}
+
+// Movimiento "normal" del dólar en N días: la mediana de los cambios
+// absolutos de N días en toda la serie. (La mediana es el valor del medio
+// al ordenarlos; no se deja llevar por unos pocos días extremos.)
+function movimientoNormal(serie, dias) {
+  const cambios = [];
+  for (const p of serie) {
+    const luego = datoDespues(serie, p.t, dias);
+    if (luego && luego.t >= p.t + dias - 1) cambios.push(Math.abs(luego.y - p.y) / p.y);
+  }
+  if (!cambios.length) return NaN;
+  cambios.sort((a, b) => a - b);
+  const medio = Math.floor(cambios.length / 2);
+  return cambios.length % 2 ? cambios[medio] : (cambios[medio - 1] + cambios[medio]) / 2;
+}
+
+// Mide el movimiento del dólar alrededor de una noticia.
+function medirImpacto(noticia, normal) {
+  const cfg = CONFIG.noticias;
+  const dia = fechaADia(noticia.fecha);
+  const oficial = estado.series.oficial;
+  const resultado = { estado: "sin-datos" };
+
+  // Paralelo (compra): solo como dato complementario.
+  const pAntes = datoAntes(estado.series.compra, dia, cfg.diasParalelo);
+  const pDespues = datoDespues(estado.series.compra, dia, cfg.diasParalelo);
+  if (pAntes && pDespues) {
+    resultado.paralelo = { antes: pAntes, despues: pDespues, cambio: (pDespues.y - pAntes.y) / pAntes.y };
+  }
+
+  let antes = datoAntes(oficial, dia, 7);
+  if (!antes && noticia.referenciaPrevia) {
+    antes = { fecha: noticia.fecha, y: noticia.referenciaPrevia.valor, nota: noticia.referenciaPrevia.descripcion };
+  }
+  if (!antes || !oficial.length) return resultado;
+
+  // ¿Ya pasaron los días necesarios para medir?
+  if (oficial[oficial.length - 1].t < dia + cfg.diasDespues) {
+    resultado.estado = "pendiente";
+    resultado.desde = diaAFecha(dia + cfg.diasDespues);
+    return resultado;
+  }
+  const despues = datoDespues(oficial, dia, cfg.diasDespues);
+  if (!despues) return resultado;
+
+  const cambio = (despues.y - antes.y) / antes.y;
+  const veces = Math.abs(cambio) / (normal > 0 ? normal : 0.001);
+  resultado.estado = "medido";
+  resultado.antes = antes;
+  resultado.despues = despues;
+  resultado.cambio = cambio;
+  resultado.veces = veces;
+  resultado.nivel = veces >= cfg.fuerte ? "fuerte" : veces >= cfg.moderado ? "moderado" : "normal";
+  return resultado;
+}
+
+// HTML de una noticia con su barra de impacto.
+function htmlNoticia(n, impacto) {
+  const enlaceValido = /^https?:\/\//i.test(n.enlace || "");
+  const titulo = enlaceValido
+    ? '<a href="' + escaparHTML(n.enlace) + '" target="_blank" rel="noopener noreferrer">' + escaparHTML(n.titular) + "</a>"
+    : escaparHTML(n.titular);
+
+  let bloque;
+  if (impacto.estado === "medido") {
+    const sube = impacto.cambio > 0;
+    const nombres = { fuerte: "Fuerte", moderado: "Moderado", normal: "Normal" };
+    const ancho = Math.max(4, Math.min(impacto.veces / 5, 1) * 100);
+    bloque =
+      '<div class="impacto-cabecera"><span>Movimiento del dólar oficial</span>' +
+        '<span class="nivel-impacto ' + impacto.nivel + '">' + nombres[impacto.nivel] + "</span></div>" +
+      '<div class="barra-impacto" role="img" aria-label="Movimiento ' + nombres[impacto.nivel] + '">' +
+        '<div class="relleno-impacto ' + (sube ? "sube" : "baja") + " " + impacto.nivel + '" style="width:' + ancho.toFixed(0) + '%"></div></div>' +
+      '<div class="impacto-detalle"><span class="' + (sube ? "sube" : "baja") + '">' + (sube ? "▲" : "▼") + " " + pctConSigno(impacto.cambio) + "</span> · " +
+        bs(impacto.antes.y) + " (" + (impacto.antes.nota ? impacto.antes.nota : formatoFecha(impacto.antes.fecha)) + ") → " +
+        bs(impacto.despues.y) + " (" + formatoFecha(impacto.despues.fecha) + ") · " +
+        num(impacto.veces) + " veces un movimiento normal</div>";
+  } else if (impacto.estado === "pendiente") {
+    bloque = '<div class="impacto-detalle pendiente">Todavía no pasaron ' + CONFIG.noticias.diasDespues +
+      " días desde la noticia: el movimiento se podrá medir desde el " + formatoFecha(impacto.desde) + ".</div>";
+  } else {
+    bloque = '<div class="impacto-detalle pendiente">No hay datos del dólar oficial alrededor de esta fecha para medir el movimiento.</div>';
+  }
+  if (impacto.paralelo) {
+    const pc = impacto.paralelo;
+    bloque += '<div class="impacto-paralelo">Paralelo (compra): ' + bs(pc.antes.y) + " (" + formatoFecha(pc.antes.fecha) + ") → " +
+      bs(pc.despues.y) + " (" + formatoFecha(pc.despues.fecha) + "): " + pctConSigno(pc.cambio) + "</div>";
+  }
+
+  // Etiqueta según el tipo de noticia.
+  const etiquetas = {
+    clave: '<span class="noticia-tipo clave">Clave</span>',
+    automatica: '<span class="noticia-tipo automatica">Automática</span>',
+    propia: '<span class="noticia-tipo propia">Agregada por usted</span>'
+  };
+
+  return '<article class="noticia">' +
+    '<div class="noticia-meta"><span class="noticia-fecha">' + formatoFecha(n.fecha) + "</span>" +
+      (n.fuente ? '<span class="noticia-fuente">' + escaparHTML(n.fuente) + "</span>" : "") +
+      (etiquetas[n.tipo] || "") + "</div>" +
+    '<h3 class="noticia-titulo">' + titulo + "</h3>" +
+    (n.resumen ? '<p class="noticia-resumen">' + escaparHTML(n.resumen) + "</p>" : "") +
+    '<div class="impacto">' + bloque + "</div>" +
+    (n.tipo === "propia" ? '<button type="button" class="boton-link" data-borrar-noticia="' + escaparHTML(n.id) + '">Eliminar noticia</button>' : "") +
+    "</article>";
+}
+
+function dibujarNoticias() {
+  const lista = $("listaNoticias");
+  if (!lista) return;
+  const normal = movimientoNormal(estado.series.oficial, CONFIG.noticias.diasDespues);
+  $("textoNormal").textContent = isFinite(normal) ? pct(normal) : "—";
+
+  // Estado de la búsqueda automática (fecha de la última búsqueda).
+  const todas = todasLasNoticias();
+  const cuantasAuto = todas.filter((n) => n.tipo === "automatica").length;
+  const fechaAuto = datosAutomaticos.fechaNoticias;
+  $("estadoNoticias").innerHTML = fechaAuto
+    ? "Búsqueda automática en Google News: última actualización el <strong>" + formatoFecha(fechaAuto.slice(0, 10)) +
+      " a las " + fechaAuto.slice(11, 16) + "</strong> · " + cuantasAuto + " noticias automáticas" +
+      (datosAutomaticos.desdeInternet ? " (descargadas de internet)." : ".")
+    : "La búsqueda automática todavía no se ejecutó.";
+
+  // Resaltar el botón del filtro activo.
+  document.querySelectorAll(".filtro-noticias button").forEach((b) => {
+    b.classList.toggle("activo", b.dataset.filtro === filtroNoticias);
+  });
+
+  const visibles = filtroNoticias === "todas" ? todas : todas.filter((n) => n.tipo === filtroNoticias);
+  lista.innerHTML = visibles.length
+    ? visibles.map((n) => htmlNoticia(n, medirImpacto(n, normal))).join("")
+    : '<p class="nota">No hay noticias de este tipo todavía.</p>';
+}
+
+// Se ejecuta al pulsar "Agregar noticia".
+function alAgregarNoticia(evento) {
+  evento.preventDefault();
+  const fecha = leerFecha($("notFecha").value);
+  const titular = $("notTitular").value.trim();
+  const enlace = $("notEnlace").value.trim();
+  if (!fecha) return mostrarMensaje("Ingrese la fecha de la noticia.", "error");
+  if (!titular) return mostrarMensaje("Escriba el titular de la noticia.", "error");
+  if (enlace && !/^https?:\/\//i.test(enlace)) return mostrarMensaje("El enlace debe empezar con http:// o https://", "error");
+
+  const lista = leerNoticiasUsuario();
+  lista.push({
+    id: Date.now().toString(36),   // identificador para poder eliminarla
+    fecha: fecha,
+    titular: titular.slice(0, 200),
+    fuente: $("notFuente").value.trim().slice(0, 80),
+    enlace: enlace,
+    resumen: $("notResumen").value.trim().slice(0, 500)
+  });
+  if (guardarNoticiasUsuario(lista)) {
+    ["notTitular", "notFuente", "notEnlace", "notResumen"].forEach((id) => { $(id).value = ""; });
+    dibujarNoticias();
+    dibujarGrafico();
+    mostrarMensaje("Noticia agregada. Su impacto se calcula automáticamente.", "ok");
+  }
+}
+
+function borrarNoticia(id) {
+  if (!confirm("¿Eliminar esta noticia?")) return;
+  if (guardarNoticiasUsuario(leerNoticiasUsuario().filter((n) => n.id !== id))) {
+    dibujarNoticias();
+    dibujarGrafico();
+    mostrarMensaje("Noticia eliminada.", "ok");
+  }
+}
+
+
+/* =====================================================================
+   10. NAVEGACIÓN: MENÚ LATERAL Y APARTADOS
+   ---------------------------------------------------------------------
+   La página muestra UN apartado a la vez (cotización, calculadora,
+   registro o metodología), como si cada uno fuera su propia página.
+
+   Cuál se ve depende del final de la dirección de la página:
+     ...LeoFX.html#metodologia  → se muestra el apartado "metodologia".
+   Por eso también funcionan los botones Atrás/Adelante del navegador.
+
+   Las opciones del menú se leen solas del HTML (class="opcion-menu") y
+   los apartados también (class="apartado"). Para agregar una opción
+   nueva NO hace falta cambiar este código (ver el comentario en
+   index.html, junto al menú lateral).
+   ===================================================================== */
+
+// Apartado que se muestra al abrir la página (o si la dirección no es válida).
+const APARTADO_INICIO = "cotizacion";
+
+// Abre el panel lateral.
+function abrirMenu() {
+  const panel = $("panelMenu");
+  panel.classList.add("abierto");          // el CSS lo desliza hacia adentro
+  panel.inert = false;                     // ya se puede usar con el teclado
+  panel.setAttribute("aria-hidden", "false");
+  $("fondoMenu").classList.add("visible"); // fondo oscuro detrás
+  $("btnMenu").setAttribute("aria-expanded", "true");
+  document.body.classList.add("menu-abierto"); // la página de fondo no se mueve
+  // Poner el foco del teclado en la opción activa (ayuda a la accesibilidad).
+  const activa = panel.querySelector(".opcion-menu.activa") || panel.querySelector(".opcion-menu");
+  if (activa) activa.focus({ preventScroll: true });
+}
+
+// Cierra el panel lateral. Si devolverFoco es true, el foco del teclado
+// vuelve al botón ☰ (cuando se cierra con la X, Escape o clic afuera).
+function cerrarMenu(devolverFoco) {
+  const panel = $("panelMenu");
+  if (!panel.classList.contains("abierto")) return; // ya estaba cerrado
+  panel.classList.remove("abierto");
+  panel.inert = true;
+  panel.setAttribute("aria-hidden", "true");
+  $("fondoMenu").classList.remove("visible");
+  $("btnMenu").setAttribute("aria-expanded", "false");
+  document.body.classList.remove("menu-abierto");
+  if (devolverFoco) $("btnMenu").focus({ preventScroll: true });
+}
+
+// Muestra solo el apartado pedido, oculta los demás y resalta su opción
+// en el menú.
+function mostrarApartado(id) {
+  const destino = document.getElementById(id);
+  if (!destino || !destino.classList.contains("apartado")) id = APARTADO_INICIO;
+
+  // 1) Mostrar uno, ocultar los demás.
+  document.querySelectorAll(".apartado").forEach((seccion) => {
+    seccion.hidden = seccion.id !== id;
+  });
+
+  // 2) Resaltar la opción activa y escribir su nombre en la barra.
+  document.querySelectorAll(".opcion-menu").forEach((opcion) => {
+    const activa = opcion.dataset.apartado === id;
+    opcion.classList.toggle("activa", activa);
+    if (activa) {
+      opcion.setAttribute("aria-current", "page");
+      const nombre = opcion.querySelector(".texto-opcion").textContent;
+      $("tituloApartado").textContent = nombre;
+      document.title = nombre + " · LeoFX";
+    } else {
+      opcion.removeAttribute("aria-current");
+    }
+  });
+
+  // 3) Empezar el apartado desde arriba, como una página nueva.
+  window.scrollTo({ top: 0, behavior: "instant" });
+
+  // 4) Si el gráfico se dibujó mientras su apartado estaba oculto, se
+  //    reajusta a su tamaño real ahora que se ve.
+  if (id === "cotizacion" && estado.grafico) estado.grafico.resize();
+}
+
+
+/* =====================================================================
+   11. ARRANQUE
+   "DOMContentLoaded" significa: cuando la página terminó de cargarse.
+   Aquí se conectan los botones con sus funciones (addEventListener).
+   ===================================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+  // Menú lateral: abrir con ☰; cerrar con la X, con un clic en el fondo
+  // oscuro (fuera del panel) o con la tecla Escape.
+  $("btnMenu").addEventListener("click", abrirMenu);
+  $("btnCerrarMenu").addEventListener("click", () => cerrarMenu(true));
+  $("fondoMenu").addEventListener("click", () => cerrarMenu(true));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") cerrarMenu(true);
+  });
+  // Al elegir una opción, el menú se cierra solo. El enlace cambia el
+  // final de la dirección (#...) y eso muestra el apartado (ver abajo).
+  document.querySelectorAll(".opcion-menu").forEach((opcion) => {
+    opcion.addEventListener("click", () => cerrarMenu(false));
+  });
+  // Cada vez que cambia el #... de la dirección, se muestra ese apartado.
+  window.addEventListener("hashchange", () => mostrarApartado(location.hash.slice(1)));
+  // Al abrir la página: el apartado de la dirección, o el de inicio.
+  mostrarApartado(location.hash.slice(1));
+
+  // Pestañas Oficial / Paralelo.
+  document.querySelectorAll(".pestana").forEach((boton) => {
+    boton.addEventListener("click", () => {
+      estado.mercado = boton.dataset.mercado;
+      // La calculadora sigue a la pestaña elegida (el usuario puede cambiarla).
+      $("mercadoCalc").value = MERCADOS[estado.mercado].series[0];
+      dibujarTodo();
+    });
+  });
+
+  // Opciones del gráfico.
+  $("chkComparar").addEventListener("change", (e) => { estado.comparar = e.target.checked; dibujarGrafico(); });
+  $("chkPrediccion").addEventListener("change", (e) => { estado.mostrarPrediccion = e.target.checked; dibujarGrafico(); });
+  $("ladoSerie").addEventListener("change", (e) => { estado.lado = e.target.value; dibujarTodo(); });
+
+  // Calculadora.
+  $("formCalculadora").addEventListener("submit", (e) => { e.preventDefault(); calcular(); });
+  $("mercadoCalc").addEventListener("change", () => { if (calculadoraUsada) calcular(); });
+
+  // Registro de cotizaciones.
+  $("regFecha").value = fechaHoyLocal();
+  $("formRegistro").addEventListener("submit", alEnviarRegistro);
+  $("cuerpoRegistros").addEventListener("click", (e) => {
+    const fecha = e.target.dataset && e.target.dataset.borrar;
+    if (fecha) borrarRegistro(fecha);
+  });
+  $("btnExportar").addEventListener("click", exportarCSV);
+  $("btnImportar").addEventListener("click", () => $("archivoCSV").click());
+  $("archivoCSV").addEventListener("change", (e) => {
+    if (e.target.files.length) importarCSV(e.target.files[0]);
+    e.target.value = ""; // permite volver a elegir el mismo archivo
+  });
+  $("btnBorrarTodo").addEventListener("click", borrarTodosRegistros);
+
+  // Noticias: agregar y eliminar.
+  $("formNoticia").addEventListener("submit", alAgregarNoticia);
+  $("notFecha").value = fechaHoyLocal();
+  $("listaNoticias").addEventListener("click", (e) => {
+    const id = e.target.dataset && e.target.dataset.borrarNoticia;
+    if (id) borrarNoticia(id);
+  });
+  // Botones de filtro: Todas / Clave / Automáticas / Mías.
+  document.querySelectorAll(".filtro-noticias button").forEach((boton) => {
+    boton.addEventListener("click", () => {
+      filtroNoticias = boton.dataset.filtro;
+      dibujarNoticias();
+    });
+  });
+
+  // Botón "Actualizar ahora".
+  $("btnActualizar").addEventListener("click", actualizarDesdeInternet);
+
+  // Primer cálculo con los datos guardados (se ve al instante)...
+  cargarDatosEnLineaGuardados();
+  recalcular();
+  // ...y enseguida se buscan en internet las cotizaciones de hoy y las
+  // noticias y cotizaciones publicadas en GitHub.
+  actualizarDesdeInternet();
+  cargarDatosEnLinea();
+  // Mientras la página siga abierta, se vuelve a consultar cada 30 minutos.
+  setInterval(() => {
+    actualizarDesdeInternet();
+    cargarDatosEnLinea();
+  }, FUENTE_EN_LINEA.repetirCadaMs);
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<!--
+  =====================================================================
+  LeoFX — index.html
+  ---------------------------------------------------------------------
+  Este archivo es el "esqueleto" de la página: define qué secciones,
+  textos, botones y formularios existen. No calcula nada.
+    - El diseño (colores, tamaños) está en styles.css
+    - Los datos históricos están en datos.js
+    - Los cálculos y predicciones están en app.js
+  Los elementos con id="..." son los que app.js busca para escribir
+  resultados dentro de ellos.
+  =====================================================================
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <!-- Hace que la página se adapte bien a celulares -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LeoFX — Predicción del dólar en Bolivia</title>
+  <meta name="description" content="Herramienta de apoyo para decidir cuándo comprar dólares en Bolivia: tipo de cambio oficial (BCB) y paralelo, con predicciones a 1, 7 y 30 días.">
+  <!-- Color verde de la barra del navegador en celulares -->
+  <meta name="theme-color" content="#14532d">
+  <!-- Ícono de la pestaña: el logo dibujado en SVG, escrito dentro del mismo
+       archivo (así no depende de ninguna imagen aparte) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%23166534'/%3E%3Cpolyline points='11,33 19,25 25,29 37,15' fill='none' stroke='%2386efac' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpolyline points='30,15 37,15 37,22' fill='none' stroke='%2386efac' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+  <!-- Letra "Inter" de Google Fonts (necesita internet; sin internet se
+       usa la letra del sistema y todo sigue funcionando) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+
+  <!-- Hoja de estilos (diseño) -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Chart.js: librería gratuita para dibujar gráficos (necesita internet) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+
+<body>
+
+  <!-- ============ ENCABEZADO ============ -->
+  <header class="encabezado">
+    <div class="contenedor">
+      <!-- Logo + nombre. El logo es un dibujo SVG (una línea de tendencia con
+           flecha) escrito aquí mismo, sin archivos de imagen aparte.
+           "FX" es la sigla de foreign exchange (mercado de divisas). -->
+      <div class="marca">
+        <svg class="logo" viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="2" y="2" width="44" height="44" rx="12" fill="#ffffff" fill-opacity="0.12" stroke="#86efac" stroke-width="2"/>
+          <polyline points="11,33 19,25 25,29 37,15" fill="none" stroke="#86efac" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="30,15 37,15 37,22" fill="none" stroke="#86efac" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1>Leo<span class="marca-fx">FX</span></h1>
+      </div>
+      <p class="subtitulo">Predicción del tipo de cambio del dólar en Bolivia — apoyo a la decisión de compra para empresas importadoras</p>
+    </div>
+  </header>
+
+  <!-- Aviso obligatorio, siempre visible arriba -->
+  <div class="aviso-principal" role="note">
+    <div class="contenedor">
+      <strong>Aviso:</strong> Herramienta de apoyo a la toma de decisiones. Las predicciones son estimaciones y no garantizan valores futuros.
+    </div>
+  </div>
+
+  <!-- ============ BARRA DE NAVEGACIÓN ============
+       Se queda fija arriba al bajar por la página. A la izquierda, el botón
+       ☰ que abre el menú lateral; al lado, el nombre del apartado que se
+       está viendo (lo escribe app.js). -->
+  <div class="barra-navegacion">
+    <div class="contenedor">
+      <button type="button" id="btnMenu" class="boton-menu" aria-label="Abrir el menú" aria-controls="panelMenu" aria-expanded="false">
+        <span class="icono-hamburguesa" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="texto-boton-menu">Menú</span>
+      </button>
+      <span class="separador-nav" aria-hidden="true"></span>
+      <span id="tituloApartado" class="titulo-apartado">Cotización y predicción</span>
+    </div>
+  </div>
+
+  <!-- ============ MENÚ LATERAL (panel que se desliza desde la izquierda) ============
+       Para AGREGAR una opción al menú:
+         1) Copie una línea <a class="opcion-menu" ...> de abajo.
+         2) Cambie href="#..." y data-apartado="..." por el id del nuevo
+            apartado, y el texto del <span class="texto-opcion">.
+         3) Cree en <main> una <section class="seccion apartado" id="..."> con
+            ese mismo id.
+       No hace falta tocar app.js: el menú encuentra solo las opciones nuevas. -->
+  <div id="fondoMenu" class="fondo-menu" aria-hidden="true"></div>
+  <aside id="panelMenu" class="panel-menu" aria-label="Menú de apartados" aria-hidden="true" inert>
+    <div class="panel-cabecera">
+      <div class="panel-marca">
+        <svg class="logo-chico" viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="2" y="2" width="44" height="44" rx="12" fill="#ffffff" fill-opacity="0.12" stroke="#86efac" stroke-width="2"/>
+          <polyline points="11,33 19,25 25,29 37,15" fill="none" stroke="#86efac" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="30,15 37,15 37,22" fill="none" stroke="#86efac" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Leo<span class="marca-fx">FX</span></span>
+      </div>
+      <button type="button" id="btnCerrarMenu" class="boton-cerrar" aria-label="Cerrar el menú">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <nav class="panel-opciones" aria-label="Apartados">
+      <a class="opcion-menu" href="#cotizacion" data-apartado="cotizacion">
+        <svg class="icono-opcion" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 6-6"/></svg>
+        <span class="texto-opcion">Cotización y predicción</span>
+      </a>
+      <a class="opcion-menu" href="#calculadora" data-apartado="calculadora">
+        <svg class="icono-opcion" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></svg>
+        <span class="texto-opcion">¿Compro hoy o espero?</span>
+      </a>
+      <a class="opcion-menu" href="#noticias" data-apartado="noticias">
+        <svg class="icono-opcion" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h13v16H6a2 2 0 01-2-2z"/><path d="M17 8h3v10a2 2 0 01-2 2h-1"/><path d="M8 8h5M8 12h5M8 16h3"/></svg>
+        <span class="texto-opcion">Noticias e impacto</span>
+      </a>
+      <a class="opcion-menu" href="#registro" data-apartado="registro">
+        <svg class="icono-opcion" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>
+        <span class="texto-opcion">Registrar cotizaciones</span>
+      </a>
+      <a class="opcion-menu" href="#metodologia" data-apartado="metodologia">
+        <svg class="icono-opcion" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 016.5 17H20V3H6.5A2.5 2.5 0 004 5.5z"/><path d="M4 19.5A2.5 2.5 0 006.5 22H20v-5"/></svg>
+        <span class="texto-opcion">Metodología</span>
+      </a>
+    </nav>
+
+    <p class="panel-pie">Herramienta de apoyo a la toma de decisiones. Las predicciones son estimaciones y no garantizan valores futuros.</p>
+  </aside>
+
+  <main class="contenedor">
+
+    <!-- ============ 1. COTIZACIÓN, GRÁFICO Y PREDICCIONES ============ -->
+    <!-- Cada <section class="apartado"> se muestra por separado, como una
+         página propia. El que tiene "hidden" empieza oculto; app.js decide
+         cuál mostrar según la opción elegida en el menú. -->
+    <section id="cotizacion" class="seccion apartado">
+
+      <!-- Estado de la actualización automática desde internet (lo escribe app.js) -->
+      <div class="barra-actualizacion">
+        <p id="estadoActualizacion" class="estado-actualizacion">Buscando las cotizaciones de hoy…</p>
+        <button type="button" id="btnActualizar" class="boton secundario chico">Actualizar ahora</button>
+      </div>
+
+      <!-- Pestañas: app.js cambia "estado.mercado" al hacer clic -->
+      <div class="pestanas" role="tablist" aria-label="Mercado">
+        <button type="button" class="pestana activa" role="tab" data-mercado="oficial" aria-selected="true">Oficial (BCB)</button>
+        <button type="button" class="pestana" role="tab" data-mercado="paralelo" aria-selected="false">Paralelo</button>
+      </div>
+
+      <!-- Breve explicación del mercado elegido (la escribe app.js) -->
+      <p id="descripcionMercado" class="descripcion-mercado"></p>
+
+      <!-- Aviso si los datos no están al día (lo muestra app.js) -->
+      <p id="avisoDesactualizado" class="aviso-dato" hidden></p>
+
+      <!-- Tarjeta(s) con la cotización de hoy -->
+      <div id="tarjetaHoy" class="grid-hoy"></div>
+
+      <!-- Gráfico histórico -->
+      <div class="tarjeta">
+        <h2 id="tituloGrafico">Evolución del tipo de cambio</h2>
+        <div class="controles">
+          <label class="check"><input type="checkbox" id="chkPrediccion" checked> Mostrar predicción (30 días)</label>
+          <label class="check"><input type="checkbox" id="chkComparar"> Comparar oficial y paralelo</label>
+          <label id="grupoLado" class="selector" hidden>
+            Predecir:
+            <select id="ladoSerie">
+              <option value="compra">Precio de compra</option>
+              <option value="venta">Precio de venta</option>
+            </select>
+          </label>
+        </div>
+        <div class="caja-grafico">
+          <canvas id="grafico" aria-label="Gráfico del tipo de cambio" role="img"></canvas>
+          <p id="avisoGrafico" class="aviso-dato" hidden>No se pudo cargar la librería de gráficos (Chart.js). Verifique su conexión a internet y recargue la página. El resto de la herramienta funciona igual.</p>
+        </div>
+        <p class="nota">En el paralelo, los puntos son los días con dato real; la línea que los une es solo una ayuda visual. La línea punteada es la predicción y la zona sombreada su rango.</p>
+      </div>
+
+      <!-- Predicciones a 1, 7 y 30 días -->
+      <div class="tarjeta">
+        <h2>Predicción a 1, 7 y 30 días</h2>
+        <!-- Resumen en palabras de lo que se espera (lo escribe app.js) -->
+        <p id="resumenTendencia" class="resumen-tendencia" hidden></p>
+        <div id="predicciones" class="grid-3"></div>
+        <p id="metodoElegido" class="nota"></p>
+
+        <!-- Lo que predice cada método, para comparar tendencias -->
+        <h3>¿Qué predice cada método?</h3>
+        <p class="nota">Cada método ve el futuro de forma distinta: unos siguen la tendencia reciente (▲ sube, ▼ baja) y otros no. En cada plazo se usa el que menos se equivocó en el pasado (marcado como <strong>Usado</strong>).</p>
+        <div class="tabla-scroll">
+          <table id="tablaMetodos" class="tabla"></table>
+        </div>
+      </div>
+
+      <!-- Tabla de comparación de métodos (backtest) -->
+      <div class="tarjeta">
+        <h2>Comparación de métodos (backtest)</h2>
+        <p class="nota">Cada método se probó "prediciendo el pasado" y se midió su error con el MAPE (error porcentual absoluto medio). <strong>Menor MAPE = mejor.</strong> Para cada plazo se elige automáticamente el método de menor MAPE.</p>
+        <div class="tabla-scroll">
+          <table id="tablaBacktest" class="tabla"></table>
+        </div>
+        <p id="notaBacktest" class="nota"></p>
+      </div>
+    </section>
+
+    <!-- ============ 2. CALCULADORA ============ -->
+    <section id="calculadora" class="seccion apartado" hidden>
+      <div class="tarjeta">
+        <h2>¿Compro hoy o espero?</h2>
+        <p class="nota">Ingrese cuántos dólares necesita su empresa (para importaciones, proveedores, alquileres, etc.) y en qué mercado los compraría.</p>
+        <form id="formCalculadora" class="formulario">
+          <label>
+            Monto que necesita (USD)
+            <input type="text" id="montoUSD" inputmode="decimal" placeholder="Ej.: 10.000" autocomplete="off">
+          </label>
+          <label>
+            Mercado
+            <select id="mercadoCalc">
+              <option value="oficial">Oficial (BCB)</option>
+              <option value="compra">Paralelo (precio de compra)</option>
+            </select>
+          </label>
+          <button type="submit" class="boton">Calcular</button>
+        </form>
+        <div id="resultadoCalc" class="resultado"></div>
+      </div>
+    </section>
+
+    <!-- ============ NOTICIAS E IMPACTO EN EL DÓLAR ============ -->
+    <section id="noticias" class="seccion apartado" hidden>
+      <div class="tarjeta">
+        <h2>Noticias e impacto en el dólar</h2>
+        <p class="nota">Noticias económicas clave y cuánto se movió el dólar oficial en los <strong>5 días siguientes</strong> a cada una, comparado con un movimiento normal de 5 días (hoy: <strong id="textoNormal">—</strong>). Las fechas de las noticias también aparecen como rombos amarillos en el gráfico de “Cotización y predicción”.</p>
+
+        <!-- Leyenda de los niveles de la barra -->
+        <div class="leyenda-impacto">
+          <span><i class="punto normal"></i> Normal: menos de 1 vez el movimiento habitual</span>
+          <span><i class="punto moderado"></i> Moderado: de 1 a 2,5 veces</span>
+          <span><i class="punto fuerte"></i> Fuerte: 2,5 veces o más</span>
+          <span><i class="punto sube"></i> rojo = el dólar subió · <i class="punto baja"></i> verde = bajó</span>
+        </div>
+
+        <p class="aviso-dato">Importante: que el dólar se mueva cerca de una noticia <strong>no prueba</strong> que la noticia lo haya causado; en esos días pudieron influir otros hechos. La barra muestra coincidencia en el tiempo.</p>
+
+        <!-- Fecha de la última búsqueda automática (la escribe app.js) -->
+        <p id="estadoNoticias" class="estado-noticias"></p>
+
+        <!-- Filtros: qué tipo de noticias mostrar -->
+        <div class="filtro-noticias" role="group" aria-label="Filtrar noticias">
+          <button type="button" data-filtro="todas" class="activo">Todas</button>
+          <button type="button" data-filtro="clave">Clave</button>
+          <button type="button" data-filtro="automatica">Automáticas</button>
+          <button type="button" data-filtro="propia">Mías</button>
+        </div>
+
+        <!-- Lista de noticias (la escribe app.js) -->
+        <div id="listaNoticias" class="lista-noticias"></div>
+      </div>
+
+      <div class="tarjeta">
+        <h2>Agregar una noticia</h2>
+        <p class="nota">Las noticias automáticas llegan solas de Google News (si activó la búsqueda diaria). Use este formulario para hechos que la búsqueda no encuentre —en Bolivia o en el mundo: decisiones del BCB, del Gobierno, del FMI, precios del petróleo, tasas de interés de EE. UU.—. Su impacto se calcula automáticamente.</p>
+        <form id="formNoticia" class="formulario formulario-noticia">
+          <label>
+            Fecha
+            <input type="date" id="notFecha" required>
+          </label>
+          <label class="ancho-doble">
+            Titular
+            <input type="text" id="notTitular" maxlength="200" placeholder="Ej.: El BCB anuncia nueva medida cambiaria" autocomplete="off">
+          </label>
+          <label>
+            Fuente
+            <input type="text" id="notFuente" maxlength="80" placeholder="Ej.: El Deber" autocomplete="off">
+          </label>
+          <label class="ancho-doble">
+            Enlace (opcional)
+            <input type="text" id="notEnlace" placeholder="https://..." autocomplete="off">
+          </label>
+          <label class="ancho-completo">
+            Resumen (opcional)
+            <textarea id="notResumen" rows="2" maxlength="500" placeholder="En pocas palabras, qué pasó"></textarea>
+          </label>
+          <button type="submit" class="boton">Agregar noticia</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============ 3. REGISTRO DE COTIZACIONES ============ -->
+    <section id="registro" class="seccion apartado" hidden>
+      <div class="tarjeta">
+        <h2>Registrar cotizaciones</h2>
+        <p class="nota">Cada vez que abre la herramienta con internet, las cotizaciones del día se descargan y guardan solas (aparecen abajo como “Automático”). Use este formulario solo para corregir un valor o completar un día que falte. Escriba con coma decimal (11,70). Los datos se guardan en este navegador y las predicciones se recalculan al instante.</p>
+        <form id="formRegistro" class="formulario">
+          <label>
+            Fecha
+            <input type="date" id="regFecha" required>
+          </label>
+          <label>
+            Oficial BCB (Bs)
+            <input type="text" id="regOficial" inputmode="decimal" placeholder="Ej.: 11,70" autocomplete="off">
+          </label>
+          <label>
+            Paralelo compra (Bs)
+            <input type="text" id="regCompra" inputmode="decimal" placeholder="Ej.: 11,85" autocomplete="off">
+          </label>
+          <label>
+            Paralelo venta (Bs)
+            <input type="text" id="regVenta" inputmode="decimal" placeholder="Ej.: 11,83" autocomplete="off">
+          </label>
+          <button type="submit" class="boton">Guardar cotización</button>
+        </form>
+
+        <div class="barra-botones">
+          <button type="button" id="btnExportar" class="boton secundario">Exportar CSV</button>
+          <button type="button" id="btnImportar" class="boton secundario">Importar CSV</button>
+          <button type="button" id="btnBorrarTodo" class="boton peligro">Borrar mis registros</button>
+          <!-- Selector de archivo oculto; se abre con el botón "Importar CSV" -->
+          <input type="file" id="archivoCSV" accept=".csv,text/csv" hidden>
+        </div>
+        <p id="resumenDatos" class="nota"></p>
+
+        <h3>Datos nuevos guardados (automáticos y manuales)</h3>
+        <div class="tabla-scroll">
+          <table class="tabla">
+            <thead>
+              <tr><th>Fecha</th><th>Oficial</th><th>Paralelo compra</th><th>Paralelo venta</th><th>Origen</th><th></th></tr>
+            </thead>
+            <tbody id="cuerpoRegistros"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4. METODOLOGÍA ============ -->
+    <section id="metodologia" class="seccion apartado" hidden>
+      <div class="tarjeta texto">
+        <h2>Metodología</h2>
+
+        <h3>Contexto</h3>
+        <p>Desde el 29 de junio de 2026 Bolivia aplica un régimen de tipo de cambio flexible; ya no rige el tipo fijo de Bs 6,96. El Banco Central de Bolivia (BCB) publica cada día hábil a las 20:00 el <strong>Tipo de Cambio Oficial (TCO)</strong>, calculado con las operaciones de compra de dólares de los bancos; los fines de semana se mantiene el valor del viernes. Paralelamente existe el <strong>dólar paralelo</strong> (mercado informal / plataformas P2P), con precio de compra y de venta.</p>
+
+        <h3>Fuentes de datos</h3>
+        <ul>
+          <li><strong>Oficial:</strong> TCO publicado por el BCB (<em>bcb.gob.bo</em>), dato diario desde el 27/06/2026.</li>
+          <li><strong>Paralelo:</strong> cierres reportados en prensa (dolarboliviahoy.com vía Red Uno, EJU, Correo del Sur; dolaresabolivianos.com / paralelo.bo para algunos días de septiembre). Hay días sin dato: no se inventan valores; los modelos usan solo los días con dato.</li>
+          <li><strong>Actualización automática (desde el 15/10/2026):</strong> al abrirse, la herramienta consulta <em>DolarApi Bolivia</em> (bo.dolarapi.com), un servicio público y gratuito. De ahí toma el TCO del BCB (verificado contra bcb.gob.bo) y, como dólar paralelo, el precio de referencia del mercado P2P en bolivianos que reporta ese servicio (el 15/10/2026 coincidía con el publicado por dolarboliviahoy.com, fuente de la serie histórica). Como precio de <em>compra</em> se toma el mayor de sus dos valores (lo que se paga por 1 USD) y como <em>venta</em> el menor. Cada dato se guarda con su fecha; si la herramienta se abre varias veces el mismo día, se conserva el último valor. El servicio no ofrece historia: los días en que no se abre la herramienta quedan sin dato (pueden completarse a mano).</li>
+          <li><strong>Registros manuales:</strong> correcciones o días faltantes que el usuario agrega en la sección “Registrar cotizaciones”.</li>
+        </ul>
+
+        <h3>Métodos de predicción</h3>
+        <dl class="metodos">
+          <dt>1. Promedio móvil</dt>
+          <dd>Promedia los últimos <em>k</em> valores (k = 7 en el oficial, 3 en el paralelo). Suaviza los saltos, pero no sigue tendencias: predice el mismo valor para todos los plazos.
+            <div class="formula">Ŷ = (y<sub>t</sub> + y<sub>t−1</sub> + … + y<sub>t−k+1</sub>) / k</div></dd>
+
+          <dt>2. Regresión lineal</dt>
+          <dd>Traza la recta que mejor se ajusta a los datos de los últimos 30 días (mínimos cuadrados) y la prolonga hacia el futuro. Capta tendencias, pero supone que continúan en línea recta.
+            <div class="formula">Ŷ = a + b · t &nbsp;&nbsp; donde &nbsp; b = Σ(t − t̄)(y − ȳ) / Σ(t − t̄)² &nbsp; y &nbsp; a = ȳ − b · t̄</div></dd>
+
+          <dt>3. Suavizamiento exponencial doble (método de Holt)</dt>
+          <dd>Actualiza con cada dato un <em>nivel</em> (L) y una <em>tendencia</em> (T), dando más peso a lo reciente. Los parámetros α y β se eligen automáticamente probando combinaciones y quedándose con la de menor error.
+            <div class="formula">L<sub>t</sub> = α · y<sub>t</sub> + (1 − α) · (L<sub>t−1</sub> + T<sub>t−1</sub>)<br>T<sub>t</sub> = β · (L<sub>t</sub> − L<sub>t−1</sub>) + (1 − β) · T<sub>t−1</sub><br>Ŷ<sub>t+h</sub> = L<sub>t</sub> + h · T<sub>t</sub></div>
+            <span class="nota">Como el paralelo no tiene dato diario, la tendencia se mide “por día” teniendo en cuenta los días transcurridos entre datos.</span></dd>
+
+          <dt>4. Holt amortiguado</dt>
+          <dd>Variante de Holt en la que la tendencia se va “frenando” con el tiempo según un factor φ (entre 0 y 1). A 1 día sigue la tendencia reciente; a 30 días no la prolonga sin límite, lo que evita predicciones exageradas (Gardner y McKenzie, 1985). α, β y φ se eligen automáticamente.
+            <div class="formula">Ŷ<sub>t+h</sub> = L<sub>t</sub> + (φ + φ² + … + φ<sup>h</sup>) · T<sub>t</sub></div></dd>
+
+          <dt>5. Combinación de métodos</dt>
+          <dd>Promedio del promedio móvil (nivel estable) y de Holt amortiguado (tendencia). Combinar pronósticos de métodos distintos suele reducir el error, porque sus equivocaciones se compensan (Bates y Granger, 1969).
+            <div class="formula">Ŷ = (Ŷ<sub>promedio móvil</sub> + Ŷ<sub>Holt amortiguado</sub>) / 2</div></dd>
+
+          <dt>Referencia: último valor (modelo ingenuo)</dt>
+          <dd>Supone que el dólar seguirá igual que en el último dato (Ŷ = y<sub>t</sub>). Se incluye solo como punto de comparación (no se elige para predecir): un modelo aporta valor si se equivoca menos que esta regla simple. Si la referencia gana, es señal de que el tipo de cambio se comporta casi como una “caminata aleatoria”.</dd>
+        </dl>
+
+        <h3>Evaluación: backtest y MAPE</h3>
+        <p>Para cada fecha del pasado se ocultan los datos posteriores, se predice el valor a 1, 7 y 30 días y se compara con lo que realmente ocurrió. El error se resume con el <strong>MAPE</strong> (error porcentual absoluto medio):</p>
+        <div class="formula grande">MAPE = (1 / n) · Σ | (Real − Pronóstico) / Real | × 100 %</div>
+        <p><strong>Para cada plazo (1, 7 y 30 días) se elige automáticamente el método con menor MAPE en ese plazo.</strong> Un método puede ser el mejor para mañana y otro para dentro de un mes: seguir la tendencia suele ayudar a muy corto plazo, mientras que a 30 días conviene no exagerarla. En el gráfico, la línea de predicción pasa suavemente del método de un plazo al del siguiente (promedio ponderado por la distancia en días), para que no dé saltos.</p>
+        <p>Cuando el mercado no muestra una tendencia clara, los métodos más precisos dan valores parecidos en los tres plazos: es el resultado correcto (inventar subidas o bajadas aumentaría el error). En ese caso, la información más útil es el <strong>rango</strong>, que se amplía a medida que el plazo es más largo. Por ejemplo, un MAPE de 2 % significa que, en promedio, las predicciones se equivocaron en un 2 % (unos Bs 0,24 con un dólar a Bs 12).</p>
+
+        <h3>Rango de la predicción</h3>
+        <p>La predicción se presenta como un rango y no como un número exacto. Con los errores relativos del método elegido en el backtest, e = (Real − Pronóstico) / Real, se calcula su desviación σ = √(promedio de e²) para cada plazo, y:</p>
+        <div class="formula">Mínimo = Esperado × (1 − 1,28 σ) &nbsp;&nbsp;·&nbsp;&nbsp; Máximo = Esperado × (1 + 1,28 σ)</div>
+        <p>El factor 1,28 corresponde aproximadamente a un 80 % de confianza si los errores fueran normales. Cuando el ancho del rango supera el 5 % del valor esperado, la herramienta advierte <strong>“alta incertidumbre”</strong>. Si para un plazo hubo menos de 3 comparaciones (caso del paralelo a 30 días), σ se estima a partir del plazo más corto multiplicándolo por √(plazo largo / plazo corto). Además, el rango de un plazo largo nunca se toma más angosto que el de un plazo más corto.</p>
+
+        <h3>Regla de recomendación</h3>
+        <p>Si el valor esperado cambia más de ±0,5 % respecto al último dato, se considera subida o bajada; si no, estabilidad. Si además hay alta incertidumbre, se informa el costo en el peor caso (máximo del rango) y se sugiere la compra escalonada. El ahorro o costo estimado es: <em>monto en USD × (tipo de cambio esperado − tipo de cambio de hoy)</em>.</p>
+
+        <h3>Noticias e impacto (estudio de eventos)</h3>
+        <p>Para cada noticia se compara el dólar oficial del día anterior con el del quinto día posterior, y ese cambio se divide entre el movimiento “normal” de 5 días (la mediana de todos los cambios de 5 días de la serie):</p>
+        <div class="formula">Cambio = (TCO<sub>t+5</sub> − TCO<sub>t−1</sub>) / TCO<sub>t−1</sub> &nbsp;&nbsp;·&nbsp;&nbsp; Intensidad = |Cambio| / Mediana(|cambios de 5 días|)</div>
+        <p>Intensidad menor a 1: movimiento normal; de 1 a 2,5: moderado; 2,5 o más: fuerte. Hay tres tipos de noticias: <strong>clave</strong> (seleccionadas a mano, con enlace a la nota original en El Deber, Opinión, Infobae/EFE y France 24), <strong>automáticas</strong> (un programa en la computadora busca dos veces al día en Google News titulares de Bolivia sobre dólar, tipo de cambio, BCB, FMI y reservas; descarta las notas de rutina que solo informan la cotización del día y las repetidas) y <strong>propias</strong> (agregadas por el usuario). Este método mide <strong>coincidencia en el tiempo, no causalidad</strong>: varios hechos pueden ocurrir en la misma ventana de días.</p>
+
+        <h3>Limitaciones</h3>
+        <ul>
+          <li>El régimen flexible es muy reciente: hay pocos meses de historia y episodios de alta volatilidad (por ejemplo, mediados de septiembre de 2026), lo que limita la precisión.</li>
+          <li>Los modelos son estadísticos y solo usan valores pasados: no consideran noticias, medidas del gobierno o del BCB, reservas internacionales, inflación ni expectativas del mercado.</li>
+          <li>El paralelo tiene pocos datos y fechas irregulares; su backtest se basa en pocas comparaciones.</li>
+          <li>La actualización automática depende de un servicio externo (DolarApi Bolivia) y de tener internet. Si el servicio falla o cambia, la herramienta sigue funcionando con los datos guardados y se puede registrar a mano.</li>
+          <li>El TCO es un valor de referencia: los bancos pueden aplicar márgenes o comisiones adicionales.</li>
+          <li>La búsqueda automática de noticias funciona solo en la computadora donde se activó y cuando está encendida; el filtro por palabras clave puede dejar pasar alguna nota poco relevante u omitir otra importante (por eso existen las noticias clave y las propias). El impacto medido no prueba que la noticia haya causado el movimiento.</li>
+          <li>Los datos registrados se guardan solo en el navegador usado; conviene exportar un CSV como respaldo.</li>
+        </ul>
+        <p id="resumenMetodologia" class="nota"></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ PIE DE PÁGINA ============ -->
+  <footer class="pie">
+    <div class="contenedor">
+      <p><strong>Herramienta de apoyo a la toma de decisiones. Las predicciones son estimaciones y no garantizan valores futuros.</strong></p>
+      <p>LeoFX · Bolivia, 2026</p>
+    </div>
+  </footer>
+
+  <!-- Mensajes temporales (los muestra app.js) -->
+  <div id="mensaje" class="mensaje" role="status" aria-live="polite"></div>
+
+  <!-- Primero los datos y después la lógica (el orden importa) -->
+  <script src="datos.js"></script>
+  <!-- Cotizaciones y noticias guardadas por la tarea diaria de Windows -->
+  <script src="cotizaciones_auto.js"></script>
+  <script src="noticias_auto.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
