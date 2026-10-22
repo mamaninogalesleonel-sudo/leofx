@@ -1,4 +1,4 @@
-{"actualizado": "2026-10-22T12:33", "noticias": [
+{"actualizado": "2026-10-22T13:08", "noticias": [
   {
     "fecha": "2026-10-22",
     "titular": "Decreto Supremo 5750: así cambiaría tu factura de electricidad si pagas Bs 100 al mes",
@@ -61,15 +61,9 @@
   },
   {
     "fecha": "2026-10-18",
-    "titular": "¿Qué dijo el presidente del BCB sobre las restricciones a los ahorros en dólares?",
-    "fuente": "El Potosí",
-    "enlace": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNN1Iza09ERXVxQVFyaTloQmxJejRsUU1rcEJ6ejlLV01Zb1lURW5wWVpNU1JvaFREX2s0U2s5SVU3eEdERmVQZk1rSVVIVlZJbWRxbm1SRmlrdWJ2US1QU2xIdF9RTXE5RlFSOFNXVkxjeC04V095emtUR2R5cDUyVDVrRTMxaFIyYjF4Mm1JS09fYjlFSUVWSzljNUp3VEZXVDd2NFNBRWNpdHVVelZSY25XTWlCMEFSY1BSd3ByWlI?oc=5"
-  },
-  {
-    "fecha": "2026-10-18",
-    "titular": "El presidente del BCB asegura que no volverá a haber “corralitos” en dólares en Bolivia",
-    "fuente": "ANF Agencia de Noticias Fides Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPcTZmdFNjc09LcHhVYjB6eTR6d25yZExRN3NtQm5rSTBCLXBKc2xsWVNxWkYtUUlVZjBScUZBSUhLRS10UkVBekJfWEJCZWl2VlpmYmJXVmpnSExaUWxKbkJSOGdoLWNKTUk0Z0g1QXhiZG0xZU1uRmhPaDBIN1RhSWhFc2xOeG5MdXQwUDBFVEdmTWR3dng2NHFjbWpNY1otZzcxSll2aUdEU1Mxd0M5Y2hZNEw2anlqVklzVmpWSkZMZw?oc=5"
+    "titular": "FMI y Banco Mundial amplían su actividad en América Latina mientras gobiernos giran al mercado",
+    "fuente": "DiarioBitcoin",
+    "enlace": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxOaGhEVElTNGJpNVdUS3M4ZGt4THJweW9EemJwMHg0QXFWdEF0bEwtdlJ3SkZJV3JqNXFBaVZJalRZa0E0S2hYYUZGUDQ3a3VtVGJPcldQclNXZWxLeFhFcFkxZHZmVmNBTF9XSWo0cXlDQnlIdzZ4RGpZSlNhZEE5RHZ6X1ZobWdCMWJEUi1aZFlPTUhmRnhNSE15MUFZakVfeEZhOTEyeTZHaWVsN09yd3RDdmFaZmtCN3dQemE2S2FKSjFtUTEzT1hvYWx6cElR?oc=5"
   },
   {
     "fecha": "2026-10-18",
@@ -85,9 +79,15 @@
   },
   {
     "fecha": "2026-10-18",
-    "titular": "FMI y Banco Mundial amplían su actividad en América Latina mientras gobiernos giran al mercado",
-    "fuente": "DiarioBitcoin",
-    "enlace": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxOaGhEVElTNGJpNVdUS3M4ZGt4THJweW9EemJwMHg0QXFWdEF0bEwtdlJ3SkZJV3JqNXFBaVZJalRZa0E0S2hYYUZGUDQ3a3VtVGJPcldQclNXZWxLeFhFcFkxZHZmVmNBTF9XSWo0cXlDQnlIdzZ4RGpZSlNhZEE5RHZ6X1ZobWdCMWJEUi1aZFlPTUhmRnhNSE15MUFZakVfeEZhOTEyeTZHaWVsN09yd3RDdmFaZmtCN3dQemE2S2FKSjFtUTEzT1hvYWx6cElR?oc=5"
+    "titular": "¿Qué dijo el presidente del BCB sobre las restricciones a los ahorros en dólares?",
+    "fuente": "El Potosí",
+    "enlace": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNN1Iza09ERXVxQVFyaTloQmxJejRsUU1rcEJ6ejlLV01Zb1lURW5wWVpNU1JvaFREX2s0U2s5SVU3eEdERmVQZk1rSVVIVlZJbWRxbm1SRmlrdWJ2US1QU2xIdF9RTXE5RlFSOFNXVkxjeC04V095emtUR2R5cDUyVDVrRTMxaFIyYjF4Mm1JS09fYjlFSUVWSzljNUp3VEZXVDd2NFNBRWNpdHVVelZSY25XTWlCMEFSY1BSd3ByWlI?oc=5"
+  },
+  {
+    "fecha": "2026-10-18",
+    "titular": "El presidente del BCB asegura que no volverá a haber “corralitos” en dólares en Bolivia",
+    "fuente": "ANF Agencia de Noticias Fides Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPcTZmdFNjc09LcHhVYjB6eTR6d25yZExRN3NtQm5rSTBCLXBKc2xsWVNxWkYtUUlVZjBScUZBSUhLRS10UkVBekJfWEJCZWl2VlpmYmJXVmpnSExaUWxKbkJSOGdoLWNKTUk0Z0g1QXhiZG0xZU1uRmhPaDBIN1RhSWhFc2xOeG5MdXQwUDBFVEdmTWR3dng2NHFjbWpNY1otZzcxSll2aUdEU1Mxd0M5Y2hZNEw2anlqVklzVmpWSkZMZw?oc=5"
   },
   {
     "fecha": "2026-10-17",
@@ -133,6 +133,12 @@
   },
   {
     "fecha": "2026-10-15",
+    "titular": "BCB inicia devolución de depósitos en dólares de entre $us 8.001 y $us 10.000",
+    "fuente": "eju.tv",
+    "enlace": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOLURKVzJBdU9mS0ljcmI3dkJ4T2ZEZnhhOXg5aWtrTEtuTkE0cmUwQUJtQmJtWHBWcDdCUlMzdDVoX1B0OXhpaERESS1ncFhOOW12Q09pVWtoWFdXdWFXTzM4dEJWOE5GaGpmYWtMdGFsSkRpRTd0ZXUyLV94NDNaSnZYcmJpUjNsT3UwMXdCeVgxRUxUcU83TVpOWjJNSzht?oc=5"
+  },
+  {
+    "fecha": "2026-10-15",
     "titular": "Ministro Morales presenta el potencial y la visión económica de Bolivia ante el FMI y el Banco Mundial",
     "fuente": "Economy",
     "enlace": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxPY3pNV0M5Y3Voa2R3TnRpWHZEUC1TMXRTeEM0LTFsWkpMYmtvVlJxSmVHLWo5cVhZRnZQQ245aU96SkZEb1V6UEh3amdxZjdTbXREYXBPWEJpZU9GWlIzaTB2RFhIR1J4bGRER1pVVkIydW5DY3pJNnVfY1paMjFmc1REOWJjSDNlLUJFTWxzS3FIUVNoemlxbHBOYXRFeE90TTFDUGo2Rko2THZjeVFzMGkzcW9YOGNQbWNrZjkzN0VTLVFNVUFZOFNpaWQ0WEJYemRWU3dwT2tlOEhPanZaWlVta9IB6AFBVV95cUxNZ1VjOXVwRzNhUE9oWUtHelpia0xWMDk5RWtZM2hJNnljdmpvN0taUldjVFpzeURCcVVTQ0hzeVdyMzE0dDQxWXlwUXlpQmlUeVRiVWkyUmwycFdIbnY5anZOWnluaTUxOTZKMmFhZUNwcERSVmU4VjlaRzFyS3l2YkEwNGtnWEVZbVp6UEd6Y0ZQeWN6TU00S2dTdmFJQVhBcUhWbkJFWkk1UmY2NTdlNHp6ZC1qOVVjX0tHTW01S2c4WVNuazBpMXBRQmVzaFRYbjdISHZDLThiZXQwRlpyWjBZUlVTV2g4?oc=5"
@@ -148,12 +154,6 @@
     "titular": "Bolivia reforma el mercado de exportación de oro para mejorar el acceso de su sistema financiero al dólar",
     "fuente": "Forbes España",
     "enlace": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxQM0duOWs2Z0JkYTRSSlQxczhKaWFwdXNfYldfczdCWDdwd2hGeHdrOWs4bmtvejlUMGc2dmZRMGNjR05HNGR3Q1lIb0Y2Y3IzQXpJZzFTVF9qbjdfRGR4eGRjNW9lSjFVY0E4aGFhVVJPZm13YjI4SVJvTnlma1V3VmFFaURrMmpEdFZNeDI5UTc4R0hnX2JRQUNycWtOTDlhdVlCcklodHAyVks1Wm5OZVZtQmVOUFVxSjYtUlNBMl8yTV9Uc0VoeDVQVFVuTUQ5SElRVGx2c09WWEdU?oc=5"
-  },
-  {
-    "fecha": "2026-10-15",
-    "titular": "BCB inicia devolución de depósitos en dólares de entre $us 8.001 y $us 10.000",
-    "fuente": "eju.tv",
-    "enlace": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOLURKVzJBdU9mS0ljcmI3dkJ4T2ZEZnhhOXg5aWtrTEtuTkE0cmUwQUJtQmJtWHBWcDdCUlMzdDVoX1B0OXhpaERESS1ncFhOOW12Q09pVWtoWFdXdWFXTzM4dEJWOE5GaGpmYWtMdGFsSkRpRTd0ZXUyLV94NDNaSnZYcmJpUjNsT3UwMXdCeVgxRUxUcU83TVpOWjJNSzht?oc=5"
   },
   {
     "fecha": "2026-10-15",
