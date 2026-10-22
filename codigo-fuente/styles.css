@@ -236,11 +236,16 @@ input[type="checkbox"] {
   background: linear-gradient(90deg, #fffbeb, #fef3c7);
   color: var(--alerta);
   border-bottom: 1px solid #fde68a;
-  padding: 10px 0;
-  font-size: 0.9rem;
+  padding: 7px 0;
+  font-size: 0.84rem;
+  line-height: 1.4;
 }
 .aviso-principal .contenedor::before {
   content: "⚠ ";
+}
+/* En celular, el aviso ocupa menos espacio (sigue visible siempre). */
+@media (max-width: 760px) {
+  .aviso-principal { padding: 5px 0; font-size: 0.74rem; line-height: 1.35; }
 }
 
 /* ----- Barra de navegación -----
@@ -459,6 +464,8 @@ input[type="checkbox"] {
 .panel-menu.abierto .opcion-menu:nth-child(4) { animation-delay: 0.23s; }
 .panel-menu.abierto .opcion-menu:nth-child(5) { animation-delay: 0.28s; }
 .panel-menu.abierto .opcion-menu:nth-child(6) { animation-delay: 0.33s; }
+.panel-menu.abierto .opcion-menu:nth-child(7) { animation-delay: 0.38s; }
+.panel-menu.abierto .opcion-menu:nth-child(8) { animation-delay: 0.43s; }
 @keyframes entrarOpcion {
   from { opacity: 0; transform: translateX(-16px); }
   to   { opacity: 1; transform: translateX(0); }
@@ -804,6 +811,63 @@ body.menu-abierto {
   padding-top: 8px;
   margin-top: 6px;
 }
+
+/* Botón "Informe PDF" en la barra de navegación (a la derecha). */
+.boton-informe {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.boton-informe svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+@media (max-width: 480px) {
+  .texto-boton-informe { display: none; }   /* en celular, solo el ícono */
+}
+
+/* Glosario: término en negrita y explicación debajo. */
+.glosario dt {
+  font-weight: 800;
+  color: var(--verde-800);
+  margin-top: 14px;
+}
+.glosario dd {
+  margin: 3px 0 0;
+  color: #334155;
+}
+
+/* Bloque plegable (se abre al tocar el título). */
+.desplegable {
+  margin-top: 18px;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-chico);
+  padding: 4px 16px;
+  background: #fbfefc;
+}
+.desplegable summary {
+  cursor: pointer;
+  padding: 10px 0;
+  font-weight: 700;
+  color: var(--verde-800);
+}
+.desplegable[open] { padding-bottom: 16px; }
+
+/* Gráfico más bajo (brecha). */
+.caja-grafico.caja-chica { height: 240px; }
+/* Botones de zoom del gráfico (usan el mismo estilo que los filtros). */
+.zoom-grafico { margin-left: auto; }
+
+/* Separación arriba (por ejemplo, tabla debajo de tarjetas). */
+.espacio-arriba { margin-top: 16px; }
+.tabla-scroll:has(table:empty) { display: none; }   /* no mostrar tablas vacías */
+.tp-esperado.vacio { color: var(--neutro); }
 
 /* Método usado en cada tarjeta de predicción. */
 .tp-metodo {

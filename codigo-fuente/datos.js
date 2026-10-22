@@ -134,7 +134,18 @@ const DATOS_OFICIAL = [
   { fecha: "2026-10-11", valor: 11.73 },
   { fecha: "2026-10-12", valor: 11.73 },
   { fecha: "2026-10-13", valor: 11.70 },
-  { fecha: "2026-10-14", valor: 11.70 }
+  { fecha: "2026-10-14", valor: 11.70 },
+  // 15 al 21 de octubre: agregados después. Fuente: BCB (bcb.gob.bo),
+  // verificados con la serie del "Monitor Cambiario de Bolivia" y la prensa.
+  // El 17 y 18 (fin de semana) llevan el TCO de Bs 11,69 que el BCB
+  // publicó con vigencia del sábado 17 al lunes 19.
+  { fecha: "2026-10-15", valor: 11.68 },
+  { fecha: "2026-10-16", valor: 11.68 },
+  { fecha: "2026-10-17", valor: 11.69 },
+  { fecha: "2026-10-18", valor: 11.69 },
+  { fecha: "2026-10-19", valor: 11.69 },
+  { fecha: "2026-10-20", valor: 11.70 },
+  { fecha: "2026-10-21", valor: 11.73 }
 ];
 
 

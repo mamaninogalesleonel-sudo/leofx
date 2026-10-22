@@ -27,9 +27,13 @@ function Leer($nombre) {
 
 # Reemplaza un texto exacto; si no lo encuentra, avisa (así no se genera
 # un archivo incompleto sin darnos cuenta).
+# Solo se reemplaza la PRIMERA vez que aparece: el código de app.js puede
+# contener el mismo texto (por ejemplo "<!DOCTYPE html>" en el informe) y
+# ese no se debe tocar.
 function Reemplazar($html, $buscar, $nuevo) {
-  if (-not $html.Contains($buscar)) { throw "No se encontró en index.html: $buscar" }
-  return $html.Replace($buscar, $nuevo)
+  $i = $html.IndexOf($buscar)
+  if ($i -lt 0) { throw "No se encontró en index.html: $buscar" }
+  return $html.Substring(0, $i) + $nuevo + $html.Substring($i + $buscar.Length)
 }
 
 $html = Leer "index.html"
@@ -45,6 +49,11 @@ $html = Reemplazar $html '<script src="app.js"></script>' ("<script>`n" + (Leer 
 $cotizaciones = "const COTIZACIONES_AUTOMATICAS_FECHA = null;`nconst COTIZACIONES_AUTOMATICAS = [];"
 if (Test-Path (Join-Path $carpeta "cotizaciones_auto.js")) { $cotizaciones = Leer "cotizaciones_auto.js" }
 $html = Reemplazar $html '<script src="cotizaciones_auto.js"></script>' ("<script>`n" + $cotizaciones + "`n</script>")
+
+# Predicciones guardadas para el seguimiento real (lista vacía si todavía no hay).
+$predicciones = "const PREDICCIONES_AUTOMATICAS_FECHA = null;`nconst PREDICCIONES_AUTOMATICAS = [];"
+if (Test-Path (Join-Path $carpeta "predicciones_auto.js")) { $predicciones = Leer "predicciones_auto.js" }
+$html = Reemplazar $html '<script src="predicciones_auto.js"></script>' ("<script>`n" + $predicciones + "`n</script>")
 
 # Noticias automáticas (si todavía no se buscó ninguna, va una lista vacía).
 $noticias = "const NOTICIAS_AUTOMATICAS_FECHA = null;`nconst NOTICIAS_AUTOMATICAS = [];"

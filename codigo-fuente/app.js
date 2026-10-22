@@ -315,6 +315,8 @@ const datosAutomaticos = {
   fechaCotizaciones: typeof COTIZACIONES_AUTOMATICAS_FECHA !== "undefined" ? COTIZACIONES_AUTOMATICAS_FECHA : null,
   noticias: typeof NOTICIAS_AUTOMATICAS !== "undefined" && Array.isArray(NOTICIAS_AUTOMATICAS) ? NOTICIAS_AUTOMATICAS : [],
   fechaNoticias: typeof NOTICIAS_AUTOMATICAS_FECHA !== "undefined" ? NOTICIAS_AUTOMATICAS_FECHA : null,
+  predicciones: typeof PREDICCIONES_AUTOMATICAS !== "undefined" && Array.isArray(PREDICCIONES_AUTOMATICAS) ? PREDICCIONES_AUTOMATICAS : [],
+  fechaPredicciones: typeof PREDICCIONES_AUTOMATICAS_FECHA !== "undefined" ? PREDICCIONES_AUTOMATICAS_FECHA : null,
   desdeInternet: false   // true cuando se usan los datos descargados de GitHub
 };
 
@@ -760,6 +762,36 @@ function prediccionPlazo(analisis, h) {
   return analisis.curva[h];
 }
 
+// Predicciones de HOY para el "seguimiento real": lo que la herramienta
+// predice para mañana, 7 y 30 días, del oficial y del paralelo (compra).
+// Lo usa registrar_predicciones.js en GitHub dos veces al día para ir
+// guardando las predicciones y, cuando llegue la fecha, compararlas con
+// el valor real (ver sección 6.10).
+function prediccionesDeHoy() {
+  const redondear = (x) => Math.round(x * 10000) / 10000;
+  const tabla = combinarDatos();
+  const lista = [];
+  for (const clave of ["oficial", "compra"]) {
+    const a = analizarSerie(crearSerie(tabla, clave), SERIES[clave].perfil);
+    if (!a) continue;
+    for (const h of CONFIG.horizontes) {
+      const p = a.curva[h];
+      lista.push({
+        serie: clave,            // "oficial" o "compra" (paralelo)
+        hecha: a.ultimo.fecha,   // fecha del último dato usado
+        base: a.ultimo.y,        // valor de ese último dato
+        plazo: h,                // 1, 7 o 30 días
+        objetivo: p.fecha,       // fecha que se está prediciendo
+        esperado: redondear(p.esperado),
+        minimo: redondear(p.minimo),
+        maximo: redondear(p.maximo),
+        metodo: a.ganadores[h].metodo.id
+      });
+    }
+  }
+  return lista;
+}
+
 
 /* =====================================================================
    6. INTERFAZ (lo que se ve en pantalla)
@@ -770,6 +802,8 @@ const estado = {
   mercado: "oficial",      // pestaña activa: "oficial" o "paralelo"
   lado: "compra",          // en el paralelo: predecir "compra" o "venta"
   comparar: false,         // mostrar los otros mercados en el gráfico
+  rango: "90",             // zoom del gráfico: "30", "90" (días) o "todo"
+  graficoBrecha: null,     // el gráfico de la brecha oficial-paralelo
   mostrarPrediccion: true, // dibujar la predicción en el gráfico
   tabla: [],               // todos los datos combinados
   series: {},              // puntos con dato de cada serie (clave → lista)
@@ -844,8 +878,10 @@ function dibujarTodo() {
   dibujarAvisoDatos();
   dibujarTarjetaHoy();
   dibujarGrafico();
+  dibujarGraficoBrecha();
   dibujarPredicciones();
   dibujarBacktest();
+  dibujarSeguimiento();
   dibujarRegistros();
   dibujarNoticias();
   dibujarMetodologiaDinamica();
@@ -877,7 +913,7 @@ function dibujarAvisoDatos() {
     caja.textContent = (serie.length === 0
       ? "Todavía no hay datos de " + nombreSerie(clave) + "."
       : "Solo hay " + serie.length + " dato(s) de " + nombreSerie(clave) + ".") +
-      " Regístrelos en la sección “Registrar cotizaciones”: se necesitan al menos 3 para predecir, y con 15 o más el backtest es más confiable.";
+      " Puede agregarlos en “Datos y respaldo”: se necesitan al menos 3 para predecir, y con 15 o más el backtest es más confiable.";
     return;
   }
 
@@ -890,7 +926,7 @@ function dibujarAvisoDatos() {
   if (atraso >= 1) {
     caja.hidden = false;
     caja.textContent = "El último dato de " + nombreSerie(clave) + " es del " + formatoFecha(ultimo.fecha) +
-      ". Pulse “Actualizar ahora” (necesita internet) o registre el valor de hoy en la sección “Registrar cotizaciones”.";
+      ". Pulse “Actualizar ahora” (necesita internet) o agregue el valor en “Datos y respaldo”.";
   } else {
     caja.hidden = true;
   }
@@ -969,6 +1005,80 @@ function dibujarTarjetaHoy() {
 }
 
 // ---- 6.4 Gráfico histórico con predicción ------------------------------
+
+// Zoom del gráfico: "todo", "90" (3 meses) o "30" (1 mes) días hacia atrás
+// desde el último dato. Devuelve la primera fecha que se dibuja.
+function inicioDelGrafico(fechas) {
+  if (estado.rango === "todo") return fechas[0];
+  const desde = sumarDias(fechas[fechas.length - 1], -parseInt(estado.rango, 10));
+  return desde > fechas[0] ? desde : fechas[0];
+}
+
+// Gráfico de la BRECHA: cuánto más caro (en %) está el paralelo (compra)
+// que el oficial, en los días que tienen los dos datos.
+function dibujarGraficoBrecha() {
+  const lienzo = $("graficoBrecha");
+  if (!lienzo || typeof Chart === "undefined") return;
+  const fechas = estado.tabla.map((f) => f.fecha);
+  if (!fechas.length) return;
+  const desde = inicioDelGrafico(fechas);
+  const puntos = estado.tabla
+    .filter((f) => f.fecha >= desde && f.oficial != null && f.compra != null)
+    .map((f) => ({ fecha: f.fecha, brecha: (f.compra - f.oficial) / f.oficial * 100, oficial: f.oficial, compra: f.compra }));
+
+  const resumen = $("resumenBrecha");
+  if (puntos.length) {
+    const ultimo = puntos[puntos.length - 1];
+    const prom = promedio(puntos.map((p) => p.brecha));
+    resumen.innerHTML = "Brecha al " + formatoFecha(ultimo.fecha) + ": <strong>" + pctConSigno(ultimo.brecha / 100) +
+      "</strong> (paralelo " + bs(ultimo.compra) + " frente a oficial " + bs(ultimo.oficial) + ") · promedio del período: " +
+      pctConSigno(prom / 100) + ".";
+  } else {
+    resumen.textContent = "No hay días con dato oficial y paralelo a la vez en este período.";
+  }
+
+  if (estado.graficoBrecha) estado.graficoBrecha.destroy();
+  estado.graficoBrecha = new Chart(lienzo, {
+    type: "line",
+    data: {
+      labels: puntos.map((p) => p.fecha),
+      datasets: [{
+        label: "Brecha paralelo vs. oficial (%)",
+        data: puntos.map((p) => p.brecha),
+        borderColor: "#0d9488",
+        backgroundColor: degradadoBajoLinea("#0d9488"),
+        fill: "origin",                // sombreado hasta la línea del 0 %
+        borderWidth: 2.5,
+        pointRadius: 3,
+        pointBackgroundColor: "#0d9488",
+        pointBorderColor: "#fff",
+        cubicInterpolationMode: "monotone"
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { duration: 700 },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: "rgba(2, 44, 34, 0.94)", padding: 10, cornerRadius: 10,
+          callbacks: {
+            title: (items) => (items.length ? formatoFecha(puntos[items[0].dataIndex].fecha) : ""),
+            label: (item) => {
+              const p = puntos[item.dataIndex];
+              return "Brecha " + pctConSigno(p.brecha / 100) + " (paralelo " + num(p.compra) + " · oficial " + num(p.oficial) + ")";
+            }
+          }
+        }
+      },
+      scales: {
+        x: { ticks: { maxTicksLimit: window.innerWidth < 600 ? 4 : 8, maxRotation: 0, callback: function (v) { return formatoFechaCorta(this.getLabelForValue(v)); } }, grid: { display: false }, border: { display: false } },
+        y: { ticks: { callback: (v) => num(v) + " %" }, grid: { color: (c) => (c.tick.value === 0 ? "rgba(2,44,34,0.35)" : "rgba(5,150,105,0.08)") }, border: { display: false } }
+      }
+    }
+  });
+}
 function dibujarGrafico() {
   const lienzo = $("grafico");
 
@@ -1000,14 +1110,17 @@ function dibujarGrafico() {
     if (finPred > fin) fin = finPred;
   }
   const etiquetas = [];
-  for (let f = fechas[0]; f <= fin; f = sumarDias(f, 1)) etiquetas.push(f);
+  for (let f = inicioDelGrafico(fechas); f <= fin; f = sumarDias(f, 1)) etiquetas.push(f);
   const posicion = {}; // fecha → posición en el eje
   etiquetas.forEach((f, i) => { posicion[f] = i; });
 
   // Crea un arreglo del largo del eje con los valores (null = sin dato).
+  // Los datos anteriores al inicio del gráfico (zoom) se omiten.
   function arregloDeSerie(clave) {
     const datos = new Array(etiquetas.length).fill(null);
-    for (const p of estado.series[clave]) datos[posicion[p.fecha]] = p.y;
+    for (const p of estado.series[clave]) {
+      if (posicion[p.fecha] != null) datos[posicion[p.fecha]] = p.y;
+    }
     return datos;
   }
 
@@ -1310,32 +1423,116 @@ function dibujarBacktest() {
   $("notaBacktest").textContent = nota;
 }
 
+// ---- 6.6 B Seguimiento real: ¿acertaron las predicciones? ----------------
+// GitHub guarda cada día lo que LeoFX predijo (registrar_predicciones.js).
+// Cuando llega la fecha predicha, aquí se compara con el valor real. A
+// diferencia del backtest, estas predicciones se hicieron SIN conocer el
+// futuro: es la prueba más honesta de la herramienta.
+function evaluarSeguimiento(clave) {
+  const serie = estado.series[clave];
+  const ultimoDia = serie.length ? serie[serie.length - 1].t : -Infinity;
+  const evaluadas = [];
+  const pendientes = [];
+  for (const p of datosAutomaticos.predicciones) {
+    if (p.serie !== clave || !leerFecha(p.objetivo)) continue;
+    const dia = fechaADia(p.objetivo);
+    if (dia > ultimoDia) { pendientes.push(p); continue; }   // todavía no llegó la fecha
+    // Dato real de la fecha predicha (o el más cercano, con la misma
+    // tolerancia que el backtest, porque el paralelo tiene huecos).
+    const tolerancia = CONFIG.tolerancia[p.plazo] || 0;
+    let real = null;
+    for (const d of serie) {
+      if (Math.abs(d.t - dia) <= tolerancia && (!real || Math.abs(d.t - dia) < Math.abs(real.t - dia))) real = d;
+    }
+    if (!real) continue;
+    evaluadas.push({
+      p: p,
+      real: real,
+      error: (real.y - p.esperado) / real.y,                 // + = el real fue mayor
+      dentro: real.y >= p.minimo && real.y <= p.maximo         // ¿cayó dentro del rango?
+    });
+  }
+  evaluadas.sort((a, b) => (a.p.objetivo < b.p.objetivo ? 1 : -1)); // las más recientes primero
+  return { evaluadas: evaluadas, pendientes: pendientes };
+}
+
+function dibujarSeguimiento() {
+  const contenedor = $("resumenSeguimiento");
+  if (!contenedor) return;
+  // Se guardan predicciones del oficial y del paralelo (compra).
+  const clave = estado.mercado === "oficial" ? "oficial" : "compra";
+  const { evaluadas, pendientes } = evaluarSeguimiento(clave);
+  const a = estado.analisis[clave];
+  const textoPlazo = (h) => (h === 1 ? "Mañana (1 día)" : h + " días");
+
+  // Resumen por plazo.
+  let html = '<p class="nota">Serie: <strong>' + nombreSerie(clave) + "</strong>. " +
+    evaluadas.length + " predicciones ya comprobadas · " + pendientes.length + " esperando su fecha.</p>";
+  html += '<div class="grid-3">';
+  for (const h of CONFIG.horizontes) {
+    const delPlazo = evaluadas.filter((e) => e.p.plazo === h);
+    let cuerpo;
+    if (delPlazo.length) {
+      const mape = promedio(delPlazo.map((e) => Math.abs(e.error))) * 100;
+      const dentro = delPlazo.filter((e) => e.dentro).length / delPlazo.length;
+      const mapeBacktest = a ? a.ganadores[h].porPlazo[h].mape : NaN;
+      cuerpo = '<div class="tp-esperado">' + num(mape) + " %</div>" +
+        '<div class="nota">error medio real (MAPE) en ' + delPlazo.length + (delPlazo.length === 1 ? " predicción" : " predicciones") +
+        (isFinite(mapeBacktest) ? " · en el backtest fue " + num(mapeBacktest) + " %" : "") + "</div>" +
+        '<div class="tp-rango"><span>Dentro del rango</span><span><strong>' + pct(dentro) + "</strong></span></div>";
+    } else {
+      const proxima = pendientes.filter((p) => p.plazo === h).map((p) => p.objetivo).sort()[0];
+      cuerpo = '<div class="tp-esperado vacio">—</div><div class="nota">' +
+        (proxima ? "La primera se podrá comprobar el " + formatoFecha(proxima) + "." : "Todavía no hay predicciones guardadas para este plazo.") + "</div>";
+    }
+    html += '<div class="tarjeta-pred"><div class="tp-plazo">' + textoPlazo(h) + "</div>" + cuerpo + "</div>";
+  }
+  html += "</div>";
+  contenedor.innerHTML = html;
+
+  // Tabla con las últimas predicciones comprobadas.
+  const tabla = $("tablaSeguimiento");
+  if (!evaluadas.length) {
+    tabla.innerHTML = "";
+    return;
+  }
+  let filas = "<thead><tr><th>Predicha el</th><th>Para el</th><th>Plazo</th><th>Predicción (rango)</th><th>Real</th><th>Error</th><th>¿En el rango?</th></tr></thead><tbody>";
+  for (const e of evaluadas.slice(0, 15)) {
+    filas += "<tr><td>" + formatoFecha(e.p.hecha) + "</td><td>" + formatoFecha(e.p.objetivo) + "</td><td>" + textoPlazo(e.p.plazo) + "</td>" +
+      "<td>" + bs(e.p.esperado) + '<div class="sub">' + num(e.p.minimo) + " – " + num(e.p.maximo) + "</div></td>" +
+      "<td>" + bs(e.real.y) + "</td><td>" + pctConSigno(e.error) + "</td>" +
+      '<td class="' + (e.dentro ? "baja" : "sube") + '">' + (e.dentro ? "✓ Sí" : "✗ No") + "</td></tr>";
+  }
+  tabla.innerHTML = filas + "</tbody>";
+}
+
 // ---- 6.7 Calculadora "¿Compro hoy o espero?" ----------------------------
 let calculadoraUsada = false;
 
 // Clasifica lo que se espera para un plazo y redacta un texto sencillo.
-function recomendacionPlazo(monto, hoy, p, h) {
+// "factor" convierte el TCO en el precio real del banco (1 + margen).
+function recomendacionPlazo(monto, hoy, p, h, factor) {
   const cambio = (p.esperado - hoy) / hoy;
   const ancho = (p.maximo - p.minimo) / p.esperado;
   const incierto = ancho > CONFIG.umbralIncertidumbre;
-  const difEsperada = monto * (p.esperado - hoy); // + = esperar cuesta más
+  const difEsperada = monto * (p.esperado - hoy) * factor; // + = esperar cuesta más
   const plazo = h + " días";
   let tipo;
   let texto;
 
   if (cambio > CONFIG.umbralCambio) {
     tipo = "sube";
-    texto = "En " + plazo + " se espera que el dólar suba de " + bs(hoy) + " a " + bs(p.esperado) + " (" + pctConSigno(cambio) + "). " +
+    texto = "En " + plazo + " se espera que el dólar suba de " + bs(hoy * factor) + " a " + bs(p.esperado * factor) + " (" + pctConSigno(cambio) + "). " +
       "Comprar hoy te ahorraría aproximadamente <strong>" + bs(difEsperada) + "</strong>.";
     if (p.minimo < hoy) {
-      texto += " Aun así, el rango incluye la posibilidad de que baje (hasta " + bs(p.minimo) + ").";
+      texto += " Aun así, el rango incluye la posibilidad de que baje (hasta " + bs(p.minimo * factor) + ").";
     }
   } else if (cambio < -CONFIG.umbralCambio) {
     tipo = "baja";
-    texto = "En " + plazo + " se espera que el dólar baje de " + bs(hoy) + " a " + bs(p.esperado) + " (" + pctConSigno(cambio) + "). " +
+    texto = "En " + plazo + " se espera que el dólar baje de " + bs(hoy * factor) + " a " + bs(p.esperado * factor) + " (" + pctConSigno(cambio) + "). " +
       "Esperar podría ahorrarte aproximadamente <strong>" + bs(-difEsperada) + "</strong>.";
     if (p.maximo > hoy) {
-      texto += " Riesgo: si el dólar llega al máximo del rango (" + bs(p.maximo) + "), pagarías " + bs(monto * (p.maximo - hoy)) + " más que hoy.";
+      texto += " Riesgo: si el dólar llega al máximo del rango (" + bs(p.maximo * factor) + "), pagarías " + bs(monto * (p.maximo - hoy) * factor) + " más que hoy.";
     }
   } else if (!incierto) {
     tipo = "estable";
@@ -1349,38 +1546,136 @@ function recomendacionPlazo(monto, hoy, p, h) {
   }
 
   if (incierto) {
-    texto += " <span class=\"etiqueta-alerta\">Alta incertidumbre</span> El rango posible es amplio (de " + bs(p.minimo) + " a " + bs(p.maximo) +
-      " por dólar). En el peor caso pagarías " + bs(monto * (p.maximo - hoy)) + " más que hoy. " +
-      "Considera comprar por partes (compra escalonada) para repartir el riesgo.";
+    texto += " <span class=\"etiqueta-alerta\">Alta incertidumbre</span> El rango posible es amplio (de " + bs(p.minimo * factor) + " a " + bs(p.maximo * factor) +
+      " por dólar). En el peor caso pagarías " + bs(monto * (p.maximo - hoy) * factor) + " más que hoy. " +
+      "Considera comprar por partes (ver simulación abajo) para repartir el riesgo.";
   }
-  return { tipo: tipo, texto: texto, incierto: incierto };
+  return { tipo: tipo, texto: texto, incierto: incierto, cambio: cambio, dif: difEsperada };
 }
 
-// Junta las señales de 7 y 30 días en una recomendación principal.
+// Recomendación principal, diciendo QUÉ plazo sube o baja y CUÁNTO se
+// ahorraría o se pagaría de más (en Bs, para el monto ingresado).
 function recomendacionGeneral(r7, r30) {
+  const t7 = pctConSigno(r7.cambio) + " (" + bsConSigno(r7.dif) + ")";
+  const t30 = pctConSigno(r30.cambio) + " (" + bsConSigno(r30.dif) + ")";
+  const incierto = r7.incierto || r30.incierto;
+  const avisoIncierto = incierto ? " Ojo: la incertidumbre es alta, así que estos montos son aproximados." : "";
+  let r;
+
   if (r7.tipo === "sube" && r30.tipo === "sube") {
-    return { clase: "sube", titulo: "Conviene comprar hoy", texto: "Los modelos esperan que el dólar suba tanto en 7 como en 30 días." };
+    r = { clase: "sube", titulo: "Conviene comprar hoy",
+      texto: "Se espera que el dólar suba en 7 días " + t7 + " y en 30 días " + t30 + ". Comprar hoy te ahorraría unos " +
+        bs(r7.dif) + " frente a esperar una semana, o " + bs(r30.dif) + " frente a esperar un mes." };
+  } else if (r7.tipo === "baja" && r30.tipo === "baja") {
+    r = { clase: "baja", titulo: "Podrías esperar",
+      texto: "Se espera que el dólar baje en 7 días " + t7 + " y en 30 días " + t30 + ". Esperar una semana podría ahorrarte unos " +
+        bs(-r7.dif) + "; esperar un mes, unos " + bs(-r30.dif) + ". Revisa la predicción cada día antes de decidir." };
+  } else if (r7.tipo === "sube") {
+    r = { clase: "sube", titulo: "Sube a corto plazo: si lo necesitas pronto, compra hoy",
+      texto: "En 7 días se espera que el dólar suba " + t7 + ", pero a 30 días se espera " +
+        (r30.tipo === "baja" ? "que baje " : "que vuelva a un nivel parecido al de hoy ") + t30 +
+        ". Si necesitas los dólares esta semana, conviene comprar hoy; si puedes esperar un mes, no hay apuro." };
+  } else if (r30.tipo === "sube") {
+    r = { clase: "sube", titulo: "Sube a mediano plazo: compra dentro de los próximos días",
+      texto: "En 7 días se espera " + (r7.tipo === "baja" ? "una leve baja " : "casi el mismo valor ") + t7 +
+        ", pero en 30 días se espera que suba " + t30 + ". Tienes margen de unos días, pero no conviene esperar un mes." };
+  } else if (r7.tipo === "baja") {
+    r = { clase: "baja", titulo: "Baja pasajera: podrías esperar alrededor de una semana",
+      texto: "En 7 días se espera que el dólar baje " + t7 + ", pero a 30 días vuelve a un nivel parecido al de hoy " + t30 +
+        ". Si puedes, espera unos días; no hace falta esperar un mes." };
+  } else if (r30.tipo === "baja") {
+    r = { clase: "baja", titulo: "Baja a mediano plazo: podrías esperar",
+      texto: "En 7 días se espera casi el mismo valor " + t7 + ", y en 30 días una baja " + t30 +
+        ". Si el pago puede esperar un mes, podrías ahorrar algo." };
+  } else if (incierto) {
+    r = { clase: "neutra", titulo: "Sin tendencia clara, pero con alta incertidumbre",
+      texto: "No se espera que el dólar suba ni baje de forma marcada (7 días: " + t7 + "; 30 días: " + t30 + "), pero el rango posible es amplio. " +
+        "Si el pago es importante, una opción prudente es comprar por partes (ver simulación abajo)." };
+    return r;
+  } else {
+    r = { clase: "neutra", titulo: "Sin urgencia: se espera estabilidad",
+      texto: "No se esperan cambios importantes (7 días: " + t7 + "; 30 días: " + t30 + "). Compra cuando lo necesites." };
   }
-  if (r7.tipo === "baja" && r30.tipo === "baja") {
-    return { clase: "baja", titulo: "Podrías esperar", texto: "Los modelos esperan que el dólar baje en 7 y en 30 días. Revisa la predicción cada día antes de decidir." };
+  r.texto += avisoIncierto;
+  return r;
+}
+
+// Precio de 1 USD en el banco = TCO × (1 + margen). Lee el margen escrito
+// por el usuario (en %); si está vacío o es inválido, usa 0.
+function leerMargenBanco() {
+  const m = leerNumero($("margenBanco").value);
+  return isFinite(m) && m >= 0 && m <= 20 ? m / 100 : 0;
+}
+
+// Compara el costo de hoy en el banco y en el paralelo.
+function htmlComparacionMercados(monto, margen) {
+  const o = estado.analisis.oficial;
+  const c = estado.analisis.compra;
+  if (!o || !c) return "";
+  const precioBanco = o.ultimo.y * (1 + margen);
+  const precioParalelo = c.ultimo.y;
+  const costoBanco = monto * precioBanco;
+  const costoParalelo = monto * precioParalelo;
+  const dif = costoBanco - costoParalelo;
+  const masBarato = Math.abs(dif) < 0.005 * costoBanco ? null : dif < 0 ? "banco" : "paralelo";
+  return '<h3>¿Dónde conviene comprar hoy?</h3>' +
+    '<div class="tabla-scroll"><table class="tabla"><thead><tr><th>Mercado</th><th>Precio de 1 USD</th><th>Costo de USD ' + FORMATO_2.format(monto) + "</th></tr></thead><tbody>" +
+    '<tr><td>Banco (TCO ' + bs(o.ultimo.y) + " + margen " + pct(margen) + ')<div class="sub">TCO del ' + formatoFecha(o.ultimo.fecha) + "</div></td><td>" +
+      bs(precioBanco) + "</td><td" + (masBarato === "banco" ? ' class="celda-elegida"' : "") + "><strong>" + bs(costoBanco) + "</strong></td></tr>" +
+    '<tr><td>Paralelo (compra)<div class="sub">dato del ' + formatoFecha(c.ultimo.fecha) + "</div></td><td>" + bs(precioParalelo) + "</td><td" +
+      (masBarato === "paralelo" ? ' class="celda-elegida"' : "") + "><strong>" + bs(costoParalelo) + "</strong></td></tr>" +
+    "</tbody></table></div>" +
+    '<p class="nota">' + (masBarato === null
+      ? "Hoy los dos cuestan prácticamente lo mismo (diferencia de " + bs(Math.abs(dif)) + ")."
+      : "Hoy es más barato comprar en el <strong>" + masBarato + "</strong>: ahorras " + bs(Math.abs(dif)) + ".") +
+    " El paralelo es un mercado informal: antes de usarlo, considere el respaldo contable y tributario de la operación (facturas y bancarización).</p>";
+}
+
+// Simula comprar el monto en varias partes, cada cierto número de días,
+// usando la predicción día por día (y su rango).
+function htmlCompraEscalonada(monto, a, factor) {
+  const partes = parseInt($("partesCompra").value, 10) || 4;
+  const cada = parseInt($("intervaloCompra").value, 10) || 7;
+  const maxDia = a.curva.length - 1;   // 30 días
+  const montoParte = monto / partes;
+  let esperado = 0;
+  let minimo = 0;
+  let maximo = 0;
+  let filas = "";
+  let recortado = false;
+  for (let i = 0; i < partes; i++) {
+    let d = i * cada;
+    if (d > maxDia) { d = maxDia; recortado = true; }
+    const p = a.curva[d];
+    esperado += montoParte * p.esperado * factor;
+    minimo += montoParte * p.minimo * factor;
+    maximo += montoParte * p.maximo * factor;
+    filas += "<tr><td>Compra " + (i + 1) + '<div class="sub">' + formatoFecha(p.fecha) + (d === 0 ? " (hoy)" : "") + "</div></td>" +
+      "<td>USD " + FORMATO_2.format(montoParte) + "</td><td>" + bs(p.esperado * factor) +
+      (d > 0 ? '<div class="sub">' + num(p.minimo * factor) + " – " + num(p.maximo * factor) + "</div>" : "") + "</td>" +
+      "<td>" + bs(montoParte * p.esperado * factor) + "</td></tr>";
   }
-  if (r7.tipo === "estable" && r30.tipo === "estable") {
-    if (r7.incierto || r30.incierto) {
-      return { clase: "neutra", titulo: "Sin tendencia clara, pero con alta incertidumbre",
-        texto: "No se espera que el dólar suba ni baje de forma marcada, pero el rango posible es amplio. " +
-          "Si el pago es importante, una opción prudente es comprar una parte hoy y el resto en los próximos días." };
-    }
-    return { clase: "neutra", titulo: "Sin urgencia: se espera estabilidad", texto: "No se esperan cambios importantes. Compra cuando lo necesites." };
-  }
-  if (r7.tipo === "sube" || r30.tipo === "sube") {
-    return { clase: "sube", titulo: "Señales de subida: considera comprar al menos una parte hoy", texto: "Al menos uno de los plazos muestra tendencia al alza." };
-  }
-  return { clase: "neutra", titulo: "Señales mixtas", texto: "Los plazos no coinciden. Una opción prudente es comprar una parte hoy y el resto más adelante." };
+  const hoyTotal = monto * a.ultimo.y * factor;
+  const p30 = a.curva[maxDia];
+  const peor30 = monto * p30.maximo * factor;
+  return '<h3>Simulación: comprar por partes</h3>' +
+    '<p class="nota">Comprar USD ' + FORMATO_2.format(monto) + " en " + partes + " partes iguales, una cada " + cada + " días" +
+      (recortado ? " (las que pasan de 30 días se ubican en el día 30, el límite de la predicción)" : "") + ".</p>" +
+    '<div class="tabla-scroll"><table class="tabla"><thead><tr><th>Compra</th><th>Monto</th><th>Tipo de cambio esperado</th><th>Costo esperado</th></tr></thead><tbody>' +
+    filas + "</tbody></table></div>" +
+    '<div class="grid-3 espacio-arriba">' +
+      '<div class="tarjeta-pred"><div class="tp-plazo">Por partes</div><div class="tp-esperado">' + bs(esperado) + '</div><div class="tp-rango"><span>Mín. ' + bs(minimo) + "</span><span>Máx. " + bs(maximo) + "</span></div></div>" +
+      '<div class="tarjeta-pred"><div class="tp-plazo">Todo hoy</div><div class="tp-esperado">' + bs(hoyTotal) + '</div><div class="nota">Precio seguro: sin riesgo de que suba.</div></div>' +
+      '<div class="tarjeta-pred"><div class="tp-plazo">Todo en 30 días</div><div class="tp-esperado">' + bs(monto * p30.esperado * factor) + '</div><div class="tp-rango"><span>Mín. ' + bs(monto * p30.minimo * factor) + "</span><span>Máx. " + bs(peor30) + "</span></div></div>" +
+    "</div>" +
+    '<p class="nota">Comprar por partes no busca el precio más bajo, sino <strong>repartir el riesgo</strong>: en el peor escenario pagarías ' +
+      bs(maximo) + ", frente a " + bs(peor30) + " si esperaras para comprar todo en 30 días. Frente a comprar todo hoy, la diferencia esperada es de " +
+      bsConSigno(esperado - hoyTotal) + ". (El mínimo y el máximo suponen que todas las compras caen en el extremo del rango: es un escenario conservador.)</p>";
 }
 
 // Nota al pie de la calculadora según el mercado elegido.
 const NOTAS_CALCULADORA = {
-  oficial: "El TCO es una referencia: su banco puede aplicar un margen o comisión adicional.",
+  oficial: "Precio del banco = TCO del BCB más el margen indicado (los bancos venden el dólar algo por encima del TCO; consulte el de su banco).",
   compra: "En el paralelo se usa el precio de compra (lo que usted paga por cada dólar)."
 };
 
@@ -1396,28 +1691,31 @@ function calcular() {
   const a = estado.analisis[mercado];
   if (!a) {
     salida.innerHTML = '<p class="error-texto">No hay datos suficientes de ' + nombreSerie(mercado) +
-      " para calcular (hay " + estado.series[mercado].length + "; se necesitan al menos 3). Regístrelos en “Registrar cotizaciones”.</p>";
+      " para calcular (hay " + estado.series[mercado].length + "; se necesitan al menos 3).</p>";
     return;
   }
   calculadoraUsada = true;
 
+  // En el oficial se compra en el banco: TCO × (1 + margen).
+  const margen = mercado === "oficial" ? leerMargenBanco() : 0;
+  const factor = 1 + margen;
   const hoy = a.ultimo.y;
   const p7 = prediccionPlazo(a, 7);
   const p30 = prediccionPlazo(a, 30);
-  const r7 = recomendacionPlazo(monto, hoy, p7, 7);
-  const r30 = recomendacionPlazo(monto, hoy, p30, 30);
+  const r7 = recomendacionPlazo(monto, hoy, p7, 7, factor);
+  const r30 = recomendacionPlazo(monto, hoy, p30, 30, factor);
   const general = recomendacionGeneral(r7, r30);
 
   // Fila de la tabla de costos.
   function fila(etiqueta, fecha, precio, minimo, maximo) {
-    const total = monto * precio;
-    const dif = total - monto * hoy;
+    const total = monto * precio * factor;
+    const dif = total - monto * hoy * factor;
     const rango = minimo != null
-      ? '<div class="sub">Rango: ' + bs(monto * minimo) + " – " + bs(monto * maximo) + "</div>" : "";
+      ? '<div class="sub">Rango: ' + bs(monto * minimo * factor) + " – " + bs(monto * maximo * factor) + "</div>" : "";
     const difTexto = minimo != null
       ? '<span class="' + (dif > 0 ? "sube" : dif < 0 ? "baja" : "") + '">' + bsConSigno(dif) + "</span>" : "—";
     return "<tr><td>" + etiqueta + '<div class="sub">' + formatoFecha(fecha) + "</div></td>" +
-      "<td>" + bs(precio) + (minimo != null ? '<div class="sub">' + num(minimo) + " – " + num(maximo) + "</div>" : "") + "</td>" +
+      "<td>" + bs(precio * factor) + (minimo != null ? '<div class="sub">' + num(minimo * factor) + " – " + num(maximo * factor) + "</div>" : "") + "</td>" +
       "<td><strong>" + bs(total) + "</strong>" + rango + "</td><td>" + difTexto + "</td></tr>";
   }
 
@@ -1425,15 +1723,22 @@ function calcular() {
   salida.innerHTML =
     '<div class="recomendacion ' + general.clase + '"><div class="rec-titulo">' + general.titulo + "</div><p>" + general.texto + "</p></div>" +
     '<div class="tabla-scroll"><table class="tabla">' +
-    "<thead><tr><th>Momento de compra</th><th>Tipo de cambio</th><th>Costo de " + usd + "</th><th>Diferencia vs. hoy</th></tr></thead><tbody>" +
+    "<thead><tr><th>Momento de compra</th><th>Precio de 1 USD</th><th>Costo de " + usd + "</th><th>Diferencia vs. hoy</th></tr></thead><tbody>" +
     fila("Hoy (último dato)", a.ultimo.fecha, hoy, null, null) +
     fila("Esperar 7 días", p7.fecha, p7.esperado, p7.minimo, p7.maximo) +
     fila("Esperar 30 días", p30.fecha, p30.esperado, p30.minimo, p30.maximo) +
     "</tbody></table></div>" +
     '<ul class="lista-rec"><li class="' + r7.tipo + '">' + r7.texto + '</li><li class="' + r30.tipo + '">' + r30.texto + "</li></ul>" +
-    '<p class="nota">Cálculo con ' + nombreSerie(mercado) + ". Métodos usados: " + a.ganadores[7].metodo.corto +
-    " (7 días) y " + a.ganadores[30].metodo.corto + " (30 días). " +
-    NOTAS_CALCULADORA[mercado] + "</p>";
+    '<p class="nota">Cálculo con ' + (mercado === "oficial" ? "el precio del banco (TCO + " + pct(margen) + ")" : nombreSerie(mercado)) +
+    ". Métodos usados: " + a.ganadores[7].metodo.corto + " (7 días) y " + a.ganadores[30].metodo.corto + " (30 días). " +
+    NOTAS_CALCULADORA[mercado] + "</p>" +
+    htmlComparacionMercados(monto, leerMargenBanco()) +
+    htmlCompraEscalonada(monto, a, factor);
+}
+
+// Muestra el campo "margen del banco" solo si el mercado es el oficial.
+function actualizarCamposCalculadora() {
+  $("grupoMargen").hidden = $("mercadoCalc").value !== "oficial";
 }
 
 // ---- 6.8 Tabla de registros del usuario --------------------------------
@@ -1696,6 +2001,13 @@ function aplicarDatosEnLinea(paquete) {
     datosAutomaticos.fechaCotizaciones = c.actualizado;
     cambio = true;
   }
+  const p = paquete && paquete.predicciones;
+  if (p && typeof p.actualizado === "string" && Array.isArray(p.predicciones) &&
+      (!datosAutomaticos.fechaPredicciones || p.actualizado > datosAutomaticos.fechaPredicciones)) {
+    datosAutomaticos.predicciones = p.predicciones;
+    datosAutomaticos.fechaPredicciones = p.actualizado;
+    cambio = true;
+  }
   if (cambio) datosAutomaticos.desdeInternet = true;
   return cambio;
 }
@@ -1718,8 +2030,11 @@ async function descargarJSON(nombre) {
 async function cargarDatosEnLinea() {
   if (DATOS_EN_LINEA.url.includes("USUARIO")) return; // todavía no se publicó en GitHub
   try {
-    const [noticias, cotizaciones] = await Promise.all([descargarJSON("noticias.json"), descargarJSON("cotizaciones.json")]);
-    const paquete = { noticias: noticias, cotizaciones: cotizaciones };
+    // Si un archivo falla, se usan los demás (".catch(() => null)").
+    const [noticias, cotizaciones, predicciones] = await Promise.all(
+      ["noticias.json", "cotizaciones.json", "predicciones.json"].map((n) => descargarJSON(n).catch(() => null)));
+    if (!noticias && !cotizaciones && !predicciones) return;
+    const paquete = { noticias: noticias, cotizaciones: cotizaciones, predicciones: predicciones };
     try { localStorage.setItem(DATOS_EN_LINEA.claveCache, JSON.stringify(paquete)); } catch (e) { /* sin espacio: no pasa nada */ }
     if (aplicarDatosEnLinea(paquete)) recalcular();
   } catch (e) {
@@ -2089,6 +2404,109 @@ function borrarNoticia(id) {
 
 
 /* =====================================================================
+   9 B. INFORME PARA IMPRIMIR O GUARDAR COMO PDF
+   ---------------------------------------------------------------------
+   Arma una página limpia con lo más importante (cotización, predicciones,
+   seguimiento, calculadora, noticias y metodología) y abre la ventana de
+   impresión del navegador. Ahí se puede elegir "Guardar como PDF".
+   ===================================================================== */
+function generarInforme() {
+  const textoPlazo = (h) => (h === 1 ? "1 día" : h + " días");
+  const ahora = new Date();
+  const generado = formatoFecha(fechaHoyLocal()) + " a las " +
+    String(ahora.getHours()).padStart(2, "0") + ":" + String(ahora.getMinutes()).padStart(2, "0");
+
+  // Tabla de predicciones de una serie.
+  function tablaPredicciones(clave) {
+    const a = estado.analisis[clave];
+    if (!a) return "<p>Sin datos suficientes de " + nombreSerie(clave) + ".</p>";
+    let filas = "";
+    for (const h of CONFIG.horizontes) {
+      const p = prediccionPlazo(a, h);
+      const g = a.ganadores[h];
+      filas += "<tr><td>" + textoPlazo(h) + "</td><td>" + formatoFecha(p.fecha) + "</td><td><b>" + bs(p.esperado) + "</b></td><td>" +
+        num(p.minimo) + " – " + num(p.maximo) + "</td><td>" + g.metodo.corto + "</td><td>" + num(g.porPlazo[h].mape) + " %</td></tr>";
+    }
+    return "<h3>" + nombreSerie(clave) + " · último dato " + bs(a.ultimo.y) + " (" + formatoFecha(a.ultimo.fecha) + ")</h3>" +
+      "<table><thead><tr><th>Plazo</th><th>Fecha</th><th>Esperado</th><th>Rango (≈80 %)</th><th>Método</th><th>MAPE backtest</th></tr></thead><tbody>" +
+      filas + "</tbody></table>";
+  }
+
+  // Resumen del seguimiento real.
+  function textoSeguimiento(clave) {
+    const { evaluadas, pendientes } = evaluarSeguimiento(clave);
+    if (!evaluadas.length) return nombreSerie(clave) + ": todavía no hay predicciones con fecha cumplida (" + pendientes.length + " en espera).";
+    const mape = promedio(evaluadas.map((e) => Math.abs(e.error))) * 100;
+    const dentro = evaluadas.filter((e) => e.dentro).length / evaluadas.length;
+    return nombreSerie(clave) + ": " + evaluadas.length + " predicciones comprobadas · error medio real " + num(mape) +
+      " % · " + pct(dentro) + " dentro del rango.";
+  }
+
+  // Cotización actual.
+  const o = estado.analisis.oficial;
+  const c = estado.analisis.compra;
+  const v = estado.analisis.venta;
+  let cotizacion = "<ul>";
+  if (o) cotizacion += "<li>Oficial (TCO del BCB): <b>" + bs(o.ultimo.y) + "</b> (" + formatoFecha(o.ultimo.fecha) + ")</li>";
+  if (c && v) cotizacion += "<li>Paralelo: compra <b>" + bs(c.ultimo.y) + "</b>, venta " + bs(v.ultimo.y) + " (" + formatoFecha(c.ultimo.fecha) + ")</li>";
+  if (o && c) cotizacion += "<li>Brecha paralelo vs. oficial: " + pctConSigno((c.ultimo.y - o.ultimo.y) / o.ultimo.y) + "</li>";
+  cotizacion += "</ul>";
+
+  // Noticias recientes (las 6 más nuevas) con su impacto.
+  const normal = movimientoNormal(estado.series.oficial, CONFIG.noticias.diasDespues);
+  const nombresNivel = { fuerte: "Fuerte", moderado: "Moderado", normal: "Normal" };
+  const noticias = todasLasNoticias().slice(0, 6).map((n) => {
+    const im = medirImpacto(n, normal);
+    const impacto = im.estado === "medido"
+      ? nombresNivel[im.nivel] + " (" + pctConSigno(im.cambio) + " en 5 días)"
+      : im.estado === "pendiente" ? "por medir" : "sin datos";
+    return "<li><b>" + formatoFecha(n.fecha) + "</b> · " + escaparHTML(n.titular) + (n.fuente ? " <i>(" + escaparHTML(n.fuente) + ")</i>" : "") +
+      " — impacto: " + impacto + "</li>";
+  }).join("");
+
+  // Resultado de la calculadora, si se usó.
+  const calculadora = calculadoraUsada && $("resultadoCalc").innerHTML
+    ? "<h2>Calculadora: ¿compro hoy o espero?</h2><p>Monto: USD " + escaparHTML($("montoUSD").value) + "</p>" + $("resultadoCalc").innerHTML
+    : "";
+
+  const html = '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Informe LeoFX — ' + generado + "</title>" +
+    "<style>body{font-family:Inter,Segoe UI,Arial,sans-serif;color:#0f172a;margin:28px;font-size:12.5px;line-height:1.45}" +
+    "h1{color:#064e3b;margin:0 0 2px;font-size:22px}h2{color:#047857;font-size:16px;border-bottom:2px solid #d1fae5;padding-bottom:3px;margin-top:22px}" +
+    "h3{font-size:13px;margin:12px 0 6px}table{width:100%;border-collapse:collapse;margin:6px 0}th,td{border:1px solid #d6e5dc;padding:5px 7px;text-align:left;vertical-align:top}" +
+    "th{background:#ecfdf5;color:#065f46}.aviso{background:#fffbeb;border:1px solid #fde68a;color:#92400e;padding:8px 10px;border-radius:6px}" +
+    ".sub,.nota{color:#64748b;font-size:11px}.sube{color:#dc2626}.baja{color:#059669}.recomendacion{border-left:5px solid #64748b;background:#f1f5f9;padding:8px 12px;margin:8px 0}" +
+    ".recomendacion.sube{border-color:#dc2626;background:#fef2f2}.recomendacion.baja{border-color:#059669;background:#ecfdf5}.rec-titulo{font-weight:800}" +
+    ".grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.tarjeta-pred{border:1px solid #d6e5dc;padding:6px 8px;border-radius:6px}" +
+    ".tp-esperado{font-size:15px;font-weight:800}.tp-rango{display:flex;justify-content:space-between;color:#64748b}.etiqueta-alerta,.insignia{font-weight:700}" +
+    "@media print{body{margin:12mm}}</style></head><body>" +
+    "<h1>LeoFX — Informe del tipo de cambio del dólar en Bolivia</h1><div class='nota'>Generado el " + generado + "</div>" +
+    "<p class='aviso'><b>Aviso:</b> Herramienta de apoyo a la toma de decisiones. Las predicciones son estimaciones y no garantizan valores futuros.</p>" +
+    "<h2>Cotización actual</h2>" + cotizacion +
+    "<h2>Predicciones a 1, 7 y 30 días</h2><p>Para cada plazo se usa el método con menor error (MAPE) en el backtest. El rango equivale a cerca de 80 % de confianza.</p>" +
+    tablaPredicciones("oficial") + tablaPredicciones("compra") +
+    "<h2>Seguimiento real de las predicciones</h2><ul><li>" + textoSeguimiento("oficial") + "</li><li>" + textoSeguimiento("compra") + "</li></ul>" +
+    calculadora +
+    "<h2>Noticias recientes e impacto</h2><ul>" + noticias + "</ul><p class='nota'>El impacto mide cuánto se movió el dólar oficial en los 5 días siguientes a la noticia, comparado con un movimiento normal. Muestra coincidencia en el tiempo, no causa.</p>" +
+    "<h2>Metodología y fuentes</h2><p>Métodos: promedio móvil, regresión lineal, Holt, Holt amortiguado y combinación; se comparan con el MAPE en un backtest y se elige el mejor para cada plazo. " +
+    "Fuentes: Banco Central de Bolivia (TCO), DolarApi Bolivia (actualización diaria), prensa boliviana y Google News (noticias). Datos desde el 27/06/2026.</p>" +
+    "<p class='nota'>LeoFX · https://mamaninogalesleonel-sudo.github.io/leofx/</p>" +
+    "</body></html>";
+
+  const ventana = window.open("", "_blank");
+  if (!ventana) {
+    mostrarMensaje("El navegador bloqueó la ventana del informe. Permita las ventanas emergentes e intente de nuevo.", "error");
+    return;
+  }
+  ventana.document.open();
+  ventana.document.write(html);
+  ventana.document.close();
+  // Abrir la ventana de impresión cuando el informe terminó de cargarse.
+  ventana.onload = () => { ventana.focus(); ventana.print(); };
+  setTimeout(() => { try { ventana.focus(); ventana.print(); } catch (e) { /* ya se imprimió */ } }, 900);
+}
+
+
+/* =====================================================================
    10. NAVEGACIÓN: MENÚ LATERAL Y APARTADOS
    ---------------------------------------------------------------------
    La página muestra UN apartado a la vez (cotización, calculadora,
@@ -2173,8 +2591,30 @@ function mostrarApartado(id) {
    11. ARRANQUE
    "DOMContentLoaded" significa: cuando la página terminó de cargarse.
    Aquí se conectan los botones con sus funciones (addEventListener).
+   (Si este archivo se usa fuera de un navegador —por ejemplo, en GitHub
+   con registrar_predicciones.js— no hay página y esta parte no se ejecuta.)
    ===================================================================== */
-document.addEventListener("DOMContentLoaded", () => {
+// App instalable: solo cuando LeoFX se abre desde la página web (https),
+// se enlaza el "manifiesto" (nombre e íconos de la app) y se instala el
+// service worker (sw.js) para que funcione sin internet. En las copias
+// abiertas con doble clic no se hace nada (esos archivos no están al lado).
+function activarAppInstalable() {
+  if (location.protocol !== "https:") return;
+  const manifiesto = document.createElement("link");
+  manifiesto.rel = "manifest";
+  manifiesto.href = "manifest.webmanifest";
+  document.head.appendChild(manifiesto);
+  const iconoApple = document.createElement("link");
+  iconoApple.rel = "apple-touch-icon";
+  iconoApple.href = "icono-192.png";
+  document.head.appendChild(iconoApple);
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js").catch(() => { /* si falla, la página funciona igual */ });
+  }
+}
+
+function iniciarPagina() {
+  activarAppInstalable();
   // Menú lateral: abrir con ☰; cerrar con la X, con un clic en el fondo
   // oscuro (fuera del panel) o con la tecla Escape.
   $("btnMenu").addEventListener("click", abrirMenu);
@@ -2199,6 +2639,7 @@ document.addEventListener("DOMContentLoaded", () => {
       estado.mercado = boton.dataset.mercado;
       // La calculadora sigue a la pestaña elegida (el usuario puede cambiarla).
       $("mercadoCalc").value = MERCADOS[estado.mercado].series[0];
+      actualizarCamposCalculadora();
       dibujarTodo();
     });
   });
@@ -2207,10 +2648,24 @@ document.addEventListener("DOMContentLoaded", () => {
   $("chkComparar").addEventListener("change", (e) => { estado.comparar = e.target.checked; dibujarGrafico(); });
   $("chkPrediccion").addEventListener("change", (e) => { estado.mostrarPrediccion = e.target.checked; dibujarGrafico(); });
   $("ladoSerie").addEventListener("change", (e) => { estado.lado = e.target.value; dibujarTodo(); });
+  // Zoom del gráfico: 1 mes / 3 meses / Todo.
+  document.querySelectorAll(".zoom-grafico button").forEach((boton) => {
+    boton.addEventListener("click", () => {
+      estado.rango = boton.dataset.rango;
+      document.querySelectorAll(".zoom-grafico button").forEach((b) => b.classList.toggle("activo", b === boton));
+      dibujarGrafico();
+      dibujarGraficoBrecha();
+    });
+  });
 
   // Calculadora.
   $("formCalculadora").addEventListener("submit", (e) => { e.preventDefault(); calcular(); });
-  $("mercadoCalc").addEventListener("change", () => { if (calculadoraUsada) calcular(); });
+  $("mercadoCalc").addEventListener("change", () => { actualizarCamposCalculadora(); if (calculadoraUsada) calcular(); });
+  // Si ya se calculó, cambiar el margen o la compra por partes recalcula al instante.
+  ["margenBanco", "partesCompra", "intervaloCompra"].forEach((id) => {
+    $(id).addEventListener("change", () => { if (calculadoraUsada) calcular(); });
+  });
+  actualizarCamposCalculadora();
 
   // Registro de cotizaciones.
   $("regFecha").value = fechaHoyLocal();
@@ -2242,6 +2697,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Botón "Informe PDF".
+  $("btnInforme").addEventListener("click", generarInforme);
+
   // Botón "Actualizar ahora".
   $("btnActualizar").addEventListener("click", actualizarDesdeInternet);
 
@@ -2257,4 +2715,8 @@ document.addEventListener("DOMContentLoaded", () => {
     actualizarDesdeInternet();
     cargarDatosEnLinea();
   }, FUENTE_EN_LINEA.repetirCadaMs);
-});
+}
+
+if (typeof document !== "undefined") {
+  document.addEventListener("DOMContentLoaded", iniciarPagina);
+}

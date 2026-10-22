@@ -1,0 +1,16 @@
+{
+  "name": "LeoFX — Predicción del dólar en Bolivia",
+  "short_name": "LeoFX",
+  "description": "Cotización del dólar oficial y paralelo en Bolivia, predicciones a 1, 7 y 30 días, calculadora de compra y noticias.",
+  "lang": "es",
+  "start_url": "./LeoFX.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#14532d",
+  "icons": [
+    { "src": "icono-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icono-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icono-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
