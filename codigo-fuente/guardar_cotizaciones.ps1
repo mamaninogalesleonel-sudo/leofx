@@ -36,6 +36,14 @@ function Escribir-Registro($texto) {
 # ¿Es un valor de tipo de cambio razonable? (evita guardar errores)
 function Es-Razonable($x) { return ($x -ge 3 -and $x -le 50) }
 
+# Convierte la fecha que trae DolarApi en un momento en hora universal.
+# Hace falta porque el PowerShell nuevo (el de GitHub) convierte solo los
+# textos de fecha en objetos de fecha, y el de Windows los deja como texto.
+function A-UTC($valor) {
+  if ($valor -is [datetime]) { return [DateTimeOffset]$valor.ToUniversalTime() }
+  return [DateTimeOffset]::Parse([string]$valor, $invariante, [Globalization.DateTimeStyles]::AssumeUniversal)
+}
+
 try {
   # ---------- 1. Leer lo que ya estaba guardado ----------
   # Se guarda en un diccionario: fecha → { fecha, oficial, compra, venta }.
@@ -45,7 +53,10 @@ try {
     $m = [regex]::Match($texto, 'const COTIZACIONES_AUTOMATICAS = (\[[\s\S]*?\]);')
     if ($m.Success) {
       foreach ($c in @($m.Groups[1].Value | ConvertFrom-Json)) {
-        $porFecha[$c.fecha] = [ordered]@{ fecha = $c.fecha; oficial = $c.oficial; compra = $c.compra; venta = $c.venta }
+        # Fecha siempre como texto "AAAA-MM-DD"; las que tengan otro formato se descartan.
+        $f = if ($c.fecha -is [datetime]) { $c.fecha.ToString("yyyy-MM-dd") } else { [string]$c.fecha }
+        if ($f -notmatch '^\d{4}-\d{2}-\d{2}$') { continue }
+        $porFecha[$f] = [ordered]@{ fecha = $f; oficial = $c.oficial; compra = $c.compra; venta = $c.venta }
       }
     }
   }
@@ -62,7 +73,8 @@ try {
   $oficial = $datos | Where-Object { $_.casa -eq "oficial" } | Select-Object -First 1
   if ($oficial) {
     $valor = [double]$(if ($null -ne $oficial.venta) { $oficial.venta } else { $oficial.compra })
-    $fecha = ([string]$oficial.fechaActualizacion).Substring(0, 10)   # "2026-10-22T00:00..." → "2026-10-22"
+    # El TCO viene con fecha a medianoche en hora universal ("2026-10-22T00:00Z"): se usa esa fecha.
+    $fecha = (A-UTC $oficial.fechaActualizacion).ToString("yyyy-MM-dd")
     if (Es-Razonable $valor) {
       # Último oficial conocido antes de esta fecha: en lo guardado o en datos.js.
       $anteriores = @($porFecha.Values | Where-Object { $null -ne $_.oficial -and $_.fecha -lt $fecha } | ForEach-Object { [pscustomobject]@{ fecha = $_.fecha; valor = [double]$_.oficial } })
@@ -91,7 +103,7 @@ try {
   # Paralelo (referencia P2P)
   $paralelo = $datos | Where-Object { $_.casa -eq "binance" } | Select-Object -First 1
   if ($paralelo -and (Es-Razonable ([double]$paralelo.compra)) -and (Es-Razonable ([double]$paralelo.venta))) {
-    $fecha = ([DateTimeOffset]::Parse([string]$paralelo.fechaActualizacion, $invariante)).ToOffset([TimeSpan]::FromHours(-4)).ToString("yyyy-MM-dd")
+    $fecha = (A-UTC $paralelo.fechaActualizacion).ToOffset([TimeSpan]::FromHours(-4)).ToString("yyyy-MM-dd")
     $fila = Fila $fecha
     $fila.compra = [Math]::Max([double]$paralelo.compra, [double]$paralelo.venta)
     $fila.venta = [Math]::Min([double]$paralelo.compra, [double]$paralelo.venta)
