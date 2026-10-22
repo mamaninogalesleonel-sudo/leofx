@@ -10,22 +10,27 @@ Herramienta web para empresas importadoras y empresas que usan dólares con frec
 
 ## 1. Cómo abrir la herramienta
 
-1. Abra la carpeta **PROYECCTO LEO**.
-2. Haga **doble clic en `LeoFX.html`**. Se abre en su navegador (Chrome, Edge o Firefox).
-3. Listo. No necesita instalar nada ni usar un servidor.
+Hay dos formas, y las dos se mantienen al día solas:
 
-### En el celular (siempre actualizado, con OneDrive)
-Una copia enviada por WhatsApp o correo **no se actualiza**: es una "foto" del archivo en el momento en que se envió. Para tener siempre la última versión, abra el archivo **desde OneDrive**, donde ya está guardada la carpeta del proyecto:
+**A) Con el enlace (recomendado: computadora, Android y iPhone)**
+👉 **https://mamaninogalesleonel-sudo.github.io/leofx/**
+Es la herramienta publicada en internet. Siempre muestra la última versión. Se puede compartir con cualquier persona.
 
-1. **En la computadora:** OneDrive debe estar abierto (ícono de nube junto al reloj de Windows). Si no aparece, búsquelo en el menú Inicio como **OneDrive** y ábralo. Cada vez que la tarea diaria actualiza `LeoFX.html`, OneDrive sube la nueva versión a la nube.
-2. **En el celular:** instale la app **Microsoft OneDrive** e ingrese con la misma cuenta.
-3. Vaya a **Escritorio → PROYECCTO LEO → LeoFX.html**, toque los tres puntos (⋮) y elija **Abrir con → Chrome**. (Puede marcarlo como favorito ★ en OneDrive para encontrarlo rápido.)
-4. Cada vez que lo abra así, tendrá las **noticias y cotizaciones más recientes** que guardó la computadora. Además, al abrirse, la página descarga sola el dólar del momento.
+**B) Con el archivo `LeoFX.html`**
+Haga **doble clic en `LeoFX.html`** (o envíelo por WhatsApp, correo, etc. y ábralo con **Chrome**). Funciona sin instalar nada.
+
+### ¿Cómo se mantiene al día? (GitHub)
+El proyecto está publicado en **GitHub**: https://github.com/mamaninogalesleonel-sudo/leofx
+
+- Dos veces al día (**9:00 y 21:00**, hora de Bolivia), un programa corre **en los servidores de GitHub** —no en su computadora, que puede estar apagada—: guarda el dólar oficial y el paralelo del día, busca noticias del dólar en Google News y deja todo publicado en la carpeta `datos-en-linea`.
+- **Cada copia de `LeoFX.html`** (la de su computadora, la del celular, las que envió a otras personas) descarga esos datos **cada vez que se abre con internet**. Así recibe las noticias y cotizaciones nuevas **sin reenviar el archivo**. Lo descargado queda guardado para cuando no haya internet.
+- Además, al abrirse, la página consulta el dólar del momento (DolarApi Bolivia).
+- Para actualizar a mano en GitHub: en el repositorio, pestaña **Actions → Actualizar LeoFX → Run workflow**.
 
 Notas:
-- La computadora tiene que encenderse de vez en cuando (al menos una vez por semana) para buscar noticias y subirlas.
-- Los datos que usted registre a mano en el celular quedan en el celular (cada navegador guarda los suyos). Para pasarlos, use **Exportar CSV** en uno e **Importar CSV** en el otro.
-- **iPhone:** la vista previa de archivos de iPhone no ejecuta la lógica de la página. Para iPhone, la herramienta tendría que publicarse en internet (con un enlace).
+- El repositorio es **público** (plan gratuito): cualquiera puede ver el código y las noticias. Los datos que cada persona registra a mano quedan solo en su navegador; no se publican.
+- Los datos que usted registre a mano en un dispositivo quedan en ese dispositivo. Para pasarlos, use **Exportar CSV** en uno e **Importar CSV** en el otro.
+- La tarea programada de Windows ya **no se usa** (la reemplazó GitHub). Los archivos `activar_…`/`desactivar_…`/`actualizar_ahora.bat` quedan por si algún día prefiere actualizar desde la computadora.
 
 **Con internet**, al abrirse, la herramienta **descarga sola las cotizaciones del día** (oficial del BCB y paralelo) y recalcula las predicciones. Arriba verá una barra verde con la hora de actualización y los valores obtenidos.
 
@@ -38,13 +43,16 @@ Notas:
 | Archivo | Para qué sirve |
 |---|---|
 | **`LeoFX.html`** | **La herramienta lista para usar.** Un solo archivo con todo adentro. Es el que se abre y el que se envía al celular. |
+| `index.html` | Entrada de la página web en GitHub (abre `LeoFX.html`). |
+| `datos-en-linea/` | Noticias y cotizaciones publicadas dos veces al día; las leen todas las copias. |
+| `.github/workflows/actualizar.yml` | El programa que corre en GitHub a las 9:00 y 21:00. |
 | `README.md` | Este instructivo. |
 | `codigo-fuente/index.html` | Estructura de la página: secciones, botones y textos. |
 | `codigo-fuente/styles.css` | El diseño: colores (tonos verdes), tamaños y adaptación al celular. |
 | `codigo-fuente/app.js` | La lógica: actualización automática, modelos de predicción, backtest, calculadora, registro y CSV. |
 | `codigo-fuente/datos.js` | Los datos históricos (oficial y paralelo) hasta el 14/10/2026. |
 | `codigo-fuente/armar_LeoFX.bat` | Doble clic para volver a crear `LeoFX.html` si modifica algún archivo del código fuente. |
-| `codigo-fuente/activar_noticias_diarias.bat` | **Doble clic una sola vez** para activar la actualización diaria (9:00 y 21:00): dólar del día + noticias + `LeoFX.html`. *(Ya está activada en esta computadora.)* |
+| `codigo-fuente/activar_noticias_diarias.bat` | (Opcional, ya no hace falta) Activa la actualización diaria en la computadora en lugar de GitHub. |
 | `codigo-fuente/desactivar_noticias_diarias.bat` | Doble clic para quitar esa actualización diaria. |
 | `codigo-fuente/actualizar_ahora.bat` | Doble clic para actualizar en ese momento (a mano). |
 | `codigo-fuente/actualizar_leofx.ps1` | Lo que ejecuta la tarea diaria: llama a los dos programas de abajo y arma `LeoFX.html`. |
@@ -79,17 +87,14 @@ En el menú, **Noticias e impacto** muestra noticias económicas (con fecha, fue
 - **Importante para la tesis:** la barra mide **coincidencia en el tiempo, no causa**. Que el dólar se mueva cerca de una noticia no prueba que la noticia lo haya provocado.
 
 #### Noticias automáticas (se agregan solas)
-La página no puede leer Google News por sí sola (el navegador lo bloquea), así que lo hace la **actualización diaria** de Windows (ya activada en esta computadora):
+La página no puede leer Google News por sí sola (el navegador lo bloquea), así que lo hace la **actualización diaria en GitHub** (ver sección 1):
 
-1. Todos los días a las **9:00 y a las 21:00**, Windows busca noticias de los **últimos 7 días**. Si la computadora estaba apagada, lo hace apenas se enciende; como mira 7 días hacia atrás, no se pierden noticias aunque la PC esté apagada hasta una semana.
-2. Las noticias nuevas se guardan **dentro de `LeoFX.html`**. Al abrir (o recargar) la herramienta, aparecen con la etiqueta **Automática**, cada una con su barra de impacto.
+1. Todos los días a las **9:00 y a las 21:00**, GitHub busca noticias de los **últimos 7 días** y las publica en `datos-en-linea/noticias.json`.
+2. Cada copia de la herramienta las descarga al abrirse y las muestra con la etiqueta **Automática**, cada una con su barra de impacto.
 
 Qué busca: titulares de Bolivia sobre dólar, tipo de cambio, divisas, BCB, FMI y reservas internacionales. Descarta las notas de rutina que solo informan la cotización del día ("Dólar hoy…", "Así cierra el dólar…") y las repetidas. Guarda hasta 150 noticias de los últimos 6 meses.
 
-Tenga en cuenta:
-- Se actualiza el `LeoFX.html` de la carpeta del proyecto. Para verlo en el celular, ábralo desde OneDrive (ver sección 1).
-- Para actualizar en ese momento: doble clic en `codigo-fuente/actualizar_ahora.bat`. Para quitar la actualización diaria: `desactivar_noticias_diarias.bat`.
-- Si algo falla (por ejemplo, sin internet), se anota en `codigo-fuente/actualizacion.log` y la herramienta sigue funcionando con lo que ya tenía.
+Si algo falla (por ejemplo, Google no responde), se anota en `codigo-fuente/actualizacion.log` y la herramienta sigue funcionando con lo que ya tenía.
 
 #### Agregar noticias a mano
 Al final del apartado hay un formulario (fecha, titular, fuente, enlace y resumen) para hechos que la búsqueda no encuentre, de Bolivia o del mundo.
@@ -103,7 +108,7 @@ Noticias precargadas: cambio a tipo de cambio flexible (26/06/2026), crédito co
 - Mientras la página siga abierta, vuelve a consultar **cada 30 minutos**. También puede pulsar **"Actualizar ahora"**.
 - Si la abre varias veces el mismo día, se queda con el último valor del día.
 - Los fines de semana el BCB mantiene el valor del viernes: la herramienta completa sábado y domingo con ese valor, como en la serie histórica.
-- **Aunque no abra la página**, la actualización diaria de Windows guarda el dólar del día (archivo `cotizaciones_auto.js`), así la serie no queda con huecos. Solo faltarán los días en que la computadora no se encendió; esos se pueden completar a mano (sección 4).
+- **Aunque nadie abra la página**, la actualización diaria en GitHub guarda el dólar de cada día (`datos-en-linea/cotizaciones.json`), así la serie no queda con huecos. Todas las copias reciben esos días al abrirse.
 
 ### Pestañas "Oficial (BCB)" y "Paralelo"
 En cada pestaña verá:
