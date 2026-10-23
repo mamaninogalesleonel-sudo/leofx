@@ -1,4 +1,4 @@
-{"actualizado": "2026-10-22T13:09", "noticias": [
+{"actualizado": "2026-10-22T21:32", "noticias": [
   {
     "fecha": "2026-10-22",
     "titular": "DÓLAR OFICIAL LLEGA A BS 11,75 TRAS SUBIR DOS CENTAVOS",
@@ -55,6 +55,12 @@
   },
   {
     "fecha": "2026-10-19",
+    "titular": "Gobierno destaca ante el FMI que las reformas económicas responden a un programa propio",
+    "fuente": "La Octava",
+    "enlace": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPUTFsajdoNUdhdWVTaG5aV2gwWEhscUtqRkRYRzF2RnM0YmhGYTRVdHoyMW0teXNLc0I4TVg2Um1tUUtVc3Zlc3dWaktwYjN0ZHNhNnV6WUtfY1F6N1NCOGRkWVp3azVJOXZaWVRqbHZDakl4TnpYdkVJRGRHNzg4V25NUzZLbWdxNEhmWThsdWNCZ2l1bDJzeTVqSlhZdTctOWVfbmlScXNYZVNZN0FReUxEMkFRajRrbkZSY0lHVQ?oc=5"
+  },
+  {
+    "fecha": "2026-10-19",
     "titular": "La Aduana y el FMI revisarán la valoración de mercancías y los tiempos de atención",
     "fuente": "El Deber",
     "enlace": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPVFZ2Smp6cl96NDl3bzZJdGh4Q2s2OUN6ZTltcEhmTlBENVF4Tk9xMjNRQzNLREQzM1Q1c1Rzay11OVVTV01heEwtWW5xRzlVV1FNakxQS1p6djBiZnY2SjFIajA2TVhCQkJJTmNYOTB6SjRxWlVjQndjVF9iM0c2NnZRNjg5MmFVakNhVklHUjBqTkRFaXpjb0NBMnZ3bmZ2ZDdPWQ?oc=5"
@@ -67,21 +73,9 @@
   },
   {
     "fecha": "2026-10-18",
-    "titular": "El presidente del BCB asegura que no volverá a haber “corralitos” en dólares en Bolivia",
-    "fuente": "ANF Agencia de Noticias Fides Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPcTZmdFNjc09LcHhVYjB6eTR6d25yZExRN3NtQm5rSTBCLXBKc2xsWVNxWkYtUUlVZjBScUZBSUhLRS10UkVBekJfWEJCZWl2VlpmYmJXVmpnSExaUWxKbkJSOGdoLWNKTUk0Z0g1QXhiZG0xZU1uRmhPaDBIN1RhSWhFc2xOeG5MdXQwUDBFVEdmTWR3dng2NHFjbWpNY1otZzcxSll2aUdEU1Mxd0M5Y2hZNEw2anlqVklzVmpWSkZMZw?oc=5"
-  },
-  {
-    "fecha": "2026-10-18",
-    "titular": "¿Qué dijo el presidente del BCB sobre las restricciones a los ahorros en dólares?",
-    "fuente": "El Potosí",
-    "enlace": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNN1Iza09ERXVxQVFyaTloQmxJejRsUU1rcEJ6ejlLV01Zb1lURW5wWVpNU1JvaFREX2s0U2s5SVU3eEdERmVQZk1rSVVIVlZJbWRxbm1SRmlrdWJ2US1QU2xIdF9RTXE5RlFSOFNXVkxjeC04V095emtUR2R5cDUyVDVrRTMxaFIyYjF4Mm1JS09fYjlFSUVWSzljNUp3VEZXVDd2NFNBRWNpdHVVelZSY25XTWlCMEFSY1BSd3ByWlI?oc=5"
-  },
-  {
-    "fecha": "2026-10-18",
-    "titular": "Bolivia rinde su primer examen ante el FMI luego de la aprobación del crédito de $us 1.900 millones y el primer desembolso",
-    "fuente": "eju.tv",
-    "enlace": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxNc0oyWGpTcUtyR0YtYzE4akZuNzh3MDR0UVVmSWRUc1FQZk9SclFHaWRRME9maENzSDRlc2ctZ0tNVmxmUGsyVmF2TmZhVEN2dVRibUZ1WWVKWDdsX0IydnRfc3BoYXBES19fN2FrSXoxbHpwZTV2Q182STNDb3pOS2RfX2dfNWtDeWVQcmRYWk5FTzR6MURuS29Zei1Nb2dGLU1OYTBSVWlvcFVrV0NMOHFJX1VZT1hNQjBDNnktSHpIX2NxdjVMMmlpTENFWVpuNFhuc05May16R1VyX3c?oc=5"
+    "titular": "FMI y Banco Mundial amplían su actividad en América Latina mientras gobiernos giran al mercado",
+    "fuente": "DiarioBitcoin",
+    "enlace": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxOaGhEVElTNGJpNVdUS3M4ZGt4THJweW9EemJwMHg0QXFWdEF0bEwtdlJ3SkZJV3JqNXFBaVZJalRZa0E0S2hYYUZGUDQ3a3VtVGJPcldQclNXZWxLeFhFcFkxZHZmVmNBTF9XSWo0cXlDQnlIdzZ4RGpZSlNhZEE5RHZ6X1ZobWdCMWJEUi1aZFlPTUhmRnhNSE15MUFZakVfeEZhOTEyeTZHaWVsN09yd3RDdmFaZmtCN3dQemE2S2FKSjFtUTEzT1hvYWx6cElR?oc=5"
   },
   {
     "fecha": "2026-10-18",
@@ -91,9 +85,21 @@
   },
   {
     "fecha": "2026-10-18",
-    "titular": "FMI y Banco Mundial amplían su actividad en América Latina mientras gobiernos giran al mercado",
-    "fuente": "DiarioBitcoin",
-    "enlace": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxOaGhEVElTNGJpNVdUS3M4ZGt4THJweW9EemJwMHg0QXFWdEF0bEwtdlJ3SkZJV3JqNXFBaVZJalRZa0E0S2hYYUZGUDQ3a3VtVGJPcldQclNXZWxLeFhFcFkxZHZmVmNBTF9XSWo0cXlDQnlIdzZ4RGpZSlNhZEE5RHZ6X1ZobWdCMWJEUi1aZFlPTUhmRnhNSE15MUFZakVfeEZhOTEyeTZHaWVsN09yd3RDdmFaZmtCN3dQemE2S2FKSjFtUTEzT1hvYWx6cElR?oc=5"
+    "titular": "Bolivia rinde su primer examen ante el FMI luego de la aprobación del crédito de $us 1.900 millones y el primer desembolso",
+    "fuente": "eju.tv",
+    "enlace": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxNc0oyWGpTcUtyR0YtYzE4akZuNzh3MDR0UVVmSWRUc1FQZk9SclFHaWRRME9maENzSDRlc2ctZ0tNVmxmUGsyVmF2TmZhVEN2dVRibUZ1WWVKWDdsX0IydnRfc3BoYXBES19fN2FrSXoxbHpwZTV2Q182STNDb3pOS2RfX2dfNWtDeWVQcmRYWk5FTzR6MURuS29Zei1Nb2dGLU1OYTBSVWlvcFVrV0NMOHFJX1VZT1hNQjBDNnktSHpIX2NxdjVMMmlpTENFWVpuNFhuc05May16R1VyX3c?oc=5"
+  },
+  {
+    "fecha": "2026-10-18",
+    "titular": "¿Qué dijo el presidente del BCB sobre las restricciones a los ahorros en dólares?",
+    "fuente": "El Potosí",
+    "enlace": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNN1Iza09ERXVxQVFyaTloQmxJejRsUU1rcEJ6ejlLV01Zb1lURW5wWVpNU1JvaFREX2s0U2s5SVU3eEdERmVQZk1rSVVIVlZJbWRxbm1SRmlrdWJ2US1QU2xIdF9RTXE5RlFSOFNXVkxjeC04V095emtUR2R5cDUyVDVrRTMxaFIyYjF4Mm1JS09fYjlFSUVWSzljNUp3VEZXVDd2NFNBRWNpdHVVelZSY25XTWlCMEFSY1BSd3ByWlI?oc=5"
+  },
+  {
+    "fecha": "2026-10-18",
+    "titular": "El presidente del BCB asegura que no volverá a haber “corralitos” en dólares en Bolivia",
+    "fuente": "ANF Agencia de Noticias Fides Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPcTZmdFNjc09LcHhVYjB6eTR6d25yZExRN3NtQm5rSTBCLXBKc2xsWVNxWkYtUUlVZjBScUZBSUhLRS10UkVBekJfWEJCZWl2VlpmYmJXVmpnSExaUWxKbkJSOGdoLWNKTUk0Z0g1QXhiZG0xZU1uRmhPaDBIN1RhSWhFc2xOeG5MdXQwUDBFVEdmTWR3dng2NHFjbWpNY1otZzcxSll2aUdEU1Mxd0M5Y2hZNEw2anlqVklzVmpWSkZMZw?oc=5"
   },
   {
     "fecha": "2026-10-17",
