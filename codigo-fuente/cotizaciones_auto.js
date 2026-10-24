@@ -1,7 +1,7 @@
 /* LeoFX — cotizaciones_auto.js
    ARCHIVO GENERADO AUTOMÁTICAMENTE por guardar_cotizaciones.ps1 (no lo edite).
    Cotizaciones guardadas cada día por la tarea de Windows (fuente: DolarApi Bolivia). */
-const COTIZACIONES_AUTOMATICAS_FECHA = "2026-10-23T09:34";
+const COTIZACIONES_AUTOMATICAS_FECHA = "2026-10-23T21:33";
 const COTIZACIONES_AUTOMATICAS = [
   {
     "fecha": "2026-10-22",
@@ -12,7 +12,7 @@ const COTIZACIONES_AUTOMATICAS = [
   {
     "fecha": "2026-10-23",
     "oficial": 11.84,
-    "compra": 11.98,
-    "venta": 11.95
+    "compra": 12.01,
+    "venta": 11.98
   }
 ];
