@@ -2254,7 +2254,7 @@ const DATOS_NOTICIAS = [
 /* LeoFX — cotizaciones_auto.js
    ARCHIVO GENERADO AUTOMÁTICAMENTE por guardar_cotizaciones.ps1 (no lo edite).
    Cotizaciones guardadas cada día por la tarea de Windows (fuente: DolarApi Bolivia). */
-const COTIZACIONES_AUTOMATICAS_FECHA = "2026-10-30T21:48";
+const COTIZACIONES_AUTOMATICAS_FECHA = "2026-10-31T09:39";
 const COTIZACIONES_AUTOMATICAS = [
   {
     "fecha": "2026-10-22",
@@ -2309,6 +2309,12 @@ const COTIZACIONES_AUTOMATICAS = [
     "oficial": 12.11,
     "compra": 12.03,
     "venta": 12.0
+  },
+  {
+    "fecha": "2026-10-31",
+    "oficial": 12.09,
+    "compra": 11.98,
+    "venta": 11.94
   }
 ];
 
@@ -2317,8 +2323,20 @@ const COTIZACIONES_AUTOMATICAS = [
 /* LeoFX — noticias_auto.js
    ARCHIVO GENERADO AUTOMÁTICAMENTE por buscar_noticias.ps1 (no lo edite).
    Noticias de Google News relacionadas con el dólar en Bolivia. */
-const NOTICIAS_AUTOMATICAS_FECHA = "2026-10-30T21:48";
+const NOTICIAS_AUTOMATICAS_FECHA = "2026-10-31T09:39";
 const NOTICIAS_AUTOMATICAS = [
+  {
+    "fecha": "2026-10-31",
+    "titular": "BCB adelanta la devolución de $us 333 millones y cambia el manejo de nuevos depósitos en dólares",
+    "fuente": "Economy",
+    "enlace": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPcFpaR3VaZklDeDhHdER1b0VDZGpNc2RSVDY3RnpfRUxnUkxxZEVreTBGNmZoRE05OEU5MzgzbS1YUUpmTzdrTWExM093ZTQxb1ZQaHFOREpYTEo0dmdKV2lTcXRjSGxVaGVYWGF6ZnU3Z1ZPamZxNUZYZGNEZFpTU0ZMYWZTMTlDb0s0eUZSS0dFRl9WWkNONUp2eU02U09OWUVRY1pzTERMU25nRGdLQjNMVTJwMXhBOFhfMVVJMmUtOFJkaUZHNFFpbUUxNWRQ0gHWAUFVX3lxTFBSSndnY18tb2dDdXVkbkVhMHlYazFJUERZWlFVYy1zOUp6WFNBaEpFcmNZTTZEenY2aUJkWVVSWi1MaGtnZFY1bndYS2JGNDNBVUdxSGFxd2hiSklIVGl2TzAzMDlVeFFEME1IYUxVVWxHZUM0d1R6MC1fTzRGeE5QOGdPSm5qOWhOVnRqM0l4QXRFVUZuUzRqZXdwMFQ0WVFTTkN5eUVKWllvaG1OTXY4WVRKS0p3UW5OOEdwcXJYYzJKYlBLNVFQcWY2MWF6REpPM2NDamc?oc=5"
+  },
+  {
+    "fecha": "2026-10-30",
+    "titular": "El dólar vuelve a caer y se cotizará en Bs 12,09 durante los próximos cuatro días",
+    "fuente": "eju.tv",
+    "enlace": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNMkwxaWtJUF9UTjVRM2RYYlRGbWV1cWlDOWxuTkROazktNEttTUw2ZXQwa0xwY3d4RWFnZGs1VVFrTGQwa3hkVXRIZFZsLTFkdnpyeU9ZNFljN2stUzc0TVBmVVBKdExWWHJyRThzem1lVXBSN0JHVVcxc0gtcERtZFFmMWoxYmFpSm9LNWRWOWE1Znk1TmZMVTBQcHRnVWVsaVQtMlM5dw?oc=5"
+  },
   {
     "fecha": "2026-10-30",
     "titular": "El dólar paralelo rompe la tendencia al alza y cae por debajo de los Bs 12 este viernes",
@@ -2381,18 +2399,6 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-10-29",
-    "titular": "BCB: Reservas Internacionales Netas registran un saldo de $us 1.905 millones a agosto el 2024",
-    "fuente": "Economy",
-    "enlace": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxORGtiX2FxSGhvTEQ0aTFkRnNEUTdCeUsxNjdZbGpaT3MwUTcxTWtlVk8xSFIwTlBiR0hya21XMzgwZDZlQ3gxTE8yQXRkZkZoOWNzUjhvbDNsM2VvOTM4dGxuY3BpMk9Zc0FyT09kSGdVUE9hajNRZVRBYVo2RU1RcDlDa0lvREY0SnJLTDN6cGdSWF9rNDVmM01COVhHTWhlUldrcmRWR0V0Q3ZjLURiaXAtTlJtM2ZYaW5oQ0hyYkhrRHpyRGZZTC0xNEl6c1BmVV80bGh1NmTSAd4BQVVfeXFMTmt2cnd3VS12NmtUYzYzdlEwd05mOGo5eHJsWWd1YUxLLXAtcW9EQjdhTHotRk1xTnZNV3c1NXE5YVpRdmJNSmJNOGZVY2lVTGNVWDdpcFZGTUFZMmQteUk0OVlNU2NpbEFtRjh0UmJ2LWZwczhURWNSYktrc2lPQVBsTTM3SnZDOTRhN0xkYmdWWW4xU09vT3h0UHVkWjdGV2NLUmJwQnBwRnR3eWhqX1ZhTjFZQUdHTEg2MVBLRlNKbERQX0JNNFcybnlpbmtCdmcxNzVhZzdUak81UTlR?oc=5"
-  },
-  {
-    "fecha": "2026-10-29",
-    "titular": "EFY Financiera dinamiza operaciones con divisas en Bolivia",
-    "fuente": "El Diario - Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQaDMtRzVoVDY0VmxPWGpPeHEwOEVveW9YVWsza3I0Y2RPMG9DOUlsU3VJdlZVazRFZzBOLXdGUXhPUi0wWmY3THhVWXB0bTZMbkNsNUsyMzI4XzdOS2lzUmVZZDFDWmthZUpsRFZhZ0QwdjYwWk5XNlN4NHVPNnMxSjZSOHZXYzl2QUVJeFRIU3hPUy1VT3VJR252cVVrVWwxa1hwRA?oc=5"
-  },
-  {
-    "fecha": "2026-10-29",
     "titular": "DÓLAR SUBE Y ALCANZA LOS BS 12,12",
     "fuente": "El Alteño",
     "enlace": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNalY2MEQ0UENBbG0tYUk4eVJ1M0xLNXp5bjUwUWtFNFd3YjJqRkZsVWF0XzBHdVA0UGlWa3JlSk5Oa29QOF9ycy0wU2JKQ09SRnhMTTl3TEhTVzRaNEFKMlR2dXkxbzZ3UWY0SExmWlk4RnRsMFNHTU94RTJ1ejlxT1Z2MFc?oc=5"
@@ -2402,6 +2408,18 @@ const NOTICIAS_AUTOMATICAS = [
     "titular": "El dólar oficial cambia de precio en Bolivia: ¿a cuánto llegó este jueves?",
     "fuente": "Red Uno",
     "enlace": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOaERVckdFTXBtVnJPeGVhYWlRTkhjbDJnWndJVlB4bUNWSFA1S09wVFNiY1NMSkRxUzJ3MUVfd0tLUHNxdTNOUXh3Z0M2aGlTbExhQlpGb1JNakZoUkpuSW5HQU1RXzdld01jSWhNaU1MaFZHUDdyVVQzT3RucVdyNjROQ0VJeFp5ZEROWnpUcE5FRU85Vnowd3FKcVZpbno5UVYwcHpCd3dOeGdIaTc3VlBVVXk0cUJiTk96MQ?oc=5"
+  },
+  {
+    "fecha": "2026-10-29",
+    "titular": "BCB: Reservas Internacionales Netas registran un saldo de $us 1.905 millones a agosto el 2024",
+    "fuente": "Economy",
+    "enlace": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxORGtiX2FxSGhvTEQ0aTFkRnNEUTdCeUsxNjdZbGpaT3MwUTcxTWtlVk8xSFIwTlBiR0hya21XMzgwZDZlQ3gxTE8yQXRkZkZoOWNzUjhvbDNsM2VvOTM4dGxuY3BpMk9Zc0FyT09kSGdVUE9hajNRZVRBYVo2RU1RcDlDa0lvREY0SnJLTDN6cGdSWF9rNDVmM01COVhHTWhlUldrcmRWR0V0Q3ZjLURiaXAtTlJtM2ZYaW5oQ0hyYkhrRHpyRGZZTC0xNEl6c1BmVV80bGh1NmTSAd4BQVVfeXFMTmt2cnd3VS12NmtUYzYzdlEwd05mOGo5eHJsWWd1YUxLLXAtcW9EQjdhTHotRk1xTnZNV3c1NXE5YVpRdmJNSmJNOGZVY2lVTGNVWDdpcFZGTUFZMmQteUk0OVlNU2NpbEFtRjh0UmJ2LWZwczhURWNSYktrc2lPQVBsTTM3SnZDOTRhN0xkYmdWWW4xU09vT3h0UHVkWjdGV2NLUmJwQnBwRnR3eWhqX1ZhTjFZQUdHTEg2MVBLRlNKbERQX0JNNFcybnlpbmtCdmcxNzVhZzdUak81UTlR?oc=5"
+  },
+  {
+    "fecha": "2026-10-29",
+    "titular": "EFY Financiera dinamiza operaciones con divisas en Bolivia",
+    "fuente": "El Diario - Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQaDMtRzVoVDY0VmxPWGpPeHEwOEVveW9YVWsza3I0Y2RPMG9DOUlsU3VJdlZVazRFZzBOLXdGUXhPUi0wWmY3THhVWXB0bTZMbkNsNUsyMzI4XzdOS2lzUmVZZDFDWmthZUpsRFZhZ0QwdjYwWk5XNlN4NHVPNnMxSjZSOHZXYzl2QUVJeFRIU3hPUy1VT3VJR252cVVrVWwxa1hwRA?oc=5"
   },
   {
     "fecha": "2026-10-28",
@@ -2441,15 +2459,15 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-10-25",
-    "titular": "Bolivia: Reservas Internacionales suman 3.978 millones de dólares",
-    "fuente": "La Patria Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOSEFQTER6ZzMweS1pQWpIOEJ4bzFOaHgyakdEMjVNc1B3d3hCcGJGTG5TdnJDOXhHSUJyR3czWG5ib2pZVDVGcHVxLVJVTmNvSS0wY0l0RERiVi03enRMSzlmazMwOFZRNDl4WDNtNS1GYjcxWUlMZlVMcERsRTNJYWIyREVUb2dXQUdtQjNCenlsNkFYUFhjajRmRGtFXzF1QV9F?oc=5"
-  },
-  {
-    "fecha": "2026-10-25",
     "titular": "¡Cisterna con combustible en llamas! Reportan impresionante incendio en la carretera a Camiri",
     "fuente": "Red Uno",
     "enlace": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxORUhqeWpKY1FHRWoxaHN0UXFzS3dpeHh6N0NwLUJOZTlZcDVoNHN0VnI0by1qMWtZZEkxVmtUNjdNTFhjaEFQU2IyMlNwZW95WFBzbFJPVVB6TjJtdjNENk1LWVlsMUxUUzBNVzkxRk1HZ3lQU0s2M1lRVlRuaXlkMmJrd3AyTGpIdXItNkhlU3dhTzBRME56Rm1DSlZCYjNxSnNTbTFqNWRoUkdraHhlREhuYldqeFk2N3poWEx2M08?oc=5"
+  },
+  {
+    "fecha": "2026-10-25",
+    "titular": "Bolivia: Reservas Internacionales suman 3.978 millones de dólares",
+    "fuente": "La Patria Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOSEFQTER6ZzMweS1pQWpIOEJ4bzFOaHgyakdEMjVNc1B3d3hCcGJGTG5TdnJDOXhHSUJyR3czWG5ib2pZVDVGcHVxLVJVTmNvSS0wY0l0RERiVi03enRMSzlmazMwOFZRNDl4WDNtNS1GYjcxWUlMZlVMcERsRTNJYWIyREVUb2dXQUdtQjNCenlsNkFYUFhjajRmRGtFXzF1QV9F?oc=5"
   },
   {
     "fecha": "2026-10-24",
@@ -2465,69 +2483,9 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-10-23",
-    "titular": "Reservas de Bolivia llegan a $us 3.978 millones a mediados de octubre; $us 647 millones son divisas",
-    "fuente": "unitel.bo",
-    "enlace": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxPZHlTWmxSQzI5ZW1zWmFDenNqOVY5X1BOd3lzRElYSnpaQ3NEcFZoSlk3bXAyb0NwYnRkMGlVS2hRbDJsdkVrMG11STc3TG8xQlhxTkdReUcteGZkVGtQZ19MTlR3MGx5WXpycDJxbHNNU2NjQnF4dElscTItYmFNLWhlalJVRUJQVHhFX3VJdnludFRLeTNCWjhSaURjZXpvWW5BNHBmNG5iRkVxMmgyNTFZelNtdlEwWEg1V1VKLXFpS04tbWJsNXhBR0Y3MkQyZnB5MTI1SkloQQ?oc=5"
-  },
-  {
-    "fecha": "2026-10-23",
-    "titular": "Alivio Tributario: contribuyentes tienen hasta el 31 de diciembre para regularizar sus deudas",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxNRnNDTGN5OW82NVJUSXc1OGM3S2RELXJHQVVJalNkMmFsTU5FMmNSR1FabjdLNmQyVHpYcm9BU2JZRE9Cbmc3d3ZZMmxzQUhNZU9OV2xaa1lIeWdaMjZUTWlKSFk5b1pVak8wTzlTX093dUpvTkk2STVHNjl5MmdlSFZLWEVob1FUNGVyZ1JTcE42Rl9nRlFDWlh1VVFXR0FBclNScDJSWjZFaF9DZkVHQmVDZUt2VXBxeHp0bUdSNkFSdEZmV1NLRUJDNlpSUE9fTzNoWnc2MmQ?oc=5"
-  },
-  {
-    "fecha": "2026-10-23",
-    "titular": "Acuerdo con el FMI compromete a Bolivia a eliminar la subvención a los combustibles desde 2027",
-    "fuente": "FmBolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNQ19tVEdqX2NzR3FpRXF5aWc1ZnM2MEs3V29nbnFTYk9nTENfMmhtZy03REI4bXpKdG1XTW1ZQjBNcVVPOVVxNllydW1QVlI5TUljNE9IRnhIeEJQOU90ZEsxcFZsdkpwYUdpck5fbXg1bWRyU2Z3UW16RVp5b05SR2xpV0ZBaWVzczExNWNCdXY0bDRxQ1pJS1N4ekhzSTdiSzh3QnQ0ZkRkeE9zcVd4NmFMeXVTM3I2cjNDcFdTVkQya2hzWWNNU0ZTRkxqbEU?oc=5"
-  },
-  {
-    "fecha": "2026-10-23",
-    "titular": "Deuda pública de Bolivia llegaría al 100,2% del PIB en 2026, según informe técnico del FMI",
-    "fuente": "FmBolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMixwFBVV95cUxORkItelFRZjNWdVpicng2akdhMWdyanc5Ml9WMlZxMU13eGpZWkxDbU9UZzQ5bjZMLUtsOXJlS3RlWTZEMzlneEpSeS1QZTJBNEh0blIxbHNyYnJyRDM1bWdDTWJmWVBVcWtBLVB0NzlxZzN3MFgwdUVhSjFBVjFjWGFGQkp6MWJydlVnRFctN3p1YU8yb19ORU9VdUJ4MGlBRS1ZUGNmaTJqTVJNb0xRQ2gyS2V6TGVJYnJfdnVSamQ0bV9DZHRF?oc=5"
-  },
-  {
-    "fecha": "2026-10-23",
-    "titular": "¿Conviene comprar dólares ahora? Estas fueron las variaciones del paralelo en cinco días",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQOS1OdkZLUi1KdDlYVTRpVXhfdEh6UGhHX25HdXhqd01IZ21oRTgzX0hoVXZlSm9faEg4TnR2anlfYzg0QlV4cWczMzBWbmR2VEZPSm5VUW5tN1lwWWJpMDNMV0lIOE5OY1dEblBsLVNxdmlPbTVIeUV5U1BOSFR5OTQtdEwyRThLT3ZpTDZQYS1ZSnpOWGJvZ0RwY0MtekpNRnNCbHB2Zzd2dklNcXZmM2Y4X1FOUUxudmZwNEk4TEVNdmhXMkh6MjZMWlFXdEQ2M1E?oc=5"
-  },
-  {
-    "fecha": "2026-10-23",
-    "titular": "Las reservas internacionales llegan a $us 3.978 millones, con el oro como principal componente",
-    "fuente": "Abya Yala Tv",
-    "enlace": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQS090VlFpOWZHUi1weTBYSnhCUzFXZ1l5WHB1bjZna2VhOTJmWmVzOEo0RUpIblpVLV9icVd1ampsUkZ3UXROLWhZMWJTZVRNemlyVVZiYUQ3ampDMEdEdTJJVGp1S1dpcEptT3EwdHRFRlZhUVF5cjUxVmlfTWdkWTBwZ1FBU0ZzSjlLS0pmYmgxdmVWc2xpLXRrVkFkSjVLZzROMzBWa0pMeDVhMDRnVnZpZDF2ekk?oc=5"
-  },
-  {
-    "fecha": "2026-10-23",
-    "titular": "Senado aprueba crédito de $us 30,2 millones del BID para modernizar el alumbrado público en el país",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxPXzdTNFVqamdCMVRsUHhEbUJZZ1FMOVpod2Z0dEFvT205U2QyaWNZbXQ4WGVnOGxqb3VNNlpfZkhtVTFXZU5oUUlzWXVMNEF0cU0zUm50NlExSEp0Rnladm1UMnlMOW1OWUlBYkE3dkw2OWk1cWxqNnhQR050Q0sza2FSSmUtVFFxdXpaLWFKRW0zMHQ3eS11WnFfa1ZUby1jelV5VnRjUUJSU3p4Yl9tXzg0Q2tZVlNweWpBRnk2bDQtSUE3c2VLTy1WWUtqLWNFeE5NWkxVWWdCNEpXVDJmbw?oc=5"
-  },
-  {
-    "fecha": "2026-10-23",
-    "titular": "¿Cuál es la cotización del dólar este viernes? La divisa sigue en ascenso en Bolivia",
-    "fuente": "El Deber",
-    "enlace": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNZ0hwRGVnZUdzTFVNcnBySkIzVU0zdWtOeGJuSVlsLUN1Rk9VdU9xVEdYU3Jtc2Z3RjdzNUFkMVhGLXBKaGtqcGFnV1BhQVd3a2FtTVItTU5kWkNMWU02dmZ5SlpVRXAyZUQ2TTF5ZXl3MkN1UVF0MGFQMHViNklPWURDMFlnRHNiM1QzNmtRQXJTOE43VlBVaG1WcEwtaW9qNktfdkRzNG9TUQ?oc=5"
-  },
-  {
-    "fecha": "2026-10-23",
-    "titular": "BCB fija el dólar oficial en Bs 11,84 y el mercado paralelo se mantiene por encima",
-    "fuente": "FmBolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQTnZBclpzRFVaVWU0dERuZDNKNnlNcjRETjBXNjZDNVM1aW1ZOXlQN0NCenl6aWZsUjl5OWFrLTFrdUFadzh4S3ZiZmVCSFJGRzN2VkRhY0pmNDIzOUc2SFJGbm5ENFozWUJsUVdaeGJaT0tLcVRmVGNrU3dWWE03NUtzWVBNUWlsTjJrUUJXbVJ2NWhGOGY1TXcxTG4zcGQ2bkNxY1cya0hHRmFuYmVXbnlIZ1dZNGtic3hKNkhldw?oc=5"
-  },
-  {
-    "fecha": "2026-10-23",
-    "titular": "El dólar paralelo supera la barrera de los Bs 12 y cierra al alza este viernes",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQTnJwVUFzd203YXRUYm9zWG5lR2hOWWZoWm5Vem9vaE5FWGlRYnhCbXdodk1scEZUVmpBTFk5RDY2Q0ZVdDZmZm1YZXBOY20zVXh2akJDU1oxSVA0SkdWSWNHTnBDMzY2Wjd2UVFISHJCNVlGNU9ETGkybmxidWlxQW80OEFXSXB4Nk9yWG9ZTkx1X1hXSG5jdzJDaHB6WDJZT1FDYnNBSTBWTjJ0dm1MRllNLThxYkRNQXpOdTlZdnBTTWhJamc?oc=5"
-  },
-  {
-    "fecha": "2026-10-23",
-    "titular": "BCB: RIN de Bolivia suben a $us 3.978 millones hasta el 16 de octubre",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPUUxFUndJUHJySEwzOUpEVUpNeFFQME5xX1lWSEhhN09EenlmSW95bWRxSmJ4SmNPVHNoMjIxYVlyejBFc3h3OEJWZ05xN3daeF9aZmZvejRrTFJ0Mzk3THdHUW5LdkxQYVdCcnRLbnVQU2QycDB6dDFCX29MRnZURlk3dkxkV3VSSzBDQWtMTGV2eEJUQmNhVG96ZnRTX2JrZlFMcEwzVk53SkxiMGZSZldDZHpWRWZK?oc=5"
+    "titular": "Dólar Binance en Bolivia supera los 12 bolivianos: cotiza a 12.05",
+    "fuente": "Criptotendencias",
+    "enlace": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9NSFdRczhjWlhrUkt4U0hzSzQtaWs4OWRGNi1fU2JWUFNCMlpFSDdScWluc254SVNUQVp0eHJHYjdPRGRLWGZLQmh2b2N2Qmhtc19hbFdYb1lkV05nWHJZQUpTR1R4YVg4NzZib2FPY3F3MFRTcHc?oc=5"
   },
   {
     "fecha": "2026-10-23",
@@ -2537,15 +2495,93 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-10-23",
+    "titular": "BCB: RIN de Bolivia suben a $us 3.978 millones hasta el 16 de octubre",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPUUxFUndJUHJySEwzOUpEVUpNeFFQME5xX1lWSEhhN09EenlmSW95bWRxSmJ4SmNPVHNoMjIxYVlyejBFc3h3OEJWZ05xN3daeF9aZmZvejRrTFJ0Mzk3THdHUW5LdkxQYVdCcnRLbnVQU2QycDB6dDFCX29MRnZURlk3dkxkV3VSSzBDQWtMTGV2eEJUQmNhVG96ZnRTX2JrZlFMcEwzVk53SkxiMGZSZldDZHpWRWZK?oc=5"
+  },
+  {
+    "fecha": "2026-10-23",
+    "titular": "El dólar paralelo supera la barrera de los Bs 12 y cierra al alza este viernes",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQTnJwVUFzd203YXRUYm9zWG5lR2hOWWZoWm5Vem9vaE5FWGlRYnhCbXdodk1scEZUVmpBTFk5RDY2Q0ZVdDZmZm1YZXBOY20zVXh2akJDU1oxSVA0SkdWSWNHTnBDMzY2Wjd2UVFISHJCNVlGNU9ETGkybmxidWlxQW80OEFXSXB4Nk9yWG9ZTkx1X1hXSG5jdzJDaHB6WDJZT1FDYnNBSTBWTjJ0dm1MRllNLThxYkRNQXpOdTlZdnBTTWhJamc?oc=5"
+  },
+  {
+    "fecha": "2026-10-23",
+    "titular": "BCB fija el dólar oficial en Bs 11,84 y el mercado paralelo se mantiene por encima",
+    "fuente": "FmBolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQTnZBclpzRFVaVWU0dERuZDNKNnlNcjRETjBXNjZDNVM1aW1ZOXlQN0NCenl6aWZsUjl5OWFrLTFrdUFadzh4S3ZiZmVCSFJGRzN2VkRhY0pmNDIzOUc2SFJGbm5ENFozWUJsUVdaeGJaT0tLcVRmVGNrU3dWWE03NUtzWVBNUWlsTjJrUUJXbVJ2NWhGOGY1TXcxTG4zcGQ2bkNxY1cya0hHRmFuYmVXbnlIZ1dZNGtic3hKNkhldw?oc=5"
+  },
+  {
+    "fecha": "2026-10-23",
+    "titular": "¿Cuál es la cotización del dólar este viernes? La divisa sigue en ascenso en Bolivia",
+    "fuente": "El Deber",
+    "enlace": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNZ0hwRGVnZUdzTFVNcnBySkIzVU0zdWtOeGJuSVlsLUN1Rk9VdU9xVEdYU3Jtc2Z3RjdzNUFkMVhGLXBKaGtqcGFnV1BhQVd3a2FtTVItTU5kWkNMWU02dmZ5SlpVRXAyZUQ2TTF5ZXl3MkN1UVF0MGFQMHViNklPWURDMFlnRHNiM1QzNmtRQXJTOE43VlBVaG1WcEwtaW9qNktfdkRzNG9TUQ?oc=5"
+  },
+  {
+    "fecha": "2026-10-23",
     "titular": "¿Qué pasa con el dólar? El tipo de cambio oficial registra una nueva variación",
     "fuente": "Red Uno",
     "enlace": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNWjhDblJMRGdDQXdhQlppQVBySUwybzZlUFpkLVZfZ0xISGV6RkFPSl8wMDBWaktIT1RqSGx2a2FXbWpxV2VseFpnYUZCTUw2ZXE0TkhkaGhwbjc2Zmlvd0hxSVVNeGNFTjNFSTFTQUp6QW5jbTl6WG9oaXlxNTI4a3l2cmhCNF9Nd2p1aDJrVGJ2NFVJTjJGZVdvdzBSZ3NZSUl5YklUNWstUTEyUW02NTgzMXpkX3hIR0NNbkU2Vmk4M0E?oc=5"
   },
   {
     "fecha": "2026-10-23",
-    "titular": "Dólar Binance en Bolivia supera los 12 bolivianos: cotiza a 12.05",
-    "fuente": "Criptotendencias",
-    "enlace": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9NSFdRczhjWlhrUkt4U0hzSzQtaWs4OWRGNi1fU2JWUFNCMlpFSDdScWluc254SVNUQVp0eHJHYjdPRGRLWGZLQmh2b2N2Qmhtc19hbFdYb1lkV05nWHJZQUpTR1R4YVg4NzZib2FPY3F3MFRTcHc?oc=5"
+    "titular": "Las reservas internacionales llegan a $us 3.978 millones, con el oro como principal componente",
+    "fuente": "Abya Yala Tv",
+    "enlace": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQS090VlFpOWZHUi1weTBYSnhCUzFXZ1l5WHB1bjZna2VhOTJmWmVzOEo0RUpIblpVLV9icVd1ampsUkZ3UXROLWhZMWJTZVRNemlyVVZiYUQ3ampDMEdEdTJJVGp1S1dpcEptT3EwdHRFRlZhUVF5cjUxVmlfTWdkWTBwZ1FBU0ZzSjlLS0pmYmgxdmVWc2xpLXRrVkFkSjVLZzROMzBWa0pMeDVhMDRnVnZpZDF2ekk?oc=5"
+  },
+  {
+    "fecha": "2026-10-23",
+    "titular": "¿Conviene comprar dólares ahora? Estas fueron las variaciones del paralelo en cinco días",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQOS1OdkZLUi1KdDlYVTRpVXhfdEh6UGhHX25HdXhqd01IZ21oRTgzX0hoVXZlSm9faEg4TnR2anlfYzg0QlV4cWczMzBWbmR2VEZPSm5VUW5tN1lwWWJpMDNMV0lIOE5OY1dEblBsLVNxdmlPbTVIeUV5U1BOSFR5OTQtdEwyRThLT3ZpTDZQYS1ZSnpOWGJvZ0RwY0MtekpNRnNCbHB2Zzd2dklNcXZmM2Y4X1FOUUxudmZwNEk4TEVNdmhXMkh6MjZMWlFXdEQ2M1E?oc=5"
+  },
+  {
+    "fecha": "2026-10-23",
+    "titular": "Deuda pública de Bolivia llegaría al 100,2% del PIB en 2026, según informe técnico del FMI",
+    "fuente": "FmBolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMixwFBVV95cUxORkItelFRZjNWdVpicng2akdhMWdyanc5Ml9WMlZxMU13eGpZWkxDbU9UZzQ5bjZMLUtsOXJlS3RlWTZEMzlneEpSeS1QZTJBNEh0blIxbHNyYnJyRDM1bWdDTWJmWVBVcWtBLVB0NzlxZzN3MFgwdUVhSjFBVjFjWGFGQkp6MWJydlVnRFctN3p1YU8yb19ORU9VdUJ4MGlBRS1ZUGNmaTJqTVJNb0xRQ2gyS2V6TGVJYnJfdnVSamQ0bV9DZHRF?oc=5"
+  },
+  {
+    "fecha": "2026-10-23",
+    "titular": "Acuerdo con el FMI compromete a Bolivia a eliminar la subvención a los combustibles desde 2027",
+    "fuente": "FmBolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNQ19tVEdqX2NzR3FpRXF5aWc1ZnM2MEs3V29nbnFTYk9nTENfMmhtZy03REI4bXpKdG1XTW1ZQjBNcVVPOVVxNllydW1QVlI5TUljNE9IRnhIeEJQOU90ZEsxcFZsdkpwYUdpck5fbXg1bWRyU2Z3UW16RVp5b05SR2xpV0ZBaWVzczExNWNCdXY0bDRxQ1pJS1N4ekhzSTdiSzh3QnQ0ZkRkeE9zcVd4NmFMeXVTM3I2cjNDcFdTVkQya2hzWWNNU0ZTRkxqbEU?oc=5"
+  },
+  {
+    "fecha": "2026-10-23",
+    "titular": "Alivio Tributario: contribuyentes tienen hasta el 31 de diciembre para regularizar sus deudas",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxNRnNDTGN5OW82NVJUSXc1OGM3S2RELXJHQVVJalNkMmFsTU5FMmNSR1FabjdLNmQyVHpYcm9BU2JZRE9Cbmc3d3ZZMmxzQUhNZU9OV2xaa1lIeWdaMjZUTWlKSFk5b1pVak8wTzlTX093dUpvTkk2STVHNjl5MmdlSFZLWEVob1FUNGVyZ1JTcE42Rl9nRlFDWlh1VVFXR0FBclNScDJSWjZFaF9DZkVHQmVDZUt2VXBxeHp0bUdSNkFSdEZmV1NLRUJDNlpSUE9fTzNoWnc2MmQ?oc=5"
+  },
+  {
+    "fecha": "2026-10-23",
+    "titular": "Senado aprueba crédito de $us 30,2 millones del BID para modernizar el alumbrado público en el país",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxPXzdTNFVqamdCMVRsUHhEbUJZZ1FMOVpod2Z0dEFvT205U2QyaWNZbXQ4WGVnOGxqb3VNNlpfZkhtVTFXZU5oUUlzWXVMNEF0cU0zUm50NlExSEp0Rnladm1UMnlMOW1OWUlBYkE3dkw2OWk1cWxqNnhQR050Q0sza2FSSmUtVFFxdXpaLWFKRW0zMHQ3eS11WnFfa1ZUby1jelV5VnRjUUJSU3p4Yl9tXzg0Q2tZVlNweWpBRnk2bDQtSUE3c2VLTy1WWUtqLWNFeE5NWkxVWWdCNEpXVDJmbw?oc=5"
+  },
+  {
+    "fecha": "2026-10-23",
+    "titular": "Reservas de Bolivia llegan a $us 3.978 millones a mediados de octubre; $us 647 millones son divisas",
+    "fuente": "unitel.bo",
+    "enlace": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxPZHlTWmxSQzI5ZW1zWmFDenNqOVY5X1BOd3lzRElYSnpaQ3NEcFZoSlk3bXAyb0NwYnRkMGlVS2hRbDJsdkVrMG11STc3TG8xQlhxTkdReUcteGZkVGtQZ19MTlR3MGx5WXpycDJxbHNNU2NjQnF4dElscTItYmFNLWhlalJVRUJQVHhFX3VJdnludFRLeTNCWjhSaURjZXpvWW5BNHBmNG5iRkVxMmgyNTFZelNtdlEwWEg1V1VKLXFpS04tbWJsNXhBR0Y3MkQyZnB5MTI1SkloQQ?oc=5"
+  },
+  {
+    "fecha": "2026-10-22",
+    "titular": "DÓLAR OFICIAL LLEGA A BS 11,75 TRAS SUBIR DOS CENTAVOS",
+    "fuente": "El Alteño",
+    "enlace": "https://news.google.com/rss/articles/CBMioAFBVV95cUxORFN4TDU0bEhrWkRPelROeUJpZDhON2sxb3BMbFJiSjFqRjNKS1JreEJlRTB0WHBxdU5UZ0JoaDFuLTh1bDBxNXRSUXNaS095azNDb0o1MjY1UzRUOFU1NUVuQ3RaZlVjY1hXOXpBVHVZX1F1QVpQQlBBY0ttVnRQTjhBam9uNEdjRWVwaEUwSm1LbVBzdFJJLW1vR2hnQ1Zl?oc=5"
+  },
+  {
+    "fecha": "2026-10-22",
+    "titular": "FMI aprueba crédito de $us 1.900 millones para Bolivia y habilita desembolso de $us 214 millones",
+    "fuente": "FmBolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQN25ldmhnNjJQT2dMTk44NWVEZ1hJYU5sa3VxWVhzQWJlMHN2bHZuM09kWUNNLVI0VzZpU1owZFk4U2VSZWlZZ0QtTkNhOWd5ZDVZLWhkbnVYNE1mNENOQ041ejBzVTVpNEFnaFMzMTlsdFViaHNwMnhkTlg2dTFjRHVTNlBheFRNNXNNWVRucFl5eW5Xc3lHVWNjRHg5NGRpYUpRM3lGR1FOTVhzb3pMUEMycjk5TDY2R01OZVdpb01rek1uQVFhY1U4WDlrOUk?oc=5"
+  },
+  {
+    "fecha": "2026-10-22",
+    "titular": "FMI confirma que Bolivia eliminará por completo el subsidio a los combustibles a comienzos de 2027",
+    "fuente": "FmBolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxPaGtFWjk0YXVuLUZvdzh0V1JUUXBmUHVGNjZIdVV4dDk1dEJualBVZHB4WXFudk9sdWlUQ3lOd2ZNS2hQc29BdXhHckVuTFdLODhWV2E0eVB0SXh3d3FDa0dmMmtsSzU0azhpa2xUdkFnUGNRQzdnMWxaYm92NkJhVDR2RmJMSi1fUC00WEx0b2lzcTVIR2txc21UVE5ucVdDSDBNSkZ0NC1vLWNOZnFtUFNoaU1CNjBSeXZMYnRSNzlKWkpFd2RhNU9TNkphOHJOR1Z4eA?oc=5"
   },
   {
     "fecha": "2026-10-22",
@@ -2558,24 +2594,6 @@ const NOTICIAS_AUTOMATICAS = [
     "titular": "Decreto Supremo 5750: así cambiaría tu factura de electricidad si pagas Bs 100 al mes",
     "fuente": "Bolivia.com",
     "enlace": "https://news.google.com/rss/articles/CBMixwFBVV95cUxPaGZqUWI1NFkzSnV6aUQtN2N5Q08wRVpjdlNCMHlJY0VwT1BlMy1mUjhmeGRZdXR0RXJSb09VdHRtNzVnN2FYY3pXSlhuQ2NfVmpzSHctbFFLd1FCTGZmRzY0VE4ya1FHZjQxV1lBWHIzTmJMVlRiOGhfUWJMOHdONFREQ05kVFdCNlJUdkhFQ3J1bVJqVVhjUkFFek8zRzdQYV9iMV9pMEV4TVpnSUFlVXhQd194NFZLYVJwY05EX21ibnFKSmpr?oc=5"
-  },
-  {
-    "fecha": "2026-10-22",
-    "titular": "FMI aprueba crédito de $us 1.900 millones para Bolivia y habilita desembolso de $us 214 millones",
-    "fuente": "FmBolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQN25ldmhnNjJQT2dMTk44NWVEZ1hJYU5sa3VxWVhzQWJlMHN2bHZuM09kWUNNLVI0VzZpU1owZFk4U2VSZWlZZ0QtTkNhOWd5ZDVZLWhkbnVYNE1mNENOQ041ejBzVTVpNEFnaFMzMTlsdFViaHNwMnhkTlg2dTFjRHVTNlBheFRNNXNNWVRucFl5eW5Xc3lHVWNjRHg5NGRpYUpRM3lGR1FOTVhzb3pMUEMycjk5TDY2R01OZVdpb01rek1uQVFhY1U4WDlrOUk?oc=5"
-  },
-  {
-    "fecha": "2026-10-22",
-    "titular": "DÓLAR OFICIAL LLEGA A BS 11,75 TRAS SUBIR DOS CENTAVOS",
-    "fuente": "El Alteño",
-    "enlace": "https://news.google.com/rss/articles/CBMioAFBVV95cUxORFN4TDU0bEhrWkRPelROeUJpZDhON2sxb3BMbFJiSjFqRjNKS1JreEJlRTB0WHBxdU5UZ0JoaDFuLTh1bDBxNXRSUXNaS095azNDb0o1MjY1UzRUOFU1NUVuQ3RaZlVjY1hXOXpBVHVZX1F1QVpQQlBBY0ttVnRQTjhBam9uNEdjRWVwaEUwSm1LbVBzdFJJLW1vR2hnQ1Zl?oc=5"
-  },
-  {
-    "fecha": "2026-10-22",
-    "titular": "FMI confirma que Bolivia eliminará por completo el subsidio a los combustibles a comienzos de 2027",
-    "fuente": "FmBolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxPaGtFWjk0YXVuLUZvdzh0V1JUUXBmUHVGNjZIdVV4dDk1dEJualBVZHB4WXFudk9sdWlUQ3lOd2ZNS2hQc29BdXhHckVuTFdLODhWV2E0eVB0SXh3d3FDa0dmMmtsSzU0azhpa2xUdkFnUGNRQzdnMWxaYm92NkJhVDR2RmJMSi1fUC00WEx0b2lzcTVIR2txc21UVE5ucVdDSDBNSkZ0NC1vLWNOZnFtUFNoaU1CNjBSeXZMYnRSNzlKWkpFd2RhNU9TNkphOHJOR1Z4eA?oc=5"
   },
   {
     "fecha": "2026-10-21",
@@ -2633,15 +2651,9 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-10-19",
-    "titular": "Gobierno reafirma ante el FMI y el Banco Mundial su apuesta por las reformas económicas",
-    "fuente": "La Voz de Tarija",
-    "enlace": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNbW1FSkhsQ0JyVlNXT1BFTktiQzU3el9Ybl85OExpZ0p4bU4zX1VwVjRWVWlxQjNINFQ5b21Pa2YzZVZMVVFTWVppX3pVcGFjczZpRkJUVzNwY19MSHRZVzVONVBwcUxrNTQwaVV2MUF5S2RDdWhqYWc0dS1yOTlWUFpqX1lmdU80dmxEelFObVF4U1JlckpLaXJmUmRuRzJ5M3ZxWENtdHYxZURNOHdMWl92cmtTLTVpTGdQLU50d0FTZVU?oc=5"
-  },
-  {
-    "fecha": "2026-10-19",
-    "titular": "Gobierno destaca ante el FMI que las reformas económicas responden a un programa propio",
-    "fuente": "La Octava",
-    "enlace": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPUTFsajdoNUdhdWVTaG5aV2gwWEhscUtqRkRYRzF2RnM0YmhGYTRVdHoyMW0teXNLc0I4TVg2Um1tUUtVc3Zlc3dWaktwYjN0ZHNhNnV6WUtfY1F6N1NCOGRkWVp3azVJOXZaWVRqbHZDakl4TnpYdkVJRGRHNzg4V25NUzZLbWdxNEhmWThsdWNCZ2l1bDJzeTVqSlhZdTctOWVfbmlScXNYZVNZN0FReUxEMkFRajRrbkZSY0lHVQ?oc=5"
+    "titular": "El dólar baja en Brasil y Bolivia mira su mercado cambiario",
+    "fuente": "Identidad Correntina",
+    "enlace": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNV3VoRjZSb1doLTNHQ2N1VDQ2eG9mWG1HbFRvanVaVzJzclZSNHBEMTJfalV3RVVvZXVvRlczZGRSYnhvd2tlR242d1JLd1h3Q09hRzN5VGMtbDkySHRBZ1hBTldyTGFOdUlCOGFVOU9EVjZyb01ZT3lmOEdPMHJtWFl1am9XSEhHODd1bnZWMXM3WWQ4XzZ4U0Z5eFR0YUl4SzFRbDFoOTJqWmM2NWl3MHozd1IyUQ?oc=5"
   },
   {
     "fecha": "2026-10-19",
@@ -2651,9 +2663,15 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-10-19",
-    "titular": "El dólar baja en Brasil y Bolivia mira su mercado cambiario",
-    "fuente": "Identidad Correntina",
-    "enlace": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNV3VoRjZSb1doLTNHQ2N1VDQ2eG9mWG1HbFRvanVaVzJzclZSNHBEMTJfalV3RVVvZXVvRlczZGRSYnhvd2tlR242d1JLd1h3Q09hRzN5VGMtbDkySHRBZ1hBTldyTGFOdUlCOGFVOU9EVjZyb01ZT3lmOEdPMHJtWFl1am9XSEhHODd1bnZWMXM3WWQ4XzZ4U0Z5eFR0YUl4SzFRbDFoOTJqWmM2NWl3MHozd1IyUQ?oc=5"
+    "titular": "Gobierno reafirma ante el FMI y el Banco Mundial su apuesta por las reformas económicas",
+    "fuente": "La Voz de Tarija",
+    "enlace": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNbW1FSkhsQ0JyVlNXT1BFTktiQzU3el9Ybl85OExpZ0p4bU4zX1VwVjRWVWlxQjNINFQ5b21Pa2YzZVZMVVFTWVppX3pVcGFjczZpRkJUVzNwY19MSHRZVzVONVBwcUxrNTQwaVV2MUF5S2RDdWhqYWc0dS1yOTlWUFpqX1lmdU80dmxEelFObVF4U1JlckpLaXJmUmRuRzJ5M3ZxWENtdHYxZURNOHdMWl92cmtTLTVpTGdQLU50d0FTZVU?oc=5"
+  },
+  {
+    "fecha": "2026-10-19",
+    "titular": "Gobierno destaca ante el FMI que las reformas económicas responden a un programa propio",
+    "fuente": "La Octava",
+    "enlace": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPUTFsajdoNUdhdWVTaG5aV2gwWEhscUtqRkRYRzF2RnM0YmhGYTRVdHoyMW0teXNLc0I4TVg2Um1tUUtVc3Zlc3dWaktwYjN0ZHNhNnV6WUtfY1F6N1NCOGRkWVp3azVJOXZaWVRqbHZDakl4TnpYdkVJRGRHNzg4V25NUzZLbWdxNEhmWThsdWNCZ2l1bDJzeTVqSlhZdTctOWVfbmlScXNYZVNZN0FReUxEMkFRajRrbkZSY0lHVQ?oc=5"
   },
   {
     "fecha": "2026-10-18",
@@ -2687,6 +2705,12 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-10-17",
+    "titular": "El FMI alerta sobre tres riesgos globales que también acechan a Bolivia",
+    "fuente": "La Razón Digital Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNUFY0dkZFUEZiQmJLTlZsMlNnN2E3V3ZOSU9McW9aMTVpNlNBUDltelZHOTcwd1JCN3M4aS11T1FCYWlpQ0taRUZCaVRQbWRaVnFWVnFfQXZfTHNEcGhkQy1iX2EzT1R0eWl6REZRVmM2T3hjT2ZBVnhpLUwxWnVwNF9tTzExT0cyVmRfVkl1MmM1UUgzZERvaThxVDVabE5lZ3I4VE1ZYmlaSkZGX1dGbC1TOF8tN2VPMEN6cA?oc=5"
+  },
+  {
+    "fecha": "2026-10-17",
     "titular": "BCB asegura que no volverán los “corralitos” en dólares y promete proteger los ahorros",
     "fuente": "FmBolivia",
     "enlace": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOZ1g5bklRcE5lelJmX3RmVnFmckJPQ0s2eEtWZ1E0X2tJQ2FMSDg2ZFFfTXo5a19ZMEVoQ2piU2V6ay1adXZXZ1VURTJPclVRU0pPc0F4dEJyOWl2dll5bXJiejltYWN6Wi04MmJWemk5Vm9PYnFyNkVpRzdDSXdxZkpCVk9NMzNRbWtzT0NsYkIwYThFNkpuRVBhYUJIbTRMMDlRWnN3Vmp6QURmWlJtbHJtTTk5WjlYLTVaMTh1Y3hJZw?oc=5"
@@ -2702,12 +2726,6 @@ const NOTICIAS_AUTOMATICAS = [
     "titular": "BCB asegura que no se repetirán los “corralitos” en dólares ni el empeño de reservas de oro",
     "fuente": "Red Uno",
     "enlace": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxQaFZ6Qkx1czU5VXpTREZ2MHkxQ3VnTWI0NEgyZXJSd2ZDdWcxd2d0Vk9QU3hrbWNiVERibVdXcDdtblNzY21tX29CeHpMeTlBNW9VVVItV2pSWG9ZOEdOVzFhdVJxRGNwdDlocFBnOEZoWDJ1X3FVdnE5Y1lhZW82LWVnVUE1MHg0eFRuTUtwVW50c1NETXc4ZEdmOWhNdzZidmhheUp4X09RWGZETE4tMTNMRjZkYW9sNk9Jc0xhRXJvVmp3Ry1DVVh4NmRNdmhqeU5wejN3?oc=5"
-  },
-  {
-    "fecha": "2026-10-17",
-    "titular": "El FMI alerta sobre tres riesgos globales que también acechan a Bolivia",
-    "fuente": "La Razón Digital Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNUFY0dkZFUEZiQmJLTlZsMlNnN2E3V3ZOSU9McW9aMTVpNlNBUDltelZHOTcwd1JCN3M4aS11T1FCYWlpQ0taRUZCaVRQbWRaVnFWVnFfQXZfTHNEcGhkQy1iX2EzT1R0eWl6REZRVmM2T3hjT2ZBVnhpLUwxWnVwNF9tTzExT0cyVmRfVkl1MmM1UUgzZERvaThxVDVabE5lZ3I4VE1ZYmlaSkZGX1dGbC1TOF8tN2VPMEN6cA?oc=5"
   },
   {
     "fecha": "2026-10-17",
@@ -2741,18 +2759,6 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-10-15",
-    "titular": "Exportación de oro en Bolivia: qué exige el Decreto 5747 sobre las divisas",
-    "fuente": "Visión 360",
-    "enlace": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPSUZWZjdWY2c3WEQ3YkR4RUE4QmFyY0s3TUV0WUFEa3FsNnZwTlRCVFlxTEpZdFU1NVppN3QyUXlBdU9lUnNrRVRaRV9yLXZoSlRyRDB3N1N5cnZNTF9sck9RLUFqNXlGcDB4QUctUjNQUWZaZDd2aHM0R2JUaWNkLTBvQXJqXzVYdmdheGNvNVZWbmp6NnRoVG8xNVlyX3d2MTJsLWVDYmx0OXVBUUhFZnhoQkdRMTNvNktBTFl0NThMd9IBxwFBVV95cUxOMmd4Zk95cHh3ZUhnZVdXZWl5YmUxNnN4VmZBek1FVGljcy1Va3l6Z3dmVGF1MXoxRVRQMUt3Y1JWRTZOdHVGbzd4T2RTMGVmcHZ6WXhCeW1mRTZ3bWJYNTNJOE9PeEFoZUZaT05LWUxJZ3ljd3B6ZjdBNkJ4WjV0ejVQNkhuRk84RTZidUd3dkZHMlhtM2dDZWdybXFkTUdSeUd0Q29TN0NfdmhydExwNXZGWGtwNmNIU2VYMG8yWkZ6MWJnM3J3?oc=5"
-  },
-  {
-    "fecha": "2026-10-15",
-    "titular": "Bolivia reforma el mercado de exportación de oro para mejorar el acceso de su sistema financiero al dólar",
-    "fuente": "Forbes España",
-    "enlace": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxQM0duOWs2Z0JkYTRSSlQxczhKaWFwdXNfYldfczdCWDdwd2hGeHdrOWs4bmtvejlUMGc2dmZRMGNjR05HNGR3Q1lIb0Y2Y3IzQXpJZzFTVF9qbjdfRGR4eGRjNW9lSjFVY0E4aGFhVVJPZm13YjI4SVJvTnlma1V3VmFFaURrMmpEdFZNeDI5UTc4R0hnX2JRQUNycWtOTDlhdVlCcklodHAyVks1Wm5OZVZtQmVOUFVxSjYtUlNBMl8yTV9Uc0VoeDVQVFVuTUQ5SElRVGx2c09WWEdU?oc=5"
-  },
-  {
-    "fecha": "2026-10-15",
     "titular": "BCB inicia devolución de depósitos en dólares de entre $us 8.001 y $us 10.000",
     "fuente": "eju.tv",
     "enlace": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOLURKVzJBdU9mS0ljcmI3dkJ4T2ZEZnhhOXg5aWtrTEtuTkE0cmUwQUJtQmJtWHBWcDdCUlMzdDVoX1B0OXhpaERESS1ncFhOOW12Q09pVWtoWFdXdWFXTzM4dEJWOE5GaGpmYWtMdGFsSkRpRTd0ZXUyLV94NDNaSnZYcmJpUjNsT3UwMXdCeVgxRUxUcU83TVpOWjJNSzht?oc=5"
@@ -2762,6 +2768,18 @@ const NOTICIAS_AUTOMATICAS = [
     "titular": "Ministro Morales presenta el potencial y la visión económica de Bolivia ante el FMI y el Banco Mundial",
     "fuente": "Economy",
     "enlace": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxPY3pNV0M5Y3Voa2R3TnRpWHZEUC1TMXRTeEM0LTFsWkpMYmtvVlJxSmVHLWo5cVhZRnZQQ245aU96SkZEb1V6UEh3amdxZjdTbXREYXBPWEJpZU9GWlIzaTB2RFhIR1J4bGRER1pVVkIydW5DY3pJNnVfY1paMjFmc1REOWJjSDNlLUJFTWxzS3FIUVNoemlxbHBOYXRFeE90TTFDUGo2Rko2THZjeVFzMGkzcW9YOGNQbWNrZjkzN0VTLVFNVUFZOFNpaWQ0WEJYemRWU3dwT2tlOEhPanZaWlVta9IB6AFBVV95cUxNZ1VjOXVwRzNhUE9oWUtHelpia0xWMDk5RWtZM2hJNnljdmpvN0taUldjVFpzeURCcVVTQ0hzeVdyMzE0dDQxWXlwUXlpQmlUeVRiVWkyUmwycFdIbnY5anZOWnluaTUxOTZKMmFhZUNwcERSVmU4VjlaRzFyS3l2YkEwNGtnWEVZbVp6UEd6Y0ZQeWN6TU00S2dTdmFJQVhBcUhWbkJFWkk1UmY2NTdlNHp6ZC1qOVVjX0tHTW01S2c4WVNuazBpMXBRQmVzaFRYbjdISHZDLThiZXQwRlpyWjBZUlVTV2g4?oc=5"
+  },
+  {
+    "fecha": "2026-10-15",
+    "titular": "Exportación de oro en Bolivia: qué exige el Decreto 5747 sobre las divisas",
+    "fuente": "Visión 360",
+    "enlace": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPSUZWZjdWY2c3WEQ3YkR4RUE4QmFyY0s3TUV0WUFEa3FsNnZwTlRCVFlxTEpZdFU1NVppN3QyUXlBdU9lUnNrRVRaRV9yLXZoSlRyRDB3N1N5cnZNTF9sck9RLUFqNXlGcDB4QUctUjNQUWZaZDd2aHM0R2JUaWNkLTBvQXJqXzVYdmdheGNvNVZWbmp6NnRoVG8xNVlyX3d2MTJsLWVDYmx0OXVBUUhFZnhoQkdRMTNvNktBTFl0NThMd9IBxwFBVV95cUxOMmd4Zk95cHh3ZUhnZVdXZWl5YmUxNnN4VmZBek1FVGljcy1Va3l6Z3dmVGF1MXoxRVRQMUt3Y1JWRTZOdHVGbzd4T2RTMGVmcHZ6WXhCeW1mRTZ3bWJYNTNJOE9PeEFoZUZaT05LWUxJZ3ljd3B6ZjdBNkJ4WjV0ejVQNkhuRk84RTZidUd3dkZHMlhtM2dDZWdybXFkTUdSeUd0Q29TN0NfdmhydExwNXZGWGtwNmNIU2VYMG8yWkZ6MWJnM3J3?oc=5"
+  },
+  {
+    "fecha": "2026-10-15",
+    "titular": "Bolivia reforma el mercado de exportación de oro para mejorar el acceso de su sistema financiero al dólar",
+    "fuente": "Forbes España",
+    "enlace": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxQM0duOWs2Z0JkYTRSSlQxczhKaWFwdXNfYldfczdCWDdwd2hGeHdrOWs4bmtvejlUMGc2dmZRMGNjR05HNGR3Q1lIb0Y2Y3IzQXpJZzFTVF9qbjdfRGR4eGRjNW9lSjFVY0E4aGFhVVJPZm13YjI4SVJvTnlma1V3VmFFaURrMmpEdFZNeDI5UTc4R0hnX2JRQUNycWtOTDlhdVlCcklodHAyVks1Wm5OZVZtQmVOUFVxSjYtUlNBMl8yTV9Uc0VoeDVQVFVuTUQ5SElRVGx2c09WWEdU?oc=5"
   },
   {
     "fecha": "2026-10-15",
@@ -2776,8 +2794,8 @@ const NOTICIAS_AUTOMATICAS = [
 /* LeoFX — predicciones_auto.js
    ARCHIVO GENERADO AUTOMÁTICAMENTE por registrar_predicciones.js (no lo edite).
    Predicciones guardadas cada día para el seguimiento real. */
-const PREDICCIONES_AUTOMATICAS_FECHA = "2026-10-30T21:48";
-const PREDICCIONES_AUTOMATICAS = [{"serie":"compra","hecha":"2026-10-22","base":11.94,"plazo":1,"objetivo":"2026-10-23","esperado":11.8441,"minimo":11.7576,"maximo":11.9307,"metodo":"amortiguado"},{"serie":"compra","hecha":"2026-10-22","base":11.94,"plazo":30,"objetivo":"2026-11-21","esperado":11.89,"minimo":11.6947,"maximo":12.0853,"metodo":"promedio"},{"serie":"compra","hecha":"2026-10-22","base":11.94,"plazo":7,"objetivo":"2026-10-29","esperado":11.864,"minimo":11.7111,"maximo":12.0169,"metodo":"combinacion"},{"serie":"oficial","hecha":"2026-10-22","base":11.75,"plazo":1,"objetivo":"2026-10-23","esperado":11.7618,"minimo":11.4934,"maximo":12.0302,"metodo":"amortiguado"},{"serie":"oficial","hecha":"2026-10-22","base":11.75,"plazo":30,"objetivo":"2026-11-21","esperado":11.7043,"minimo":10.672,"maximo":12.7366,"metodo":"promedio"},{"serie":"oficial","hecha":"2026-10-22","base":11.75,"plazo":7,"objetivo":"2026-10-29","esperado":11.7521,"minimo":10.7156,"maximo":12.7886,"metodo":"combinacion"},{"serie":"compra","hecha":"2026-10-23","base":12.01,"plazo":1,"objetivo":"2026-10-24","esperado":12.0124,"minimo":11.9194,"maximo":12.1054,"metodo":"holt"},{"serie":"compra","hecha":"2026-10-23","base":12.01,"plazo":30,"objetivo":"2026-11-22","esperado":11.9333,"minimo":11.746,"maximo":12.1206,"metodo":"promedio"},{"serie":"compra","hecha":"2026-10-23","base":12.01,"plazo":7,"objetivo":"2026-10-30","esperado":11.9434,"minimo":11.7895,"maximo":12.0974,"metodo":"combinacion"},{"serie":"oficial","hecha":"2026-10-23","base":11.84,"plazo":1,"objetivo":"2026-10-24","esperado":11.8679,"minimo":11.5981,"maximo":12.1376,"metodo":"amortiguado"},{"serie":"oficial","hecha":"2026-10-23","base":11.84,"plazo":30,"objetivo":"2026-11-22","esperado":11.7271,"minimo":10.6977,"maximo":12.7566,"metodo":"promedio"},{"serie":"oficial","hecha":"2026-10-23","base":11.84,"plazo":7,"objetivo":"2026-10-30","esperado":11.8501,"minimo":10.8099,"maximo":12.8904,"metodo":"combinacion"},{"serie":"compra","hecha":"2026-10-24","base":11.99,"plazo":1,"objetivo":"2026-10-25","esperado":12.011,"minimo":11.9242,"maximo":12.0977,"metodo":"holt"},{"serie":"compra","hecha":"2026-10-24","base":11.99,"plazo":30,"objetivo":"2026-11-23","esperado":11.98,"minimo":11.7901,"maximo":12.1699,"metodo":"promedio"},{"serie":"compra","hecha":"2026-10-24","base":11.99,"plazo":7,"objetivo":"2026-10-31","esperado":11.9907,"minimo":11.8362,"maximo":12.1453,"metodo":"combinacion"},{"serie":"oficial","hecha":"2026-10-24","base":11.88,"plazo":1,"objetivo":"2026-10-25","esperado":11.9113,"minimo":11.6418,"maximo":12.1807,"metodo":"amortiguado"},{"serie":"oficial","hecha":"2026-10-24","base":11.88,"plazo":30,"objetivo":"2026-11-23","esperado":11.7543,"minimo":10.7272,"maximo":12.7814,"metodo":"promedio"},{"serie":"oficial","hecha":"2026-10-24","base":11.88,"plazo":7,"objetivo":"2026-10-31","esperado":11.8807,"minimo":10.8426,"maximo":12.9188,"metodo":"combinacion"},{"serie":"compra","hecha":"2026-10-25","base":12,"plazo":1,"objetivo":"2026-10-26","esperado":12.0161,"minimo":11.9347,"maximo":12.0974,"metodo":"holt"},{"serie":"compra","hecha":"2026-10-25","base":12,"plazo":30,"objetivo":"2026-11-24","esperado":12,"minimo":11.8108,"maximo":12.1892,"metodo":"promedio"},{"serie":"compra","hecha":"2026-10-25","base":12,"plazo":7,"objetivo":"2026-11-01","esperado":12.0165,"minimo":11.8616,"maximo":12.1714,"metodo":"combinacion"},{"serie":"oficial","hecha":"2026-10-25","base":11.88,"plazo":1,"objetivo":"2026-10-26","esperado":11.899,"minimo":11.6311,"maximo":12.1669,"metodo":"amortiguado"},{"serie":"oficial","hecha":"2026-10-25","base":11.88,"plazo":30,"objetivo":"2026-11-24","esperado":11.7814,"minimo":10.7568,"maximo":12.8061,"metodo":"promedio"},{"serie":"oficial","hecha":"2026-10-25","base":11.88,"plazo":7,"objetivo":"2026-11-01","esperado":11.8636,"minimo":10.8318,"maximo":12.8954,"metodo":"combinacion"},{"serie":"compra","hecha":"2026-10-26","base":12.06,"plazo":1,"objetivo":"2026-10-27","esperado":12.0756,"minimo":11.9963,"maximo":12.155,"metodo":"holt"},{"serie":"compra","hecha":"2026-10-26","base":12.06,"plazo":30,"objetivo":"2026-11-25","esperado":12.0167,"minimo":11.8383,"maximo":12.195,"metodo":"promedio"},{"serie":"compra","hecha":"2026-10-26","base":12.06,"plazo":7,"objetivo":"2026-11-02","esperado":12.0561,"minimo":11.9007,"maximo":12.2115,"metodo":"combinacion"},{"serie":"oficial","hecha":"2026-10-26","base":11.88,"plazo":1,"objetivo":"2026-10-27","esperado":11.8884,"minimo":11.622,"maximo":12.1549,"metodo":"amortiguado"},{"serie":"oficial","hecha":"2026-10-26","base":11.88,"plazo":30,"objetivo":"2026-11-25","esperado":11.8086,"minimo":10.7863,"maximo":12.8308,"metodo":"promedio"},{"serie":"oficial","hecha":"2026-10-26","base":11.88,"plazo":7,"objetivo":"2026-11-02","esperado":11.8581,"minimo":10.8316,"maximo":12.8847,"metodo":"combinacion"},{"serie":"compra","hecha":"2026-10-27","base":12.14,"plazo":1,"objetivo":"2026-10-28","esperado":12.167,"minimo":12.0868,"maximo":12.2472,"metodo":"holt"},{"serie":"compra","hecha":"2026-10-27","base":12.14,"plazo":30,"objetivo":"2026-11-26","esperado":12.0667,"minimo":11.8971,"maximo":12.2362,"metodo":"promedio"},{"serie":"compra","hecha":"2026-10-27","base":12.14,"plazo":7,"objetivo":"2026-11-03","esperado":12.1265,"minimo":11.9702,"maximo":12.2828,"metodo":"combinacion"},{"serie":"oficial","hecha":"2026-10-27","base":12.02,"plazo":1,"objetivo":"2026-10-28","esperado":12.0547,"minimo":11.7853,"maximo":12.3241,"metodo":"amortiguado"},{"serie":"oficial","hecha":"2026-10-27","base":12.02,"plazo":30,"objetivo":"2026-11-26","esperado":11.8543,"minimo":10.8319,"maximo":12.8767,"metodo":"promedio"},{"serie":"oficial","hecha":"2026-10-27","base":12.02,"plazo":7,"objetivo":"2026-11-03","esperado":12.0251,"minimo":10.988,"maximo":13.0623,"metodo":"combinacion"},{"serie":"compra","hecha":"2026-10-28","base":12.17,"plazo":1,"objetivo":"2026-10-29","esperado":12.21,"minimo":12.1332,"maximo":12.2867,"metodo":"holt"},{"serie":"compra","hecha":"2026-10-28","base":12.17,"plazo":30,"objetivo":"2026-11-27","esperado":12.1233,"minimo":11.9305,"maximo":12.3161,"metodo":"promedio"},{"serie":"compra","hecha":"2026-10-28","base":12.17,"plazo":7,"objetivo":"2026-11-04","esperado":12.1842,"minimo":11.9904,"maximo":12.3779,"metodo":"combinacion"},{"serie":"oficial","hecha":"2026-10-28","base":12.02,"plazo":1,"objetivo":"2026-10-29","esperado":12.0505,"minimo":11.7824,"maximo":12.3186,"metodo":"amortiguado"},{"serie":"oficial","hecha":"2026-10-28","base":12.02,"plazo":30,"objetivo":"2026-11-27","esperado":11.8957,"minimo":10.8741,"maximo":12.9173,"metodo":"promedio"},{"serie":"oficial","hecha":"2026-10-28","base":12.02,"plazo":7,"objetivo":"2026-11-04","esperado":12.013,"minimo":10.9813,"maximo":13.0447,"metodo":"combinacion"},{"serie":"compra","hecha":"2026-10-29","base":12.19,"plazo":1,"objetivo":"2026-10-30","esperado":12.2298,"minimo":12.1558,"maximo":12.3038,"metodo":"holt"},{"serie":"compra","hecha":"2026-10-29","base":12.19,"plazo":30,"objetivo":"2026-11-28","esperado":12.1667,"minimo":11.9545,"maximo":12.3789,"metodo":"promedio"},{"serie":"compra","hecha":"2026-10-29","base":12.19,"plazo":7,"objetivo":"2026-11-05","esperado":12.2232,"minimo":12.01,"maximo":12.4364,"metodo":"combinacion"},{"serie":"oficial","hecha":"2026-10-29","base":12.12,"plazo":1,"objetivo":"2026-10-30","esperado":12.1572,"minimo":11.8878,"maximo":12.4266,"metodo":"amortiguado"},{"serie":"oficial","hecha":"2026-10-29","base":12.12,"plazo":30,"objetivo":"2026-11-28","esperado":11.9486,"minimo":10.9262,"maximo":12.9709,"metodo":"promedio"},{"serie":"oficial","hecha":"2026-10-29","base":12.12,"plazo":7,"objetivo":"2026-11-05","esperado":12.118,"minimo":11.0812,"maximo":13.1549,"metodo":"combinacion"},{"serie":"compra","hecha":"2026-10-30","base":12.03,"plazo":1,"objetivo":"2026-10-31","esperado":12.0578,"minimo":11.958,"maximo":12.1576,"metodo":"holt"},{"serie":"compra","hecha":"2026-10-30","base":12.03,"plazo":30,"objetivo":"2026-11-29","esperado":12.13,"minimo":11.9457,"maximo":12.3143,"metodo":"promedio"},{"serie":"compra","hecha":"2026-10-30","base":12.03,"plazo":7,"objetivo":"2026-11-06","esperado":12.1493,"minimo":11.9647,"maximo":12.3339,"metodo":"combinacion"},{"serie":"oficial","hecha":"2026-10-30","base":12.11,"plazo":1,"objetivo":"2026-10-31","esperado":12.1347,"minimo":11.867,"maximo":12.4025,"metodo":"amortiguado"},{"serie":"oficial","hecha":"2026-10-30","base":12.11,"plazo":30,"objetivo":"2026-11-29","esperado":11.9871,"minimo":10.966,"maximo":13.0083,"metodo":"promedio"},{"serie":"oficial","hecha":"2026-10-30","base":12.11,"plazo":7,"objetivo":"2026-11-06","esperado":12.0905,"minimo":11.0605,"maximo":13.1205,"metodo":"combinacion"}];
+const PREDICCIONES_AUTOMATICAS_FECHA = "2026-10-31T09:39";
+const PREDICCIONES_AUTOMATICAS = [{"serie":"compra","hecha":"2026-10-22","base":11.94,"plazo":1,"objetivo":"2026-10-23","esperado":11.8441,"minimo":11.7576,"maximo":11.9307,"metodo":"amortiguado"},{"serie":"compra","hecha":"2026-10-22","base":11.94,"plazo":30,"objetivo":"2026-11-21","esperado":11.89,"minimo":11.6947,"maximo":12.0853,"metodo":"promedio"},{"serie":"compra","hecha":"2026-10-22","base":11.94,"plazo":7,"objetivo":"2026-10-29","esperado":11.864,"minimo":11.7111,"maximo":12.0169,"metodo":"combinacion"},{"serie":"oficial","hecha":"2026-10-22","base":11.75,"plazo":1,"objetivo":"2026-10-23","esperado":11.7618,"minimo":11.4934,"maximo":12.0302,"metodo":"amortiguado"},{"serie":"oficial","hecha":"2026-10-22","base":11.75,"plazo":30,"objetivo":"2026-11-21","esperado":11.7043,"minimo":10.672,"maximo":12.7366,"metodo":"promedio"},{"serie":"oficial","hecha":"2026-10-22","base":11.75,"plazo":7,"objetivo":"2026-10-29","esperado":11.7521,"minimo":10.7156,"maximo":12.7886,"metodo":"combinacion"},{"serie":"compra","hecha":"2026-10-23","base":12.01,"plazo":1,"objetivo":"2026-10-24","esperado":12.0124,"minimo":11.9194,"maximo":12.1054,"metodo":"holt"},{"serie":"compra","hecha":"2026-10-23","base":12.01,"plazo":30,"objetivo":"2026-11-22","esperado":11.9333,"minimo":11.746,"maximo":12.1206,"metodo":"promedio"},{"serie":"compra","hecha":"2026-10-23","base":12.01,"plazo":7,"objetivo":"2026-10-30","esperado":11.9434,"minimo":11.7895,"maximo":12.0974,"metodo":"combinacion"},{"serie":"oficial","hecha":"2026-10-23","base":11.84,"plazo":1,"objetivo":"2026-10-24","esperado":11.8679,"minimo":11.5981,"maximo":12.1376,"metodo":"amortiguado"},{"serie":"oficial","hecha":"2026-10-23","base":11.84,"plazo":30,"objetivo":"2026-11-22","esperado":11.7271,"minimo":10.6977,"maximo":12.7566,"metodo":"promedio"},{"serie":"oficial","hecha":"2026-10-23","base":11.84,"plazo":7,"objetivo":"2026-10-30","esperado":11.8501,"minimo":10.8099,"maximo":12.8904,"metodo":"combinacion"},{"serie":"compra","hecha":"2026-10-24","base":11.99,"plazo":1,"objetivo":"2026-10-25","esperado":12.011,"minimo":11.9242,"maximo":12.0977,"metodo":"holt"},{"serie":"compra","hecha":"2026-10-24","base":11.99,"plazo":30,"objetivo":"2026-11-23","esperado":11.98,"minimo":11.7901,"maximo":12.1699,"metodo":"promedio"},{"serie":"compra","hecha":"2026-10-24","base":11.99,"plazo":7,"objetivo":"2026-10-31","esperado":11.9907,"minimo":11.8362,"maximo":12.1453,"metodo":"combinacion"},{"serie":"oficial","hecha":"2026-10-24","base":11.88,"plazo":1,"objetivo":"2026-10-25","esperado":11.9113,"minimo":11.6418,"maximo":12.1807,"metodo":"amortiguado"},{"serie":"oficial","hecha":"2026-10-24","base":11.88,"plazo":30,"objetivo":"2026-11-23","esperado":11.7543,"minimo":10.7272,"maximo":12.7814,"metodo":"promedio"},{"serie":"oficial","hecha":"2026-10-24","base":11.88,"plazo":7,"objetivo":"2026-10-31","esperado":11.8807,"minimo":10.8426,"maximo":12.9188,"metodo":"combinacion"},{"serie":"compra","hecha":"2026-10-25","base":12,"plazo":1,"objetivo":"2026-10-26","esperado":12.0161,"minimo":11.9347,"maximo":12.0974,"metodo":"holt"},{"serie":"compra","hecha":"2026-10-25","base":12,"plazo":30,"objetivo":"2026-11-24","esperado":12,"minimo":11.8108,"maximo":12.1892,"metodo":"promedio"},{"serie":"compra","hecha":"2026-10-25","base":12,"plazo":7,"objetivo":"2026-11-01","esperado":12.0165,"minimo":11.8616,"maximo":12.1714,"metodo":"combinacion"},{"serie":"oficial","hecha":"2026-10-25","base":11.88,"plazo":1,"objetivo":"2026-10-26","esperado":11.899,"minimo":11.6311,"maximo":12.1669,"metodo":"amortiguado"},{"serie":"oficial","hecha":"2026-10-25","base":11.88,"plazo":30,"objetivo":"2026-11-24","esperado":11.7814,"minimo":10.7568,"maximo":12.8061,"metodo":"promedio"},{"serie":"oficial","hecha":"2026-10-25","base":11.88,"plazo":7,"objetivo":"2026-11-01","esperado":11.8636,"minimo":10.8318,"maximo":12.8954,"metodo":"combinacion"},{"serie":"compra","hecha":"2026-10-26","base":12.06,"plazo":1,"objetivo":"2026-10-27","esperado":12.0756,"minimo":11.9963,"maximo":12.155,"metodo":"holt"},{"serie":"compra","hecha":"2026-10-26","base":12.06,"plazo":30,"objetivo":"2026-11-25","esperado":12.0167,"minimo":11.8383,"maximo":12.195,"metodo":"promedio"},{"serie":"compra","hecha":"2026-10-26","base":12.06,"plazo":7,"objetivo":"2026-11-02","esperado":12.0561,"minimo":11.9007,"maximo":12.2115,"metodo":"combinacion"},{"serie":"oficial","hecha":"2026-10-26","base":11.88,"plazo":1,"objetivo":"2026-10-27","esperado":11.8884,"minimo":11.622,"maximo":12.1549,"metodo":"amortiguado"},{"serie":"oficial","hecha":"2026-10-26","base":11.88,"plazo":30,"objetivo":"2026-11-25","esperado":11.8086,"minimo":10.7863,"maximo":12.8308,"metodo":"promedio"},{"serie":"oficial","hecha":"2026-10-26","base":11.88,"plazo":7,"objetivo":"2026-11-02","esperado":11.8581,"minimo":10.8316,"maximo":12.8847,"metodo":"combinacion"},{"serie":"compra","hecha":"2026-10-27","base":12.14,"plazo":1,"objetivo":"2026-10-28","esperado":12.167,"minimo":12.0868,"maximo":12.2472,"metodo":"holt"},{"serie":"compra","hecha":"2026-10-27","base":12.14,"plazo":30,"objetivo":"2026-11-26","esperado":12.0667,"minimo":11.8971,"maximo":12.2362,"metodo":"promedio"},{"serie":"compra","hecha":"2026-10-27","base":12.14,"plazo":7,"objetivo":"2026-11-03","esperado":12.1265,"minimo":11.9702,"maximo":12.2828,"metodo":"combinacion"},{"serie":"oficial","hecha":"2026-10-27","base":12.02,"plazo":1,"objetivo":"2026-10-28","esperado":12.0547,"minimo":11.7853,"maximo":12.3241,"metodo":"amortiguado"},{"serie":"oficial","hecha":"2026-10-27","base":12.02,"plazo":30,"objetivo":"2026-11-26","esperado":11.8543,"minimo":10.8319,"maximo":12.8767,"metodo":"promedio"},{"serie":"oficial","hecha":"2026-10-27","base":12.02,"plazo":7,"objetivo":"2026-11-03","esperado":12.0251,"minimo":10.988,"maximo":13.0623,"metodo":"combinacion"},{"serie":"compra","hecha":"2026-10-28","base":12.17,"plazo":1,"objetivo":"2026-10-29","esperado":12.21,"minimo":12.1332,"maximo":12.2867,"metodo":"holt"},{"serie":"compra","hecha":"2026-10-28","base":12.17,"plazo":30,"objetivo":"2026-11-27","esperado":12.1233,"minimo":11.9305,"maximo":12.3161,"metodo":"promedio"},{"serie":"compra","hecha":"2026-10-28","base":12.17,"plazo":7,"objetivo":"2026-11-04","esperado":12.1842,"minimo":11.9904,"maximo":12.3779,"metodo":"combinacion"},{"serie":"oficial","hecha":"2026-10-28","base":12.02,"plazo":1,"objetivo":"2026-10-29","esperado":12.0505,"minimo":11.7824,"maximo":12.3186,"metodo":"amortiguado"},{"serie":"oficial","hecha":"2026-10-28","base":12.02,"plazo":30,"objetivo":"2026-11-27","esperado":11.8957,"minimo":10.8741,"maximo":12.9173,"metodo":"promedio"},{"serie":"oficial","hecha":"2026-10-28","base":12.02,"plazo":7,"objetivo":"2026-11-04","esperado":12.013,"minimo":10.9813,"maximo":13.0447,"metodo":"combinacion"},{"serie":"compra","hecha":"2026-10-29","base":12.19,"plazo":1,"objetivo":"2026-10-30","esperado":12.2298,"minimo":12.1558,"maximo":12.3038,"metodo":"holt"},{"serie":"compra","hecha":"2026-10-29","base":12.19,"plazo":30,"objetivo":"2026-11-28","esperado":12.1667,"minimo":11.9545,"maximo":12.3789,"metodo":"promedio"},{"serie":"compra","hecha":"2026-10-29","base":12.19,"plazo":7,"objetivo":"2026-11-05","esperado":12.2232,"minimo":12.01,"maximo":12.4364,"metodo":"combinacion"},{"serie":"oficial","hecha":"2026-10-29","base":12.12,"plazo":1,"objetivo":"2026-10-30","esperado":12.1572,"minimo":11.8878,"maximo":12.4266,"metodo":"amortiguado"},{"serie":"oficial","hecha":"2026-10-29","base":12.12,"plazo":30,"objetivo":"2026-11-28","esperado":11.9486,"minimo":10.9262,"maximo":12.9709,"metodo":"promedio"},{"serie":"oficial","hecha":"2026-10-29","base":12.12,"plazo":7,"objetivo":"2026-11-05","esperado":12.118,"minimo":11.0812,"maximo":13.1549,"metodo":"combinacion"},{"serie":"compra","hecha":"2026-10-30","base":12.03,"plazo":1,"objetivo":"2026-10-31","esperado":12.0578,"minimo":11.958,"maximo":12.1576,"metodo":"holt"},{"serie":"compra","hecha":"2026-10-30","base":12.03,"plazo":30,"objetivo":"2026-11-29","esperado":12.13,"minimo":11.9457,"maximo":12.3143,"metodo":"promedio"},{"serie":"compra","hecha":"2026-10-30","base":12.03,"plazo":7,"objetivo":"2026-11-06","esperado":12.1493,"minimo":11.9647,"maximo":12.3339,"metodo":"combinacion"},{"serie":"oficial","hecha":"2026-10-30","base":12.11,"plazo":1,"objetivo":"2026-10-31","esperado":12.1347,"minimo":11.867,"maximo":12.4025,"metodo":"amortiguado"},{"serie":"oficial","hecha":"2026-10-30","base":12.11,"plazo":30,"objetivo":"2026-11-29","esperado":11.9871,"minimo":10.966,"maximo":13.0083,"metodo":"promedio"},{"serie":"oficial","hecha":"2026-10-30","base":12.11,"plazo":7,"objetivo":"2026-11-06","esperado":12.0905,"minimo":11.0605,"maximo":13.1205,"metodo":"combinacion"},{"serie":"compra","hecha":"2026-10-31","base":11.98,"plazo":1,"objetivo":"2026-11-01","esperado":11.9647,"minimo":11.8656,"maximo":12.0638,"metodo":"holt"},{"serie":"compra","hecha":"2026-10-31","base":11.98,"plazo":30,"objetivo":"2026-11-30","esperado":12.0667,"minimo":11.8906,"maximo":12.2427,"metodo":"promedio"},{"serie":"compra","hecha":"2026-10-31","base":11.98,"plazo":7,"objetivo":"2026-11-07","esperado":12.0663,"minimo":11.8903,"maximo":12.2424,"metodo":"combinacion"},{"serie":"oficial","hecha":"2026-10-31","base":12.09,"plazo":1,"objetivo":"2026-11-01","esperado":12.096,"minimo":11.8302,"maximo":12.3618,"metodo":"amortiguado"},{"serie":"oficial","hecha":"2026-10-31","base":12.09,"plazo":30,"objetivo":"2026-11-30","esperado":12.0171,"minimo":10.9979,"maximo":13.0364,"metodo":"promedio"},{"serie":"oficial","hecha":"2026-10-31","base":12.09,"plazo":7,"objetivo":"2026-11-07","esperado":12.0588,"minimo":11.036,"maximo":13.0816,"metodo":"combinacion"}];
 
 </script>
   <script>
