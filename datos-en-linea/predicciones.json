@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-05T10:10",
+ "actualizado": "2026-11-05T21:59",
  "predicciones": [
   {
    "serie": "compra",
@@ -928,34 +928,34 @@
   {
    "serie": "compra",
    "hecha": "2026-11-05",
-   "base": 12.03,
+   "base": 12.02,
    "plazo": 1,
    "objetivo": "2026-11-06",
-   "esperado": 12.0281,
-   "minimo": 11.9336,
-   "maximo": 12.1227,
+   "esperado": 12.0177,
+   "minimo": 11.9232,
+   "maximo": 12.1122,
    "metodo": "holt"
   },
   {
    "serie": "compra",
    "hecha": "2026-11-05",
-   "base": 12.03,
+   "base": 12.02,
    "plazo": 30,
    "objetivo": "2026-12-05",
-   "esperado": 12.0367,
-   "minimo": 11.8753,
-   "maximo": 12.198,
+   "esperado": 12.0333,
+   "minimo": 11.8707,
+   "maximo": 12.196,
    "metodo": "promedio"
   },
   {
    "serie": "compra",
    "hecha": "2026-11-05",
-   "base": 12.03,
+   "base": 12.02,
    "plazo": 7,
    "objetivo": "2026-11-12",
-   "esperado": 12.0367,
-   "minimo": 11.8753,
-   "maximo": 12.198,
+   "esperado": 12.0333,
+   "minimo": 11.8707,
+   "maximo": 12.196,
    "metodo": "promedio"
   },
   {
