@@ -1,4 +1,4 @@
-{"actualizado": "2026-11-13T21:53", "cotizaciones": [
+{"actualizado": "2026-11-14T09:43", "cotizaciones": [
   {
     "fecha": "2026-10-22",
     "oficial": 11.75,
@@ -135,6 +135,12 @@
     "fecha": "2026-11-13",
     "oficial": 11.67,
     "compra": 11.88,
+    "venta": 11.85
+  },
+  {
+    "fecha": "2026-11-14",
+    "oficial": 11.67,
+    "compra": 11.9,
     "venta": 11.85
   }
 ]}
