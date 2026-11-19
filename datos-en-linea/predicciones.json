@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-18T22:08",
+ "actualizado": "2026-11-19T10:14",
  "predicciones": [
   {
    "serie": "compra",
@@ -1847,6 +1847,72 @@
    "esperado": 11.7605,
    "minimo": 10.8317,
    "maximo": 12.6894,
+   "metodo": "combinacion"
+  },
+  {
+   "serie": "compra",
+   "hecha": "2026-11-19",
+   "base": 11.93,
+   "plazo": 1,
+   "objetivo": "2026-11-20",
+   "esperado": 11.9433,
+   "minimo": 11.856,
+   "maximo": 12.0306,
+   "metodo": "promedio"
+  },
+  {
+   "serie": "compra",
+   "hecha": "2026-11-19",
+   "base": 11.93,
+   "plazo": 30,
+   "objetivo": "2026-12-19",
+   "esperado": 11.9433,
+   "minimo": 11.8032,
+   "maximo": 12.0834,
+   "metodo": "promedio"
+  },
+  {
+   "serie": "compra",
+   "hecha": "2026-11-19",
+   "base": 11.93,
+   "plazo": 7,
+   "objetivo": "2026-11-26",
+   "esperado": 11.9433,
+   "minimo": 11.8032,
+   "maximo": 12.0834,
+   "metodo": "promedio"
+  },
+  {
+   "serie": "oficial",
+   "hecha": "2026-11-19",
+   "base": 11.68,
+   "plazo": 1,
+   "objetivo": "2026-11-20",
+   "esperado": 11.6778,
+   "minimo": 11.4396,
+   "maximo": 11.916,
+   "metodo": "amortiguado"
+  },
+  {
+   "serie": "oficial",
+   "hecha": "2026-11-19",
+   "base": 11.68,
+   "plazo": 30,
+   "objetivo": "2026-12-19",
+   "esperado": 11.6871,
+   "minimo": 10.7677,
+   "maximo": 12.6065,
+   "metodo": "promedio"
+  },
+  {
+   "serie": "oficial",
+   "hecha": "2026-11-19",
+   "base": 11.68,
+   "plazo": 7,
+   "objetivo": "2026-11-26",
+   "esperado": 11.6663,
+   "minimo": 10.7485,
+   "maximo": 12.584,
    "metodo": "combinacion"
   }
  ]
