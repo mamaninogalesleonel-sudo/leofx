@@ -73,8 +73,22 @@
   --primario-claro: var(--verde-50);
 
   /* Degradados (mezclas de color) usados en botones, encabezado, etc. */
-  --degradado: linear-gradient(135deg, #059669 0%, #10b981 55%, #14b8a6 100%);
-  --degradado-oscuro: linear-gradient(135deg, #022c22 0%, #064e3b 45%, #047857 100%);
+  /* "Agua": dos reflejos de luz sobre una corriente verde. Las capas se
+     mueven lentamente (ver sección 16 B, "Efecto agua"). */
+  --degradado:
+    radial-gradient(ellipse 45% 55% at 25% 35%, rgba(255, 255, 255, 0.22), transparent 70%),
+    radial-gradient(ellipse 40% 50% at 75% 65%, rgba(190, 242, 100, 0.16), transparent 70%),
+    linear-gradient(120deg, #059669 0%, #10b981 25%, #14b8a6 50%, #10b981 75%, #059669 100%);
+  --degradado-oscuro: linear-gradient(135deg, #022c22 0%, #064e3b 30%, #047857 50%, #064e3b 70%, #022c22 100%);
+  /* Versión "agua profunda" del degradado oscuro: manchas de luz verde
+     que se desplazan como reflejos bajo el agua. */
+  /* Una ola (se repite a lo ancho para formar el oleaje). */
+  --ola: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20' preserveAspectRatio='none'%3E%3Cpath d='M0 10 Q25 2 50 10 T100 10 T150 10 T200 10 V20 H0 Z' fill='white' fill-opacity='0.07'/%3E%3C/svg%3E");
+  --agua-profunda:
+    radial-gradient(ellipse 30% 45% at 20% 30%, rgba(52, 211, 153, 0.38), transparent 70%),
+    radial-gradient(ellipse 35% 50% at 80% 70%, rgba(20, 184, 166, 0.36), transparent 70%),
+    radial-gradient(ellipse 25% 40% at 55% 20%, rgba(110, 231, 183, 0.18), transparent 70%),
+    var(--degradado-oscuro);
 
   /* Colores con significado */
   --sube: #dc2626;            /* rojo: el dólar sube */
@@ -175,11 +189,8 @@ input[type="checkbox"] {
   overflow: hidden;
   color: #fff;
   padding: 22px 0;            /* alto de la franja verde (arriba y abajo) */
-  /* Varias capas: dos "luces" verdes difusas sobre un degradado oscuro. */
-  background:
-    radial-gradient(circle at 88% 15%, rgba(52, 211, 153, 0.45), transparent 38%),
-    radial-gradient(circle at 8% 110%, rgba(20, 184, 166, 0.40), transparent 42%),
-    var(--degradado-oscuro);
+  /* Varias capas: "luces" verdes difusas que se mueven como agua. */
+  background: var(--agua-profunda);
 }
 /* Cuadrícula muy tenue de fondo, como un papel de gráfico. */
 .encabezado::before {
@@ -194,24 +205,23 @@ input[type="checkbox"] {
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 60%);
   pointer-events: none;
 }
-/* Brillo que cruza el encabezado lentamente (efecto "aurora"). */
+/* Olas suaves en el borde inferior del encabezado. */
 .encabezado::after {
   content: "";
   position: absolute;
-  top: -50%;
-  left: -30%;
-  width: 40%;
-  height: 200%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
-  transform: rotate(18deg);
-  animation: aurora 9s ease-in-out infinite;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 30px;
+  background-image: var(--ola), var(--ola);
+  background-repeat: repeat-x;
+  background-size: 420px 30px, 300px 22px;
+  background-position: 0 100%, 0 100%;
+  opacity: 0.9;
+  animation: olas 26s linear infinite;
   pointer-events: none;
 }
-@keyframes aurora {
-  0%   { left: -40%; }
-  60%  { left: 120%; }
-  100% { left: 120%; }
-}
+
 /* Logo, nombre y subtítulo en una sola fila (en celular el subtítulo
    pasa abajo automáticamente gracias a flex-wrap). */
 .encabezado .contenedor {
@@ -404,9 +414,7 @@ input[type="checkbox"] {
   justify-content: space-between;
   padding: 18px 16px 18px 20px;
   color: #fff;
-  background:
-    radial-gradient(circle at 90% 0%, rgba(52, 211, 153, 0.4), transparent 50%),
-    var(--degradado-oscuro);
+  background: var(--agua-profunda);
 }
 .panel-marca {
   display: flex;
@@ -1392,9 +1400,7 @@ textarea:focus {
 
 /* ---------- 15. Pie de página y mensajes ---------- */
 .pie {
-  background:
-    radial-gradient(circle at 90% 0%, rgba(52, 211, 153, 0.25), transparent 40%),
-    var(--degradado-oscuro);
+  background: var(--agua-profunda);
   color: #d1fae5;
   padding: 26px 0;
   margin-top: 36px;
@@ -1454,6 +1460,69 @@ textarea:focus {
 }
 
 
+/* ---------- 16 B. Efecto agua ----------
+   Los verdes se mueven lentamente, como agua: las capas del degradado
+   (reflejos de luz y corriente) se desplazan cada una a su ritmo.
+   Solo se anima la posición del fondo: no cambia tamaños ni textos. */
+h2::before,
+.boton,
+.insignia,
+.pestana.activa,
+.opcion-menu.activa,
+.filtro-noticias button.activo,
+.recomendacion.baja::before,
+.mensaje.ok {
+  background-size: 220% 220%, 260% 260%, 300% 300%;
+  animation: agua 14s ease-in-out infinite alternate;
+}
+/* La opción activa del menú conserva su entrada y además se mueve. */
+.panel-menu.abierto .opcion-menu.activa {
+  animation:
+    entrarOpcion 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both,
+    agua 14s ease-in-out infinite alternate;
+}
+/* Fondos oscuros (encabezado, panel del menú, pie): agua profunda, más lenta. */
+.encabezado,
+.panel-cabecera,
+.pie {
+  background-size: 200% 200%, 240% 240%, 180% 180%, 300% 300%;
+  animation: agua 24s ease-in-out infinite alternate;
+}
+/* El pie también tiene oleaje, en su borde superior. */
+.pie {
+  position: relative;
+  overflow: hidden;
+}
+.pie::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 24px;
+  background-image: var(--ola), var(--ola);
+  background-repeat: repeat-x;
+  background-size: 360px 24px, 260px 18px;
+  background-position: 0 0, 0 0;
+  transform: scaleY(-1);
+  animation: olas 30s linear infinite;
+  pointer-events: none;
+}
+.pie .contenedor { position: relative; }
+
+@keyframes agua {
+  0%   { background-position: 0% 0%,     100% 100%, 0% 50%,   0% 50%; }
+  35%  { background-position: 60% 100%,  30% 20%,   100% 0%,  50% 50%; }
+  70%  { background-position: 100% 30%,  0% 70%,    40% 100%, 80% 50%; }
+  100% { background-position: 30% 70%,   80% 0%,    0% 0%,    100% 50%; }
+}
+/* Cada ola recorre exactamente el ancho de su dibujo: el bucle no salta. */
+@keyframes olas {
+  from { background-position: 0 100%, 0 100%; }
+  to   { background-position: -420px 100%, 300px 100%; }
+}
+
+
 /* ---------- 17. Movimiento reducido ----------
    Si la persona configuró su equipo para "reducir animaciones", se
    desactivan los efectos de movimiento. */
@@ -1473,7 +1542,7 @@ textarea:focus {
   .apartado[hidden] { display: block !important; }
   body { background: #fff; }
   .tarjeta, .tarjeta-valor, .tarjeta-pred { box-shadow: none; break-inside: avoid; animation: none; }
-  .encabezado::after, .logo { animation: none; }
+  .encabezado, .encabezado::after, .panel-cabecera, .pie, .pie::before, .logo { animation: none; }
 }
 
 </style>
