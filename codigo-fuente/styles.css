@@ -1537,6 +1537,156 @@ textarea:focus {
 }
 
 
+/* ---------- 15 B. Veredicto, acierto, modo tesis, importación y compras ---------- */
+
+/* Veredicto del día: tarjeta con semáforo. El color lo da la clase
+   verde / amarillo / rojo que pone app.js. */
+.veredicto {
+  --color-veredicto: var(--verde-600);
+  --fondo-veredicto: var(--verde-50);
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--fondo-veredicto), #ffffff 70%);
+  border: 1px solid color-mix(in srgb, var(--color-veredicto) 35%, transparent);
+  border-left: 6px solid var(--color-veredicto);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  animation: aparecer 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.veredicto[hidden] { display: none; }
+.veredicto.amarillo { --color-veredicto: #d97706; --fondo-veredicto: #fffbeb; }
+.veredicto.rojo     { --color-veredicto: #dc2626; --fondo-veredicto: #fef2f2; }
+.semaforo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 7px;
+  border-radius: 14px;
+  background: #0f172a;
+  flex-shrink: 0;
+}
+.semaforo .luz {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  opacity: 0.18;
+}
+.semaforo .luz.rojo     { background: #ef4444; }
+.semaforo .luz.amarillo { background: #f59e0b; }
+.semaforo .luz.verde    { background: #22c55e; }
+.veredicto.rojo .luz.rojo,
+.veredicto.amarillo .luz.amarillo,
+.veredicto.verde .luz.verde {
+  opacity: 1;
+  animation: luzEncendida 2.4s ease-in-out infinite;
+}
+@keyframes luzEncendida {
+  0%, 100% { box-shadow: 0 0 6px 1px currentColor; filter: brightness(1); }
+  50%      { box-shadow: 0 0 16px 4px currentColor; filter: brightness(1.15); }
+}
+.veredicto.rojo .luz.rojo { color: #ef4444; }
+.veredicto.amarillo .luz.amarillo { color: #f59e0b; }
+.veredicto.verde .luz.verde { color: #22c55e; }
+.veredicto-cuerpo { flex: 1; min-width: 0; }
+.veredicto-etiqueta {
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--texto-suave);
+}
+.veredicto-titulo {
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-veredicto);
+  margin: 2px 0 6px;
+}
+.veredicto p { margin: 0 0 6px; font-size: 0.93rem; }
+.veredicto-linea { color: var(--texto-suave); font-size: 0.86rem !important; }
+.veredicto-botones { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+a.boton { display: inline-block; text-decoration: none; }
+
+/* Insignia "cuánto acierta" en las predicciones. */
+.insignia-acierto {
+  margin: 0 0 14px;
+  padding: 9px 14px;
+  border-radius: var(--radio-chico);
+  background: linear-gradient(90deg, var(--verde-50), #f0fdfa);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  font-size: 0.88rem;
+  color: var(--verde-950);
+}
+.insignia-acierto[hidden] { display: none; }
+
+/* Modo tesis: sin él, se ocultan las tablas técnicas. */
+body:not(.modo-tesis) .solo-tesis { display: none !important; }
+body.modo-tesis .solo-normal { display: none !important; }
+.enlace-verde { color: var(--verde-700) !important; font-weight: 700; margin-top: 8px; }
+
+/* Interruptor del menú lateral. */
+.interruptor-tesis {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 6px 16px 0;
+  padding: 12px 14px;
+  border-radius: var(--radio-chico);
+  background: var(--verde-50);
+  border: 1px solid var(--borde);
+  cursor: pointer;
+  flex-shrink: 0;            /* en pantallas bajas, la lista de opciones es la que se desplaza */
+}
+.interruptor-tesis input { position: absolute; opacity: 0; pointer-events: none; }
+.interruptor {
+  position: relative;
+  width: 40px;
+  height: 22px;
+  border-radius: 99px;
+  background: #cbd5e1;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: background var(--transicion);
+}
+.interruptor::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform var(--transicion);
+}
+.interruptor-tesis input:checked + .interruptor { background: var(--degradado); }
+.interruptor-tesis input:checked + .interruptor::after { transform: translateX(18px); }
+.interruptor-tesis input:focus-visible + .interruptor { outline: 3px solid var(--verde-300); outline-offset: 2px; }
+.texto-interruptor { display: flex; flex-direction: column; gap: 2px; font-size: 0.9rem; color: var(--verde-950); }
+.texto-interruptor small { color: var(--texto-suave); font-size: 0.76rem; line-height: 1.35; }
+
+/* Formularios nuevos: un campo que ocupa dos columnas. */
+.formulario .ancho-doble { grid-column: span 2; }
+@media (max-width: 760px) { .formulario .ancho-doble { grid-column: 1 / -1; } }
+
+/* Desglose de la importación: montos a la derecha. */
+.tabla-desglose td:last-child { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tp-esperado.texto-baja { color: var(--baja); }
+.tp-esperado.texto-sube { color: var(--sube); }
+
+@media (max-width: 480px) {
+  .veredicto { gap: 12px; padding: 16px 14px; }
+  .veredicto-titulo { font-size: 1.22rem; }
+  .semaforo .luz { width: 14px; height: 14px; }
+}
+
+
 /* ---------- 16 B. Efectos y animaciones de los verdes ----------
    Todo lo que es verde "cobra vida": los degradados fluyen, los botones
    tienen un destello al pasar el mouse y las luces del encabezado se

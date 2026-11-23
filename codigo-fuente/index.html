@@ -150,6 +150,14 @@
         <svg class="icono-opcion" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></svg>
         <span class="texto-opcion">¿Compro hoy o espero?</span>
       </a>
+      <a class="opcion-menu" href="#importacion" data-apartado="importacion">
+        <svg class="icono-opcion" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>
+        <span class="texto-opcion">Costo de importación</span>
+      </a>
+      <a class="opcion-menu" href="#compras" data-apartado="compras">
+        <svg class="icono-opcion" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/><path d="M16 3v3M8 3v3"/></svg>
+        <span class="texto-opcion">Mis compras y ahorro</span>
+      </a>
       <a class="opcion-menu" href="#noticias" data-apartado="noticias">
         <svg class="icono-opcion" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h13v16H6a2 2 0 01-2-2z"/><path d="M17 8h3v10a2 2 0 01-2 2h-1"/><path d="M8 8h5M8 12h5M8 16h3"/></svg>
         <span class="texto-opcion">Noticias e impacto</span>
@@ -167,6 +175,14 @@
         <span class="texto-opcion">Glosario</span>
       </a>
     </nav>
+
+    <!-- Modo tesis: muestra u oculta las tablas técnicas (métodos,
+         backtest, seguimiento detallado). Se recuerda en este navegador. -->
+    <label class="interruptor-tesis">
+      <input type="checkbox" id="chkModoTesis">
+      <span class="interruptor" aria-hidden="true"></span>
+      <span class="texto-interruptor"><strong>Modo tesis</strong><small>Muestra las tablas técnicas: métodos, backtest y seguimiento detallado.</small></span>
+    </label>
 
     <p class="panel-pie">Herramienta de apoyo a la toma de decisiones. Las predicciones son estimaciones y no garantizan valores futuros.</p>
   </aside>
@@ -196,6 +212,10 @@
 
       <!-- Aviso si los datos no están al día (lo muestra app.js) -->
       <p id="avisoDesactualizado" class="aviso-dato" hidden></p>
+
+      <!-- Veredicto del día (semáforo): qué conviene hacer hoy, en una
+           frase. Lo escribe app.js (sección 6.0). -->
+      <div id="veredicto" class="veredicto" hidden></div>
 
       <!-- Tarjeta(s) con la cotización de hoy -->
       <div id="tarjetaHoy" class="grid-hoy"></div>
@@ -242,19 +262,24 @@
         <h2>Predicción a 1, 7 y 30 días</h2>
         <!-- Resumen en palabras de lo que se espera (lo escribe app.js) -->
         <p id="resumenTendencia" class="resumen-tendencia" hidden></p>
+        <!-- Insignia "cuánto acierta" (seguimiento real; la escribe app.js) -->
+        <p id="insigniaAcierto" class="insignia-acierto" hidden></p>
         <div id="predicciones" class="grid-3"></div>
         <p id="metodoElegido" class="nota"></p>
+        <button type="button" class="boton-link enlace-verde solo-normal" data-cambiar-modo-tesis>Ver detalles técnicos (modo tesis) →</button>
 
-        <!-- Lo que predice cada método, para comparar tendencias -->
-        <h3>¿Qué predice cada método?</h3>
-        <p class="nota">Cada método ve el futuro de forma distinta: unos siguen la tendencia reciente (▲ sube, ▼ baja) y otros no. En cada plazo se usa el que menos se equivocó en el pasado (marcado como <strong>Usado</strong>).</p>
-        <div class="tabla-scroll">
-          <table id="tablaMetodos" class="tabla"></table>
+        <!-- Lo que predice cada método, para comparar tendencias (solo en modo tesis) -->
+        <div class="solo-tesis">
+          <h3>¿Qué predice cada método?</h3>
+          <p class="nota">Cada método ve el futuro de forma distinta: unos siguen la tendencia reciente (▲ sube, ▼ baja) y otros no. LeoFX predice con el marcado como <strong>Usado</strong>; los demás se muestran para comparar.</p>
+          <div class="tabla-scroll">
+            <table id="tablaMetodos" class="tabla"></table>
+          </div>
         </div>
       </div>
 
-      <!-- Tabla de comparación de métodos (backtest) -->
-      <div class="tarjeta">
+      <!-- Tabla de comparación de métodos (backtest) — solo en modo tesis -->
+      <div class="tarjeta solo-tesis">
         <h2>Comparación de métodos (backtest)</h2>
         <p class="nota">Cada método se probó "prediciendo el pasado" y se midió su error con el MAPE (error porcentual absoluto medio). <strong>Menor MAPE = mejor.</strong> LeoFX predice con el método marcado en verde; los demás se muestran para comparar (ver Metodología).</p>
         <div class="tabla-scroll">
@@ -268,7 +293,7 @@
         <h2>¿Acertaron las predicciones? (seguimiento real)</h2>
         <p class="nota">Dos veces al día se guarda lo que LeoFX predice. Cuando llega la fecha predicha, se compara con el valor real. A diferencia del backtest, estas predicciones se hicieron <strong>sin conocer el futuro</strong>: es la prueba más honesta de la herramienta.</p>
         <div id="resumenSeguimiento"></div>
-        <div class="tabla-scroll espacio-arriba">
+        <div class="tabla-scroll espacio-arriba solo-tesis">
           <table id="tablaSeguimiento" class="tabla"></table>
         </div>
       </div>
@@ -318,6 +343,107 @@
         </form>
         <p class="nota">El margen del banco es aproximado: hace poco los bancos vendían entre ~1 % y ~3 % por encima del TCO. Consulte el precio de venta de su banco y escríbalo aquí.</p>
         <div id="resultadoCalc" class="resultado"></div>
+      </div>
+    </section>
+
+    <!-- ============ COSTO DE IMPORTACIÓN ============ -->
+    <section id="importacion" class="seccion apartado" hidden>
+      <div class="tarjeta">
+        <h2>Costo de importación en bolivianos</h2>
+        <p class="nota">Calcule cuánto le costará en bolivianos una importación (mercadería + flete + seguro + tributos aduaneros) si compra los dólares <strong>hoy</strong>, <strong>en 7 días</strong> o <strong>en 30 días</strong>, con el tipo de cambio predicho por LeoFX.</p>
+        <form id="formImportacion" class="formulario">
+          <label>
+            Valor FOB de la mercadería (USD)
+            <input type="text" id="impFOB" inputmode="decimal" placeholder="Ej.: 20.000" autocomplete="off">
+          </label>
+          <label>
+            Flete internacional (USD)
+            <input type="text" id="impFlete" inputmode="decimal" placeholder="Ej.: 1.500" autocomplete="off">
+          </label>
+          <label>
+            Seguro (USD)
+            <input type="text" id="impSeguro" inputmode="decimal" placeholder="Vacío = 2 % del FOB" autocomplete="off">
+          </label>
+          <label>
+            Gravamen arancelario (GA)
+            <select id="impGA">
+              <option value="0">0 %</option>
+              <option value="5">5 %</option>
+              <option value="10" selected>10 %</option>
+              <option value="15">15 %</option>
+              <option value="20">20 %</option>
+              <option value="30">30 %</option>
+              <option value="40">40 %</option>
+            </select>
+          </label>
+          <label>
+            Despacho y agencia despachante (Bs)
+            <input type="text" id="impDespacho" inputmode="decimal" placeholder="Ej.: 2.500" autocomplete="off">
+          </label>
+          <label>
+            Otros gastos en Bolivia (Bs)
+            <input type="text" id="impOtros" inputmode="decimal" placeholder="Almacén, transporte interno…" autocomplete="off">
+          </label>
+          <label>
+            ¿Dónde compra los dólares?
+            <select id="impMercado">
+              <option value="oficial">Banco (TCO + margen)</option>
+              <option value="compra">Paralelo (precio de compra)</option>
+            </select>
+          </label>
+          <label id="grupoImpMargen">
+            Margen del banco sobre el TCO (%)
+            <input type="text" id="impMargen" inputmode="decimal" value="1,5" autocomplete="off">
+          </label>
+          <label>
+            Unidades importadas (opcional)
+            <input type="text" id="impUnidades" inputmode="decimal" placeholder="Para el costo unitario" autocomplete="off">
+          </label>
+          <button type="submit" class="boton">Calcular costo</button>
+        </form>
+        <div id="resultadoImportacion" class="resultado"></div>
+        <p class="nota">Cálculo <strong>referencial</strong>: la Aduana valora la mercadería con el tipo de cambio oficial del día en que se acepta la declaración (DIM). Las alícuotas reales dependen de la partida arancelaria y de los acuerdos comerciales del país de origen; confirme siempre con su agencia despachante.</p>
+      </div>
+    </section>
+
+    <!-- ============ MIS COMPRAS Y AHORRO ============ -->
+    <section id="compras" class="seccion apartado" hidden>
+      <div class="tarjeta">
+        <h2>Mis compras de dólares</h2>
+        <p class="nota">Anote cada compra de dólares de su empresa. LeoFX la compara con lo que habría pagado si hubiera esperado <strong>7</strong> o <strong>30 días</strong>, y muestra qué esperaba la herramienta ese día. Así se mide, con datos reales, si las decisiones fueron buenas. Se guarda solo en este navegador.</p>
+        <form id="formCompra" class="formulario">
+          <label>
+            Fecha de la compra
+            <input type="date" id="compraFecha">
+          </label>
+          <label>
+            Monto comprado (USD)
+            <input type="text" id="compraMonto" inputmode="decimal" placeholder="Ej.: 5.000" autocomplete="off">
+          </label>
+          <label>
+            Tipo de cambio pagado (Bs por USD)
+            <input type="text" id="compraTC" inputmode="decimal" placeholder="Ej.: 11,93" autocomplete="off">
+          </label>
+          <label>
+            Dónde
+            <select id="compraMercado">
+              <option value="oficial">Banco</option>
+              <option value="compra">Paralelo</option>
+            </select>
+          </label>
+          <label class="ancho-doble">
+            Nota (opcional)
+            <input type="text" id="compraNota" placeholder="Ej.: pago a proveedor de China" autocomplete="off" maxlength="80">
+          </label>
+          <button type="submit" class="boton">Guardar compra</button>
+        </form>
+        <div id="resumenCompras" class="espacio-arriba"></div>
+        <div class="tabla-scroll espacio-arriba">
+          <table id="tablaCompras" class="tabla"></table>
+        </div>
+        <div class="barra-botones">
+          <button type="button" id="btnExportarCompras" class="boton secundario chico">Exportar compras (CSV)</button>
+        </div>
       </div>
     </section>
 
@@ -540,6 +666,31 @@
         <div class="formula">Brecha = (Paralelo compra − TCO) / TCO × 100 %</div>
         <p>Se calcula solo en los días que tienen ambos datos.</p>
 
+        <h3>Veredicto del día (semáforo)</h3>
+        <p>Resume la predicción del mercado elegido (banco o paralelo) en una frase:</p>
+        <ul>
+          <li><strong>🟢 Buen momento para comprar:</strong> el valor esperado a 7 o 30 días sube más de 0,5 %, o la probabilidad de que suba es de 60 % o más.</li>
+          <li><strong>🔴 Si puedes, espera:</strong> el valor esperado baja más de 0,5 %, o la probabilidad de que suba es de 40 % o menos.</li>
+          <li><strong>🟡 Compra por partes / sin apuro:</strong> en los demás casos; “por partes” si el rango a 30 días supera el 5 % del valor esperado.</li>
+        </ul>
+        <p>Debajo se indica dónde es más barato comprar hoy (banco con su margen o paralelo) y el <strong>acierto real</strong> de los últimos 30 días: qué parte de las predicciones guardadas en GitHub tuvo su valor real dentro del rango, y su error medio.</p>
+
+        <h3>Costo de importación</h3>
+        <div class="formula">CIF = FOB + flete + seguro &nbsp;(seguro = 2 % del FOB si no se indica)<br>
+          CIF aduana (Bs) = CIF × TCO &nbsp;·&nbsp; GA = CIF aduana × alícuota<br>
+          IVA = (CIF aduana + GA + despacho) × 13/87 (14,94 %)<br>
+          Costo total = CIF × precio de compra del dólar + GA + IVA + despacho + otros gastos<br>
+          Costo neto (inventario) = Costo total − IVA (crédito fiscal)</div>
+        <p>Se calcula comprando los dólares hoy, en 7 y en 30 días con el valor esperado de la predicción, y con el escenario “si sube” (máximo del rango) a 30 días. Los tributos usan el tipo de cambio oficial porque es el que aplica la Aduana. Es un cálculo referencial: no incluye ICE ni otros tributos específicos.</p>
+
+        <h3>Mis compras y ahorro</h3>
+        <p>Para cada compra registrada se estima cuánto habría pagado si hubiera esperado <em>h</em> = 7 o 30 días, suponiendo que su precio cambia en la misma proporción que su mercado (así se conserva el margen que pagó):</p>
+        <div class="formula">TC si esperaba = TC pagado × Mercado<sub>fecha + h</sub> / Mercado<sub>fecha</sub> &nbsp;&nbsp;·&nbsp;&nbsp; Ahorro = Monto × (TC si esperaba − TC pagado)</div>
+        <p>Un ahorro positivo significa que comprar ese día fue mejor que esperar. También se muestra qué esperaba LeoFX ese día a 7 días (predicción guardada en GitHub), para evaluar si seguir la herramienta habría ayudado.</p>
+
+        <h3>Modo tesis</h3>
+        <p>Por defecto se ocultan las tablas técnicas (qué predice cada método, backtest y detalle del seguimiento) para que la herramienta sea más simple de usar. Se muestran activando “Modo tesis” en el menú.</p>
+
         <h3>Seguimiento real de las predicciones</h3>
         <p>Dos veces al día (9:00 y 21:00), un proceso automático en GitHub calcula y guarda las predicciones de ese momento (oficial y paralelo, a 1, 7 y 30 días) con exactamente los mismos modelos de la página. Cuando llega la fecha predicha, la herramienta las compara con el valor real: error porcentual, MAPE real por plazo y porcentaje de valores reales que cayeron dentro del rango. A diferencia del backtest, estas predicciones se hicieron sin conocer el futuro (evaluación <em>fuera de muestra</em> en tiempo real); si el rango está bien calibrado, alrededor del 80 % de los valores reales deberían caer dentro de él.</p>
 
@@ -576,6 +727,14 @@
           <dd>En esta herramienta, <em>compra</em> es lo que usted paga por 1 dólar y <em>venta</em> lo que recibe al vender 1 dólar. La compra siempre es un poco más cara.</dd>
           <dt>Brecha cambiaria</dt>
           <dd>Cuánto más caro (en %) está el paralelo que el oficial. Una brecha que crece suele indicar que faltan dólares en los bancos.</dd>
+          <dt>Valor FOB y CIF</dt>
+          <dd>FOB (<em>free on board</em>) es el precio de la mercadería puesta en el barco o transporte de origen. CIF suma el flete y el seguro hasta el destino: es la base sobre la que la Aduana calcula los tributos.</dd>
+          <dt>Gravamen arancelario (GA)</dt>
+          <dd>Tributo aduanero que se paga al importar, como porcentaje del valor CIF. Su alícuota depende de la partida arancelaria del producto y de los acuerdos comerciales con el país de origen.</dd>
+          <dt>IVA de importación y crédito fiscal</dt>
+          <dd>Al importar se paga IVA (13 % “por dentro”, que equivale a 14,94 % sobre CIF + GA + gastos de despacho). Para una empresa es crédito fiscal: lo recupera al vender, por eso el costo de la mercadería para inventario no lo incluye.</dd>
+          <dt>Veredicto del día</dt>
+          <dd>Resumen tipo semáforo de LeoFX: verde (buen momento para comprar), amarillo (sin dirección clara: compra por partes o sin apuro) y rojo (si puedes, espera).</dd>
           <dt>Margen del banco</dt>
           <dd>Lo que el banco cobra por encima del TCO al venderle dólares. Se usa en la calculadora para estimar el precio real.</dd>
           <dt>Régimen de tipo de cambio flexible</dt>

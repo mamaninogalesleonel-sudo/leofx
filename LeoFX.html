@@ -1589,6 +1589,156 @@ textarea:focus {
 }
 
 
+/* ---------- 15 B. Veredicto, acierto, modo tesis, importación y compras ---------- */
+
+/* Veredicto del día: tarjeta con semáforo. El color lo da la clase
+   verde / amarillo / rojo que pone app.js. */
+.veredicto {
+  --color-veredicto: var(--verde-600);
+  --fondo-veredicto: var(--verde-50);
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--fondo-veredicto), #ffffff 70%);
+  border: 1px solid color-mix(in srgb, var(--color-veredicto) 35%, transparent);
+  border-left: 6px solid var(--color-veredicto);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  animation: aparecer 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.veredicto[hidden] { display: none; }
+.veredicto.amarillo { --color-veredicto: #d97706; --fondo-veredicto: #fffbeb; }
+.veredicto.rojo     { --color-veredicto: #dc2626; --fondo-veredicto: #fef2f2; }
+.semaforo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 7px;
+  border-radius: 14px;
+  background: #0f172a;
+  flex-shrink: 0;
+}
+.semaforo .luz {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  opacity: 0.18;
+}
+.semaforo .luz.rojo     { background: #ef4444; }
+.semaforo .luz.amarillo { background: #f59e0b; }
+.semaforo .luz.verde    { background: #22c55e; }
+.veredicto.rojo .luz.rojo,
+.veredicto.amarillo .luz.amarillo,
+.veredicto.verde .luz.verde {
+  opacity: 1;
+  animation: luzEncendida 2.4s ease-in-out infinite;
+}
+@keyframes luzEncendida {
+  0%, 100% { box-shadow: 0 0 6px 1px currentColor; filter: brightness(1); }
+  50%      { box-shadow: 0 0 16px 4px currentColor; filter: brightness(1.15); }
+}
+.veredicto.rojo .luz.rojo { color: #ef4444; }
+.veredicto.amarillo .luz.amarillo { color: #f59e0b; }
+.veredicto.verde .luz.verde { color: #22c55e; }
+.veredicto-cuerpo { flex: 1; min-width: 0; }
+.veredicto-etiqueta {
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--texto-suave);
+}
+.veredicto-titulo {
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-veredicto);
+  margin: 2px 0 6px;
+}
+.veredicto p { margin: 0 0 6px; font-size: 0.93rem; }
+.veredicto-linea { color: var(--texto-suave); font-size: 0.86rem !important; }
+.veredicto-botones { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+a.boton { display: inline-block; text-decoration: none; }
+
+/* Insignia "cuánto acierta" en las predicciones. */
+.insignia-acierto {
+  margin: 0 0 14px;
+  padding: 9px 14px;
+  border-radius: var(--radio-chico);
+  background: linear-gradient(90deg, var(--verde-50), #f0fdfa);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  font-size: 0.88rem;
+  color: var(--verde-950);
+}
+.insignia-acierto[hidden] { display: none; }
+
+/* Modo tesis: sin él, se ocultan las tablas técnicas. */
+body:not(.modo-tesis) .solo-tesis { display: none !important; }
+body.modo-tesis .solo-normal { display: none !important; }
+.enlace-verde { color: var(--verde-700) !important; font-weight: 700; margin-top: 8px; }
+
+/* Interruptor del menú lateral. */
+.interruptor-tesis {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 6px 16px 0;
+  padding: 12px 14px;
+  border-radius: var(--radio-chico);
+  background: var(--verde-50);
+  border: 1px solid var(--borde);
+  cursor: pointer;
+  flex-shrink: 0;            /* en pantallas bajas, la lista de opciones es la que se desplaza */
+}
+.interruptor-tesis input { position: absolute; opacity: 0; pointer-events: none; }
+.interruptor {
+  position: relative;
+  width: 40px;
+  height: 22px;
+  border-radius: 99px;
+  background: #cbd5e1;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: background var(--transicion);
+}
+.interruptor::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform var(--transicion);
+}
+.interruptor-tesis input:checked + .interruptor { background: var(--degradado); }
+.interruptor-tesis input:checked + .interruptor::after { transform: translateX(18px); }
+.interruptor-tesis input:focus-visible + .interruptor { outline: 3px solid var(--verde-300); outline-offset: 2px; }
+.texto-interruptor { display: flex; flex-direction: column; gap: 2px; font-size: 0.9rem; color: var(--verde-950); }
+.texto-interruptor small { color: var(--texto-suave); font-size: 0.76rem; line-height: 1.35; }
+
+/* Formularios nuevos: un campo que ocupa dos columnas. */
+.formulario .ancho-doble { grid-column: span 2; }
+@media (max-width: 760px) { .formulario .ancho-doble { grid-column: 1 / -1; } }
+
+/* Desglose de la importación: montos a la derecha. */
+.tabla-desglose td:last-child { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tp-esperado.texto-baja { color: var(--baja); }
+.tp-esperado.texto-sube { color: var(--sube); }
+
+@media (max-width: 480px) {
+  .veredicto { gap: 12px; padding: 16px 14px; }
+  .veredicto-titulo { font-size: 1.22rem; }
+  .semaforo .luz { width: 14px; height: 14px; }
+}
+
+
 /* ---------- 16 B. Efectos y animaciones de los verdes ----------
    Todo lo que es verde "cobra vida": los degradados fluyen, los botones
    tienen un destello al pasar el mouse y las luces del encabezado se
@@ -1915,6 +2065,14 @@ input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus
         <svg class="icono-opcion" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></svg>
         <span class="texto-opcion">¿Compro hoy o espero?</span>
       </a>
+      <a class="opcion-menu" href="#importacion" data-apartado="importacion">
+        <svg class="icono-opcion" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>
+        <span class="texto-opcion">Costo de importación</span>
+      </a>
+      <a class="opcion-menu" href="#compras" data-apartado="compras">
+        <svg class="icono-opcion" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/><path d="M16 3v3M8 3v3"/></svg>
+        <span class="texto-opcion">Mis compras y ahorro</span>
+      </a>
       <a class="opcion-menu" href="#noticias" data-apartado="noticias">
         <svg class="icono-opcion" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h13v16H6a2 2 0 01-2-2z"/><path d="M17 8h3v10a2 2 0 01-2 2h-1"/><path d="M8 8h5M8 12h5M8 16h3"/></svg>
         <span class="texto-opcion">Noticias e impacto</span>
@@ -1932,6 +2090,14 @@ input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus
         <span class="texto-opcion">Glosario</span>
       </a>
     </nav>
+
+    <!-- Modo tesis: muestra u oculta las tablas técnicas (métodos,
+         backtest, seguimiento detallado). Se recuerda en este navegador. -->
+    <label class="interruptor-tesis">
+      <input type="checkbox" id="chkModoTesis">
+      <span class="interruptor" aria-hidden="true"></span>
+      <span class="texto-interruptor"><strong>Modo tesis</strong><small>Muestra las tablas técnicas: métodos, backtest y seguimiento detallado.</small></span>
+    </label>
 
     <p class="panel-pie">Herramienta de apoyo a la toma de decisiones. Las predicciones son estimaciones y no garantizan valores futuros.</p>
   </aside>
@@ -1961,6 +2127,10 @@ input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus
 
       <!-- Aviso si los datos no están al día (lo muestra app.js) -->
       <p id="avisoDesactualizado" class="aviso-dato" hidden></p>
+
+      <!-- Veredicto del día (semáforo): qué conviene hacer hoy, en una
+           frase. Lo escribe app.js (sección 6.0). -->
+      <div id="veredicto" class="veredicto" hidden></div>
 
       <!-- Tarjeta(s) con la cotización de hoy -->
       <div id="tarjetaHoy" class="grid-hoy"></div>
@@ -2007,19 +2177,24 @@ input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus
         <h2>Predicción a 1, 7 y 30 días</h2>
         <!-- Resumen en palabras de lo que se espera (lo escribe app.js) -->
         <p id="resumenTendencia" class="resumen-tendencia" hidden></p>
+        <!-- Insignia "cuánto acierta" (seguimiento real; la escribe app.js) -->
+        <p id="insigniaAcierto" class="insignia-acierto" hidden></p>
         <div id="predicciones" class="grid-3"></div>
         <p id="metodoElegido" class="nota"></p>
+        <button type="button" class="boton-link enlace-verde solo-normal" data-cambiar-modo-tesis>Ver detalles técnicos (modo tesis) →</button>
 
-        <!-- Lo que predice cada método, para comparar tendencias -->
-        <h3>¿Qué predice cada método?</h3>
-        <p class="nota">Cada método ve el futuro de forma distinta: unos siguen la tendencia reciente (▲ sube, ▼ baja) y otros no. En cada plazo se usa el que menos se equivocó en el pasado (marcado como <strong>Usado</strong>).</p>
-        <div class="tabla-scroll">
-          <table id="tablaMetodos" class="tabla"></table>
+        <!-- Lo que predice cada método, para comparar tendencias (solo en modo tesis) -->
+        <div class="solo-tesis">
+          <h3>¿Qué predice cada método?</h3>
+          <p class="nota">Cada método ve el futuro de forma distinta: unos siguen la tendencia reciente (▲ sube, ▼ baja) y otros no. LeoFX predice con el marcado como <strong>Usado</strong>; los demás se muestran para comparar.</p>
+          <div class="tabla-scroll">
+            <table id="tablaMetodos" class="tabla"></table>
+          </div>
         </div>
       </div>
 
-      <!-- Tabla de comparación de métodos (backtest) -->
-      <div class="tarjeta">
+      <!-- Tabla de comparación de métodos (backtest) — solo en modo tesis -->
+      <div class="tarjeta solo-tesis">
         <h2>Comparación de métodos (backtest)</h2>
         <p class="nota">Cada método se probó "prediciendo el pasado" y se midió su error con el MAPE (error porcentual absoluto medio). <strong>Menor MAPE = mejor.</strong> LeoFX predice con el método marcado en verde; los demás se muestran para comparar (ver Metodología).</p>
         <div class="tabla-scroll">
@@ -2033,7 +2208,7 @@ input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus
         <h2>¿Acertaron las predicciones? (seguimiento real)</h2>
         <p class="nota">Dos veces al día se guarda lo que LeoFX predice. Cuando llega la fecha predicha, se compara con el valor real. A diferencia del backtest, estas predicciones se hicieron <strong>sin conocer el futuro</strong>: es la prueba más honesta de la herramienta.</p>
         <div id="resumenSeguimiento"></div>
-        <div class="tabla-scroll espacio-arriba">
+        <div class="tabla-scroll espacio-arriba solo-tesis">
           <table id="tablaSeguimiento" class="tabla"></table>
         </div>
       </div>
@@ -2083,6 +2258,107 @@ input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus
         </form>
         <p class="nota">El margen del banco es aproximado: hace poco los bancos vendían entre ~1 % y ~3 % por encima del TCO. Consulte el precio de venta de su banco y escríbalo aquí.</p>
         <div id="resultadoCalc" class="resultado"></div>
+      </div>
+    </section>
+
+    <!-- ============ COSTO DE IMPORTACIÓN ============ -->
+    <section id="importacion" class="seccion apartado" hidden>
+      <div class="tarjeta">
+        <h2>Costo de importación en bolivianos</h2>
+        <p class="nota">Calcule cuánto le costará en bolivianos una importación (mercadería + flete + seguro + tributos aduaneros) si compra los dólares <strong>hoy</strong>, <strong>en 7 días</strong> o <strong>en 30 días</strong>, con el tipo de cambio predicho por LeoFX.</p>
+        <form id="formImportacion" class="formulario">
+          <label>
+            Valor FOB de la mercadería (USD)
+            <input type="text" id="impFOB" inputmode="decimal" placeholder="Ej.: 20.000" autocomplete="off">
+          </label>
+          <label>
+            Flete internacional (USD)
+            <input type="text" id="impFlete" inputmode="decimal" placeholder="Ej.: 1.500" autocomplete="off">
+          </label>
+          <label>
+            Seguro (USD)
+            <input type="text" id="impSeguro" inputmode="decimal" placeholder="Vacío = 2 % del FOB" autocomplete="off">
+          </label>
+          <label>
+            Gravamen arancelario (GA)
+            <select id="impGA">
+              <option value="0">0 %</option>
+              <option value="5">5 %</option>
+              <option value="10" selected>10 %</option>
+              <option value="15">15 %</option>
+              <option value="20">20 %</option>
+              <option value="30">30 %</option>
+              <option value="40">40 %</option>
+            </select>
+          </label>
+          <label>
+            Despacho y agencia despachante (Bs)
+            <input type="text" id="impDespacho" inputmode="decimal" placeholder="Ej.: 2.500" autocomplete="off">
+          </label>
+          <label>
+            Otros gastos en Bolivia (Bs)
+            <input type="text" id="impOtros" inputmode="decimal" placeholder="Almacén, transporte interno…" autocomplete="off">
+          </label>
+          <label>
+            ¿Dónde compra los dólares?
+            <select id="impMercado">
+              <option value="oficial">Banco (TCO + margen)</option>
+              <option value="compra">Paralelo (precio de compra)</option>
+            </select>
+          </label>
+          <label id="grupoImpMargen">
+            Margen del banco sobre el TCO (%)
+            <input type="text" id="impMargen" inputmode="decimal" value="1,5" autocomplete="off">
+          </label>
+          <label>
+            Unidades importadas (opcional)
+            <input type="text" id="impUnidades" inputmode="decimal" placeholder="Para el costo unitario" autocomplete="off">
+          </label>
+          <button type="submit" class="boton">Calcular costo</button>
+        </form>
+        <div id="resultadoImportacion" class="resultado"></div>
+        <p class="nota">Cálculo <strong>referencial</strong>: la Aduana valora la mercadería con el tipo de cambio oficial del día en que se acepta la declaración (DIM). Las alícuotas reales dependen de la partida arancelaria y de los acuerdos comerciales del país de origen; confirme siempre con su agencia despachante.</p>
+      </div>
+    </section>
+
+    <!-- ============ MIS COMPRAS Y AHORRO ============ -->
+    <section id="compras" class="seccion apartado" hidden>
+      <div class="tarjeta">
+        <h2>Mis compras de dólares</h2>
+        <p class="nota">Anote cada compra de dólares de su empresa. LeoFX la compara con lo que habría pagado si hubiera esperado <strong>7</strong> o <strong>30 días</strong>, y muestra qué esperaba la herramienta ese día. Así se mide, con datos reales, si las decisiones fueron buenas. Se guarda solo en este navegador.</p>
+        <form id="formCompra" class="formulario">
+          <label>
+            Fecha de la compra
+            <input type="date" id="compraFecha">
+          </label>
+          <label>
+            Monto comprado (USD)
+            <input type="text" id="compraMonto" inputmode="decimal" placeholder="Ej.: 5.000" autocomplete="off">
+          </label>
+          <label>
+            Tipo de cambio pagado (Bs por USD)
+            <input type="text" id="compraTC" inputmode="decimal" placeholder="Ej.: 11,93" autocomplete="off">
+          </label>
+          <label>
+            Dónde
+            <select id="compraMercado">
+              <option value="oficial">Banco</option>
+              <option value="compra">Paralelo</option>
+            </select>
+          </label>
+          <label class="ancho-doble">
+            Nota (opcional)
+            <input type="text" id="compraNota" placeholder="Ej.: pago a proveedor de China" autocomplete="off" maxlength="80">
+          </label>
+          <button type="submit" class="boton">Guardar compra</button>
+        </form>
+        <div id="resumenCompras" class="espacio-arriba"></div>
+        <div class="tabla-scroll espacio-arriba">
+          <table id="tablaCompras" class="tabla"></table>
+        </div>
+        <div class="barra-botones">
+          <button type="button" id="btnExportarCompras" class="boton secundario chico">Exportar compras (CSV)</button>
+        </div>
       </div>
     </section>
 
@@ -2305,6 +2581,31 @@ input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus
         <div class="formula">Brecha = (Paralelo compra − TCO) / TCO × 100 %</div>
         <p>Se calcula solo en los días que tienen ambos datos.</p>
 
+        <h3>Veredicto del día (semáforo)</h3>
+        <p>Resume la predicción del mercado elegido (banco o paralelo) en una frase:</p>
+        <ul>
+          <li><strong>🟢 Buen momento para comprar:</strong> el valor esperado a 7 o 30 días sube más de 0,5 %, o la probabilidad de que suba es de 60 % o más.</li>
+          <li><strong>🔴 Si puedes, espera:</strong> el valor esperado baja más de 0,5 %, o la probabilidad de que suba es de 40 % o menos.</li>
+          <li><strong>🟡 Compra por partes / sin apuro:</strong> en los demás casos; “por partes” si el rango a 30 días supera el 5 % del valor esperado.</li>
+        </ul>
+        <p>Debajo se indica dónde es más barato comprar hoy (banco con su margen o paralelo) y el <strong>acierto real</strong> de los últimos 30 días: qué parte de las predicciones guardadas en GitHub tuvo su valor real dentro del rango, y su error medio.</p>
+
+        <h3>Costo de importación</h3>
+        <div class="formula">CIF = FOB + flete + seguro &nbsp;(seguro = 2 % del FOB si no se indica)<br>
+          CIF aduana (Bs) = CIF × TCO &nbsp;·&nbsp; GA = CIF aduana × alícuota<br>
+          IVA = (CIF aduana + GA + despacho) × 13/87 (14,94 %)<br>
+          Costo total = CIF × precio de compra del dólar + GA + IVA + despacho + otros gastos<br>
+          Costo neto (inventario) = Costo total − IVA (crédito fiscal)</div>
+        <p>Se calcula comprando los dólares hoy, en 7 y en 30 días con el valor esperado de la predicción, y con el escenario “si sube” (máximo del rango) a 30 días. Los tributos usan el tipo de cambio oficial porque es el que aplica la Aduana. Es un cálculo referencial: no incluye ICE ni otros tributos específicos.</p>
+
+        <h3>Mis compras y ahorro</h3>
+        <p>Para cada compra registrada se estima cuánto habría pagado si hubiera esperado <em>h</em> = 7 o 30 días, suponiendo que su precio cambia en la misma proporción que su mercado (así se conserva el margen que pagó):</p>
+        <div class="formula">TC si esperaba = TC pagado × Mercado<sub>fecha + h</sub> / Mercado<sub>fecha</sub> &nbsp;&nbsp;·&nbsp;&nbsp; Ahorro = Monto × (TC si esperaba − TC pagado)</div>
+        <p>Un ahorro positivo significa que comprar ese día fue mejor que esperar. También se muestra qué esperaba LeoFX ese día a 7 días (predicción guardada en GitHub), para evaluar si seguir la herramienta habría ayudado.</p>
+
+        <h3>Modo tesis</h3>
+        <p>Por defecto se ocultan las tablas técnicas (qué predice cada método, backtest y detalle del seguimiento) para que la herramienta sea más simple de usar. Se muestran activando “Modo tesis” en el menú.</p>
+
         <h3>Seguimiento real de las predicciones</h3>
         <p>Dos veces al día (9:00 y 21:00), un proceso automático en GitHub calcula y guarda las predicciones de ese momento (oficial y paralelo, a 1, 7 y 30 días) con exactamente los mismos modelos de la página. Cuando llega la fecha predicha, la herramienta las compara con el valor real: error porcentual, MAPE real por plazo y porcentaje de valores reales que cayeron dentro del rango. A diferencia del backtest, estas predicciones se hicieron sin conocer el futuro (evaluación <em>fuera de muestra</em> en tiempo real); si el rango está bien calibrado, alrededor del 80 % de los valores reales deberían caer dentro de él.</p>
 
@@ -2341,6 +2642,14 @@ input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus
           <dd>En esta herramienta, <em>compra</em> es lo que usted paga por 1 dólar y <em>venta</em> lo que recibe al vender 1 dólar. La compra siempre es un poco más cara.</dd>
           <dt>Brecha cambiaria</dt>
           <dd>Cuánto más caro (en %) está el paralelo que el oficial. Una brecha que crece suele indicar que faltan dólares en los bancos.</dd>
+          <dt>Valor FOB y CIF</dt>
+          <dd>FOB (<em>free on board</em>) es el precio de la mercadería puesta en el barco o transporte de origen. CIF suma el flete y el seguro hasta el destino: es la base sobre la que la Aduana calcula los tributos.</dd>
+          <dt>Gravamen arancelario (GA)</dt>
+          <dd>Tributo aduanero que se paga al importar, como porcentaje del valor CIF. Su alícuota depende de la partida arancelaria del producto y de los acuerdos comerciales con el país de origen.</dd>
+          <dt>IVA de importación y crédito fiscal</dt>
+          <dd>Al importar se paga IVA (13 % “por dentro”, que equivale a 14,94 % sobre CIF + GA + gastos de despacho). Para una empresa es crédito fiscal: lo recupera al vender, por eso el costo de la mercadería para inventario no lo incluye.</dd>
+          <dt>Veredicto del día</dt>
+          <dd>Resumen tipo semáforo de LeoFX: verde (buen momento para comprar), amarillo (sin dirección clara: compra por partes o sin apuro) y rojo (si puedes, espera).</dd>
           <dt>Margen del banco</dt>
           <dd>Lo que el banco cobra por encima del TCO al venderle dólares. Se usa en la calculadora para estimar el precio real.</dd>
           <dt>Régimen de tipo de cambio flexible</dt>
@@ -4762,16 +5071,20 @@ function recalcular() {
 function dibujarTodo() {
   dibujarPestanas();
   dibujarAvisoDatos();
+  dibujarVeredicto();
   dibujarTarjetaHoy();
   dibujarGrafico();
   dibujarGraficoBrecha();
   dibujarPredicciones();
+  dibujarInsigniaAcierto();
   dibujarBacktest();
   dibujarSeguimiento();
   dibujarRegistros();
+  dibujarCompras();
   dibujarNoticias();
   dibujarMetodologiaDinamica();
   if (calculadoraUsada) calcular(); // actualiza la calculadora si ya se usó
+  if (importacionUsada) calcularImportacion();
 }
 
 // ---- 6.1 Pestañas ----------------------------------------------------
@@ -5674,6 +5987,464 @@ function calcular() {
 // Muestra el campo "margen del banco" solo si el mercado es el oficial.
 function actualizarCamposCalculadora() {
   $("grupoMargen").hidden = $("mercadoCalc").value !== "oficial";
+}
+
+
+/* =====================================================================
+   6.7 B  VEREDICTO DEL DÍA E INSIGNIA "CUÁNTO ACIERTA"
+   ---------------------------------------------------------------------
+   El veredicto resume, en una frase y con un semáforo, qué conviene
+   hacer hoy con el mercado de la pestaña elegida:
+     🟢 verde    → "Buen momento para comprar": se espera que suba.
+     🔴 rojo     → "Si puedes, espera": se espera que baje.
+     🟡 amarillo → sin dirección clara ("compra por partes" si el rango
+                   es amplio; "sin apuro" si no lo es).
+   Reglas (ver Metodología):
+     verde si el esperado a 7 o 30 días sube más de CONFIG.umbralCambio,
+       o si la probabilidad de que suba es de 60 % o más;
+     rojo si baja más del umbral, o si esa probabilidad es de 40 % o menos.
+   ===================================================================== */
+
+// Serie con la que se decide: el oficial (banco) o el paralelo (compra).
+// (El seguimiento real se guarda para estas dos.)
+function claveDecision() {
+  return estado.mercado === "oficial" ? "oficial" : "compra";
+}
+
+function calcularVeredicto(a) {
+  const hoy = a.ultimo.y;
+  const p7 = a.curva[7];
+  const p30 = a.curva[30];
+  const c7 = p7.esperado / hoy - 1;
+  const c30 = p30.esperado / hoy - 1;
+  const u = CONFIG.umbralCambio;
+  const probMayor = Math.max(p7.probSube, p30.probSube);
+  const probMenor = Math.min(p7.probSube, p30.probSube);
+  const incierto = (p30.maximo - p30.minimo) / p30.esperado > CONFIG.umbralIncertidumbre;
+  const prob = (p) => Math.min(99, Math.max(1, Math.round(p * 100))) + " %";
+  const rango30 = bs(p30.minimo) + " y " + bs(p30.maximo);
+
+  if (c7 > u || c30 > u || probMayor >= 0.6) {
+    return { luz: "verde", titulo: "Buen momento para comprar",
+      texto: "Se espera que el dólar <strong>suba</strong>: probabilidad de que esté más alto que hoy de " + prob(p7.probSube) +
+        " en 7 días y " + prob(p30.probSube) + " en 30 días (esperado en 30 días: " + bs(p30.esperado) + ", " + pctConSigno(c30) +
+        "). Comprar pronto te protege de la subida." };
+  }
+  if (c7 < -u || c30 < -u || probMenor <= 0.4) {
+    return { luz: "rojo", titulo: "Si puedes, espera",
+      texto: "Se espera que el dólar <strong>baje</strong>: probabilidad de que suba de solo " + prob(probMenor) +
+        " (esperado en 30 días: " + bs(p30.esperado) + ", " + pctConSigno(c30) + "). Si el pago puede esperar, podría salir más barato; revisa el veredicto cada día." };
+  }
+  if (incierto) {
+    return { luz: "amarillo", titulo: "Compra por partes",
+      texto: "No hay una dirección clara (probabilidad de que suba en 30 días: " + prob(p30.probSube) + "), pero el dólar podría moverse bastante: en 30 días, entre " +
+        rango30 + ". Repartir la compra en varias partes reduce el riesgo." };
+  }
+  return { luz: "amarillo", titulo: "Sin apuro: compra cuando lo necesites",
+    texto: "No se esperan cambios importantes (probabilidad de que suba en 30 días: " + prob(p30.probSube) + "; en 30 días, entre " + rango30 + ")." };
+}
+
+// ¿Dónde es más barato hoy: banco (TCO + margen) o paralelo?
+function textoDondeComprar() {
+  const o = estado.analisis.oficial;
+  const c = estado.analisis.compra;
+  if (!o || !c) return "";
+  const margen = leerMargenBanco();
+  const banco = o.ultimo.y * (1 + margen);
+  const paralelo = c.ultimo.y;
+  const dif = (paralelo - banco) / banco;
+  const conclusion = Math.abs(dif) < 0.002 ? "cuestan prácticamente lo mismo"
+    : dif > 0 ? "es más barato el <strong>banco</strong>" : "es más barato el <strong>paralelo</strong>";
+  return "💵 Hoy " + conclusion + ": banco " + bs(banco) + " (TCO + " + pct(margen) + ") · paralelo " + bs(paralelo) + ".";
+}
+
+// Resumen del seguimiento real de los últimos 30 días: cuántas veces el
+// valor real cayó dentro del rango y el error medio, comparado con la
+// regla "queda igual" (el último valor que se conocía al predecir).
+function resumenAcierto(clave) {
+  const serie = estado.series[clave];
+  if (!serie || !serie.length) return null;
+  const desde = serie[serie.length - 1].t - 30;
+  const recientes = evaluarSeguimiento(clave).evaluadas.filter((e) => fechaADia(e.p.objetivo) > desde);
+  if (recientes.length < 5) return { n: recientes.length };
+  return {
+    n: recientes.length,
+    dentro: recientes.filter((e) => e.dentro).length / recientes.length,
+    mape: promedio(recientes.map((e) => Math.abs(e.error))) * 100,
+    mapeIngenuo: promedio(recientes.map((e) => Math.abs(e.real.y - e.p.base) / e.real.y)) * 100
+  };
+}
+
+function textoAcierto(r) {
+  if (!r) return "";
+  if (r.dentro == null) {
+    return "🎯 Midiendo aciertos: aún hay pocas predicciones comprobadas en los últimos 30 días (" + r.n + ").";
+  }
+  return "🎯 <strong>Acierto real (últimos 30 días):</strong> " + Math.round(r.dentro * 10) + " de cada 10 valores reales cayeron dentro del rango predicho · " +
+    "error medio " + num(r.mape) + " % (" + r.n + " predicciones comprobadas)." +
+    '<span class="solo-tesis"> Regla “queda igual”: ' + num(r.mapeIngenuo) + " %.</span>";
+}
+
+function dibujarVeredicto() {
+  const caja = $("veredicto");
+  if (!caja) return;
+  const clave = claveDecision();
+  const a = estado.analisis[clave];
+  if (!a) { caja.hidden = true; return; }
+  const v = calcularVeredicto(a);
+  const acierto = textoAcierto(resumenAcierto(clave));
+  caja.className = "veredicto " + v.luz;
+  caja.hidden = false;
+  caja.innerHTML =
+    '<div class="semaforo" aria-hidden="true"><span class="luz rojo"></span><span class="luz amarillo"></span><span class="luz verde"></span></div>' +
+    '<div class="veredicto-cuerpo">' +
+      '<div class="veredicto-etiqueta">Veredicto de hoy · ' + (clave === "oficial" ? "dólar en el banco (oficial)" : "dólar paralelo") +
+        " · dato del " + formatoFecha(a.ultimo.fecha) + "</div>" +
+      '<div class="veredicto-titulo">' + v.titulo + "</div>" +
+      "<p>" + v.texto + "</p>" +
+      '<p class="veredicto-linea">' + textoDondeComprar() + "</p>" +
+      (acierto ? '<p class="veredicto-linea">' + acierto + "</p>" : "") +
+      '<div class="veredicto-botones">' +
+        '<a class="boton chico" href="#calculadora">Calcular mi compra</a>' +
+        '<a class="boton secundario chico" href="#importacion">Costo de importación</a>' +
+      "</div>" +
+    "</div>";
+}
+
+// Insignia de acierto en la tarjeta de predicciones.
+function dibujarInsigniaAcierto() {
+  const caja = $("insigniaAcierto");
+  if (!caja) return;
+  const texto = textoAcierto(resumenAcierto(claveDecision()));
+  caja.hidden = !texto;
+  caja.innerHTML = texto;
+}
+
+
+/* =====================================================================
+   6.7 C  COSTO DE IMPORTACIÓN EN BOLIVIANOS
+   ---------------------------------------------------------------------
+   Para una importación se compran dólares para pagar la mercadería, el
+   flete y el seguro (valor CIF), y en la Aduana se pagan tributos:
+     CIF (USD)         = FOB + flete + seguro
+                         (si no se indica seguro, 2 % del FOB)
+     CIF aduana (Bs)   = CIF × tipo de cambio OFICIAL (lo usa la Aduana)
+     GA                = CIF aduana × alícuota del gravamen arancelario
+     IVA importación   = (CIF aduana + GA + gastos de despacho) × 14,94 %
+                         (13 % "por dentro": 13 / 87 = 14,94 % efectiva)
+     Dólares (Bs)      = CIF × precio al que se compran los dólares
+     Costo total       = Dólares + GA + IVA + despacho + otros gastos
+     Costo neto        = Costo total − IVA (el IVA es crédito fiscal)
+   Se calcula comprando los dólares hoy, en 7 y en 30 días, con el tipo
+   de cambio predicho (y el escenario "si sube" a 30 días).
+   ===================================================================== */
+let importacionUsada = false;
+const IVA_IMPORTACION = 13 / 87;   // 14,94 %
+const SEGURO_POR_DEFECTO = 0.02;   // 2 % del FOB
+
+// Número opcional: si está vacío o no es válido, cuenta como 0.
+function leerOpcional(id) {
+  const v = leerNumero($(id).value);
+  return isFinite(v) && v >= 0 ? v : 0;
+}
+
+function calcularImportacion() {
+  const salida = $("resultadoImportacion");
+  const fob = leerNumero($("impFOB").value);
+  if (!isFinite(fob) || fob <= 0) {
+    salida.innerHTML = '<p class="error-texto">Ingrese el valor FOB de la mercadería en dólares (por ejemplo: 20.000).</p>';
+    return;
+  }
+  const mercado = $("impMercado").value; // "oficial" o "compra"
+  const ao = estado.analisis.oficial;
+  const am = estado.analisis[mercado];
+  if (!ao || !am) {
+    salida.innerHTML = '<p class="error-texto">Todavía no hay datos suficientes del tipo de cambio para calcular.</p>';
+    return;
+  }
+  importacionUsada = true;
+
+  const flete = leerOpcional("impFlete");
+  const seguroAuto = $("impSeguro").value.trim() === "";
+  const seguro = seguroAuto ? fob * SEGURO_POR_DEFECTO : leerOpcional("impSeguro");
+  const ga = Number($("impGA").value) / 100;
+  const despacho = leerOpcional("impDespacho");
+  const otros = leerOpcional("impOtros");
+  const margenEscrito = leerNumero($("impMargen").value);
+  const margen = mercado === "oficial" && isFinite(margenEscrito) && margenEscrito >= 0 && margenEscrito <= 20 ? margenEscrito / 100 : 0;
+  const unidades = leerNumero($("impUnidades").value);
+  const cifUSD = fob + flete + seguro;
+
+  // Costo si los dólares se compran dentro de "d" días.
+  // "campo": "esperado" o "maximo" (escenario si sube) de la predicción.
+  function escenario(d, campo) {
+    const tco = d === 0 ? ao.ultimo.y : ao.curva[d][campo];
+    const tcCompra = (d === 0 ? am.ultimo.y : am.curva[d][campo]) * (1 + margen);
+    const dolaresBs = cifUSD * tcCompra;
+    const cifBs = cifUSD * tco;
+    const gaBs = cifBs * ga;
+    const ivaBs = (cifBs + gaBs + despacho) * IVA_IMPORTACION;
+    const total = dolaresBs + gaBs + ivaBs + despacho + otros;
+    return { d: d, tco: tco, tcCompra: tcCompra, dolaresBs: dolaresBs, cifBs: cifBs, gaBs: gaBs, ivaBs: ivaBs, total: total, neto: total - ivaBs };
+  }
+  const hoy = escenario(0, "esperado");
+  const e7 = escenario(7, "esperado");
+  const e30 = escenario(30, "esperado");
+  const peor30 = escenario(30, "maximo");
+
+  function fila(titulo, fecha, e, nota) {
+    const dif = e.total - hoy.total;
+    return "<tr><td>" + titulo + '<div class="sub">' + formatoFecha(fecha) + (nota ? " · " + nota : "") + "</div></td>" +
+      "<td>" + bs(e.tcCompra) + "</td><td>" + bs(e.dolaresBs) + "</td><td>" + bs(e.gaBs + e.ivaBs) + "</td>" +
+      "<td><strong>" + bs(e.total) + "</strong></td>" +
+      "<td>" + (e.d === 0 ? "—" : '<span class="' + (dif > 0 ? "sube" : dif < 0 ? "baja" : "") + '">' + bsConSigno(dif) + "</span>") + "</td></tr>";
+  }
+
+  // Mensaje principal.
+  const dif30 = e30.total - hoy.total;
+  const difPeor = peor30.total - hoy.total;
+  let clase;
+  let titulo;
+  if (dif30 > 0.002 * hoy.total) { clase = "sube"; titulo = "Comprar los dólares pronto abarata la importación"; }
+  else if (dif30 < -0.002 * hoy.total) { clase = "baja"; titulo = "Esperar podría abaratar la importación"; }
+  else { clase = "neutra"; titulo = "El costo esperado casi no cambia con el plazo"; }
+  const mensaje = '<div class="recomendacion ' + clase + '"><div class="rec-titulo">' + titulo + "</div><p>" +
+    "Hoy la importación costaría <strong>" + bs(hoy.total) + "</strong> en total (" + bs(hoy.neto) + " sin el IVA, que es crédito fiscal). " +
+    "Si compra los dólares en 30 días, se espera " + bsConSigno(dif30) + " (" + pctConSigno(dif30 / hoy.total) + "); " +
+    "si el dólar sube, hasta " + bsConSigno(difPeor) + ".</p></div>";
+
+  // Desglose de hoy.
+  const lineas = [
+    ["Valor FOB", "USD " + FORMATO_2.format(fob)],
+    ["Flete internacional", "USD " + FORMATO_2.format(flete)],
+    ["Seguro" + (seguroAuto ? " (2 % del FOB)" : ""), "USD " + FORMATO_2.format(seguro)],
+    ["<strong>Valor CIF</strong>", "<strong>USD " + FORMATO_2.format(cifUSD) + "</strong>"],
+    ["Compra de los dólares (" + bs(hoy.tcCompra) + " por USD)", bs(hoy.dolaresBs)],
+    ["CIF aduana (TC oficial " + bs(hoy.tco) + ")", bs(hoy.cifBs)],
+    ["Gravamen arancelario (" + pct(ga) + " del CIF aduana)", bs(hoy.gaBs)],
+    ["IVA importación (14,94 % de CIF + GA + despacho)", bs(hoy.ivaBs)],
+    ["Despacho y agencia", bs(despacho)],
+    ["Otros gastos en Bolivia", bs(otros)],
+    ["<strong>Costo total a desembolsar</strong>", "<strong>" + bs(hoy.total) + "</strong>"],
+    ["(−) IVA importación: crédito fiscal recuperable", "−" + bs(hoy.ivaBs)],
+    ["<strong>Costo neto de la mercadería (para inventario)</strong>", "<strong>" + bs(hoy.neto) + "</strong>"]
+  ];
+  if (isFinite(unidades) && unidades > 0) {
+    lineas.push(["Costo neto por unidad (" + FORMATO_2.format(unidades) + " unidades)", bs(hoy.neto / unidades)]);
+  }
+
+  salida.innerHTML = mensaje +
+    "<h3>Costo según cuándo compre los dólares</h3>" +
+    '<div class="tabla-scroll"><table class="tabla"><thead><tr><th>Compra de dólares</th><th>Precio de 1 USD</th><th>Dólares (Bs)</th>' +
+      "<th>Tributos (GA + IVA)</th><th>Costo total</th><th>Diferencia vs. hoy</th></tr></thead><tbody>" +
+      fila("Hoy", ao.ultimo.fecha, hoy) +
+      fila("En 7 días", ao.curva[7].fecha, e7, "esperado") +
+      fila("En 30 días", ao.curva[30].fecha, e30, "esperado") +
+      fila("En 30 días, si sube", ao.curva[30].fecha, peor30, "escenario alto") +
+    "</tbody></table></div>" +
+    "<h3>Desglose (comprando los dólares hoy)</h3>" +
+    '<div class="tabla-scroll"><table class="tabla tabla-desglose"><tbody>' +
+      lineas.map((l) => "<tr><td>" + l[0] + "</td><td>" + l[1] + "</td></tr>").join("") +
+    "</tbody></table></div>" +
+    '<p class="nota">Dólares comprados en ' + (mercado === "oficial" ? "el banco (TCO + " + pct(margen) + ")" : "el paralelo (precio de compra)") +
+    ". Los tributos se calculan con el tipo de cambio oficial, que es el que usa la Aduana. Si la mercadería paga ICE u otros tributos, súmelos aparte.</p>";
+}
+
+function actualizarCamposImportacion() {
+  $("grupoImpMargen").hidden = $("impMercado").value !== "oficial";
+}
+
+
+/* =====================================================================
+   6.7 D  MIS COMPRAS Y AHORRO
+   ---------------------------------------------------------------------
+   El usuario anota sus compras de dólares. Para cada una se calcula lo
+   que habría pagado si hubiera esperado 7 o 30 días: el precio cambia en
+   la misma proporción que su mercado (oficial o paralelo), así se respeta
+   el margen que pagó.
+     TC si esperaba = TC pagado × (mercado en fecha + h) / (mercado en fecha)
+     Ahorro         = Monto × (TC si esperaba − TC pagado)
+   Ahorro positivo = comprar ese día fue mejor que esperar.
+   ===================================================================== */
+const CLAVE_COMPRAS = "leofx_compras_v1";
+
+function leerCompras() {
+  try {
+    const lista = JSON.parse(localStorage.getItem(CLAVE_COMPRAS) || "[]");
+    return Array.isArray(lista) ? lista : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function guardarCompras(lista) {
+  try {
+    localStorage.setItem(CLAVE_COMPRAS, JSON.stringify(lista));
+    return true;
+  } catch (e) {
+    mostrarMensaje("No se pudo guardar: este navegador no permite guardar datos.", "error");
+    return false;
+  }
+}
+
+// Valor del mercado en un día (o el último anterior, hasta 7 días atrás).
+function valorDelDia(serie, dia) {
+  return datoAntes(serie, dia + 1, 7);
+}
+
+function evaluarCompra(c) {
+  const clave = c.mercado === "compra" ? "compra" : "oficial";
+  const serie = estado.series[clave] || [];
+  const resultado = { clave: clave };
+  if (!serie.length) return resultado;
+  const dia = fechaADia(c.fecha);
+  const ultimoDia = serie[serie.length - 1].t;
+  const base = valorDelDia(serie, dia);
+  for (const h of [7, 30]) {
+    if (dia + h > ultimoDia) { resultado[h] = { pendiente: true, fecha: sumarDias(c.fecha, h) }; continue; }
+    const despues = valorDelDia(serie, dia + h);
+    if (!base || !despues) { resultado[h] = null; continue; }
+    const tcEsperando = c.tc * despues.y / base.y;
+    resultado[h] = { tc: tcEsperando, ahorro: c.monto * (tcEsperando - c.tc) };
+  }
+  // Qué esperaba LeoFX ese día para 7 días (predicción guardada en GitHub,
+  // hecha ese día o hasta 3 días antes).
+  let prediccion = null;
+  for (const p of datosAutomaticos.predicciones) {
+    if (p.serie === clave && p.plazo === 7 && p.hecha <= c.fecha && p.hecha >= sumarDias(c.fecha, -3) &&
+        (!prediccion || p.hecha > prediccion.hecha)) prediccion = p;
+  }
+  resultado.prediccion = prediccion;
+  return resultado;
+}
+
+function htmlAhorro(r) {
+  if (!r) return '<span class="vacio">sin dato</span>';
+  if (r.pendiente) return '<span class="vacio">se sabrá el ' + formatoFecha(r.fecha) + "</span>";
+  const clase = r.ahorro > 0 ? "baja" : r.ahorro < 0 ? "sube" : "neutra";
+  const texto = r.ahorro > 0 ? "Ahorraste " + bs(r.ahorro) : r.ahorro < 0 ? "Pagaste " + bs(-r.ahorro) + " de más" : "Igual";
+  return '<span class="' + clase + '">' + texto + '</span><div class="sub">si esperabas: ' + num(r.tc) + "</div>";
+}
+
+function dibujarCompras() {
+  const tabla = $("tablaCompras");
+  if (!tabla) return;
+  const compras = leerCompras().sort((a, b) => (a.fecha < b.fecha ? 1 : -1));
+  const resumen = $("resumenCompras");
+  if (!compras.length) {
+    tabla.innerHTML = "";
+    resumen.innerHTML = '<p class="nota">Todavía no anotó compras. Cuando lo haga, aquí verá cuánto ahorró (o pagó de más) frente a esperar.</p>';
+    return;
+  }
+
+  let totalUSD = 0;
+  let totalBs = 0;
+  const ahorro = { 7: 0, 30: 0 };
+  const comprobadas = { 7: 0, 30: 0 };
+  let filas = "<thead><tr><th>Fecha</th><th>Monto</th><th>TC pagado</th><th>Total</th><th>LeoFX esperaba (7 días)</th>" +
+    "<th>Frente a esperar 7 días</th><th>Frente a esperar 30 días</th><th></th></tr></thead><tbody>";
+  for (const c of compras) {
+    const r = evaluarCompra(c);
+    totalUSD += c.monto;
+    totalBs += c.monto * c.tc;
+    for (const h of [7, 30]) {
+      if (r[h] && !r[h].pendiente) { ahorro[h] += r[h].ahorro; comprobadas[h]++; }
+    }
+    let esperaba = '<span class="vacio">—</span>';
+    if (r.prediccion) {
+      const cambio = r.prediccion.esperado / r.prediccion.base - 1;
+      const clase = cambio > CONFIG.umbralCambio / 2 ? "sube" : cambio < -CONFIG.umbralCambio / 2 ? "baja" : "neutra";
+      const flecha = clase === "sube" ? "▲" : clase === "baja" ? "▼" : "▬";
+      esperaba = '<span class="' + clase + '">' + flecha + " " + pctConSigno(cambio) + "</span>";
+    }
+    filas += "<tr><td>" + formatoFecha(c.fecha) + '<div class="sub">' + (c.mercado === "compra" ? "Paralelo" : "Banco") +
+        (c.nota ? " · " + escaparHTML(c.nota) : "") + "</div></td>" +
+      "<td>USD " + FORMATO_2.format(c.monto) + "</td><td>" + bs(c.tc) + "</td><td>" + bs(c.monto * c.tc) + "</td>" +
+      "<td>" + esperaba + "</td><td>" + htmlAhorro(r[7]) + "</td><td>" + htmlAhorro(r[30]) + "</td>" +
+      '<td><button type="button" class="boton-link" data-borrar-compra="' + escaparHTML(c.id) + '">Eliminar</button></td></tr>';
+  }
+  tabla.innerHTML = filas + "</tbody>";
+
+  const tarjeta = (titulo, valor, nota, clase) =>
+    '<div class="tarjeta-pred"><div class="tp-plazo">' + titulo + '</div><div class="tp-esperado ' + (clase || "") + '">' + valor + '</div><div class="nota">' + nota + "</div></div>";
+  const tarjetaAhorro = (h) => comprobadas[h]
+    ? tarjeta("Frente a esperar " + h + " días", (ahorro[h] >= 0 ? "+" : "−") + bs(Math.abs(ahorro[h])),
+        (ahorro[h] >= 0 ? "ahorrado al comprar cuando lo hizo" : "pagado de más por no esperar") + " (" + comprobadas[h] + " de " + compras.length + " compras ya comprobables)",
+        ahorro[h] >= 0 ? "texto-baja" : "texto-sube")
+    : tarjeta("Frente a esperar " + h + " días", "—", "todavía no pasaron " + h + " días desde ninguna compra");
+  resumen.innerHTML = '<div class="grid-3">' +
+    tarjeta("Total comprado", "USD " + FORMATO_2.format(totalUSD), bs(totalBs) + " · TC promedio " + bs(totalBs / totalUSD)) +
+    tarjetaAhorro(7) + tarjetaAhorro(30) + "</div>";
+}
+
+function alGuardarCompra(evento) {
+  evento.preventDefault();
+  const fecha = leerFecha($("compraFecha").value);
+  const monto = leerNumero($("compraMonto").value);
+  const tc = leerNumero($("compraTC").value);
+  if (!fecha || fecha > fechaHoyLocal()) { mostrarMensaje("Ingrese una fecha válida (no futura).", "error"); return; }
+  if (!isFinite(monto) || monto <= 0) { mostrarMensaje("Ingrese el monto comprado en dólares.", "error"); return; }
+  if (!valorRazonable(tc)) { mostrarMensaje("Ingrese el tipo de cambio pagado (por ejemplo: 11,93).", "error"); return; }
+  const lista = leerCompras();
+  lista.push({
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    fecha: fecha, monto: monto, tc: tc,
+    mercado: $("compraMercado").value,
+    nota: $("compraNota").value.trim().slice(0, 80)
+  });
+  if (!guardarCompras(lista)) return;
+  $("compraMonto").value = "";
+  $("compraTC").value = "";
+  $("compraNota").value = "";
+  dibujarCompras();
+  mostrarMensaje("Compra guardada.", "ok");
+}
+
+function borrarCompra(id) {
+  if (!confirm("¿Eliminar esta compra?")) return;
+  guardarCompras(leerCompras().filter((c) => c.id !== id));
+  dibujarCompras();
+}
+
+function exportarCompras() {
+  const compras = leerCompras().sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
+  if (!compras.length) { mostrarMensaje("No hay compras para exportar.", "error"); return; }
+  const v = (x) => (x == null ? "" : num(x).replace(/\./g, ""));
+  const lineas = ["fecha;mercado;monto_usd;tc_pagado;total_bs;ahorro_vs_7_dias;ahorro_vs_30_dias;nota"];
+  for (const c of compras) {
+    const r = evaluarCompra(c);
+    const ah = (h) => (r[h] && !r[h].pendiente ? v(r[h].ahorro) : "");
+    lineas.push([c.fecha, c.mercado === "compra" ? "paralelo" : "banco", v(c.monto), v(c.tc), v(c.monto * c.tc), ah(7), ah(30),
+      '"' + String(c.nota || "").replace(/"/g, '""') + '"'].join(";"));
+  }
+  const blob = new Blob(["﻿" + lineas.join("\r\n")], { type: "text/csv;charset=utf-8" });
+  const enlace = document.createElement("a");
+  enlace.href = URL.createObjectURL(blob);
+  enlace.download = "leofx_mis_compras_" + fechaHoyLocal() + ".csv";
+  document.body.appendChild(enlace);
+  enlace.click();
+  enlace.remove();
+  setTimeout(() => URL.revokeObjectURL(enlace.href), 1000);
+}
+
+
+/* =====================================================================
+   6.7 E  MODO TESIS
+   Oculta o muestra las tablas técnicas (clase "solo-tesis"). Se recuerda
+   en este navegador. Sin modo tesis, la herramienta queda más simple.
+   ===================================================================== */
+const CLAVE_MODO_TESIS = "leofx_modo_tesis_v1";
+
+function aplicarModoTesis(activo, guardar) {
+  document.body.classList.toggle("modo-tesis", activo);
+  $("chkModoTesis").checked = activo;
+  if (guardar) {
+    try { localStorage.setItem(CLAVE_MODO_TESIS, activo ? "1" : "0"); } catch (e) { /* sin almacenamiento */ }
+  }
+}
+
+function modoTesisGuardado() {
+  try { return localStorage.getItem(CLAVE_MODO_TESIS) === "1"; } catch (e) { return false; }
 }
 
 // ---- 6.8 Tabla de registros del usuario --------------------------------
@@ -6683,6 +7454,35 @@ function iniciarPagina() {
     $(id).addEventListener("change", () => { if (calculadoraUsada) calcular(); });
   });
   actualizarCamposCalculadora();
+  // El margen del banco también se usa en el veredicto ("¿dónde conviene?").
+  $("margenBanco").addEventListener("change", dibujarVeredicto);
+
+  // Costo de importación.
+  $("formImportacion").addEventListener("submit", (e) => { e.preventDefault(); calcularImportacion(); });
+  $("impMercado").addEventListener("change", () => { actualizarCamposImportacion(); if (importacionUsada) calcularImportacion(); });
+  ["impGA", "impMargen"].forEach((id) => {
+    $(id).addEventListener("change", () => { if (importacionUsada) calcularImportacion(); });
+  });
+  actualizarCamposImportacion();
+
+  // Mis compras.
+  $("compraFecha").value = fechaHoyLocal();
+  $("formCompra").addEventListener("submit", alGuardarCompra);
+  $("tablaCompras").addEventListener("click", (e) => {
+    const id = e.target.dataset && e.target.dataset.borrarCompra;
+    if (id) borrarCompra(id);
+  });
+  $("btnExportarCompras").addEventListener("click", exportarCompras);
+
+  // Modo tesis: interruptor del menú y botón "Ver detalles técnicos".
+  aplicarModoTesis(modoTesisGuardado(), false);
+  $("chkModoTesis").addEventListener("change", (e) => aplicarModoTesis(e.target.checked, true));
+  document.querySelectorAll("[data-cambiar-modo-tesis]").forEach((boton) => {
+    boton.addEventListener("click", () => {
+      aplicarModoTesis(true, true);
+      mostrarMensaje("Modo tesis activado: se muestran las tablas técnicas. Puede desactivarlo en el menú.", "ok");
+    });
+  });
 
   // Registro de cotizaciones.
   $("regFecha").value = fechaHoyLocal();
@@ -6707,7 +7507,7 @@ function iniciarPagina() {
     if (id) borrarNoticia(id);
   });
   // Botones de filtro: Todas / Clave / Automáticas / Mías.
-  document.querySelectorAll(".filtro-noticias button").forEach((boton) => {
+  document.querySelectorAll(".filtro-noticias button[data-filtro]").forEach((boton) => {
     boton.addEventListener("click", () => {
       filtroNoticias = boton.dataset.filtro;
       dibujarNoticias();

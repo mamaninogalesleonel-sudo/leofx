@@ -1001,16 +1001,20 @@ function recalcular() {
 function dibujarTodo() {
   dibujarPestanas();
   dibujarAvisoDatos();
+  dibujarVeredicto();
   dibujarTarjetaHoy();
   dibujarGrafico();
   dibujarGraficoBrecha();
   dibujarPredicciones();
+  dibujarInsigniaAcierto();
   dibujarBacktest();
   dibujarSeguimiento();
   dibujarRegistros();
+  dibujarCompras();
   dibujarNoticias();
   dibujarMetodologiaDinamica();
   if (calculadoraUsada) calcular(); // actualiza la calculadora si ya se usó
+  if (importacionUsada) calcularImportacion();
 }
 
 // ---- 6.1 Pestañas ----------------------------------------------------
@@ -1913,6 +1917,464 @@ function calcular() {
 // Muestra el campo "margen del banco" solo si el mercado es el oficial.
 function actualizarCamposCalculadora() {
   $("grupoMargen").hidden = $("mercadoCalc").value !== "oficial";
+}
+
+
+/* =====================================================================
+   6.7 B  VEREDICTO DEL DÍA E INSIGNIA "CUÁNTO ACIERTA"
+   ---------------------------------------------------------------------
+   El veredicto resume, en una frase y con un semáforo, qué conviene
+   hacer hoy con el mercado de la pestaña elegida:
+     🟢 verde    → "Buen momento para comprar": se espera que suba.
+     🔴 rojo     → "Si puedes, espera": se espera que baje.
+     🟡 amarillo → sin dirección clara ("compra por partes" si el rango
+                   es amplio; "sin apuro" si no lo es).
+   Reglas (ver Metodología):
+     verde si el esperado a 7 o 30 días sube más de CONFIG.umbralCambio,
+       o si la probabilidad de que suba es de 60 % o más;
+     rojo si baja más del umbral, o si esa probabilidad es de 40 % o menos.
+   ===================================================================== */
+
+// Serie con la que se decide: el oficial (banco) o el paralelo (compra).
+// (El seguimiento real se guarda para estas dos.)
+function claveDecision() {
+  return estado.mercado === "oficial" ? "oficial" : "compra";
+}
+
+function calcularVeredicto(a) {
+  const hoy = a.ultimo.y;
+  const p7 = a.curva[7];
+  const p30 = a.curva[30];
+  const c7 = p7.esperado / hoy - 1;
+  const c30 = p30.esperado / hoy - 1;
+  const u = CONFIG.umbralCambio;
+  const probMayor = Math.max(p7.probSube, p30.probSube);
+  const probMenor = Math.min(p7.probSube, p30.probSube);
+  const incierto = (p30.maximo - p30.minimo) / p30.esperado > CONFIG.umbralIncertidumbre;
+  const prob = (p) => Math.min(99, Math.max(1, Math.round(p * 100))) + " %";
+  const rango30 = bs(p30.minimo) + " y " + bs(p30.maximo);
+
+  if (c7 > u || c30 > u || probMayor >= 0.6) {
+    return { luz: "verde", titulo: "Buen momento para comprar",
+      texto: "Se espera que el dólar <strong>suba</strong>: probabilidad de que esté más alto que hoy de " + prob(p7.probSube) +
+        " en 7 días y " + prob(p30.probSube) + " en 30 días (esperado en 30 días: " + bs(p30.esperado) + ", " + pctConSigno(c30) +
+        "). Comprar pronto te protege de la subida." };
+  }
+  if (c7 < -u || c30 < -u || probMenor <= 0.4) {
+    return { luz: "rojo", titulo: "Si puedes, espera",
+      texto: "Se espera que el dólar <strong>baje</strong>: probabilidad de que suba de solo " + prob(probMenor) +
+        " (esperado en 30 días: " + bs(p30.esperado) + ", " + pctConSigno(c30) + "). Si el pago puede esperar, podría salir más barato; revisa el veredicto cada día." };
+  }
+  if (incierto) {
+    return { luz: "amarillo", titulo: "Compra por partes",
+      texto: "No hay una dirección clara (probabilidad de que suba en 30 días: " + prob(p30.probSube) + "), pero el dólar podría moverse bastante: en 30 días, entre " +
+        rango30 + ". Repartir la compra en varias partes reduce el riesgo." };
+  }
+  return { luz: "amarillo", titulo: "Sin apuro: compra cuando lo necesites",
+    texto: "No se esperan cambios importantes (probabilidad de que suba en 30 días: " + prob(p30.probSube) + "; en 30 días, entre " + rango30 + ")." };
+}
+
+// ¿Dónde es más barato hoy: banco (TCO + margen) o paralelo?
+function textoDondeComprar() {
+  const o = estado.analisis.oficial;
+  const c = estado.analisis.compra;
+  if (!o || !c) return "";
+  const margen = leerMargenBanco();
+  const banco = o.ultimo.y * (1 + margen);
+  const paralelo = c.ultimo.y;
+  const dif = (paralelo - banco) / banco;
+  const conclusion = Math.abs(dif) < 0.002 ? "cuestan prácticamente lo mismo"
+    : dif > 0 ? "es más barato el <strong>banco</strong>" : "es más barato el <strong>paralelo</strong>";
+  return "💵 Hoy " + conclusion + ": banco " + bs(banco) + " (TCO + " + pct(margen) + ") · paralelo " + bs(paralelo) + ".";
+}
+
+// Resumen del seguimiento real de los últimos 30 días: cuántas veces el
+// valor real cayó dentro del rango y el error medio, comparado con la
+// regla "queda igual" (el último valor que se conocía al predecir).
+function resumenAcierto(clave) {
+  const serie = estado.series[clave];
+  if (!serie || !serie.length) return null;
+  const desde = serie[serie.length - 1].t - 30;
+  const recientes = evaluarSeguimiento(clave).evaluadas.filter((e) => fechaADia(e.p.objetivo) > desde);
+  if (recientes.length < 5) return { n: recientes.length };
+  return {
+    n: recientes.length,
+    dentro: recientes.filter((e) => e.dentro).length / recientes.length,
+    mape: promedio(recientes.map((e) => Math.abs(e.error))) * 100,
+    mapeIngenuo: promedio(recientes.map((e) => Math.abs(e.real.y - e.p.base) / e.real.y)) * 100
+  };
+}
+
+function textoAcierto(r) {
+  if (!r) return "";
+  if (r.dentro == null) {
+    return "🎯 Midiendo aciertos: aún hay pocas predicciones comprobadas en los últimos 30 días (" + r.n + ").";
+  }
+  return "🎯 <strong>Acierto real (últimos 30 días):</strong> " + Math.round(r.dentro * 10) + " de cada 10 valores reales cayeron dentro del rango predicho · " +
+    "error medio " + num(r.mape) + " % (" + r.n + " predicciones comprobadas)." +
+    '<span class="solo-tesis"> Regla “queda igual”: ' + num(r.mapeIngenuo) + " %.</span>";
+}
+
+function dibujarVeredicto() {
+  const caja = $("veredicto");
+  if (!caja) return;
+  const clave = claveDecision();
+  const a = estado.analisis[clave];
+  if (!a) { caja.hidden = true; return; }
+  const v = calcularVeredicto(a);
+  const acierto = textoAcierto(resumenAcierto(clave));
+  caja.className = "veredicto " + v.luz;
+  caja.hidden = false;
+  caja.innerHTML =
+    '<div class="semaforo" aria-hidden="true"><span class="luz rojo"></span><span class="luz amarillo"></span><span class="luz verde"></span></div>' +
+    '<div class="veredicto-cuerpo">' +
+      '<div class="veredicto-etiqueta">Veredicto de hoy · ' + (clave === "oficial" ? "dólar en el banco (oficial)" : "dólar paralelo") +
+        " · dato del " + formatoFecha(a.ultimo.fecha) + "</div>" +
+      '<div class="veredicto-titulo">' + v.titulo + "</div>" +
+      "<p>" + v.texto + "</p>" +
+      '<p class="veredicto-linea">' + textoDondeComprar() + "</p>" +
+      (acierto ? '<p class="veredicto-linea">' + acierto + "</p>" : "") +
+      '<div class="veredicto-botones">' +
+        '<a class="boton chico" href="#calculadora">Calcular mi compra</a>' +
+        '<a class="boton secundario chico" href="#importacion">Costo de importación</a>' +
+      "</div>" +
+    "</div>";
+}
+
+// Insignia de acierto en la tarjeta de predicciones.
+function dibujarInsigniaAcierto() {
+  const caja = $("insigniaAcierto");
+  if (!caja) return;
+  const texto = textoAcierto(resumenAcierto(claveDecision()));
+  caja.hidden = !texto;
+  caja.innerHTML = texto;
+}
+
+
+/* =====================================================================
+   6.7 C  COSTO DE IMPORTACIÓN EN BOLIVIANOS
+   ---------------------------------------------------------------------
+   Para una importación se compran dólares para pagar la mercadería, el
+   flete y el seguro (valor CIF), y en la Aduana se pagan tributos:
+     CIF (USD)         = FOB + flete + seguro
+                         (si no se indica seguro, 2 % del FOB)
+     CIF aduana (Bs)   = CIF × tipo de cambio OFICIAL (lo usa la Aduana)
+     GA                = CIF aduana × alícuota del gravamen arancelario
+     IVA importación   = (CIF aduana + GA + gastos de despacho) × 14,94 %
+                         (13 % "por dentro": 13 / 87 = 14,94 % efectiva)
+     Dólares (Bs)      = CIF × precio al que se compran los dólares
+     Costo total       = Dólares + GA + IVA + despacho + otros gastos
+     Costo neto        = Costo total − IVA (el IVA es crédito fiscal)
+   Se calcula comprando los dólares hoy, en 7 y en 30 días, con el tipo
+   de cambio predicho (y el escenario "si sube" a 30 días).
+   ===================================================================== */
+let importacionUsada = false;
+const IVA_IMPORTACION = 13 / 87;   // 14,94 %
+const SEGURO_POR_DEFECTO = 0.02;   // 2 % del FOB
+
+// Número opcional: si está vacío o no es válido, cuenta como 0.
+function leerOpcional(id) {
+  const v = leerNumero($(id).value);
+  return isFinite(v) && v >= 0 ? v : 0;
+}
+
+function calcularImportacion() {
+  const salida = $("resultadoImportacion");
+  const fob = leerNumero($("impFOB").value);
+  if (!isFinite(fob) || fob <= 0) {
+    salida.innerHTML = '<p class="error-texto">Ingrese el valor FOB de la mercadería en dólares (por ejemplo: 20.000).</p>';
+    return;
+  }
+  const mercado = $("impMercado").value; // "oficial" o "compra"
+  const ao = estado.analisis.oficial;
+  const am = estado.analisis[mercado];
+  if (!ao || !am) {
+    salida.innerHTML = '<p class="error-texto">Todavía no hay datos suficientes del tipo de cambio para calcular.</p>';
+    return;
+  }
+  importacionUsada = true;
+
+  const flete = leerOpcional("impFlete");
+  const seguroAuto = $("impSeguro").value.trim() === "";
+  const seguro = seguroAuto ? fob * SEGURO_POR_DEFECTO : leerOpcional("impSeguro");
+  const ga = Number($("impGA").value) / 100;
+  const despacho = leerOpcional("impDespacho");
+  const otros = leerOpcional("impOtros");
+  const margenEscrito = leerNumero($("impMargen").value);
+  const margen = mercado === "oficial" && isFinite(margenEscrito) && margenEscrito >= 0 && margenEscrito <= 20 ? margenEscrito / 100 : 0;
+  const unidades = leerNumero($("impUnidades").value);
+  const cifUSD = fob + flete + seguro;
+
+  // Costo si los dólares se compran dentro de "d" días.
+  // "campo": "esperado" o "maximo" (escenario si sube) de la predicción.
+  function escenario(d, campo) {
+    const tco = d === 0 ? ao.ultimo.y : ao.curva[d][campo];
+    const tcCompra = (d === 0 ? am.ultimo.y : am.curva[d][campo]) * (1 + margen);
+    const dolaresBs = cifUSD * tcCompra;
+    const cifBs = cifUSD * tco;
+    const gaBs = cifBs * ga;
+    const ivaBs = (cifBs + gaBs + despacho) * IVA_IMPORTACION;
+    const total = dolaresBs + gaBs + ivaBs + despacho + otros;
+    return { d: d, tco: tco, tcCompra: tcCompra, dolaresBs: dolaresBs, cifBs: cifBs, gaBs: gaBs, ivaBs: ivaBs, total: total, neto: total - ivaBs };
+  }
+  const hoy = escenario(0, "esperado");
+  const e7 = escenario(7, "esperado");
+  const e30 = escenario(30, "esperado");
+  const peor30 = escenario(30, "maximo");
+
+  function fila(titulo, fecha, e, nota) {
+    const dif = e.total - hoy.total;
+    return "<tr><td>" + titulo + '<div class="sub">' + formatoFecha(fecha) + (nota ? " · " + nota : "") + "</div></td>" +
+      "<td>" + bs(e.tcCompra) + "</td><td>" + bs(e.dolaresBs) + "</td><td>" + bs(e.gaBs + e.ivaBs) + "</td>" +
+      "<td><strong>" + bs(e.total) + "</strong></td>" +
+      "<td>" + (e.d === 0 ? "—" : '<span class="' + (dif > 0 ? "sube" : dif < 0 ? "baja" : "") + '">' + bsConSigno(dif) + "</span>") + "</td></tr>";
+  }
+
+  // Mensaje principal.
+  const dif30 = e30.total - hoy.total;
+  const difPeor = peor30.total - hoy.total;
+  let clase;
+  let titulo;
+  if (dif30 > 0.002 * hoy.total) { clase = "sube"; titulo = "Comprar los dólares pronto abarata la importación"; }
+  else if (dif30 < -0.002 * hoy.total) { clase = "baja"; titulo = "Esperar podría abaratar la importación"; }
+  else { clase = "neutra"; titulo = "El costo esperado casi no cambia con el plazo"; }
+  const mensaje = '<div class="recomendacion ' + clase + '"><div class="rec-titulo">' + titulo + "</div><p>" +
+    "Hoy la importación costaría <strong>" + bs(hoy.total) + "</strong> en total (" + bs(hoy.neto) + " sin el IVA, que es crédito fiscal). " +
+    "Si compra los dólares en 30 días, se espera " + bsConSigno(dif30) + " (" + pctConSigno(dif30 / hoy.total) + "); " +
+    "si el dólar sube, hasta " + bsConSigno(difPeor) + ".</p></div>";
+
+  // Desglose de hoy.
+  const lineas = [
+    ["Valor FOB", "USD " + FORMATO_2.format(fob)],
+    ["Flete internacional", "USD " + FORMATO_2.format(flete)],
+    ["Seguro" + (seguroAuto ? " (2 % del FOB)" : ""), "USD " + FORMATO_2.format(seguro)],
+    ["<strong>Valor CIF</strong>", "<strong>USD " + FORMATO_2.format(cifUSD) + "</strong>"],
+    ["Compra de los dólares (" + bs(hoy.tcCompra) + " por USD)", bs(hoy.dolaresBs)],
+    ["CIF aduana (TC oficial " + bs(hoy.tco) + ")", bs(hoy.cifBs)],
+    ["Gravamen arancelario (" + pct(ga) + " del CIF aduana)", bs(hoy.gaBs)],
+    ["IVA importación (14,94 % de CIF + GA + despacho)", bs(hoy.ivaBs)],
+    ["Despacho y agencia", bs(despacho)],
+    ["Otros gastos en Bolivia", bs(otros)],
+    ["<strong>Costo total a desembolsar</strong>", "<strong>" + bs(hoy.total) + "</strong>"],
+    ["(−) IVA importación: crédito fiscal recuperable", "−" + bs(hoy.ivaBs)],
+    ["<strong>Costo neto de la mercadería (para inventario)</strong>", "<strong>" + bs(hoy.neto) + "</strong>"]
+  ];
+  if (isFinite(unidades) && unidades > 0) {
+    lineas.push(["Costo neto por unidad (" + FORMATO_2.format(unidades) + " unidades)", bs(hoy.neto / unidades)]);
+  }
+
+  salida.innerHTML = mensaje +
+    "<h3>Costo según cuándo compre los dólares</h3>" +
+    '<div class="tabla-scroll"><table class="tabla"><thead><tr><th>Compra de dólares</th><th>Precio de 1 USD</th><th>Dólares (Bs)</th>' +
+      "<th>Tributos (GA + IVA)</th><th>Costo total</th><th>Diferencia vs. hoy</th></tr></thead><tbody>" +
+      fila("Hoy", ao.ultimo.fecha, hoy) +
+      fila("En 7 días", ao.curva[7].fecha, e7, "esperado") +
+      fila("En 30 días", ao.curva[30].fecha, e30, "esperado") +
+      fila("En 30 días, si sube", ao.curva[30].fecha, peor30, "escenario alto") +
+    "</tbody></table></div>" +
+    "<h3>Desglose (comprando los dólares hoy)</h3>" +
+    '<div class="tabla-scroll"><table class="tabla tabla-desglose"><tbody>' +
+      lineas.map((l) => "<tr><td>" + l[0] + "</td><td>" + l[1] + "</td></tr>").join("") +
+    "</tbody></table></div>" +
+    '<p class="nota">Dólares comprados en ' + (mercado === "oficial" ? "el banco (TCO + " + pct(margen) + ")" : "el paralelo (precio de compra)") +
+    ". Los tributos se calculan con el tipo de cambio oficial, que es el que usa la Aduana. Si la mercadería paga ICE u otros tributos, súmelos aparte.</p>";
+}
+
+function actualizarCamposImportacion() {
+  $("grupoImpMargen").hidden = $("impMercado").value !== "oficial";
+}
+
+
+/* =====================================================================
+   6.7 D  MIS COMPRAS Y AHORRO
+   ---------------------------------------------------------------------
+   El usuario anota sus compras de dólares. Para cada una se calcula lo
+   que habría pagado si hubiera esperado 7 o 30 días: el precio cambia en
+   la misma proporción que su mercado (oficial o paralelo), así se respeta
+   el margen que pagó.
+     TC si esperaba = TC pagado × (mercado en fecha + h) / (mercado en fecha)
+     Ahorro         = Monto × (TC si esperaba − TC pagado)
+   Ahorro positivo = comprar ese día fue mejor que esperar.
+   ===================================================================== */
+const CLAVE_COMPRAS = "leofx_compras_v1";
+
+function leerCompras() {
+  try {
+    const lista = JSON.parse(localStorage.getItem(CLAVE_COMPRAS) || "[]");
+    return Array.isArray(lista) ? lista : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function guardarCompras(lista) {
+  try {
+    localStorage.setItem(CLAVE_COMPRAS, JSON.stringify(lista));
+    return true;
+  } catch (e) {
+    mostrarMensaje("No se pudo guardar: este navegador no permite guardar datos.", "error");
+    return false;
+  }
+}
+
+// Valor del mercado en un día (o el último anterior, hasta 7 días atrás).
+function valorDelDia(serie, dia) {
+  return datoAntes(serie, dia + 1, 7);
+}
+
+function evaluarCompra(c) {
+  const clave = c.mercado === "compra" ? "compra" : "oficial";
+  const serie = estado.series[clave] || [];
+  const resultado = { clave: clave };
+  if (!serie.length) return resultado;
+  const dia = fechaADia(c.fecha);
+  const ultimoDia = serie[serie.length - 1].t;
+  const base = valorDelDia(serie, dia);
+  for (const h of [7, 30]) {
+    if (dia + h > ultimoDia) { resultado[h] = { pendiente: true, fecha: sumarDias(c.fecha, h) }; continue; }
+    const despues = valorDelDia(serie, dia + h);
+    if (!base || !despues) { resultado[h] = null; continue; }
+    const tcEsperando = c.tc * despues.y / base.y;
+    resultado[h] = { tc: tcEsperando, ahorro: c.monto * (tcEsperando - c.tc) };
+  }
+  // Qué esperaba LeoFX ese día para 7 días (predicción guardada en GitHub,
+  // hecha ese día o hasta 3 días antes).
+  let prediccion = null;
+  for (const p of datosAutomaticos.predicciones) {
+    if (p.serie === clave && p.plazo === 7 && p.hecha <= c.fecha && p.hecha >= sumarDias(c.fecha, -3) &&
+        (!prediccion || p.hecha > prediccion.hecha)) prediccion = p;
+  }
+  resultado.prediccion = prediccion;
+  return resultado;
+}
+
+function htmlAhorro(r) {
+  if (!r) return '<span class="vacio">sin dato</span>';
+  if (r.pendiente) return '<span class="vacio">se sabrá el ' + formatoFecha(r.fecha) + "</span>";
+  const clase = r.ahorro > 0 ? "baja" : r.ahorro < 0 ? "sube" : "neutra";
+  const texto = r.ahorro > 0 ? "Ahorraste " + bs(r.ahorro) : r.ahorro < 0 ? "Pagaste " + bs(-r.ahorro) + " de más" : "Igual";
+  return '<span class="' + clase + '">' + texto + '</span><div class="sub">si esperabas: ' + num(r.tc) + "</div>";
+}
+
+function dibujarCompras() {
+  const tabla = $("tablaCompras");
+  if (!tabla) return;
+  const compras = leerCompras().sort((a, b) => (a.fecha < b.fecha ? 1 : -1));
+  const resumen = $("resumenCompras");
+  if (!compras.length) {
+    tabla.innerHTML = "";
+    resumen.innerHTML = '<p class="nota">Todavía no anotó compras. Cuando lo haga, aquí verá cuánto ahorró (o pagó de más) frente a esperar.</p>';
+    return;
+  }
+
+  let totalUSD = 0;
+  let totalBs = 0;
+  const ahorro = { 7: 0, 30: 0 };
+  const comprobadas = { 7: 0, 30: 0 };
+  let filas = "<thead><tr><th>Fecha</th><th>Monto</th><th>TC pagado</th><th>Total</th><th>LeoFX esperaba (7 días)</th>" +
+    "<th>Frente a esperar 7 días</th><th>Frente a esperar 30 días</th><th></th></tr></thead><tbody>";
+  for (const c of compras) {
+    const r = evaluarCompra(c);
+    totalUSD += c.monto;
+    totalBs += c.monto * c.tc;
+    for (const h of [7, 30]) {
+      if (r[h] && !r[h].pendiente) { ahorro[h] += r[h].ahorro; comprobadas[h]++; }
+    }
+    let esperaba = '<span class="vacio">—</span>';
+    if (r.prediccion) {
+      const cambio = r.prediccion.esperado / r.prediccion.base - 1;
+      const clase = cambio > CONFIG.umbralCambio / 2 ? "sube" : cambio < -CONFIG.umbralCambio / 2 ? "baja" : "neutra";
+      const flecha = clase === "sube" ? "▲" : clase === "baja" ? "▼" : "▬";
+      esperaba = '<span class="' + clase + '">' + flecha + " " + pctConSigno(cambio) + "</span>";
+    }
+    filas += "<tr><td>" + formatoFecha(c.fecha) + '<div class="sub">' + (c.mercado === "compra" ? "Paralelo" : "Banco") +
+        (c.nota ? " · " + escaparHTML(c.nota) : "") + "</div></td>" +
+      "<td>USD " + FORMATO_2.format(c.monto) + "</td><td>" + bs(c.tc) + "</td><td>" + bs(c.monto * c.tc) + "</td>" +
+      "<td>" + esperaba + "</td><td>" + htmlAhorro(r[7]) + "</td><td>" + htmlAhorro(r[30]) + "</td>" +
+      '<td><button type="button" class="boton-link" data-borrar-compra="' + escaparHTML(c.id) + '">Eliminar</button></td></tr>';
+  }
+  tabla.innerHTML = filas + "</tbody>";
+
+  const tarjeta = (titulo, valor, nota, clase) =>
+    '<div class="tarjeta-pred"><div class="tp-plazo">' + titulo + '</div><div class="tp-esperado ' + (clase || "") + '">' + valor + '</div><div class="nota">' + nota + "</div></div>";
+  const tarjetaAhorro = (h) => comprobadas[h]
+    ? tarjeta("Frente a esperar " + h + " días", (ahorro[h] >= 0 ? "+" : "−") + bs(Math.abs(ahorro[h])),
+        (ahorro[h] >= 0 ? "ahorrado al comprar cuando lo hizo" : "pagado de más por no esperar") + " (" + comprobadas[h] + " de " + compras.length + " compras ya comprobables)",
+        ahorro[h] >= 0 ? "texto-baja" : "texto-sube")
+    : tarjeta("Frente a esperar " + h + " días", "—", "todavía no pasaron " + h + " días desde ninguna compra");
+  resumen.innerHTML = '<div class="grid-3">' +
+    tarjeta("Total comprado", "USD " + FORMATO_2.format(totalUSD), bs(totalBs) + " · TC promedio " + bs(totalBs / totalUSD)) +
+    tarjetaAhorro(7) + tarjetaAhorro(30) + "</div>";
+}
+
+function alGuardarCompra(evento) {
+  evento.preventDefault();
+  const fecha = leerFecha($("compraFecha").value);
+  const monto = leerNumero($("compraMonto").value);
+  const tc = leerNumero($("compraTC").value);
+  if (!fecha || fecha > fechaHoyLocal()) { mostrarMensaje("Ingrese una fecha válida (no futura).", "error"); return; }
+  if (!isFinite(monto) || monto <= 0) { mostrarMensaje("Ingrese el monto comprado en dólares.", "error"); return; }
+  if (!valorRazonable(tc)) { mostrarMensaje("Ingrese el tipo de cambio pagado (por ejemplo: 11,93).", "error"); return; }
+  const lista = leerCompras();
+  lista.push({
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    fecha: fecha, monto: monto, tc: tc,
+    mercado: $("compraMercado").value,
+    nota: $("compraNota").value.trim().slice(0, 80)
+  });
+  if (!guardarCompras(lista)) return;
+  $("compraMonto").value = "";
+  $("compraTC").value = "";
+  $("compraNota").value = "";
+  dibujarCompras();
+  mostrarMensaje("Compra guardada.", "ok");
+}
+
+function borrarCompra(id) {
+  if (!confirm("¿Eliminar esta compra?")) return;
+  guardarCompras(leerCompras().filter((c) => c.id !== id));
+  dibujarCompras();
+}
+
+function exportarCompras() {
+  const compras = leerCompras().sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
+  if (!compras.length) { mostrarMensaje("No hay compras para exportar.", "error"); return; }
+  const v = (x) => (x == null ? "" : num(x).replace(/\./g, ""));
+  const lineas = ["fecha;mercado;monto_usd;tc_pagado;total_bs;ahorro_vs_7_dias;ahorro_vs_30_dias;nota"];
+  for (const c of compras) {
+    const r = evaluarCompra(c);
+    const ah = (h) => (r[h] && !r[h].pendiente ? v(r[h].ahorro) : "");
+    lineas.push([c.fecha, c.mercado === "compra" ? "paralelo" : "banco", v(c.monto), v(c.tc), v(c.monto * c.tc), ah(7), ah(30),
+      '"' + String(c.nota || "").replace(/"/g, '""') + '"'].join(";"));
+  }
+  const blob = new Blob(["﻿" + lineas.join("\r\n")], { type: "text/csv;charset=utf-8" });
+  const enlace = document.createElement("a");
+  enlace.href = URL.createObjectURL(blob);
+  enlace.download = "leofx_mis_compras_" + fechaHoyLocal() + ".csv";
+  document.body.appendChild(enlace);
+  enlace.click();
+  enlace.remove();
+  setTimeout(() => URL.revokeObjectURL(enlace.href), 1000);
+}
+
+
+/* =====================================================================
+   6.7 E  MODO TESIS
+   Oculta o muestra las tablas técnicas (clase "solo-tesis"). Se recuerda
+   en este navegador. Sin modo tesis, la herramienta queda más simple.
+   ===================================================================== */
+const CLAVE_MODO_TESIS = "leofx_modo_tesis_v1";
+
+function aplicarModoTesis(activo, guardar) {
+  document.body.classList.toggle("modo-tesis", activo);
+  $("chkModoTesis").checked = activo;
+  if (guardar) {
+    try { localStorage.setItem(CLAVE_MODO_TESIS, activo ? "1" : "0"); } catch (e) { /* sin almacenamiento */ }
+  }
+}
+
+function modoTesisGuardado() {
+  try { return localStorage.getItem(CLAVE_MODO_TESIS) === "1"; } catch (e) { return false; }
 }
 
 // ---- 6.8 Tabla de registros del usuario --------------------------------
@@ -2922,6 +3384,35 @@ function iniciarPagina() {
     $(id).addEventListener("change", () => { if (calculadoraUsada) calcular(); });
   });
   actualizarCamposCalculadora();
+  // El margen del banco también se usa en el veredicto ("¿dónde conviene?").
+  $("margenBanco").addEventListener("change", dibujarVeredicto);
+
+  // Costo de importación.
+  $("formImportacion").addEventListener("submit", (e) => { e.preventDefault(); calcularImportacion(); });
+  $("impMercado").addEventListener("change", () => { actualizarCamposImportacion(); if (importacionUsada) calcularImportacion(); });
+  ["impGA", "impMargen"].forEach((id) => {
+    $(id).addEventListener("change", () => { if (importacionUsada) calcularImportacion(); });
+  });
+  actualizarCamposImportacion();
+
+  // Mis compras.
+  $("compraFecha").value = fechaHoyLocal();
+  $("formCompra").addEventListener("submit", alGuardarCompra);
+  $("tablaCompras").addEventListener("click", (e) => {
+    const id = e.target.dataset && e.target.dataset.borrarCompra;
+    if (id) borrarCompra(id);
+  });
+  $("btnExportarCompras").addEventListener("click", exportarCompras);
+
+  // Modo tesis: interruptor del menú y botón "Ver detalles técnicos".
+  aplicarModoTesis(modoTesisGuardado(), false);
+  $("chkModoTesis").addEventListener("change", (e) => aplicarModoTesis(e.target.checked, true));
+  document.querySelectorAll("[data-cambiar-modo-tesis]").forEach((boton) => {
+    boton.addEventListener("click", () => {
+      aplicarModoTesis(true, true);
+      mostrarMensaje("Modo tesis activado: se muestran las tablas técnicas. Puede desactivarlo en el menú.", "ok");
+    });
+  });
 
   // Registro de cotizaciones.
   $("regFecha").value = fechaHoyLocal();
@@ -2946,7 +3437,7 @@ function iniciarPagina() {
     if (id) borrarNoticia(id);
   });
   // Botones de filtro: Todas / Clave / Automáticas / Mías.
-  document.querySelectorAll(".filtro-noticias button").forEach((boton) => {
+  document.querySelectorAll(".filtro-noticias button[data-filtro]").forEach((boton) => {
     boton.addEventListener("click", () => {
       filtroNoticias = boton.dataset.filtro;
       dibujarNoticias();

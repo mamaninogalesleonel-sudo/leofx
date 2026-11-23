@@ -40,8 +40,10 @@ La herramienta muestra **un apartado a la vez**. Pulse **☰ Menú** (arriba a l
 
 | Apartado | Qué tiene |
 |---|---|
-| **Cotización y predicción** *(se abre al inicio)* | Dólar de hoy, gráfico con **zoom (1 mes / 3 meses / Todo)**, **brecha paralelo-oficial**, predicciones a 1, 7 y 30 días, "¿Qué predice cada método?", backtest y **seguimiento real** ("¿Acertaron las predicciones?"). |
+| **Cotización y predicción** *(se abre al inicio)* | Contiene:<br>• **Veredicto del día** con semáforo: comprar / por partes / esperar.<br>• Dólar de hoy y gráfico con **zoom** (1 mes / 3 meses / Todo).<br>• **Brecha** entre paralelo y oficial.<br>• Predicciones a 1, 7 y 30 días, con escenarios e insignia de **acierto real**.<br>• **Seguimiento real** ("¿Acertaron las predicciones?").<br>• En **Modo tesis**: "¿Qué predice cada método?" y el backtest. |
 | **¿Compro hoy o espero?** | Calculadora con **margen del banco**, recomendación clara, **comparación banco vs. paralelo** y **simulación de compra por partes**. |
+| **Costo de importación** | Costo total en Bs de una importación según cuándo se compren los dólares (hoy, en 7 o en 30 días, y el escenario si sube). Incluye:<br>• FOB, flete, seguro, gravamen arancelario e IVA de importación.<br>• Costo neto para inventario (sin el crédito fiscal IVA).<br>• Costo por unidad. |
+| **Mis compras y ahorro** | Registro de las compras de dólares. Muestra:<br>• Cuánto se ahorró (o se pagó de más) frente a esperar 7 o 30 días.<br>• Qué esperaba LeoFX ese día.<br>• Exportación a CSV. |
 | **Noticias e impacto** | Noticias clave, automáticas (Google News) y propias, con una barra de cuánto se movió el dólar. |
 | **Datos y respaldo** | Exportar/Importar CSV (para Excel y los anexos) y corregir un dato a mano. |
 | **Metodología** | Fuentes, métodos, fórmulas y limitaciones. |
