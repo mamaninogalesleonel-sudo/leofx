@@ -2772,8 +2772,89 @@ function mostrarApartado(id) {
 // se enlaza el "manifiesto" (nombre e íconos de la app) y se instala el
 // service worker (sw.js) para que funcione sin internet. En las copias
 // abiertas con doble clic no se hace nada (esos archivos no están al lado).
+const ENLACE_LEOFX = "https://mamaninogalesleonel-sudo.github.io/leofx/LeoFX.html";
+const CLAVE_AVISO_APP = "leofx_aviso_app_cerrado_v1";
+
+// ¿Se está viendo una copia del archivo (WhatsApp, correo, descargas) en
+// lugar de la página web? Las copias con internet ya se pasaron solas a la
+// versión en línea (ver el <script> del inicio de index.html).
+function esCopiaDelArchivo() {
+  return location.protocol !== "https:" && location.protocol !== "http:";
+}
+
+// ¿Ya se abrió como app instalada (desde la pantalla de inicio)?
+function abiertaComoApp() {
+  return (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true;
+}
+
+// Aviso de arriba (📲): un texto, un botón y una X para cerrarlo.
+function mostrarAvisoApp(texto, textoBoton, alHacerClic, recordarCierre) {
+  const aviso = $("avisoApp");
+  if (!aviso) return;
+  $("textoAvisoApp").innerHTML = texto;
+  const boton = $("btnAvisoApp");
+  boton.hidden = !textoBoton;
+  boton.textContent = textoBoton || "";
+  boton.onclick = alHacerClic;
+  $("btnCerrarAvisoApp").onclick = () => {
+    aviso.hidden = true;
+    if (recordarCierre) { try { localStorage.setItem(CLAVE_AVISO_APP, "1"); } catch (e) { /* sin almacenamiento */ } }
+  };
+  aviso.hidden = false;
+}
+
+function avisoCerradoAntes() {
+  try { return localStorage.getItem(CLAVE_AVISO_APP) === "1"; } catch (e) { return false; }
+}
+
+// Botón "Compartir": comparte el ENLACE de LeoFX (con el menú de compartir
+// del celular, que incluye WhatsApp). Si el navegador no lo permite, copia
+// el enlace para pegarlo donde se quiera.
+function compartirEnlace() {
+  const datos = { title: "LeoFX — Predicción del dólar en Bolivia", text: "Cotización y predicción del dólar en Bolivia:", url: ENLACE_LEOFX };
+  if (navigator.share) {
+    navigator.share(datos).catch(() => { /* la persona canceló */ });
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(ENLACE_LEOFX)
+      .then(() => mostrarMensaje("Enlace copiado: péguelo en WhatsApp o donde quiera compartirlo.", "ok"))
+      .catch(() => window.prompt("Copie este enlace:", ENLACE_LEOFX));
+  } else {
+    window.prompt("Copie este enlace:", ENLACE_LEOFX);
+  }
+}
+
 function activarAppInstalable() {
+  // Copia sin internet: se usa igual, pero se avisa que es temporal.
+  if (esCopiaDelArchivo()) {
+    mostrarAvisoApp("Estás viendo una <strong>copia temporal</strong> del archivo: si cierras el navegador, el celular puede borrarla. " +
+      "Cuando tengas internet, abre la versión en línea e instálala para tenerla siempre.", "Abrir en línea",
+      () => { location.href = ENLACE_LEOFX; }, false);
+    return;
+  }
   if (location.protocol !== "https:") return;
+
+  // Ofrecer instalar la app (si todavía no está instalada y no se cerró el aviso).
+  if (!abiertaComoApp() && !avisoCerradoAntes()) {
+    // Android / Chrome / Edge: el navegador avisa cuando se puede instalar.
+    window.addEventListener("beforeinstallprompt", (evento) => {
+      evento.preventDefault();
+      mostrarAvisoApp("<strong>Instala LeoFX</strong> en tu celular: queda en tu pantalla de inicio como una app, se actualiza sola y abre aunque no tengas internet.",
+        "Instalar app", () => {
+          evento.prompt();
+          evento.userChoice.finally(() => { $("avisoApp").hidden = true; });
+        }, true);
+    });
+    // iPhone / iPad (Safari no tiene botón de instalar): se explican los pasos.
+    if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
+      mostrarAvisoApp("<strong>Instala LeoFX</strong> en tu iPhone: toca el botón <strong>Compartir</strong> (cuadrado con flecha) y luego " +
+        "<strong>“Agregar a inicio”</strong>. Así no se pierde y se actualiza sola.", null, null, true);
+    }
+  }
+  window.addEventListener("appinstalled", () => {
+    $("avisoApp").hidden = true;
+    mostrarMensaje("¡Listo! LeoFX quedó instalada en tu pantalla de inicio.", "ok");
+  });
+
   const manifiesto = document.createElement("link");
   manifiesto.rel = "manifest";
   manifiesto.href = "manifest.webmanifest";
@@ -2789,6 +2870,7 @@ function activarAppInstalable() {
 
 function iniciarPagina() {
   activarAppInstalable();
+  $("btnCompartir").addEventListener("click", compartirEnlace);
   // Menú lateral: abrir con ☰; cerrar con la X, con un clic en el fondo
   // oscuro (fuera del panel) o con la tecla Escape.
   $("btnMenu").addEventListener("click", abrirMenu);

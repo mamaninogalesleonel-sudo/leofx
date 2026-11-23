@@ -17,6 +17,21 @@
   <meta charset="UTF-8">
   <!-- Hace que la página se adapte bien a celulares -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- COPIAS DEL ARCHIVO (WhatsApp, correo, descargas): el celular solo
+       "presta" el archivo al navegador por un rato; al salir y volver, ya
+       no está disponible. Por eso, si este archivo se abre como copia y hay
+       internet, se pasa de inmediato a la versión en línea, que queda
+       guardada en el navegador y se puede instalar como app.
+       Sin internet se sigue usando la copia (ver aviso en app.js). -->
+  <script>
+    (function () {
+      var enLinea = "https://mamaninogalesleonel-sudo.github.io/leofx/LeoFX.html";
+      var esCopia = location.protocol !== "https:" && location.protocol !== "http:";
+      if (esCopia && navigator.onLine) location.replace(enLinea + location.hash);
+    })();
+  </script>
+
   <title>LeoFX — Predicción del dólar en Bolivia</title>
   <meta name="description" content="Herramienta de apoyo para decidir cuándo comprar dólares en Bolivia: tipo de cambio oficial (BCB) y paralelo, con predicciones a 1, 7 y 30 días.">
   <!-- Color verde de la barra del navegador en celulares -->
@@ -77,11 +92,28 @@
       </button>
       <span class="separador-nav" aria-hidden="true"></span>
       <span id="tituloApartado" class="titulo-apartado">Cotización y predicción</span>
+      <!-- Compartir el ENLACE (no el archivo): así la otra persona siempre
+           tiene la versión al día y no se le "pierde" al cerrar WhatsApp. -->
+      <button type="button" id="btnCompartir" class="boton secundario chico boton-informe boton-compartir" title="Compartir el enlace de LeoFX">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+        <span class="texto-boton-informe">Compartir</span>
+      </button>
       <!-- Informe listo para imprimir o guardar como PDF -->
       <button type="button" id="btnInforme" class="boton secundario chico boton-informe" title="Generar un informe para imprimir o guardar como PDF">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="4" y="9" width="16" height="8" rx="2"/><path d="M7 14h10v7H7z"/></svg>
         <span class="texto-boton-informe">Informe PDF</span>
       </button>
+    </div>
+  </div>
+
+  <!-- Aviso para instalar la app o para abrir la versión en línea. Lo
+       muestra app.js solo cuando corresponde (ver sección 11). -->
+  <div id="avisoApp" class="aviso-app" hidden>
+    <div class="contenedor">
+      <span class="icono-aviso-app" aria-hidden="true">📲</span>
+      <p id="textoAvisoApp"></p>
+      <button type="button" id="btnAvisoApp" class="boton chico"></button>
+      <button type="button" id="btnCerrarAvisoApp" class="boton-cerrar-aviso" aria-label="Cerrar este aviso">×</button>
     </div>
   </div>
 
