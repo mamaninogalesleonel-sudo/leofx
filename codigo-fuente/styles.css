@@ -1417,6 +1417,204 @@ textarea:focus {
 }
 
 
+/* ---------- 16 B. Efectos y animaciones de los verdes ----------
+   Todo lo que es verde "cobra vida": los degradados fluyen, los botones
+   tienen un destello al pasar el mouse y las luces del encabezado se
+   mueven. Son animaciones lentas y suaves para no distraer.
+   Si quiere quitarlas, borre esta sección completa. */
+
+/* Degradado más largo (vuelve al color inicial) para que al moverlo no
+   se note el "corte". */
+:root {
+  --degradado-vivo: linear-gradient(115deg, #059669 0%, #10b981 25%, #14b8a6 50%, #34d399 75%, #059669 100%);
+}
+@keyframes fluir {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* 1. Botones, pestaña activa, opción activa del menú y mensajes:
+      el verde fluye de un lado a otro. */
+.boton:not(.secundario):not(.peligro),
+.pestana.activa,
+.opcion-menu.activa,
+.mensaje.ok {
+  background-image: var(--degradado-vivo);
+  background-size: 200% 100%;
+  animation: fluir 6s linear infinite;
+}
+
+/* 2. Destello que cruza el botón al pasar el mouse. */
+.boton:not(.secundario):not(.peligro),
+.pestana.activa,
+.boton-menu {
+  position: relative;
+  overflow: hidden;
+}
+.boton:not(.secundario):not(.peligro)::after,
+.pestana.activa::after,
+.boton-menu::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+.boton:not(.secundario):not(.peligro):hover::after,
+.pestana.activa:hover::after,
+.boton-menu:hover::after {
+  animation: destello 0.8s ease-out;
+}
+@keyframes destello {
+  to { left: 130%; }
+}
+/* La pestaña activa además brilla de vez en cuando por sí sola. */
+.pestana.activa::after {
+  animation: destello 0.9s ease-out 1.2s, destelloRepetido 7s ease-in-out 3s infinite;
+}
+@keyframes destelloRepetido {
+  0%, 85% { left: -75%; }
+  100%    { left: 130%; }
+}
+
+/* 3. Encabezado: las dos luces verdes se desplazan lentamente
+      (como una aurora) y el "FX" del nombre brilla. */
+.encabezado {
+  background-size: 160% 160%, 160% 160%, 100% 100%;
+  background-position: 100% 0%, 0% 100%, 0 0;
+  animation: luces 16s ease-in-out infinite alternate;
+}
+@keyframes luces {
+  0%   { background-position: 100% 0%, 0% 100%, 0 0; }
+  50%  { background-position: 60% 30%, 30% 70%, 0 0; }
+  100% { background-position: 0% 10%, 100% 90%, 0 0; }
+}
+.marca-fx {
+  background-image: linear-gradient(90deg, var(--lima), var(--verde-300), #5eead4, var(--lima));
+  background-size: 300% 100%;
+  animation: fluir 5s linear infinite;
+}
+.logo {
+  animation: flotar 5s ease-in-out infinite, resplandor 3.5s ease-in-out infinite;
+}
+@keyframes resplandor {
+  0%, 100% { filter: drop-shadow(0 0 10px rgba(52, 211, 153, 0.45)); }
+  50%      { filter: drop-shadow(0 0 20px rgba(110, 231, 183, 0.9)); }
+}
+
+/* 4. Línea verde animada debajo de la barra de navegación. */
+.barra-navegacion::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background-image: linear-gradient(90deg, transparent, var(--verde-500), var(--turquesa), var(--lima), transparent);
+  background-size: 200% 100%;
+  animation: fluir 4s linear infinite;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* 5. Barrita verde de los títulos: crece al aparecer y su color fluye. */
+h2::before {
+  background-image: var(--degradado-vivo);
+  background-size: 100% 300%;
+  animation: crecerBarra 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both, fluirVertical 5s linear infinite;
+}
+@keyframes crecerBarra {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+@keyframes fluirVertical {
+  0%   { background-position: 50% 0%; }
+  100% { background-position: 50% 300%; }
+}
+
+/* 6. Tarjetas del dólar de hoy: la franja de arriba fluye y la luz de
+      la esquina "respira". */
+.tarjeta-valor::before {
+  background-image: linear-gradient(90deg, var(--color-serie), var(--verde-300), var(--turquesa), var(--color-serie));
+  background-size: 200% 100%;
+  animation: fluir 5s linear infinite;
+}
+.tarjeta-valor::after {
+  animation: respirar 6s ease-in-out infinite;
+}
+@keyframes respirar {
+  0%, 100% { transform: scale(1);    opacity: 0.8; }
+  50%      { transform: scale(1.25); opacity: 1; }
+}
+.tarjeta-valor .tv-numero {
+  background: linear-gradient(90deg, var(--verde-950), var(--verde-700), var(--verde-950));
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: fluir 8s linear infinite;
+}
+.tarjeta-valor .tv-numero.vacio { background: none; color: var(--neutro); }
+
+/* 7. Tarjetas (predicciones, noticias y generales): al pasar el mouse
+      aparece un borde verde luminoso arriba. */
+.tarjeta-pred,
+.noticia {
+  overflow: hidden;
+}
+.tarjeta-pred::before,
+.noticia::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background-image: var(--degradado-vivo);
+  background-size: 200% 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: fluir 4s linear infinite;
+  pointer-events: none;
+}
+.noticia { position: relative; }
+.tarjeta-pred:hover::before,
+.noticia:hover::before {
+  transform: scaleX(1);
+}
+.tarjeta:hover {
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: var(--sombra-alta), 0 0 0 4px rgba(16, 185, 129, 0.06);
+}
+
+/* 8. Celda del método usado (tabla): brillo verde suave que va y viene. */
+.tabla td.celda-elegida {
+  animation: brilloCelda 3s ease-in-out infinite;
+}
+@keyframes brilloCelda {
+  0%, 100% { box-shadow: inset 0 0 0 0 rgba(16, 185, 129, 0); }
+  50%      { box-shadow: inset 0 0 0 2px rgba(16, 185, 129, 0.35); }
+}
+
+/* 9. Campos de texto: al escribir, un halo verde aparece suavemente. */
+input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus {
+  animation: halo 0.5s ease-out;
+}
+@keyframes halo {
+  from { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.45); }
+}
+
+/* 10. Barras de impacto de las noticias (verdes): reflejo que pasa. */
+.relleno-impacto.baja {
+  background-image: linear-gradient(90deg, #6ee7b7, #059669, #34d399, #6ee7b7);
+  background-size: 200% 100%;
+  animation: llenarBarra 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both, fluir 4s linear 1s infinite;
+}
+
+
 /* ---------- 17. Movimiento reducido ----------
    Si la persona configuró su equipo para "reducir animaciones", se
    desactivan los efectos de movimiento. */
@@ -1437,4 +1635,7 @@ textarea:focus {
   body { background: #fff; }
   .tarjeta, .tarjeta-valor, .tarjeta-pred { box-shadow: none; break-inside: avoid; animation: none; }
   .encabezado::after, .logo { animation: none; }
+  .barra-navegacion::after, .tarjeta-pred::before, .noticia::before { display: none; }
+  /* El número grande va en color sólido (los degradados no siempre se imprimen). */
+  .tarjeta-valor .tv-numero { background: none; color: var(--verde-950); animation: none; }
 }
