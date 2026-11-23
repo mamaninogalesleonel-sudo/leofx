@@ -812,6 +812,84 @@ body.menu-abierto {
   margin-top: 6px;
 }
 
+/* Probabilidad de que suba o baje: textos y barra de dos colores. */
+.tp-prob { margin-top: 10px; }
+.tp-prob-textos {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.tp-prob-textos .sube { color: var(--sube); }
+.tp-prob-textos .baja { color: var(--baja); }
+.tp-prob-barra {
+  display: flex;
+  height: 7px;
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 4px;
+  background: var(--neutro-fondo);
+}
+.tp-prob-barra span {
+  display: block;
+  height: 100%;
+  animation: crecerProb 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  transform-origin: left;
+}
+.tp-prob-barra .parte-sube { background: linear-gradient(90deg, #f87171, #dc2626); }
+.tp-prob-barra .parte-baja {
+  background-image: linear-gradient(90deg, #059669, #34d399, #14b8a6, #059669);
+  background-size: 200% 100%;
+  transform-origin: right;
+  animation: crecerProb 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both, fluir 4s linear 1s infinite;
+}
+@keyframes crecerProb {
+  from { transform: scaleX(0); }
+}
+
+/* Tres escenarios: si baja · esperado · si sube. */
+.tp-escenarios {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 10px;
+}
+.esc {
+  border-radius: 10px;
+  padding: 6px 4px;
+  text-align: center;
+  line-height: 1.2;
+  transition: transform var(--transicion);
+}
+.esc:hover { transform: translateY(-2px); }
+.esc span {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+.esc strong {
+  font-size: 0.98rem;
+  font-variant-numeric: tabular-nums;
+}
+.esc.baja     { background: var(--baja-fondo); color: var(--verde-800); box-shadow: inset 0 0 0 1px rgba(5, 150, 105, 0.18); }
+.esc.esperado { background: var(--verde-100); color: var(--verde-950); box-shadow: inset 0 0 0 1px rgba(5, 150, 105, 0.3); }
+.esc.sube     { background: var(--sube-fondo); color: #b91c1c; box-shadow: inset 0 0 0 1px rgba(220, 38, 38, 0.15); }
+
+/* Escenario "si sigue el ritmo del último mes". */
+.tp-tendencia {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--borde);
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+}
+.tp-tendencia strong { color: var(--texto); }
+.tp-tendencia .sube { color: var(--sube); font-weight: 700; }
+.tp-tendencia .baja { color: var(--baja); font-weight: 700; }
+
 /* Botón "Informe PDF" en la barra de navegación (a la derecha). */
 .boton-informe {
   margin-left: auto;

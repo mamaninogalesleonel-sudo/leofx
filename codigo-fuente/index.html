@@ -479,7 +479,18 @@
         <h3>Rango de la predicción</h3>
         <p>La predicción se presenta como un rango y no como un número exacto. Con los errores relativos del modelo final en las <strong>últimas 30 comparaciones</strong> del backtest, e = (Real − Pronóstico) / Real, se calcula su desviación σ = √(promedio de e²) para cada plazo (se usan solo las recientes porque el dólar de julio era mucho más movido que el actual), y:</p>
         <div class="formula">Mínimo = Esperado × (1 − 1,28 σ) &nbsp;&nbsp;·&nbsp;&nbsp; Máximo = Esperado × (1 + 1,28 σ)</div>
-        <p>El factor 1,28 corresponde aproximadamente a un 80 % de confianza si los errores fueran normales. Cuando el ancho del rango supera el 5 % del valor esperado, la herramienta advierte <strong>“alta incertidumbre”</strong>. Si para un plazo hubo menos de 3 comparaciones (caso del paralelo a 30 días), σ se estima a partir del plazo más corto multiplicándolo por √(plazo largo / plazo corto). Además, el rango de un plazo largo nunca se toma más angosto que el de un plazo más corto.</p>
+        <p>El factor 1,28 corresponde aproximadamente a un 80 % de confianza si los errores fueran normales. Cuando el ancho del rango supera el 5 % del valor esperado, la herramienta advierte <strong>“alta incertidumbre”</strong>. Si para un plazo hubo menos de 3 comparaciones (caso del paralelo a 30 días), σ se estima a partir del plazo más corto multiplicándolo por √(plazo largo / plazo corto). Además, a más plazo, más incertidumbre: σ de un plazo largo es al menos σ del plazo anterior × (plazo largo / plazo corto)<sup>0,25</sup> (por ejemplo, a 30 días al menos 1,44 veces la de 7 días), porque las comparaciones a 30 días se solapan mucho y su error medido puede salir engañosamente chico.</p>
+
+        <h3>Escenarios y probabilidad de que suba</h3>
+        <p>Como el valor esperado puede cambiar poco entre plazos, cada tarjeta muestra además información que <strong>sí cambia con el plazo</strong>:</p>
+        <ul>
+          <li><strong>Escenarios:</strong> “si baja” es el mínimo del rango y “si sube” es el máximo. Entre ambos cae el dólar real aproximadamente 8 de cada 10 veces, y se abren a medida que el plazo es más largo.</li>
+          <li><strong>Probabilidad de que suba:</strong> probabilidad de que ese día el dólar esté más alto que hoy, calculada con el mismo error del modelo (σ) que da el rango, suponiendo errores normales. Se muestra entre 1 % y 99 %, porque nunca hay certeza.
+            <div class="formula">P(sube) = Φ( ln(Esperado / Hoy) / σ )</div>
+            Si el valor esperado es igual al de hoy, la probabilidad es 50 %: el modelo no ve más razones para subir que para bajar.</li>
+          <li><strong>Si sigue el ritmo del último mes:</strong> prolonga el cambio promedio diario de los últimos 30 días. <em>No es la predicción</em> (en las pruebas, prolongar tendencias se equivocó más), sino una referencia de qué pasaría si el dólar siguiera moviéndose como el último mes. En el gráfico es la línea de puntos gris.
+            <div class="formula">Ritmo = ln(Hoy / Hace 30 días) / días &nbsp;&nbsp;·&nbsp;&nbsp; Escenario<sub>d</sub> = Hoy × e<sup>Ritmo · d</sup></div></li>
+        </ul>
 
         <h3>Regla de recomendación</h3>
         <p>Si el valor esperado cambia más de ±0,5 % respecto al último dato, se considera subida o bajada; si no, estabilidad. La recomendación indica qué plazo (7 o 30 días) sube o baja y cuánto se ahorraría o se pagaría de más. Si además hay alta incertidumbre, se informa el costo en el peor caso (máximo del rango) y se sugiere la compra escalonada. El ahorro o costo estimado es: <em>monto en USD × (tipo de cambio esperado − tipo de cambio de hoy) × (1 + margen del banco)</em>.</p>

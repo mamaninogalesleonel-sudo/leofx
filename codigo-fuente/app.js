@@ -78,6 +78,11 @@ const CONFIG = {
   // más movido que el de ahora y agrandaba el rango sin motivo.
   ventanaErrores: 30,
 
+  // Crecimiento mínimo del rango con el plazo (ver 5.3). Con 0,25 el
+  // rango a 30 días es al menos 1,44 veces el de 7 días ((30/7)^0,25).
+  // (Si el dólar fuera una caminata aleatoria pura sería 0,5.)
+  crecimientoMinimoRango: 0.25,
+
   // Factor del rango: esperado ± z × desviación de los errores.
   // z = 1,28 equivale aproximadamente a un 80 % de confianza.
   z: 1.28,
@@ -744,10 +749,16 @@ function analizarSerie(serie, tipo, serieParalelo) {
       desviaciones[h] = base ? desviaciones[base] * Math.sqrt(h / base) : 0.01 * Math.sqrt(h);
       desviacionEstimada[h] = true;
     }
-    // La incertidumbre no puede ser menor a un plazo más largo: si con
-    // pocos datos sale más chica, se usa la del plazo anterior.
+    // A más plazo, más incertidumbre: la de un plazo largo debe ser al
+    // menos la del plazo anterior × (plazo / plazo anterior)^exponente.
+    // Hace falta porque a 30 días las comparaciones del backtest se
+    // solapan mucho (en 150 días hay solo unos 5 meses distintos) y el
+    // error medido puede salir engañosamente chico.
     const previo = CONFIG.horizontes.filter((k) => k < h).pop();
-    if (previo && desviaciones[h] < desviaciones[previo]) desviaciones[h] = desviaciones[previo];
+    if (previo) {
+      const minimo = desviaciones[previo] * Math.pow(h / previo, CONFIG.crecimientoMinimoRango);
+      if (desviaciones[h] < minimo) desviaciones[h] = minimo;
+    }
   }
 
   // Desviación para cualquier día d entre 0 y 30, interpolando en línea
@@ -785,6 +796,7 @@ function analizarSerie(serie, tipo, serieParalelo) {
   }
 
   const ultimo = serie[serie.length - 1];
+  const ritmo = ritmoReciente(serie);
   const maxPlazo = Math.max.apply(null, CONFIG.horizontes);
   const curva = [];
   for (let d = 0; d <= maxPlazo; d++) {
@@ -794,8 +806,12 @@ function analizarSerie(serie, tipo, serieParalelo) {
       d: d,
       fecha: sumarDias(ultimo.fecha, d),
       esperado: esperado,
-      minimo: esperado * (1 - CONFIG.z * s),
-      maximo: esperado * (1 + CONFIG.z * s)
+      minimo: esperado * (1 - CONFIG.z * s),   // escenario "si baja"
+      maximo: esperado * (1 + CONFIG.z * s),   // escenario "si sube"
+      // Probabilidad de que ese día el dólar esté MÁS ALTO que hoy.
+      probSube: probabilidadDeSubir(ultimo.y, esperado, s),
+      // Escenario "si sigue el ritmo de los últimos 30 días".
+      tendencia: ritmo ? ultimo.y * Math.exp(ritmo.cambioDiario * d) : null
     });
   }
 
@@ -820,11 +836,49 @@ function analizarSerie(serie, tipo, serieParalelo) {
     prediccionesPorMetodo: prediccionesPorMetodo,
     referenciaMejor: referenciaMejor,
     curva: curva,
+    ritmo: ritmo,
     desviacionEstimada: desviacionEstimada,
     holt: holt,
     amortiguado: amortiguado,
     opciones: opciones
   };
+}
+
+// ---- 5.5 Probabilidad de que suba y escenario de tendencia ---------------
+// Probabilidad acumulada de la distribución normal estándar, Φ(z)
+// (aproximación de Abramowitz y Stegun, error menor a 0,0000002).
+function probabilidadNormal(z) {
+  const t = 1 / (1 + 0.2316419 * Math.abs(z));
+  const d = 0.3989422804 * Math.exp(-z * z / 2);
+  const cola = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+  return z >= 0 ? 1 - cola : cola;
+}
+
+// ¿Qué tan probable es que el dólar termine MÁS ALTO que hoy?
+// Se usa el mismo error del modelo que da el rango (σ): el valor real
+// suele caer alrededor del esperado, con una desviación σ. Entonces:
+//   P(sube) = Φ( ln(esperado / hoy) / σ )
+// Si el esperado es igual a hoy, la probabilidad es 50 %: el modelo no
+// ve más razones para subir que para bajar.
+function probabilidadDeSubir(hoy, esperado, sigma) {
+  if (!(sigma > 0)) return esperado > hoy ? 1 : esperado < hoy ? 0 : 0.5;
+  return probabilidadNormal(Math.log(esperado / hoy) / sigma);
+}
+
+// Ritmo de los últimos 30 días: cuánto cambió el dólar por día, en
+// promedio, entre el dato de hace unos 30 días y el último.
+//   cambio diario = ln(último / hace 30 días) / días transcurridos
+// Sirve para el escenario "si sigue el ritmo": NO es la predicción (en
+// las pruebas, prolongar tendencias se equivocaba más), sino una
+// referencia de qué pasaría si el dólar siguiera igual que el último mes.
+function ritmoReciente(serie) {
+  const ultimo = serie[serie.length - 1];
+  let base = null;
+  for (const p of serie) if (p.t <= ultimo.t - 30) base = p;  // el último con 30 días o más de antigüedad
+  if (!base) base = serie[0];
+  const dias = ultimo.t - base.t;
+  if (dias < 7) return null; // muy poca historia para hablar de un ritmo
+  return { desde: base.fecha, dias: dias, cambioDiario: Math.log(ultimo.y / base.y) / dias };
 }
 
 // Extrae de la curva la predicción para un plazo concreto (1, 7 o 30).
@@ -1244,10 +1298,22 @@ function dibujarGrafico() {
       backgroundColor: transparente(color, 0.15)
     });
     datasets.push({
-      label: "Predicción (mejor método por plazo)", esPrediccion: true,
+      label: "Predicción (esperado)", esPrediccion: true,
       data: esperado, borderColor: color, backgroundColor: color,
       borderWidth: 2.5, borderDash: [7, 6], pointRadius: 0, pointHoverRadius: 5
     });
+
+    // Escenario "si sigue el ritmo de los últimos 30 días" (línea de puntos
+    // gris). Se puede ocultar tocando su nombre en la leyenda.
+    if (analisisActivo.ritmo) {
+      const tendencia = new Array(etiquetas.length).fill(null);
+      for (const p of analisisActivo.curva) tendencia[posicion[p.fecha]] = p.tendencia;
+      datasets.push({
+        label: "Si sigue el ritmo del último mes",
+        data: tendencia, borderColor: "#94a3b8", backgroundColor: "#94a3b8",
+        borderWidth: 2, borderDash: [2, 4], pointRadius: 0, pointHoverRadius: 4
+      });
+    }
   }
 
   // Noticias: un rombo amarillo sobre la línea principal en la fecha de
@@ -1321,7 +1387,8 @@ function dibujarGrafico() {
               let texto = item.dataset.label + ": " + bs(item.raw);
               if (item.dataset.esPrediccion) {
                 const p = analisisActivo.curva.find((c) => c.fecha === etiquetas[item.dataIndex]);
-                if (p && p.d > 0) texto += "  (rango " + num(p.minimo) + " – " + num(p.maximo) + ")";
+                if (p && p.d > 0) texto += "  (si baja " + num(p.minimo) + " · si sube " + num(p.maximo) +
+                  " · sube " + Math.round(p.probSube * 100) + " %)";
               }
               return texto;
             }
@@ -1386,7 +1453,18 @@ function dibujarPredicciones() {
       '<div class="tp-esperado">' + bs(p.esperado) + "</div>" +
       '<div class="tv-variacion ' + clase + '"><span class="flecha" aria-hidden="true">' + flecha + "</span> " +
         bsConSigno(difBs) + " (" + pctConSigno(cambio) + ")</div>" +
-      '<div class="tp-rango"><span>Mín. ' + num(p.minimo) + "</span><span>Máx. " + num(p.maximo) + "</span></div>" +
+      htmlProbabilidad(p.probSube) +
+      // Tres escenarios: el rango (≈ 80 %) se lee como "si baja" y "si sube".
+      '<div class="tp-escenarios">' +
+        '<div class="esc baja"><span>Si baja</span><strong>' + num(p.minimo) + "</strong></div>" +
+        '<div class="esc esperado"><span>Esperado</span><strong>' + num(p.esperado) + "</strong></div>" +
+        '<div class="esc sube"><span>Si sube</span><strong>' + num(p.maximo) + "</strong></div>" +
+      "</div>" +
+      (p.tendencia != null
+        ? '<div class="tp-tendencia">Si sigue el ritmo de los últimos ' + a.ritmo.dias + " días: <strong>" + bs(p.tendencia) +
+          '</strong> <span class="' + (p.tendencia > a.ultimo.y + 0.005 ? "sube" : p.tendencia < a.ultimo.y - 0.005 ? "baja" : "neutra") + '">(' +
+          pctConSigno(p.tendencia / a.ultimo.y - 1) + ")</span></div>"
+        : "") +
       '<div class="tp-metodo">Método: <strong>' + a.ganadores[h].metodo.corto + "</strong></div>" +
       (incierto ? '<div class="etiqueta-alerta">Alta incertidumbre</div>' : "") +
       (a.desviacionEstimada[h] ? '<div class="nota">Rango estimado: pocos datos para medir el error a ' + textoPlazo(h) + ".</div>" : "") +
@@ -1397,15 +1475,20 @@ function dibujarPredicciones() {
   // --- Resumen en palabras: ¿qué se espera? ---
   const p30 = prediccionPlazo(a, CONFIG.horizontes[CONFIG.horizontes.length - 1]);
   let resumen;
+  const probSube30 = Math.min(99, Math.max(1, Math.round(p30.probSube * 100)));
   if (cambios.every((c) => Math.abs(c) <= CONFIG.umbralCambio)) {
-    resumen = "<strong>Sin tendencia fuerte:</strong> los métodos más precisos esperan que el dólar se mantenga cerca de " +
-      bs(a.ultimo.y) + " (cambios menores a ±" + pct(CONFIG.umbralCambio) + "). Lo que más cambia con el plazo es la " +
-      "<strong>incertidumbre</strong>: en 30 días podría estar entre " + bs(p30.minimo) + " y " + bs(p30.maximo) + ".";
+    resumen = "<strong>Sin tendencia fuerte:</strong> el modelo espera que el dólar se mantenga cerca de " +
+      bs(a.ultimo.y) + " (cambios menores a ±" + pct(CONFIG.umbralCambio) + "), con " + probSube30 +
+      " % de probabilidad de que en 30 días esté más alto que hoy. Lo que más cambia con el plazo son los <strong>escenarios</strong>: " +
+      "en 30 días, si baja, rondaría " + bs(p30.minimo) + " y, si sube, " + bs(p30.maximo) + ".";
+    if (p30.tendencia != null && Math.abs(p30.tendencia / a.ultimo.y - 1) > CONFIG.umbralCambio) {
+      resumen += " Si el dólar siguiera el ritmo del último mes, llegaría a " + bs(p30.tendencia) + ".";
+    }
   } else {
     const ultimoCambio = cambios[cambios.length - 1];
     resumen = "<strong>Tendencia " + (ultimoCambio > 0 ? "al alza" : "a la baja") + ":</strong> se espera que el dólar pase de " +
       bs(a.ultimo.y) + " a " + bs(p30.esperado) + " en 30 días (" + pctConSigno(ultimoCambio) + "), dentro de un rango de " +
-      bs(p30.minimo) + " a " + bs(p30.maximo) + ".";
+      bs(p30.minimo) + " a " + bs(p30.maximo) + " (probabilidad de que suba: " + probSube30 + " %).";
   }
   $("resumenTendencia").hidden = false;
   $("resumenTendencia").innerHTML = resumen;
@@ -1437,6 +1520,18 @@ function dibujarPredicciones() {
     tabla += "</tr>";
   }
   $("tablaMetodos").innerHTML = tabla + "</tbody>";
+}
+
+// Barra "▲ Sube 58 % · ▼ Baja 42 %" de cada tarjeta de predicción.
+// (Rojo = sube, porque para quien compra dólares subir es malo.)
+function htmlProbabilidad(probSube) {
+  // Se redondea y se limita a 1 %–99 %: nunca hay certeza total.
+  const sube = Math.min(99, Math.max(1, Math.round(probSube * 100)));
+  const baja = 100 - sube;
+  return '<div class="tp-prob" title="Probabilidad estimada con el error del modelo">' +
+      '<div class="tp-prob-textos"><span class="sube">▲ Sube ' + sube + ' %</span><span class="baja">▼ Baja ' + baja + " %</span></div>" +
+      '<div class="tp-prob-barra"><span class="parte-sube" style="width:' + sube + '%"></span><span class="parte-baja" style="width:' + baja + '%"></span></div>' +
+    "</div>";
 }
 
 // ---- 6.6 Tabla del backtest ---------------------------------------------
