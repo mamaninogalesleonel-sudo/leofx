@@ -59,7 +59,7 @@ Arriba a la derecha está el botón **Informe PDF**: arma un informe limpio (cot
 - **Pestañas Oficial (BCB) / Paralelo.** En Paralelo se puede predecir el precio de compra o el de venta.
 - **Gráfico:** línea histórica, predicción punteada con su rango sombreado y rombos amarillos en las fechas de noticias clave. Botones **1 mes / 3 meses / Todo** para acercar o alejar.
 - **Brecha:** cuánto más caro (en %) está el paralelo que el oficial cada día.
-- **Predicciones a 1, 7 y 30 días:** cada tarjeta indica el valor esperado, el rango (≈ 80 %) y qué método se usó (el de menor error en ese plazo).
+- **Predicciones a 1, 7 y 30 días:** cada tarjeta indica el valor esperado, el rango (≈ 80 %) y qué método se usó (corrección por brecha en el oficial, último valor suavizado en el paralelo).
 - **¿Acertaron las predicciones?:** dos veces al día GitHub guarda lo que LeoFX predice; cuando llega la fecha, se compara con el valor real (error medio y % de veces que el real cayó dentro del rango). Las primeras comprobaciones aparecen al día siguiente de la publicación.
 
 ### Calculadora "¿Compro hoy o espero?"
@@ -87,9 +87,13 @@ Arriba a la derecha está el botón **Informe PDF**: arma un informe limpio (cot
 
 ## 4. Resumen de la metodología
 
-- **Métodos (5):** promedio móvil, regresión lineal (últimos 30 días), Holt, **Holt amortiguado** y **combinación** (promedio móvil + Holt amortiguado). Además, el "último valor" como referencia.
-- **Backtest y MAPE:** se "predice el pasado" y se mide el error. Para cada plazo se usa el método con **menor MAPE en ese plazo**.
-- **Rango:** esperado ± 1,28 × desviación de los errores pasados (≈ 80 %). Más de 5 % de ancho → "alta incertidumbre".
+- **Métodos comparados (7):** promedio móvil, regresión lineal (últimos 30 días), Holt, Holt amortiguado, combinación, **último valor suavizado** y **corrección por brecha** (solo oficial). Además, el "último valor" como referencia.
+- **Modelo final (desde noviembre 2026):**
+  - **Oficial:** corrección por brecha. El TCO tiende a acercarse al paralelo, así que si hoy el paralelo está arriba se espera que el oficial suba en los días siguientes. Para mañana se usa el último valor.
+  - **Paralelo:** último valor suavizado, que es la mitad del último valor y la mitad del promedio móvil.
+  - Se cambia en `CONFIG.modeloFinal`.
+- **Backtest y MAPE:** se "predice el pasado" y se mide el error de todos los métodos. Ya no se elige automáticamente el de menor MAPE: el seguimiento real mostró que esa elección era peor que el último valor (sobreajuste con pocos datos).
+- **Rango:** esperado ± 1,28 × desviación de los errores de las últimas 30 comparaciones (≈ 80 %). Más de 5 % de ancho → "alta incertidumbre".
 - **Seguimiento real:** predicciones guardadas cada día y comparadas con el valor real cuando llega la fecha (evaluación fuera de muestra).
 - **Precio en el banco** = TCO × (1 + margen). **Brecha** = (paralelo compra − TCO) / TCO.
 - **Compra por partes:** suma de cada parte por el tipo de cambio esperado de su día; mínimo y máximo con los extremos del rango (escenario conservador).
@@ -97,15 +101,35 @@ Arriba a la derecha está el botón **Informe PDF**: arma un informe limpio (cot
 
 **¿Por qué a veces los tres plazos dan casi el mismo valor?** Cuando el mercado no tiene una tendencia clara, el pronóstico más preciso es que el dólar se mantenga cerca de su valor actual; lo que más informa entonces es el **rango**. Cuando aparezca una tendencia, las predicciones se separarán solas.
 
-### Resultados con los datos al 14/10/2026
+### Evaluación y mejora (23/11/2026)
 
-| Serie | 1 día | 7 días | 30 días |
+**Seguimiento real.** Entre el 22/10 y el 22/11/2026 se guardaron 116 predicciones que ya tienen su valor real. La versión anterior se equivocó algo más que el "último valor":
+
+| Serie y plazo | Error del modelo | Error del último valor |
+|---|---|---|
+| Oficial, 1 día | 0,31 % | 0,28 % |
+| Oficial, 7 días | 1,52 % | 1,53 % |
+| Paralelo, 1 día | 0,41 % | 0,38 % |
+| Paralelo, 7 días | 0,77 % | 0,68 % |
+
+Además, el 100 % de los valores reales cayó dentro del rango, cuando lo esperado era 80 %. Es decir, el rango era demasiado ancho.
+
+**Comparación con la versión nueva.** Se "predijo el pasado" con toda la historia, usando en cada fecha solo los datos de ese momento. Este es el error medio (MAPE):
+
+| Serie y plazo | Versión anterior | Último valor | Modelo nuevo |
 |---|---|---|---|
-| Oficial (BCB) | Holt amortiguado (MAPE 0,99 %) | Combinación (4,59 %) | Promedio móvil (5,38 %) |
-| Paralelo – compra | Holt amortiguado (0,43 %) | Combinación (0,82 %) | Promedio móvil (1,26 %) |
-| Paralelo – venta | Holt (0,66 %) | Promedio móvil (0,81 %) | Promedio móvil (0,38 %) |
+| Oficial, 1 día | 0,77 % | 0,69 % | 0,69 % |
+| Oficial, 7 días | 4,42 % | 3,66 % | 3,53 % |
+| Oficial, 30 días | 5,23 % | 3,18 % | 3,15 % |
+| Paralelo, 1 día | 0,42 % | 0,38 % | 0,37 % |
+| Paralelo, 7 días | 0,76 % | 0,67 % | 0,66 % |
 
-En el oficial a 1 día, la referencia "último valor" (0,89 %) es levemente mejor: típico de los mercados cambiarios ("caminata aleatoria"), un hallazgo útil para la discusión de la tesis. Estos valores cambian a medida que llegan datos nuevos. La explicación completa está en el apartado **Metodología**.
+El rango calculado con los errores recientes contiene cerca del 80 % de los valores reales a 1 y 7 días.
+
+**Conclusiones para la tesis:**
+- El tipo de cambio boliviano se comporta casi como una "caminata aleatoria" (Meese y Rogoff, 1983).
+- La única señal útil encontrada es la **brecha con el paralelo**: el oficial tiende a cerrarla en una semana. Desde el 20/09, esa corrección baja el error del oficial a 7 días de 1,60 % a 1,32 %.
+- Estos modelos se eligieron con estos mismos datos, así que la prueba definitiva es el seguimiento real de los próximos meses.
 
 ---
 
@@ -134,7 +158,7 @@ En el oficial a 1 día, la referencia "último valor" (0,89 %) es levemente mejo
 
 Los cambios se hacen en `codigo-fuente` y luego se sube el proyecto a GitHub (o se ejecuta `armar_LeoFX.bat` para el archivo local).
 
-- En `app.js`, bloque `CONFIG`: `ventanaPromedio`, `ventanaRegresionDias`, `z` (1,28 ≈ 80 %; 1,96 ≈ 95 %), `umbralCambio`, `umbralIncertidumbre`, `referenciaPuedeGanar`, y los parámetros de `noticias`.
+- En `app.js`, bloque `CONFIG`: `ventanaPromedio`, `ventanaRegresionDias`, `z` (1,28 ≈ 80 %; 1,96 ≈ 95 %), `umbralCambio`, `umbralIncertidumbre`, `modeloFinal`, `brecha` (prudencia y plazo), `ventanaErrores`, y los parámetros de `noticias`.
 - Colores: `styles.css` (bloque `:root`) y, para las líneas del gráfico, `app.js` (objeto `SERIES`).
 - Datos históricos "de fábrica": `datos.js`.
 

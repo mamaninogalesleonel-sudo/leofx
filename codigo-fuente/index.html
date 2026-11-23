@@ -224,7 +224,7 @@
       <!-- Tabla de comparación de métodos (backtest) -->
       <div class="tarjeta">
         <h2>Comparación de métodos (backtest)</h2>
-        <p class="nota">Cada método se probó "prediciendo el pasado" y se midió su error con el MAPE (error porcentual absoluto medio). <strong>Menor MAPE = mejor.</strong> Para cada plazo se elige automáticamente el método de menor MAPE.</p>
+        <p class="nota">Cada método se probó "prediciendo el pasado" y se midió su error con el MAPE (error porcentual absoluto medio). <strong>Menor MAPE = mejor.</strong> LeoFX predice con el método marcado en verde; los demás se muestran para comparar (ver Metodología).</p>
         <div class="tabla-scroll">
           <table id="tablaBacktest" class="tabla"></table>
         </div>
@@ -440,18 +440,44 @@
           <dd>Promedio del promedio móvil (nivel estable) y de Holt amortiguado (tendencia). Combinar pronósticos de métodos distintos suele reducir el error, porque sus equivocaciones se compensan (Bates y Granger, 1969).
             <div class="formula">Ŷ = (Ŷ<sub>promedio móvil</sub> + Ŷ<sub>Holt amortiguado</sub>) / 2</div></dd>
 
+          <dt>6. Último valor suavizado <span class="insignia">Modelo final del paralelo</span></dt>
+          <dd>Promedio entre el último valor y el promedio móvil. En el paralelo, cuando el precio salta un día suele devolver una parte al día siguiente; este método recoge ese pequeño rebote sin alejarse del valor actual.
+            <div class="formula">Ŷ = (y<sub>t</sub> + Ŷ<sub>promedio móvil</sub>) / 2</div></dd>
+
+          <dt>7. Corrección por brecha <span class="insignia">Modelo final del oficial</span></dt>
+          <dd>El TCO se calcula con las operaciones de los bancos, por lo que tiende a <strong>acercarse al paralelo</strong>: si hoy el paralelo está por encima del oficial, lo más probable es que el oficial suba en los días siguientes, y al revés. Con los días pasados que tienen ambos datos se ajusta por mínimos cuadrados la relación entre la brecha de un día y el cambio del oficial <em>h</em> días después, y se aplica a la brecha de hoy, usando solo la mitad del efecto estimado (prudencia = 0,5) porque con pocos datos la estimación tiene error. Para mañana se usa el último valor y, pasados 7 días, se considera que el acercamiento ya se completó.
+            <div class="formula">B<sub>t</sub> = ln(Paralelo<sub>t</sub> / Oficial<sub>t</sub>) &nbsp;&nbsp;·&nbsp;&nbsp; ln(Oficial<sub>t+h</sub> / Oficial<sub>t</sub>) = a<sub>h</sub> + b<sub>h</sub> · B<sub>t</sub><br>Ŷ<sub>t+h</sub> = Oficial<sub>t</sub> × e<sup>0,5 · (a<sub>h</sub> + b<sub>h</sub> · B<sub>t</sub>)</sup> &nbsp;&nbsp; (h entre 2 y 7 días)</div>
+            <span class="nota">Es un modelo de “corrección de errores” en su versión más simple: dos precios del mismo bien no pueden separarse indefinidamente.</span></dd>
+
           <dt>Referencia: último valor (modelo ingenuo)</dt>
-          <dd>Supone que el dólar seguirá igual que en el último dato (Ŷ = y<sub>t</sub>). Se incluye solo como punto de comparación (no se elige para predecir): un modelo aporta valor si se equivoca menos que esta regla simple. Si la referencia gana, es señal de que el tipo de cambio se comporta casi como una “caminata aleatoria”.</dd>
+          <dd>Supone que el dólar seguirá igual que en el último dato (Ŷ = y<sub>t</sub>). Es la vara de comparación: un modelo aporta valor solo si se equivoca menos que esta regla simple. En los mercados de divisas es muy difícil superarla (Meese y Rogoff, 1983), porque el tipo de cambio se comporta casi como una “caminata aleatoria”.</dd>
         </dl>
+
+        <h3>¿Por qué estos dos modelos? (evaluación de noviembre de 2026)</h3>
+        <p>La primera versión elegía en cada plazo el método con menor MAPE en el backtest. Un mes de <strong>seguimiento real</strong> (116 predicciones guardadas entre el 22/10 y el 22/11/2026, hechas sin conocer el futuro) mostró que así se equivocaba <strong>un poco más que el último valor</strong> en casi todos los plazos, y que su rango era demasiado ancho (contenía el 100 % de los valores reales en lugar del 80 %). Con pocos datos, el método “ganador” del pasado cambia por azar (sobreajuste).</p>
+        <p>Se probaron entonces distintas reglas “prediciendo el pasado” día por día, usando en cada fecha solo la información disponible hasta ese día. Error medio (MAPE) sobre toda la historia:</p>
+        <div class="tabla-scroll">
+          <table class="tabla">
+            <thead><tr><th>Serie y plazo</th><th>Versión anterior</th><th>Último valor</th><th>Modelo nuevo</th><th>Mejora</th></tr></thead>
+            <tbody>
+              <tr><td>Oficial, 1 día</td><td>0,77 %</td><td>0,69 %</td><td>0,69 %</td><td>−11 %</td></tr>
+              <tr><td>Oficial, 7 días</td><td>4,42 %</td><td>3,66 %</td><td>3,53 %</td><td>−20 %</td></tr>
+              <tr><td>Oficial, 30 días</td><td>5,23 %</td><td>3,18 %</td><td>3,15 %</td><td>−40 %</td></tr>
+              <tr><td>Paralelo, 1 día</td><td>0,42 %</td><td>0,38 %</td><td>0,37 %</td><td>−12 %</td></tr>
+              <tr><td>Paralelo, 7 días</td><td>0,76 %</td><td>0,67 %</td><td>0,66 %</td><td>−14 %</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="nota">Desde el 20/09/2026, cuando ya hay datos del paralelo para medir la brecha, la corrección por brecha reduce el error del oficial a 7 días de 1,60 % (último valor) a 1,32 %. El paralelo a 30 días tiene muy pocas comparaciones para concluir. Estos modelos se eligieron mirando estos mismos datos, por eso el seguimiento real de los próximos meses es la prueba definitiva.</p>
 
         <h3>Evaluación: backtest y MAPE</h3>
         <p>Para cada fecha del pasado se ocultan los datos posteriores, se predice el valor a 1, 7 y 30 días y se compara con lo que realmente ocurrió. El error se resume con el <strong>MAPE</strong> (error porcentual absoluto medio):</p>
         <div class="formula grande">MAPE = (1 / n) · Σ | (Real − Pronóstico) / Real | × 100 %</div>
-        <p><strong>Para cada plazo (1, 7 y 30 días) se elige automáticamente el método con menor MAPE en ese plazo.</strong> Un método puede ser el mejor para mañana y otro para dentro de un mes: seguir la tendencia suele ayudar a muy corto plazo, mientras que a 30 días conviene no exagerarla. En el gráfico, la línea de predicción pasa suavemente del método de un plazo al del siguiente (promedio ponderado por la distancia en días), para que no dé saltos.</p>
-        <p>Cuando el mercado no muestra una tendencia clara, los métodos más precisos dan valores parecidos en los tres plazos: es el resultado correcto (inventar subidas o bajadas aumentaría el error). En ese caso, la información más útil es el <strong>rango</strong>, que se amplía a medida que el plazo es más largo. Por ejemplo, un MAPE de 2 % significa que, en promedio, las predicciones se equivocaron en un 2 % (unos Bs 0,24 con un dólar a Bs 12).</p>
+        <p>La tabla del backtest muestra el MAPE de todos los métodos para comparar, pero la predicción se hace con el modelo final de cada mercado (corrección por brecha en el oficial, último valor suavizado en el paralelo), por lo explicado arriba. Se puede cambiar en <code>CONFIG.modeloFinal</code> del archivo app.js.</p>
+        <p>Cuando el mercado no muestra una tendencia clara, el modelo da valores parecidos en los tres plazos: es el resultado correcto (inventar subidas o bajadas aumentaría el error). En ese caso, la información más útil es el <strong>rango</strong>, que se amplía a medida que el plazo es más largo. Por ejemplo, un MAPE de 2 % significa que, en promedio, las predicciones se equivocaron en un 2 % (unos Bs 0,24 con un dólar a Bs 12).</p>
 
         <h3>Rango de la predicción</h3>
-        <p>La predicción se presenta como un rango y no como un número exacto. Con los errores relativos del método elegido en el backtest, e = (Real − Pronóstico) / Real, se calcula su desviación σ = √(promedio de e²) para cada plazo, y:</p>
+        <p>La predicción se presenta como un rango y no como un número exacto. Con los errores relativos del modelo final en las <strong>últimas 30 comparaciones</strong> del backtest, e = (Real − Pronóstico) / Real, se calcula su desviación σ = √(promedio de e²) para cada plazo (se usan solo las recientes porque el dólar de julio era mucho más movido que el actual), y:</p>
         <div class="formula">Mínimo = Esperado × (1 − 1,28 σ) &nbsp;&nbsp;·&nbsp;&nbsp; Máximo = Esperado × (1 + 1,28 σ)</div>
         <p>El factor 1,28 corresponde aproximadamente a un 80 % de confianza si los errores fueran normales. Cuando el ancho del rango supera el 5 % del valor esperado, la herramienta advierte <strong>“alta incertidumbre”</strong>. Si para un plazo hubo menos de 3 comparaciones (caso del paralelo a 30 días), σ se estima a partir del plazo más corto multiplicándolo por √(plazo largo / plazo corto). Además, el rango de un plazo largo nunca se toma más angosto que el de un plazo más corto.</p>
 

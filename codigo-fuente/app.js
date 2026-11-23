@@ -52,11 +52,31 @@ const CONFIG = {
   // fecha exacta de ese dato real.
   tolerancia: { 1: 0, 7: 1, 30: 3 },
 
-  // ¿Puede el modelo de referencia ("último valor") ser elegido como
-  // ganador? false = solo compite entre los 3 métodos del proyecto y la
-  // referencia se muestra únicamente para comparar. Cambie a true si
-  // quiere que también pueda ser elegido.
-  referenciaPuedeGanar: false,
+  // Modelo con el que se hace la predicción final de cada mercado.
+  // ¿Por qué fijo y no "el de menor error del backtest"? Porque se probó
+  // (noviembre 2026, 150 días de oficial y 53 de paralelo) y elegir cada
+  // vez el método con menor error en el pasado se equivocaba MÁS que
+  // estos modelos: con pocos datos, el ganador del pasado suele ser
+  // cuestión de suerte (sobreajuste). Ver el apartado Metodología.
+  //   "brecha":    corrección por brecha (solo oficial; ver 4.8).
+  //   "suavizado": último valor suavizado (ver 4.7).
+  //   También puede poner "ingenuo", "promedio", "holt", etc.
+  modeloFinal: { oficial: "brecha", paralelo: "suavizado" },
+
+  // Corrección por brecha: el oficial tiende a acercarse al paralelo.
+  //   prudencia: qué parte del ajuste estimado se aplica (0,5 = la mitad).
+  //     Aplicar solo la mitad fue lo más preciso en las pruebas: el efecto
+  //     existe, pero estimarlo con pocos datos tiene error.
+  //   plazoMaximo: días en que se completa el acercamiento; después la
+  //     predicción ya no cambia más por la brecha.
+  //   minimoPares: cuántos casos pasados (con oficial y paralelo) hacen
+  //     falta para estimar el efecto; si hay menos, se usa el último valor.
+  brecha: { prudencia: 0.5, plazoMaximo: 7, minimoPares: 8 },
+
+  // El rango se calcula con los errores de las últimas N comparaciones
+  // del backtest (no de toda la historia): el dólar de julio era mucho
+  // más movido que el de ahora y agrandaba el rango sin motivo.
+  ventanaErrores: 30,
 
   // Factor del rango: esperado ± z × desviación de los errores.
   // z = 1,28 equivale aproximadamente a un 80 % de confianza.
@@ -542,16 +562,66 @@ function predecirCombinacion(historia, d, opciones) {
   return (predecirPromedioMovil(historia, d, opciones) + predecirHoltAmortiguado(historia, d)) / 2;
 }
 
+// ---- 4.7 Último valor suavizado -----------------------------------------
+// Promedio entre el último valor y el promedio móvil. El paralelo, cuando
+// sube un día, suele devolver una parte al día siguiente; este método
+// tiene en cuenta ese pequeño "rebote" sin alejarse del valor actual.
+function predecirSuavizado(historia, d, opciones) {
+  return (predecirUltimoValor(historia) + predecirPromedioMovil(historia, d, opciones)) / 2;
+}
+
+// ---- 4.8 Corrección por brecha (solo dólar oficial) ----------------------
+// Idea: el tipo de cambio oficial del BCB se forma con las operaciones del
+// mercado, así que tiende a ACERCARSE al paralelo. Si hoy el paralelo está
+// muy por encima del oficial, lo más probable es que el oficial suba en
+// los días siguientes (y si está por debajo, que baje).
+//   brecha_t = ln(paralelo_t / oficial_t)
+//   cambio del oficial en h días = ln(oficial_{t+h} / oficial_t)
+// Con los días pasados se ajusta la recta  cambio = a + b·brecha
+// (mínimos cuadrados) y se aplica a la brecha de hoy:
+//   Predicción = oficial_hoy × e^(prudencia × (a + b·brecha_hoy))
+// Para mañana (1 día) no se corrige: en las pruebas, a un día el último
+// valor fue más preciso. Después de CONFIG.brecha.plazoMaximo días se
+// considera que el acercamiento ya se completó.
+// Solo usa datos hasta el último día de "historia" (nunca el futuro).
+function predecirBrecha(historia, d, opciones) {
+  const ultimo = historia[historia.length - 1];
+  const paralelo = opciones.paralelo; // mapa día → paralelo (compra)
+  const h = Math.min(Math.round(d), CONFIG.brecha.plazoMaximo);
+  if (!paralelo || h < 2 || paralelo.get(ultimo.t) == null) return ultimo.y;
+
+  const clave = "brecha|" + historia.length + "|" + h;
+  if (!memoriaAjustes.has(clave)) {
+    const oficialPorDia = new Map(historia.map((p) => [p.t, p.y]));
+    const puntos = []; // { t: brecha de ese día, y: cambio del oficial h días después }
+    for (const p of historia) {
+      if (p.t + h > ultimo.t) break; // el resultado todavía no se conocía
+      const par = paralelo.get(p.t);
+      const despues = oficialPorDia.get(p.t + h);
+      if (par != null && despues != null) puntos.push({ t: Math.log(par / p.y), y: Math.log(despues / p.y) });
+    }
+    memoriaAjustes.set(clave, puntos.length >= CONFIG.brecha.minimoPares ? ajustarRecta(puntos) : null);
+  }
+  const recta = memoriaAjustes.get(clave);
+  if (!recta) return ultimo.y; // pocos datos: se usa el último valor
+  const brechaHoy = Math.log(paralelo.get(ultimo.t) / ultimo.y);
+  return ultimo.y * Math.exp(CONFIG.brecha.prudencia * (recta.a + recta.b * brechaHoy));
+}
+
 // Lista de métodos que se comparan. Para agregar otro método, basta con
-// añadir un elemento aquí. "referencia: true" marca el modelo que solo
-// sirve de punto de comparación (ver CONFIG.referenciaPuedeGanar).
+// añadir un elemento aquí. "referencia: true" marca el "último valor", la
+// regla más simple: sirve de vara para medir a los demás.
+// "soloPara" limita un método a un mercado ("oficial" o "paralelo").
 // "corto" es un nombre breve para las tarjetas de predicción.
+// El método que se usa para predecir es CONFIG.modeloFinal.
 const METODOS = [
   { id: "promedio",    nombre: "Promedio móvil",                          corto: "Promedio móvil",   predecir: predecirPromedioMovil },
   { id: "regresion",   nombre: "Regresión lineal",                        corto: "Regresión lineal", predecir: predecirRegresion },
   { id: "holt",        nombre: "Suavizamiento exponencial doble (Holt)",  corto: "Holt",             predecir: predecirHolt },
   { id: "amortiguado", nombre: "Holt amortiguado",                        corto: "Holt amortiguado", predecir: predecirHoltAmortiguado },
   { id: "combinacion", nombre: "Combinación (promedio móvil + Holt amortiguado)", corto: "Combinación", predecir: predecirCombinacion },
+  { id: "suavizado",   nombre: "Último valor suavizado",                  corto: "Último valor suavizado", predecir: predecirSuavizado },
+  { id: "brecha",      nombre: "Corrección por brecha con el paralelo",   corto: "Corrección por brecha",  predecir: predecirBrecha, soloPara: "oficial" },
   { id: "ingenuo",     nombre: "Último valor (referencia)",               corto: "Último valor",     predecir: predecirUltimoValor, referencia: true }
 ];
 
@@ -600,7 +670,10 @@ function backtest(serie, metodo, h, opciones) {
 
   // Desviación de los errores relativos: raíz del promedio de los
   // errores relativos al cuadrado. Sirve para construir el rango.
-  const desviacion = Math.sqrt(promedio(comparaciones.map((c) => {
+  // Se usan solo las últimas CONFIG.ventanaErrores comparaciones, para que
+  // el rango refleje cuánto se mueve el dólar AHORA.
+  const recientes = comparaciones.slice(-CONFIG.ventanaErrores);
+  const desviacion = Math.sqrt(promedio(recientes.map((c) => {
     const e = (c.real - c.predicho) / c.real;
     return e * e;
   })));
@@ -613,17 +686,21 @@ function backtest(serie, metodo, h, opciones) {
 // con su rango.
 // tipo: "oficial" o "paralelo" (el "perfil" de la serie, para usar la
 // configuración que le toca).
-function analizarSerie(serie, tipo) {
+// serieParalelo: (solo para el oficial) la serie del paralelo (compra),
+// que usa la corrección por brecha.
+function analizarSerie(serie, tipo, serieParalelo) {
   if (serie.length < 3) return null; // muy pocos datos para analizar
   memoriaAjustes.clear(); // la memoria de ajustes es de la serie anterior
 
   const opciones = {
     ventanaPromedio: CONFIG.ventanaPromedio[tipo],
-    minimoHistorial: Math.min(CONFIG.minimoHistorial[tipo], serie.length - 1)
+    minimoHistorial: Math.min(CONFIG.minimoHistorial[tipo], serie.length - 1),
+    paralelo: serieParalelo ? new Map(serieParalelo.map((p) => [p.t, p.y])) : null
   };
 
   // 5.1 Backtest de cada método en cada plazo.
-  const resultados = METODOS.map((metodo) => {
+  const metodos = METODOS.filter((m) => !m.soloPara || m.soloPara === tipo);
+  const resultados = metodos.map((metodo) => {
     const porPlazo = {};
     for (const h of CONFIG.horizontes) porPlazo[h] = backtest(serie, metodo, h, opciones);
     const mapes = CONFIG.horizontes.map((h) => porPlazo[h].mape).filter((x) => isFinite(x));
@@ -634,22 +711,15 @@ function analizarSerie(serie, tipo) {
     };
   });
 
-  // 5.2 Ganador DE CADA PLAZO = el método con menor MAPE en ese plazo.
-  // Un método puede ser el mejor para mañana y otro para dentro de un mes
-  // (por ejemplo, seguir la tendencia ayuda a 1 día, pero a 30 días suele
-  // ser mejor no exagerarla). Por eso se elige uno por plazo.
-  // (La referencia solo compite si CONFIG.referenciaPuedeGanar es true.)
-  const candidatos = resultados.filter((r) => !r.metodo.referencia || CONFIG.referenciaPuedeGanar);
+  // 5.2 Método usado en cada plazo = el modelo final de este mercado
+  // (CONFIG.modeloFinal). El backtest de los demás métodos se sigue
+  // calculando y mostrando para comparar. Se guarda "por plazo" para que
+  // el resto del programa funcione igual si algún día se usa uno distinto
+  // en cada plazo.
+  const final = resultados.find((r) => r.metodo.id === CONFIG.modeloFinal[tipo]) ||
+    resultados.find((r) => r.metodo.referencia);
   const ganadores = {};
-  for (const h of CONFIG.horizontes) {
-    let mejor = null;
-    for (const r of candidatos) {
-      if (isFinite(r.porPlazo[h].mape) && (!mejor || r.porPlazo[h].mape < mejor.porPlazo[h].mape)) mejor = r;
-    }
-    // Si en un plazo no hubo con qué comparar, se usa el ganador del plazo anterior.
-    const previo = CONFIG.horizontes.filter((k) => k < h).pop();
-    ganadores[h] = mejor || (previo ? ganadores[previo] : resultados.find((r) => r.metodo.id === "promedio"));
-  }
+  for (const h of CONFIG.horizontes) ganadores[h] = final;
 
   // ¿La referencia se equivocó menos que el mejor método en todos los
   // plazos? (dato útil para la tesis)
@@ -772,7 +842,7 @@ function prediccionesDeHoy() {
   const tabla = combinarDatos();
   const lista = [];
   for (const clave of ["oficial", "compra"]) {
-    const a = analizarSerie(crearSerie(tabla, clave), SERIES[clave].perfil);
+    const a = analizarSerie(crearSerie(tabla, clave), SERIES[clave].perfil, crearSerie(tabla, "compra"));
     if (!a) continue;
     for (const h of CONFIG.horizontes) {
       const p = a.curva[h];
@@ -866,9 +936,10 @@ function mostrarMensaje(texto, tipo) {
 // cada vez que se agregan, borran o importan datos).
 function recalcular() {
   estado.tabla = combinarDatos();
+  for (const clave of CAMPOS) estado.series[clave] = crearSerie(estado.tabla, clave);
   for (const clave of CAMPOS) {
-    estado.series[clave] = crearSerie(estado.tabla, clave);
-    estado.analisis[clave] = analizarSerie(estado.series[clave], SERIES[clave].perfil);
+    // El oficial usa además el paralelo (compra) para la corrección por brecha.
+    estado.analisis[clave] = analizarSerie(estado.series[clave], SERIES[clave].perfil, estado.series.compra);
   }
   dibujarTodo();
 }
@@ -1339,9 +1410,15 @@ function dibujarPredicciones() {
   $("resumenTendencia").hidden = false;
   $("resumenTendencia").innerHTML = resumen;
 
-  $("metodoElegido").innerHTML = "Serie: <strong>" + nombreSerie(clave) + "</strong>. Para cada plazo se usa el método que " +
-    "tuvo <strong>menor error</strong> en el backtest. El rango es el valor esperado ± " + num(CONFIG.z) +
-    " veces la desviación de los errores pasados (≈ 80 % de confianza).";
+  const explicacionModelo = a.ganadores[CONFIG.horizontes[0]].metodo.id === "brecha"
+    ? "Se usa la <strong>corrección por brecha</strong>: el oficial tiende a acercarse al paralelo, así que si hoy el paralelo " +
+      "está por encima, se espera que el oficial suba en los próximos días (y si está por debajo, que baje). Para mañana se usa el último valor."
+    : a.ganadores[CONFIG.horizontes[0]].metodo.id === "suavizado"
+      ? "Se usa el <strong>último valor suavizado</strong> (mitad último valor, mitad promedio de los últimos días): en el paralelo, " +
+        "ningún método logró anticipar la dirección mejor que esta regla prudente, así que el valor esperado casi no cambia con el plazo y lo que crece es el rango."
+      : "Se usa el método <strong>" + a.ganadores[CONFIG.horizontes[0]].metodo.nombre + "</strong>.";
+  $("metodoElegido").innerHTML = "Serie: <strong>" + nombreSerie(clave) + "</strong>. " + explicacionModelo +
+    " El rango es el valor esperado ± " + num(CONFIG.z) + " veces la desviación de los errores recientes (≈ 80 % de confianza).";
 
   // --- Tabla: qué predice cada método en cada plazo ---
   let tabla = "<thead><tr><th>Método</th>";
@@ -1410,8 +1487,10 @@ function dibujarBacktest() {
   if (a.holt) nota += "; Holt con α = " + num(a.holt.alfa) + " y β = " + num(a.holt.beta);
   if (a.amortiguado) nota += "; Holt amortiguado con α = " + num(a.amortiguado.alfa) + ", β = " + num(a.amortiguado.beta) +
     " y φ = " + num(a.amortiguado.phi);
-  nota += " (parámetros optimizados). En verde, el método elegido para cada plazo (el de menor error). " +
-    "El “último valor” es solo una referencia y no se elige.";
+  nota += " (parámetros optimizados). En verde, el método que usa LeoFX para predecir (" +
+    a.ganadores[CONFIG.horizontes[0]].metodo.corto + "). No se elige automáticamente el de menor error: con pocos datos, " +
+    "el ganador del pasado cambia por azar y en las pruebas eso empeoraba la predicción. El “último valor” es la vara de comparación: " +
+    "un método solo sirve si se equivoca menos que él.";
   if (a.referenciaMejor) {
     nota += " Observación: la referencia tuvo menor error que el mejor método en todos los plazos. Esto sugiere que, con la historia disponible, " +
       "el tipo de cambio se comporta casi como una “caminata aleatoria” (el mejor pronóstico simple es el último valor), algo frecuente en mercados cambiarios.";
