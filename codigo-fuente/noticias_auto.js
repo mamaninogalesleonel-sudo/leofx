@@ -1,13 +1,97 @@
 /* LeoFX — noticias_auto.js
    ARCHIVO GENERADO AUTOMÁTICAMENTE por buscar_noticias.ps1 (no lo edite).
    Noticias de Google News relacionadas con el dólar en Bolivia. */
-const NOTICIAS_AUTOMATICAS_FECHA = "2026-11-24T06:40";
+const NOTICIAS_AUTOMATICAS_FECHA = "2026-11-24T18:54";
 const NOTICIAS_AUTOMATICAS = [
+  {
+    "fecha": "2026-11-24",
+    "titular": "Moneda boliviana es la más depreciada del mundo frente al dólar en 2026 y estas son las razones",
+    "fuente": "Bloomberg Línea",
+    "enlace": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxPN3JHYkxJY3lQY3dCaDN0Si1wNEIwN0xXWEx3ZHRRNXZuZmZUNDRBMl81WF8yWG9XcjJBTHV6TmVKLXpYNWV1c0daUEFaX3dycTdFQ1dvZWIyRDRBRG5zTVZlcnBmM1ZqYUxSd2N0YTh3Y0NnOTVSSlJtU254azUwMENHcE1Tb1YyRC1aZXZxZ2JIX2t0THFmRWlYMW5lMFJnTTNPcFJTWVdyRXBYcHZtNkhGcXRlb19iVkstR0xwdDBXZnVNdG85c2RhWVZiMllNbnNCS3hITEwzVWp3bGdiUHRXaXc4QdIB5gFBVV95cUxPN3JHYkxJY3lQY3dCaDN0Si1wNEIwN0xXWEx3ZHRRNXZuZmZUNDRBMl81WF8yWG9XcjJBTHV6TmVKLXpYNWV1c0daUEFaX3dycTdFQ1dvZWIyRDRBRG5zTVZlcnBmM1ZqYUxSd2N0YTh3Y0NnOTVSSlJtU254azUwMENHcE1Tb1YyRC1aZXZxZ2JIX2t0THFmRWlYMW5lMFJnTTNPcFJTWVdyRXBYcHZtNkhGcXRlb19iVkstR0xwdDBXZnVNdG85c2RhWVZiMllNbnNCS3hITEwzVWp3bGdiUHRXaXc4QQ?oc=5"
+  },
   {
     "fecha": "2026-11-24",
     "titular": "Bolivia mira 2026 entre reformas cambiarias e incertidumbre",
     "fuente": "Identidad Correntina",
     "enlace": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOR2c2bm4wMTc3bDhnbkNZWXRfaDFnWU5HUGd0WEtHcmlyd2xGU09nbTJOandUQzlYWVFIeEI0X1NzTjFkQUVEOXk4QTRuejFaZXUxZFpmbHN5WTNnb3Z0dkhoQXJUZmwtdlFoSlRFRGtjNk1sVmtvNk0xaUc4Y1RWM2lOenN1RVlYY216YTFmeW9VVWdqYTBFSUhncHl6b1BBaERmZE9WMW16TU5TMFNuQjVCTTYxTTg?oc=5"
+  },
+  {
+    "fecha": "2026-11-24",
+    "titular": "BCB prevé que inflación alcance 9,2% al cierre de 2026 y anuncia medidas para reducirla en 2027",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxPZ01wcjRqVW1raWJPNkdUZjlQUTRoS2ExeVQwUDZSbE5kT3A5aHBEVW5EcWVXMUlkWUFQT1ljMlZvb09YTUoxYkhSMGZUdU5mLUM0WE12Z1hOdTNmRUJfYk5IanpNWnBDNFJhZ0VVXzN2N2tCYzhBZFJmNjM5MGpHT09QNXlvWllMblptcjBCeDJaaDNjb0t5cDFOWjRnNUt5T052Wm5hazR3MFNFeU9jZXQtQ3FIb0dlSEltaEdtZ2hMUWFrZWE3QTI4M21oQ25md3pZdW9aMzVNSldG?oc=5"
+  },
+  {
+    "fecha": "2026-11-24",
+    "titular": "BCB prevé cancelar $us 1.366 millones restantes de deuda heredada y duplicar reservas en 2027",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxPUVJvYUdINEN1b29NYUF5dm45UnRJdERMSkdjSEpzMzEySk5CYnJsYjZmT1FuOTlDaTdSanh5cF9BZ2MyaERaUS1XQjZ0WmNCNzVMTVVPcmpQcm9JZ3U2TXBuZU5laVU0S0JhbEgta00zM3JNV0VpTnlUMFpUbXVyRnM5YWx2Z05nTE9pZV9HV0IwNVJUMGxKTEUwOVQ0eGFfd0dIM1c0b0ljMkNVeURjTHF4SzgzbGxLU3d2Y2g5S1dVU1ZyNUNMVXlVYzlJdW5uUXNNWlJGZGdrZw?oc=5"
+  },
+  {
+    "fecha": "2026-11-24",
+    "titular": "Bolivia cumple acuerdo con el FMI y prevé recibir en diciembre un segundo desembolso",
+    "fuente": "eju.tv",
+    "enlace": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPZHloX0taZUh1REJEdmwtRm9QaFJQS0phM0ZGeGhBS0dVeE56YXA2MXM5cWFuSjZOejFSWGlQOW5zZ0doQnIyRVNaVHFiUk1heVlFUXpJbzhwS2x0MWhicTVOSDUtcmNJVGFfY2lfbHc1dHByZHoyRndqVmoxZ1o0c0N1cWJFZXdvRmtQek9fOFRmOEg1TGlWdWxZQmZxbWVsWXJienM2ZHAzQllz?oc=5"
+  },
+  {
+    "fecha": "2026-11-24",
+    "titular": "Bolivia está cumpliendo indicadores acordados con FMI, espera desembolso en diciembre: banco central",
+    "fuente": "TradingView",
+    "enlace": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9oWkxRRi1IVlhiTXBTNzVtZEczajFrN04taVRTUWJiUGNYYXMyWFhmLUNCY1RKUkh6T1IxMjNBLWV3SkttYjZydi0wUUdjTnJ4SDJDZDZsZmRwN0swdnl3MFRXeTZ3VkRxQk1nbmhyYmVNQ3lrQXVyZw?oc=5"
+  },
+  {
+    "fecha": "2026-11-24",
+    "titular": "Álvaro Ríos: “Acostumbrémonos a que el precio del diésel va a subir y va a bajar como el dólar”",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxQa1BmcGVqZVF4LWJpOVgwcjItcmhWWnJIRUc5MkgwRGotWDNSZlpJX1RkQWJ2cjhiUXRWNi1ySFZUaXlkRlc1UHhobFQxYnhVUUowa1hHVnh4M3dJeGxqamNwWUowSlBtZmI4Y2E3RVg2RzR5d0VXWFpyQjRBb0VMWXpsbl9wQ0JXMmhmY3hqa19uZUxkZGRCZGRtUTZTVm9Fa2lHRDhaMkp0Q2dZZ1c1c0loWWsybGNuTmJBLTRkZEpjWG44MWp0MTNId0Y5LXB1ZXZOOTNkQ0c?oc=5"
+  },
+  {
+    "fecha": "2026-11-24",
+    "titular": "Bolivia cumple los objetivos del FMI y prevé un desembolso en diciembre, según el presidente del banco central",
+    "fuente": "MarketScreener España",
+    "enlace": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxPaDJxZXhPTVd6OEExeW9GdjRfSlkweVZ0YlZUei1iQjdGUGU3ZG02UFdmc19ST0FnY1ZXWWlBZEFCZ3pXOUcyNGEtV2Zmd1h3elJPS1RoR1djejI5ckNNQ2dwQ1o4cnhRdHFmVzNWbjBxVDltSXN1NlF1amJiSkVacGZ6cHFwb0dMSk9wVGNLS29CbFhxbXFYaDhRUzZ1ZFQ0ODZxQkE5U2VrR2ZIamtwNUxvMkZ2blNteVAzbUczSUM4SlpXbXo1YUFMTUFZcVpKcTk2cWNNa0RTWmRpejFGbU11TGRVaEFubHVr?oc=5"
+  },
+  {
+    "fecha": "2026-11-24",
+    "titular": "Así arranca la cotización del dólar oficial esta semana: revisa la cifra actualizada",
+    "fuente": "Bolivia.com",
+    "enlace": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNQVN4cndsRk9yZm5Nd25tZ1ZLSWpFc3MtZ0FlXy1wRU9rVWlNQV9oNmV0aFZWSHpIemFxeFpQZ0xKUXM5Z2lIYlVid3ZTS3JaTWhVc2dVTFFUSmN3ZEd0WGxHMmtJRGtseDlyZ2UxZ2lHSjVfYl9udmYxZERBXy1LaXhpWXBfc3BIWmJPY0F5cjZpQ3R0UHY2eE1pZExUVnJuWnRxczRSRDhMbHJudWxFVnFR?oc=5"
+  },
+  {
+    "fecha": "2026-11-24",
+    "titular": "Moneda boliviana es la más depreciada del mundo en 2026 frente al dólar, según Bloomberg",
+    "fuente": "Economy Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNRjlUbktVaWJxNHl0R0V5MXdOSms3WllVQmg2bUk5My00dU5nRjh2dlBHd3ZVUThJNXN6MzVSanA0VHFyYWxuLTBRdjZoRXpTNVQ0YUxxTnhJMXMwVTRWSmVENW5XUmp5MHZuU1d4Y0JTNFYybHpQRHFjYVNLNGJYc0FGRzYwWEpBeUdKV3phV3pCUFhxUVhVbnRPX3hRQklSRzZKUVpvdWtVeFRYb2xRMjE1bjFKclU?oc=5"
+  },
+  {
+    "fecha": "2026-11-24",
+    "titular": "¿Cuánto cuesta el dólar este martes 24 de noviembre? Hay cotizaciones distintas en los mercados",
+    "fuente": "El Deber",
+    "enlace": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOR0hYbVBPTmw0emZMSUNpcUcyZzNQNGR3Y3owajg2dkFXU19RTGdIaXJwOU04RkxhdDl4R3F4UnRySFhOZzdlclc0TVFNU1NqNjVaaW56Y0dPczZvUkpOWTBnY2lKanJIYUZZUVI1VUNreE5aSEV4TWp4XzhhQ3Fha1Atd1J5U3pRWlhZd1NLT0xTWmdKQWYyZmxCSkdFZ2M5MmZmeTgzaXdUVmxUQjNmbTA0SGpkaHV1ek0yQ1lsQWM?oc=5"
+  },
+  {
+    "fecha": "2026-11-24",
+    "titular": "Banco Central de Bolivia proyecta triplicar en 2027 reservas internacionales en divisas",
+    "fuente": "Jornada",
+    "enlace": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOVE4xOU5vOUhJakxiQ0FVbzA0MDlFeVdnekllMVNaZURENlpPYW9GYk04dnl4T0FsMVpOMHVnUVl6MkhJT3Fmc3RLVFJNazMycEdZRE4xdjBjczN5QlYzWDVjQ05xbDUyLWptdFJELU1Ia0UtUzI0aFdTQzFwaWNQRV9qMzJMYXFlZldTT2daR2NJa2Noa0JyTDc0TnNCaDR6dVVvbVI5bVk2cXVOS2JScw?oc=5"
+  },
+  {
+    "fecha": "2026-11-24",
+    "titular": "BCB busca triplicar las reservas en dólares y propone convertir parte del oro el dólares",
+    "fuente": "Opinión Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPWW5zdHBQbFZfTnk3dWVKdzB5c0lJRmFBQUQ3Szlzb3IzWl9VTk44ZVczektwbVBrbFA5RUVLVmhaX1NrVXlkS3BrRDZkS3dtNVN1QlRVcS1Ic0E0QlVqaUJMX0VjOUhMSHllRVhYX1A2dEt0S0FmR0xvSFZLX25VaHk1Q3k0MnN0c014dlhBR2twYnY5ZEVZV09Qb1I0U1hiYXI1LV9uVjU0Tkdod0R1NERpMVg2LXFYdEduV2phVXRKaDAwSkcxSVV30gHPAUFVX3lxTE1RNzB1cWJWTWtoMHplTU1RT3RqYVBWaXUwQ0tkdXNqOEM1SXJqeDBfRUtjU3lxTnRXQWszSFZCSmNQRjFQZWIwZXFGampNUENxSlZkYXNheDdnLUJUd2VKRWkwV1F0bHlzLV9YWDdyVWxseFhualJQLThWdWczWmNTTlRnWkJZTDBjVU5oWm84N2RFSkhGMTlvRFQ5OExsSEprUXR4bTkwY05iTDhkT3N4am1KRTdSd3dpUi1xMng5OXJVMXhra1llSG1VZVNudw?oc=5"
+  },
+  {
+    "fecha": "2026-11-24",
+    "titular": "Precio del dólar paralelo: revisa las cotizaciones antes de cambiar tu dinero",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQSEdlVDM2bTJHbG1BTjYwNDZZdk5CcjhtNU5aVmF5TmltODFaQ19pNWIxLXdwT3E4SENmbWlqRmtWbVdISEQxVmlfeDNIdXUzMUR6MHNqVF9na1JjZGJ5YjRpTlhZcGxKNm9zRndXVXFnMkhpQjVhLWo1WHFBRTNLZ2lpZkYzWV9RQWlNbmhtTUo4ci1aY19rSFM4M1kyMkdlQUNvUjFaa3FtR1dwa296MjNrbmJIcVRjbkgzN3JScjdHZ3p0?oc=5"
+  },
+  {
+    "fecha": "2026-11-23",
+    "titular": "Bolivia: el USDT arranca la semana 2% sobre el dólar oficial de Bs 11,75",
+    "fuente": "Criptoinforme",
+    "enlace": "https://news.google.com/rss/articles/CBMicEFVX3lxTE80c0p3RVJpbklNaGJfbEtMMnRvdE5GZVMwckVldDZWTXNMM2N5MTdXanNwbHlmZkFYOGJ4SEFTUHo0LXNaTmQwWXYzYm51WUstQlhZVWJPVFdUSnpoN3BkazVhZlZYUlNGOUR2THZDSUQ?oc=5"
   },
   {
     "fecha": "2026-11-23",
@@ -28,10 +112,16 @@ const NOTICIAS_AUTOMATICAS = [
     "enlace": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNR1V0M1VGVlJtYXF4MTRHRVJuMkN4VXRPcjkyaTlxU05UcnBFWnlmOW5MWU1oLVplMjN4bkFrbmJ2SEQ2LVdDZ3N5TVNkbGY4MHp0cmdoSjd2Mm1RYjhuTm9ZRDVLeXc0NnByNEJzVlo4Y2lROFNwTVVOUXRKaTg3UlNMa1ctWEJjLWE2NkdCQUlvcVJSRmNiaXZJb2dIMTk5RTlIMjdiS1RKYzkyTUt4aUZoZUtMbVFLSlF5STBKbFlMU3ZD?oc=5"
   },
   {
-    "fecha": "2026-11-23",
-    "titular": "Bolivia: el USDT arranca la semana 2% sobre el dólar oficial de Bs 11,75",
-    "fuente": "Criptoinforme",
-    "enlace": "https://news.google.com/rss/articles/CBMicEFVX3lxTE80c0p3RVJpbklNaGJfbEtMMnRvdE5GZVMwckVldDZWTXNMM2N5MTdXanNwbHlmZkFYOGJ4SEFTUHo0LXNaTmQwWXYzYm51WUstQlhZVWJPVFdUSnpoN3BkazVhZlZYUlNGOUR2THZDSUQ?oc=5"
+    "fecha": "2026-11-22",
+    "titular": "Bolivia recibió solo el 20% de los créditos por $us 3.751 millones avalados en la ALP",
+    "fuente": "eju.tv",
+    "enlace": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQT0VtbS1UQ3dLTnJSVzZSSmloR255V2J4S2VWYTZfVTlUNC05SFo4LXlrV2d4UzJNVXMxbG4zWlg4NnlXOTdQdzRGRDhabmpCVDBKcWRwbmw0VHZIYU1FTDUwa2dxRzNLbFFSRXlOTjBWd3FBYk9sRW5heXl0S2JYS1RTRWFfOVowMXZhYVRKMkxYUTV2Vy1QTzNFOGgtTl9hWkUtMU11RldYc2M?oc=5"
+  },
+  {
+    "fecha": "2026-11-22",
+    "titular": "La caída del oro amenaza con opacar la recuperación de las reservas internacionales de Bolivia",
+    "fuente": "El Deber",
+    "enlace": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNS2FfM2RENXpoVHFmZF9IRjhyOVU3XzBJR1lQZHVzQnNPY2R1NTNET29hY21pYmgzZUZSTGxjT3dqaEtELU1NNnZycW9ydXppODFJVlJqZkpzY0RqeTJFNjdCUTQya1ZLOGxyZlRXYkFMNUFTWjNOM2JQaG1rREZoWWVnbzBqTUVRU3R1ajNNTndtbmk0VDZ6cTd1ZUVSbENlYUV6a3V5anlDdEZKb0FJV3RfVQ?oc=5"
   },
   {
     "fecha": "2026-11-22",
@@ -44,18 +134,6 @@ const NOTICIAS_AUTOMATICAS = [
     "titular": "¿Por qué cae el precio del oro? El dólar fuerte y las ventas en los mercados presionan su cotización",
     "fuente": "eju.tv",
     "enlace": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQWl8tMDBralhhSGstM0tmdkhhbmw1SjZuX3dNWVBxc2tyWThPWjhlTkhqZGpkX1BrRXl3QUNSRk9rQ1pEa1h3YnNuU0J4b3RGWFpzTmVxTlVnNkFqQlNiaU5uSnMyNUQ3NWJ1Uy1TZFNwVDJLcGRzMmJPX00yblVWRTVrS0JuWEFrc093RlluZ1RSc3BEVEItaEFqT0hOSmJyY0pJYXIwYlVVLWd3SnZzak1GZktJelRpSmNsZDVYWQ?oc=5"
-  },
-  {
-    "fecha": "2026-11-22",
-    "titular": "La caída del oro amenaza con opacar la recuperación de las reservas internacionales de Bolivia",
-    "fuente": "El Deber",
-    "enlace": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNS2FfM2RENXpoVHFmZF9IRjhyOVU3XzBJR1lQZHVzQnNPY2R1NTNET29hY21pYmgzZUZSTGxjT3dqaEtELU1NNnZycW9ydXppODFJVlJqZkpzY0RqeTJFNjdCUTQya1ZLOGxyZlRXYkFMNUFTWjNOM2JQaG1rREZoWWVnbzBqTUVRU3R1ajNNTndtbmk0VDZ6cTd1ZUVSbENlYUV6a3V5anlDdEZKb0FJV3RfVQ?oc=5"
-  },
-  {
-    "fecha": "2026-11-22",
-    "titular": "Bolivia recibió solo el 20% de los créditos por $us 3.751 millones avalados en la ALP",
-    "fuente": "eju.tv",
-    "enlace": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQT0VtbS1UQ3dLTnJSVzZSSmloR255V2J4S2VWYTZfVTlUNC05SFo4LXlrV2d4UzJNVXMxbG4zWlg4NnlXOTdQdzRGRDhabmpCVDBKcWRwbmw0VHZIYU1FTDUwa2dxRzNLbFFSRXlOTjBWd3FBYk9sRW5heXl0S2JYS1RTRWFfOVowMXZhYVRKMkxYUTV2Vy1QTzNFOGgtTl9hWkUtMU11RldYc2M?oc=5"
   },
   {
     "fecha": "2026-11-21",
@@ -71,27 +149,15 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-11-20",
-    "titular": "Bolivia aprobó un programa con el FMI por unos $us 1.900 millones y suma un paquete cercano a $us 10.000 millones con organismos multilaterales",
-    "fuente": "Acortar.link",
-    "enlace": "https://news.google.com/rss/articles/CBMiQEFVX3lxTE5xQW1fRnhGTnR3aVNfbzRoQWhlblNHa0VtM0d3R3drSThMamEtOUpHMTQtdk5XU0NMRDlWRWppYnk?oc=5"
-  },
-  {
-    "fecha": "2026-11-20",
-    "titular": "El dólar arranca el viernes con nuevos precios: esta es la diferencia entre el oficial y el paralelo",
+    "titular": "Una semana de subidas y bajadas: el recorrido del dólar oficial en Bolivia, día por día",
     "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxQSFR5TlRDZkVkMDVhUDZ2ZElmRUdvTnhEOHphdUx1LVlDMXlsTjJ1NV9oVy0zYlB4RE9oZEY0QXY5WGJndEJjeTI2UTZLaG5iTElORF9Lc1BiSlJ5Ti1sNkIzZjNsVVVJZDJVUUl0UDRNa2FSZmk4Zjlwdk1yMjdVNVNjdGxLT3RqeFZidWxVNnl5clhkSm04LXU2V3NmNUlXbGFYWjBQRjhpZ001T3pSRkE0a2ZuX1pfS250VTZCcTlPcmFneHFicEZyU1JsRnpfbjZ4TEI1bmJoc0dlUXJUcElB?oc=5"
+    "enlace": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxOQ2d3M2dVRnVaZ1gwb1B2cmN5QkpVMEpmYzRVaG9IVC05dGYxMGxaa1Bnd3Rwc2NwdW5tWXYxSFhaU2R3UVRraGdWZHozVFEwR2luTlFzSU1HNGpIZGZGVk5xZkQtQnY0X2c0eENrcm1XazN5N2E5X21TaHNoU2JOVHFxYnBCcGk4U3hVa2h4aC1DX2tsU2J6bVRTYy0xc19qZmZOTVdxMUNEemxLcXhNZEtwVHh6N3FhT2UxOXRqOVRzZ1hNemVCMGhEMTRjS3BSY1E?oc=5"
   },
   {
     "fecha": "2026-11-20",
-    "titular": "Menos inflación y más reservas: Economía reporta avances, pero el déficit fiscal sigue pendiente",
-    "fuente": "EL DÍA - Noticias de Bolivia para el mundo",
-    "enlace": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxQa1RyN3FsaVN6WmxjMEJxNkFOWFJqLTJrbW8welVwOGltaEMwSzNHMFlHcjBKaTBuN1hnTV80VWE1Wl9aS1pxd3dPVTh2dmFIQ1Q3eUUybWs2dnUwZ3lranJnQmNqQ05nTFRsZHhoOFk1MHIwUnIxVkVqSk94MVpGWElhVWNQVlFsZnZ6dzVxbFViTUlIa21kOTdKdVFndUh1Ykg3UTV6SEo4VUEtY2Q1RXFkWmZHRW5WZ2ZpUXVZWEk3Tlpvald2WDEyZTJzNElzeHZLcVRsbw?oc=5"
-  },
-  {
-    "fecha": "2026-11-20",
-    "titular": "Golochinas: por qué las golosinas chinas arrasan en kioscos con dólar barato y TikTok",
-    "fuente": "Prensa Libre Online",
-    "enlace": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNM3RuUjROVmhQWVBxNkt3THVTRTgzWWg2d3U4WWwtekpWS1k0QklFT1k3UDdJUXNtZTQ4Zk1QODY3REpNbmh1ZGEyWHB5bzZnM1lkM2l2aTc5bVd0ekQ4enZvdEdISkRxZ2JXaXlwYWpZM3lCZmNGckFyaW1CNnF1WUUyNy1sUEY5MTFIUzdXbFpveVRpRTB1NllyTGZjLUVzUGhfSG8wOGo5cDJHU184?oc=5"
+    "titular": "Exportaciones de Bolivia llegan a 10.317 millones de dólares al tercer trimestre de 2026",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxNTXN3cWVDR1dYbzl1cEw2RW53QkRsczh4cHRzTTV5eV9PU19DN1lnVXU3ZkhPMk9HOWVwR3RTMUIzelRyYzNFRWNYT2dDeDBVaGZ2UUlqbE5SVTloUTE2a0ZtUFFfbVNxX3NRTmllMTdmVW9FTGZ0elFqcWkyRHF4OEdnVjA5OHUtek5FQzBIQ183UFhrbjRXaXl6UWpJS1pxdFZIbE5PbzlxOV9PdU92eDZYQ1h3UU1acU0xeEt3LVFVWFNENEVhWnBBOGp0ZTlxQWNv?oc=5"
   },
   {
     "fecha": "2026-11-20",
@@ -107,15 +173,27 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-11-20",
-    "titular": "Una semana de subidas y bajadas: el recorrido del dólar oficial en Bolivia, día por día",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxOQ2d3M2dVRnVaZ1gwb1B2cmN5QkpVMEpmYzRVaG9IVC05dGYxMGxaa1Bnd3Rwc2NwdW5tWXYxSFhaU2R3UVRraGdWZHozVFEwR2luTlFzSU1HNGpIZGZGVk5xZkQtQnY0X2c0eENrcm1XazN5N2E5X21TaHNoU2JOVHFxYnBCcGk4U3hVa2h4aC1DX2tsU2J6bVRTYy0xc19qZmZOTVdxMUNEemxLcXhNZEtwVHh6N3FhT2UxOXRqOVRzZ1hNemVCMGhEMTRjS3BSY1E?oc=5"
+    "titular": "Menos inflación y más reservas: Economía reporta avances, pero el déficit fiscal sigue pendiente",
+    "fuente": "EL DÍA - Noticias de Bolivia para el mundo",
+    "enlace": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxQa1RyN3FsaVN6WmxjMEJxNkFOWFJqLTJrbW8welVwOGltaEMwSzNHMFlHcjBKaTBuN1hnTV80VWE1Wl9aS1pxd3dPVTh2dmFIQ1Q3eUUybWs2dnUwZ3lranJnQmNqQ05nTFRsZHhoOFk1MHIwUnIxVkVqSk94MVpGWElhVWNQVlFsZnZ6dzVxbFViTUlIa21kOTdKdVFndUh1Ykg3UTV6SEo4VUEtY2Q1RXFkWmZHRW5WZ2ZpUXVZWEk3Tlpvald2WDEyZTJzNElzeHZLcVRsbw?oc=5"
   },
   {
     "fecha": "2026-11-20",
-    "titular": "Exportaciones de Bolivia llegan a 10.317 millones de dólares al tercer trimestre de 2026",
+    "titular": "El dólar arranca el viernes con nuevos precios: esta es la diferencia entre el oficial y el paralelo",
     "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxNTXN3cWVDR1dYbzl1cEw2RW53QkRsczh4cHRzTTV5eV9PU19DN1lnVXU3ZkhPMk9HOWVwR3RTMUIzelRyYzNFRWNYT2dDeDBVaGZ2UUlqbE5SVTloUTE2a0ZtUFFfbVNxX3NRTmllMTdmVW9FTGZ0elFqcWkyRHF4OEdnVjA5OHUtek5FQzBIQ183UFhrbjRXaXl6UWpJS1pxdFZIbE5PbzlxOV9PdU92eDZYQ1h3UU1acU0xeEt3LVFVWFNENEVhWnBBOGp0ZTlxQWNv?oc=5"
+    "enlace": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxQSFR5TlRDZkVkMDVhUDZ2ZElmRUdvTnhEOHphdUx1LVlDMXlsTjJ1NV9oVy0zYlB4RE9oZEY0QXY5WGJndEJjeTI2UTZLaG5iTElORF9Lc1BiSlJ5Ti1sNkIzZjNsVVVJZDJVUUl0UDRNa2FSZmk4Zjlwdk1yMjdVNVNjdGxLT3RqeFZidWxVNnl5clhkSm04LXU2V3NmNUlXbGFYWjBQRjhpZ001T3pSRkE0a2ZuX1pfS250VTZCcTlPcmFneHFicEZyU1JsRnpfbjZ4TEI1bmJoc0dlUXJUcElB?oc=5"
+  },
+  {
+    "fecha": "2026-11-20",
+    "titular": "Bolivia aprobó un programa con el FMI por unos $us 1.900 millones y suma un paquete cercano a $us 10.000 millones con organismos multilaterales",
+    "fuente": "Acortar.link",
+    "enlace": "https://news.google.com/rss/articles/CBMiQEFVX3lxTE5xQW1fRnhGTnR3aVNfbzRoQWhlblNHa0VtM0d3R3drSThMamEtOUpHMTQtdk5XU0NMRDlWRWppYnk?oc=5"
+  },
+  {
+    "fecha": "2026-11-20",
+    "titular": "Golochinas: por qué las golosinas chinas arrasan en kioscos con dólar barato y TikTok",
+    "fuente": "Prensa Libre Online",
+    "enlace": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNM3RuUjROVmhQWVBxNkt3THVTRTgzWWg2d3U4WWwtekpWS1k0QklFT1k3UDdJUXNtZTQ4Zk1QODY3REpNbmh1ZGEyWHB5bzZnM1lkM2l2aTc5bVd0ekQ4enZvdEdISkRxZ2JXaXlwYWpZM3lCZmNGckFyaW1CNnF1WUUyNy1sUEY5MTFIUzdXbFpveVRpRTB1NllyTGZjLUVzUGhfSG8wOGo5cDJHU184?oc=5"
   },
   {
     "fecha": "2026-11-19",
@@ -128,6 +206,12 @@ const NOTICIAS_AUTOMATICAS = [
     "titular": "El dólar en el mercado informal cierra al alza este jueves 19 de noviembre en Bolivia",
     "fuente": "Red Uno",
     "enlace": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxObWhtcnltR05xSzE3RVhGZnFDNzAyclNnUVZfRDhvWWNINXNuRkE3Q01HbFZCRXdNTDFYODdBY0YwTzNpQjdtc3o5Ukhla3p6UWZrRUNnYlNubUhBODZzTW5COGVXZU1GcVV6US1zbC1fNTlKMXRnN21nMGN0SXBDMzVIWG9ZeldZTWJXN0hpSUZNRVBRdldqWmdwc0ZYS1RxMWlHeUNlckRramIycUlrMlRWZGdwYWN4YTNpdDRvNUlBdENjdnlPODZDWnlLcTJsZFM2R0NNRlE5U2Qt?oc=5"
+  },
+  {
+    "fecha": "2026-11-18",
+    "titular": "El dólar cambia de precio en Bolivia: revisa cuánto cuesta este miércoles",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPTWdwYWZvMHFVdU5UUGFKSDZsUVdVRmhQTFZrTFpiSWstbE9KYUxla18xeXJ4dE01RmZtSjdXZ1N2MUF1SloyTzB2MGtNanRyYVJvQjZoMVFpNnpBdG5LUzZHODdWdkhsRXZJTFpiY2stLUVPbERoWDNMbkZNbmlPWGtESHYtSlJVX0J1MXFkNjVEcm8ya2RwdXJBM0tVZzU1S21zVnlnMjZ4MFpIeHVQSkJCZkJyMXFoQU1z?oc=5"
   },
   {
     "fecha": "2026-11-18",
@@ -149,12 +233,6 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-11-18",
-    "titular": "El dólar cambia de precio en Bolivia: revisa cuánto cuesta este miércoles",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPTWdwYWZvMHFVdU5UUGFKSDZsUVdVRmhQTFZrTFpiSWstbE9KYUxla18xeXJ4dE01RmZtSjdXZ1N2MUF1SloyTzB2MGtNanRyYVJvQjZoMVFpNnpBdG5LUzZHODdWdkhsRXZJTFpiY2stLUVPbERoWDNMbkZNbmlPWGtESHYtSlJVX0J1MXFkNjVEcm8ya2RwdXJBM0tVZzU1S21zVnlnMjZ4MFpIeHVQSkJCZkJyMXFoQU1z?oc=5"
-  },
-  {
-    "fecha": "2026-11-18",
     "titular": "El dólar paralelo supera la barrera de los Bs 12 al cierre de este miércoles tras jornada con variaciones",
     "fuente": "eju.tv",
     "enlace": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOb0RXSVFiS0pnamZSS3hGcFd5TVZ3M3lNaG91U0dGeE54VlFGb2t0TmdYdWRqeG5fbjROZ0huZWE2V1MtaXluN1NnOUhLcV9VVDYyOFdZYUJrcHF4dnBybGV3THlfcUIzVXRwdEhyQmNLbWFzWGxDQlVlYmFTWkx4ZktycnV0NVNMMFhUVzJyQkZ6M2RzNlNlN25uY016OWcwZlkyaWdabW0tS0ltc0JLQWhLR1ByQjJNN3NscFBSUFVKY1h2VUtGUA?oc=5"
@@ -167,6 +245,12 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-11-16",
+    "titular": "Ministro Blanco: Bolivia cumplirá el compromiso con el FMI de acabar con la subvención a los hidrocarburos",
+    "fuente": "Visión 360",
+    "enlace": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxPRzk5c3ZhN0xvaDlrV2JBX1gzaFJ0Mk8xSTk3bDJpSmQyenJ3bGlFMDRnOEFEM2F0OTVLaWxPdjQybHJ6cTk4YUVwcjM2N3ZLVHh4RlYweVJpZ2ZnM1NUdzFHNUVtNmJMVVZEZVB0Y2VWSWtjaHNSakVDNXRjTDEtTlBTMVMtaHhDSE5ISk1GakRIb0FOdE8tUU9TRGRLQlhDcVFYOERuMnlfTTkwSDM1NHBKSmp2SDhUb2ZaTzNSYUljRW9XMklhRUdyZThaeEotR21BRjZlQzgwQkhRVXpMWnN4YXA1UEg0X0IzWVRCanUwQdIB8gFBVV95cUxPRzk5c3ZhN0xvaDlrV2JBX1gzaFJ0Mk8xSTk3bDJpSmQyenJ3bGlFMDRnOEFEM2F0OTVLaWxPdjQybHJ6cTk4YUVwcjM2N3ZLVHh4RlYweVJpZ2ZnM1NUdzFHNUVtNmJMVVZEZVB0Y2VWSWtjaHNSakVDNXRjTDEtTlBTMVMtaHhDSE5ISk1GakRIb0FOdE8tUU9TRGRLQlhDcVFYOERuMnlfTTkwSDM1NHBKSmp2SDhUb2ZaTzNSYUljRW9XMklhRUdyZThaeEotR21BRjZlQzgwQkhRVXpMWnN4YXA1UEg0X0IzWVRCanUwQQ?oc=5"
+  },
+  {
+    "fecha": "2026-11-16",
     "titular": "Primer desembolso del BCB alcanzará a 35 instituciones",
     "fuente": "La Patria Bolivia",
     "enlace": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPcVV3YV9BeS1iVzRHQmtLRFkzT3diZ3NUeGlhdHhSd0wxTXUxSzVteDZqalRoVkszVlZTOWJpQ29lS2VtLUUxWkJMNlE0aFFxVkpXR2pPTmhRdkt6Y0FMXzJ5a3Vkd1o1aHJHZUp5SHAtUHhuRHNZSGZsaW1yWkMyV0ItanlYZEJHRE5vOHVfa3lMbXJJYUE?oc=5"
@@ -176,12 +260,6 @@ const NOTICIAS_AUTOMATICAS = [
     "titular": "Bolivia: el USDT bajó del dólar oficial y volvió a superarlo",
     "fuente": "Criptoinforme",
     "enlace": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQdk14QjZXazJ2NXBsSlRYWkpIekJoNVpNdk0wZVQ5OTJnMjZlaktYdldsanFldEEyMldselFId3NJNDRab3VPTUVnX0tKeEstSGhra0RkQU1CVU0yUnFsa1I3RDF4aC1qWkxXVU5wRUhnbHFLVW9xd0xhQ3FOT28tbjJn?oc=5"
-  },
-  {
-    "fecha": "2026-11-16",
-    "titular": "Ministro Blanco: Bolivia cumplirá el compromiso con el FMI de acabar con la subvención a los hidrocarburos",
-    "fuente": "Visión 360",
-    "enlace": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxPRzk5c3ZhN0xvaDlrV2JBX1gzaFJ0Mk8xSTk3bDJpSmQyenJ3bGlFMDRnOEFEM2F0OTVLaWxPdjQybHJ6cTk4YUVwcjM2N3ZLVHh4RlYweVJpZ2ZnM1NUdzFHNUVtNmJMVVZEZVB0Y2VWSWtjaHNSakVDNXRjTDEtTlBTMVMtaHhDSE5ISk1GakRIb0FOdE8tUU9TRGRLQlhDcVFYOERuMnlfTTkwSDM1NHBKSmp2SDhUb2ZaTzNSYUljRW9XMklhRUdyZThaeEotR21BRjZlQzgwQkhRVXpMWnN4YXA1UEg0X0IzWVRCanUwQdIB8gFBVV95cUxPRzk5c3ZhN0xvaDlrV2JBX1gzaFJ0Mk8xSTk3bDJpSmQyenJ3bGlFMDRnOEFEM2F0OTVLaWxPdjQybHJ6cTk4YUVwcjM2N3ZLVHh4RlYweVJpZ2ZnM1NUdzFHNUVtNmJMVVZEZVB0Y2VWSWtjaHNSakVDNXRjTDEtTlBTMVMtaHhDSE5ISk1GakRIb0FOdE8tUU9TRGRLQlhDcVFYOERuMnlfTTkwSDM1NHBKSmp2SDhUb2ZaTzNSYUljRW9XMklhRUdyZThaeEotR21BRjZlQzgwQkhRVXpMWnN4YXA1UEg0X0IzWVRCanUwQQ?oc=5"
   },
   {
     "fecha": "2026-11-15",
@@ -203,42 +281,6 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-11-13",
-    "titular": "Bolivia certifica 2,3 TCF de reservas de gas, el nivel más bajo en 20 años",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOUkc0MmM2YWt4dkJQNEZyeFlfNENLMVRrOXNBTHRMTDRscHVsaUJTQWVpQ080WGtTNHhNM3pyYkpQZkNBVkF0N0Y1VnBlMmlTOTVmallYeFFLallKUVZpc2FUSWhMc05HNTVLVVlTVlZYNWc2b2RrRnlYZGJET3QtVkpEc1ptbDVMS1BIYnFuS2hfYm94OFRCanoyTEd6WVJHMks2cHRUczVOc096VTV4MVdVVmlVT1FEajYxbm5ESWI?oc=5"
-  },
-  {
-    "fecha": "2026-11-13",
-    "titular": "BCB elimina restricciones a nuevas transacciones en dólares e inicia devolución de USD 438 millones a 61 entidades financieras",
-    "fuente": "Visión 360",
-    "enlace": "https://news.google.com/rss/articles/CBMiiAJBVV95cUxQbXZUUU1SWnlFR1pGeVlsRzJYN2phcHEzcTQ3RWtyZ1N6WFg3QW92eU9KVExKN05VLW9rS0JHcjdkUmEtUXNucHhxTWRNRzloLVpoZVpPanlvUVVCNUlOQXg4cnFmZTdNdWpsZUt3THJmTUNCbE1hQ2YxWG9kaWJoUzFudFJQMjVuSkhfZ09POGhDRXJma3ZwYXotczNuTjY5cWc1M2pWTnBXazZBbFJ2dzV4Z0pGdGxTZ1BmcjFzMHdhQmpUdnpHckNGQXI0SzhFRUo3THNVaWtyVXdrcUdKTGtFVHNpcmN5Q0FkOEJ1alNmeHRickd3d0NSRzNOOFpjdFRBT1NLM1bSAY4CQVVfeXFMT3pkd1JkSlhCWU91dDM3d0IxZllrdm42dVBveHk0OTN3MnlYaUtKNWZUNUw0NVV1Z19CVXhjU2NJVDBnUVZjTVE4NlJjOVZPelp0VmFDQUlodGktZnBFU1Uxb3VWVGl0WWxNMkRockJfX1VnRlZEcWZMbVRVSHNrcTlTUTNNSmc0Y1daVTFCZmZxYk1VRFdjeHRzQW5FNEYzWXpoQ1pEWERIMU1RMDB4WUprd1cxM1R0aDVYTmlWZFdtZ3l4VVNyZExVVVIwMU1YYTQ2dGs0MXc3b0oxX0VhVjRlb3pKdENLanVpRzJzU3FEQmhZUEMtOEJzMVF2RnkzYlUwcVRlZElhYnJqV3Fn?oc=5"
-  },
-  {
-    "fecha": "2026-11-13",
-    "titular": "EL DÓLAR BAJA TRES CENTAVOS Y LLEGA A BS 11,67",
-    "fuente": "El Alteño",
-    "enlace": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNeEJoWVU3clNzYWo0YzlYR1ZHU3BTLXhudDNFM2tMQThZSkJYSm1Ya1p2a2o1emVuTTJHWlFuN21BUmF1RlhNeEFhMVZQMjBYdXFhdG04b0hRNFNhOXZTTFYzVWRvaEFvY3NHTXItcHpncF85cmdaME1sSXRKYi01MGgyV0V1REdZSTkzMVg5eTh2MzA?oc=5"
-  },
-  {
-    "fecha": "2026-11-13",
-    "titular": "Dólar oficial sigue bajando en Bolivia: Así cambió su cotización durante cinco días",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNVGt1cEtFcXJ6VGFRT29aSDUwOUFYNWxhWmp6VC1yNzQtZUR5S0ljWmdQcncwcGdWYXNCdFBhWUw5eFdSdEp6R3VtWU5aMnRvSFEwdEh1ZWRuNXZpVzVXT01NbTZzXzFfNjIxQkQ0QmhFYnl6MHdLcTh6eWRweS1Xb0psQzdwT3BoTFZ5b2g5dnFjcUNLeUVsRUpCUDgyRE45Skc3N3hhSFhIb1J6WjdtdlpualkyeVpHTUJpMUo1UEdKeG55aEpLLXc0dzU?oc=5"
-  },
-  {
-    "fecha": "2026-11-13",
-    "titular": "BCB devolverá $us 438 millones a 61 entidades financieras hasta septiembre de 2027",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMiywFBVV95cUxORzlpR2Uta21vUTVDWlIyem5zbEpuWXJLUlRMLWNUWktMbXlGbHVVZVh4TjZuOWFwVElRb1kzMGpLV2VnQVZjOXBqM0lrYncxZndTNXRnV3MtYVMzbEhkeU1EU1BvdWZJTFVUY1BHajVBRTRIRUxZR1F2YkxaZDl2bk5jZTVoa0hzcE92X1Z1V3FzaU50dFVZbWg5by16UlIwdWpYVHJ0M0wtd0hCcUNKdDNtNlZSbHgtckhYeGxSWWpuV25WRVQya3NCMA?oc=5"
-  },
-  {
-    "fecha": "2026-11-13",
-    "titular": "Dólar paralelo en Bolivia: estos son los precios de compra y venta para la tarde de este viernes",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxOQ2ZqYm5fbUtpZ0oyODdSOTVNeTNKRmNad1p2RGlORFBVQWlNUFU2NDcwLW5ueEQ2WFhsUmpjYW85WWF2Zk5LU213bll6OGlpT1JwN0RXVjhVYm1QZUxVUnprcDAwMEZWUjA0QnU4M2NEZXVhU3IwV2ZHLTd1amxPRmhZclVvcGpEa3dldnNGa0NHUjBvZWFtdnYxRmF5VGw5aWxMRWwtQ0hHYVo1ajFVSDFETGgycXFxS1ktYV8xSlk0RDdCVUxVakQ4Y2JJakpIQ3pQdmQ0bHotRHF6aXc?oc=5"
-  },
-  {
-    "fecha": "2026-11-13",
     "titular": "Analista: \"Recuperar la confianza, el desafío de las medidas del BCB\"",
     "fuente": "Red Uno",
     "enlace": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNOC16NkNtamRmdjV3TWJsTkpfV0VEbE9QVFl4R0VFY1lOWXVEazJDek5obi1PQWZRWklIMnNad3VSOXZNQlJQZkc1VzRzOVZQaF9NTGJTOXpORkU2dG1PM3R4dmVWZEJKTmc1UnhpTWFpYjhwVk14bTNBVTBIVk5Ud3ZkSlo2MUUtSzd4T0JQd3hoRlM4WW9naFpCQkx2bzBmYkdDUXVKandDNEQtVEdBZlo2RnRMQQ?oc=5"
@@ -248,6 +290,48 @@ const NOTICIAS_AUTOMATICAS = [
     "titular": "YPFB presentará este viernes la certificación anual de reservas de hidrocarburos de Bolivia",
     "fuente": "Red Uno",
     "enlace": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOcUkxWmlrLUkycE9xTzJaT3BteGpNeXNjbHdEWUpoOG54MDlLVGxhQTBKcTdpdEFwTmdubjkzcWpnRlNITmRqV3llNGItdVpLajRhNHRIYnVYc1lRNElwNHAwV2ZFNXFrQ3VYTjFFdXNuY0NyZjVBNUZobkJ5TXlwRHZTZmFSZkMxc0NtMXZ6cDB3SEU2LUxFSUMxVFNrcWl3ZmV0UXRRRUR2aVluSTRMb2U4eEpLb1ZXUFVkd0QyVzJsM2RCWW9GSGZJNVM1d2lKR3BxbE93?oc=5"
+  },
+  {
+    "fecha": "2026-11-13",
+    "titular": "Dólar paralelo en Bolivia: estos son los precios de compra y venta para la tarde de este viernes",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxOQ2ZqYm5fbUtpZ0oyODdSOTVNeTNKRmNad1p2RGlORFBVQWlNUFU2NDcwLW5ueEQ2WFhsUmpjYW85WWF2Zk5LU213bll6OGlpT1JwN0RXVjhVYm1QZUxVUnprcDAwMEZWUjA0QnU4M2NEZXVhU3IwV2ZHLTd1amxPRmhZclVvcGpEa3dldnNGa0NHUjBvZWFtdnYxRmF5VGw5aWxMRWwtQ0hHYVo1ajFVSDFETGgycXFxS1ktYV8xSlk0RDdCVUxVakQ4Y2JJakpIQ3pQdmQ0bHotRHF6aXc?oc=5"
+  },
+  {
+    "fecha": "2026-11-13",
+    "titular": "BCB devolverá $us 438 millones a 61 entidades financieras hasta septiembre de 2027",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMiywFBVV95cUxORzlpR2Uta21vUTVDWlIyem5zbEpuWXJLUlRMLWNUWktMbXlGbHVVZVh4TjZuOWFwVElRb1kzMGpLV2VnQVZjOXBqM0lrYncxZndTNXRnV3MtYVMzbEhkeU1EU1BvdWZJTFVUY1BHajVBRTRIRUxZR1F2YkxaZDl2bk5jZTVoa0hzcE92X1Z1V3FzaU50dFVZbWg5by16UlIwdWpYVHJ0M0wtd0hCcUNKdDNtNlZSbHgtckhYeGxSWWpuV25WRVQya3NCMA?oc=5"
+  },
+  {
+    "fecha": "2026-11-13",
+    "titular": "EL DÓLAR BAJA TRES CENTAVOS Y LLEGA A BS 11,67",
+    "fuente": "El Alteño",
+    "enlace": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNeEJoWVU3clNzYWo0YzlYR1ZHU3BTLXhudDNFM2tMQThZSkJYSm1Ya1p2a2o1emVuTTJHWlFuN21BUmF1RlhNeEFhMVZQMjBYdXFhdG04b0hRNFNhOXZTTFYzVWRvaEFvY3NHTXItcHpncF85cmdaME1sSXRKYi01MGgyV0V1REdZSTkzMVg5eTh2MzA?oc=5"
+  },
+  {
+    "fecha": "2026-11-13",
+    "titular": "BCB elimina restricciones a nuevas transacciones en dólares e inicia devolución de USD 438 millones a 61 entidades financieras",
+    "fuente": "Visión 360",
+    "enlace": "https://news.google.com/rss/articles/CBMiiAJBVV95cUxQbXZUUU1SWnlFR1pGeVlsRzJYN2phcHEzcTQ3RWtyZ1N6WFg3QW92eU9KVExKN05VLW9rS0JHcjdkUmEtUXNucHhxTWRNRzloLVpoZVpPanlvUVVCNUlOQXg4cnFmZTdNdWpsZUt3THJmTUNCbE1hQ2YxWG9kaWJoUzFudFJQMjVuSkhfZ09POGhDRXJma3ZwYXotczNuTjY5cWc1M2pWTnBXazZBbFJ2dzV4Z0pGdGxTZ1BmcjFzMHdhQmpUdnpHckNGQXI0SzhFRUo3THNVaWtyVXdrcUdKTGtFVHNpcmN5Q0FkOEJ1alNmeHRickd3d0NSRzNOOFpjdFRBT1NLM1bSAY4CQVVfeXFMT3pkd1JkSlhCWU91dDM3d0IxZllrdm42dVBveHk0OTN3MnlYaUtKNWZUNUw0NVV1Z19CVXhjU2NJVDBnUVZjTVE4NlJjOVZPelp0VmFDQUlodGktZnBFU1Uxb3VWVGl0WWxNMkRockJfX1VnRlZEcWZMbVRVSHNrcTlTUTNNSmc0Y1daVTFCZmZxYk1VRFdjeHRzQW5FNEYzWXpoQ1pEWERIMU1RMDB4WUprd1cxM1R0aDVYTmlWZFdtZ3l4VVNyZExVVVIwMU1YYTQ2dGs0MXc3b0oxX0VhVjRlb3pKdENLanVpRzJzU3FEQmhZUEMtOEJzMVF2RnkzYlUwcVRlZElhYnJqV3Fn?oc=5"
+  },
+  {
+    "fecha": "2026-11-13",
+    "titular": "Bolivia certifica 2,3 TCF de reservas de gas, el nivel más bajo en 20 años",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOUkc0MmM2YWt4dkJQNEZyeFlfNENLMVRrOXNBTHRMTDRscHVsaUJTQWVpQ080WGtTNHhNM3pyYkpQZkNBVkF0N0Y1VnBlMmlTOTVmallYeFFLallKUVZpc2FUSWhMc05HNTVLVVlTVlZYNWc2b2RrRnlYZGJET3QtVkpEc1ptbDVMS1BIYnFuS2hfYm94OFRCanoyTEd6WVJHMks2cHRUczVOc096VTV4MVdVVmlVT1FEajYxbm5ESWI?oc=5"
+  },
+  {
+    "fecha": "2026-11-13",
+    "titular": "Dólar oficial sigue bajando en Bolivia: Así cambió su cotización durante cinco días",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNVGt1cEtFcXJ6VGFRT29aSDUwOUFYNWxhWmp6VC1yNzQtZUR5S0ljWmdQcncwcGdWYXNCdFBhWUw5eFdSdEp6R3VtWU5aMnRvSFEwdEh1ZWRuNXZpVzVXT01NbTZzXzFfNjIxQkQ0QmhFYnl6MHdLcTh6eWRweS1Xb0psQzdwT3BoTFZ5b2g5dnFjcUNLeUVsRUpCUDgyRE45Skc3N3hhSFhIb1J6WjdtdlpualkyeVpHTUJpMUo1UEdKeG55aEpLLXc0dzU?oc=5"
+  },
+  {
+    "fecha": "2026-11-12",
+    "titular": "Bolivia debe fortalecer sus exportaciones para generar divisas y recuperar reservas",
+    "fuente": "El Diario - Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNUmFLQmdrNjFhdWlZTGFOblp1b05idFM3SEdQRWVnVl9qMUpBRlkyOW9ndHhwUWVUMElpRTNZeC1SWkFNMGFJakxCekFjTTZOY054ZndweWtkY29aV1ktaTJEaU9QTC1GRzhDM09DTHFzdDBQRWs2Y19wUllqdWJDUU1HZ1FOMjJ2b2RwVTl0STY1bDdpMGwxQ3hXd1Z5S1NxbHV6WXpuU1l0dG54QTlnTUdJZXdoVkU5ZVF0eUVCb29HbXRWTlE?oc=5"
   },
   {
     "fecha": "2026-11-12",
@@ -274,22 +358,10 @@ const NOTICIAS_AUTOMATICAS = [
     "enlace": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOdVZIMGR1ek9GemJxOHAxMWVHa1hmb01ESGlHRGlVOHUyaUhVM2JIN1I4UjB1Zy14NEw4NWFQOXBIN1hzYXowZGw3NFU5QUphWTlfclEtOUlSZmt3aG1fakVFanVtTjM0ZHdOQ005Ul9TUS1GWWQxSERGS3RsVUV5eno2Sk1KTmhSZE9ZYzFfMVZtUHQ1UHIwZ0dyRlRsOXl2cFhULUsyTklHR0dyRTMyb1ZOby1YLTNadXc?oc=5"
   },
   {
-    "fecha": "2026-11-12",
-    "titular": "Bolivia debe fortalecer sus exportaciones para generar divisas y recuperar reservas",
-    "fuente": "El Diario - Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNUmFLQmdrNjFhdWlZTGFOblp1b05idFM3SEdQRWVnVl9qMUpBRlkyOW9ndHhwUWVUMElpRTNZeC1SWkFNMGFJakxCekFjTTZOY054ZndweWtkY29aV1ktaTJEaU9QTC1GRzhDM09DTHFzdDBQRWs2Y19wUllqdWJDUU1HZ1FOMjJ2b2RwVTl0STY1bDdpMGwxQ3hXd1Z5S1NxbHV6WXpuU1l0dG54QTlnTUdJZXdoVkU5ZVF0eUVCb29HbXRWTlE?oc=5"
-  },
-  {
     "fecha": "2026-11-11",
-    "titular": "La cotización oficial del dólar continúa en descenso este jueves en Bolivia",
+    "titular": "El dólar paralelo repunta este miércoles y roza nuevamente los Bs 12",
     "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPOS1fUlRwWUxpbDU4M1RNRlRvZXJCcEl2UkFVUEstY3RkY3NBMEtWelhUaEJkN2Q5dWVFanRNRGd3dVF3dHl2amNhS3JubENEYncwaHNaRkJ6eFdEcmRBd0FkQmZYUV8tbXlJNVNuanlOZHRxdlA5WC1CeUxjUW1tTTFKam8yU1B4aHljLXN6YzBuVVk5ckltbEJHeXdIRHJ0bnBLRWNyMkh0VTdaUWRCRGxJOGdYcDAzSGRfU0NsNGtSazg?oc=5"
-  },
-  {
-    "fecha": "2026-11-11",
-    "titular": "Fundación Jubileo: Bolivia debe fortalecer sus exportaciones para generar divisas",
-    "fuente": "El Potosí",
-    "enlace": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNQW9obWY5cUxaWjhmSkxUNzQwVllLbGdzekRWMGgtRVp4U0JsWkFFbkNtMTNvOTNCUk03QjlrdUtOZkJiTWowRWtCVTRXeU5tS2VXdlUyd0pDSnZBekFhZVRGSVM4S2I1OEluTTBwWHpudlJYMlNZeE9XZUNJc3UyTnE2TkpUcGdnc0dhWjNzVTlGMUxSZmpjeU5QcnhlTnVsX0tzbURzMzhJWGhzaTZ5a0FteXQ2ckZNWmd5cmtMeWlJUQ?oc=5"
+    "enlace": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNblNoWUtVQnRxUTFmdG5TZkQyOWNrTTI2ajdSZGEyb1l4dzVYRG1yNW1PWUNRZmlBRExpNHkzeU1Jd2hKUHVGTzBKUTZrMFJjN0plTUZpdEFvaHRBZkpRYXl1ZXNxU1pCb1VuSWhNRmZvaGpKdVl3S1YwMDVndlh0V2p4R1VnZk5mODVNR1JKenBtRFhGdHo1Q1p5WUNtNVhsS3FjU2ttaWl2OGFjLThBNHpmRndlaUJvdlE?oc=5"
   },
   {
     "fecha": "2026-11-11",
@@ -299,15 +371,15 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-11-11",
-    "titular": "¿Un dólar digital en Bolivia? Analizan propuesta para implementar USD Mint y modernizar la economía",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxNUXl6REppLVNQdXNvMFVKLTJIY1p2d1VyQVVkSWdzLXRaTXlGenE5LUxSLV80YnNpa21DNXVKZmpvZ3ZFeDhPU00yZTlIdHdZd3JZYUUtbUU1RWZLdkNuWl90N0hmVkxoZERWQWF0Y3pFXzcyc2VmbVFKdHhKckQwbnpXR1ppcDFBaDhJeEx0Y1Nwb25WTnJYQlI1V2VkX1VDQUVFMnZ4RjZoeGNyczRkLUcyVmktTUZETGF1QVlWNjlIT3l1d2JZakV5d3hKd3JUZFdTQmFzbURoLVJZX1hPaA?oc=5"
+    "titular": "Bolivia — FMI: Bolivia espera el segundo desembolso entre mediados de noviembre y diciembre",
+    "fuente": "Prensa Mercosur",
+    "enlace": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNeEVYRUl5ei1zQmZFdEtMQTRlX0p1c0c4S1dQc2ZENmNTMW5xdVhTR1pIa3JFUkFxd3JzVkVoQU9xY3BONDlMRjJmalU0VUR4M2hGZEdGcHNEUDVJbTBfWXlFR3J0UE1hdl9qd0hHS0ViVFRHcVIxWkpPaXIxNVhXVndIbmt3cU1NRkRtWFRINFBXMmh6dzFxeWg0T0hQNjdwS1Zvekp2UDljSGt1WXdDTzhPY0VBRndXbXlDUFlJNmVVTk1KT2c?oc=5"
   },
   {
     "fecha": "2026-11-11",
-    "titular": "El dólar sube en Bolivia y el mercado cambia de rumbo",
-    "fuente": "Identidad Correntina",
-    "enlace": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQVXVFZTBuN2FiVnlTcldyZU5RbXl2SFIxdEtOYW8tN21kUVB5VEdYVnN6WmZHQXk3VUhBWGJYZHlrQlN4YmhQTjEyZi1yMUZpSFBtdFYwbG80ZUhobVpkRXhvUDVRWi10TUFkcW5EdTJndEJGQ3R5bHBfYmg2WEY4WFV2akplWFZkeW01elNxTjhIVlB2OHRXMmZiWmpGQzE0bm9IdTVPNkZ3YWFOd3c?oc=5"
+    "titular": "Misión del FMI visitará el país para evaluar avances del acuerdo firmado con el Gobierno",
+    "fuente": "eju.tv",
+    "enlace": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOaWZHRXNSbjhnOTFkS3NfVmVmY0VSUTdXQktjV2tpaC1LMUZJeXcxRV92bXBmU0FCakJaMUtueC0tbjJ4NDVldUNkS0htaF8zRFFuNXlFbEVGRTRha2JwQS1WZlA0XzJ1YmdhSXlweXpSQlJYaFNwa2pSWXFYMHBSYnhiTm84SzBrM1NJcWMyTEoyQVhFamdjUURrUFR1Y2R4Wlp1aC12Uzk0ZGctWktSem9R?oc=5"
   },
   {
     "fecha": "2026-11-11",
@@ -317,21 +389,33 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-11-11",
-    "titular": "Bolivia — FMI: Bolivia espera el segundo desembolso entre mediados de noviembre y diciembre",
-    "fuente": "Prensa Mercosur",
-    "enlace": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNeEVYRUl5ei1zQmZFdEtMQTRlX0p1c0c4S1dQc2ZENmNTMW5xdVhTR1pIa3JFUkFxd3JzVkVoQU9xY3BONDlMRjJmalU0VUR4M2hGZEdGcHNEUDVJbTBfWXlFR3J0UE1hdl9qd0hHS0ViVFRHcVIxWkpPaXIxNVhXVndIbmt3cU1NRkRtWFRINFBXMmh6dzFxeWg0T0hQNjdwS1Zvekp2UDljSGt1WXdDTzhPY0VBRndXbXlDUFlJNmVVTk1KT2c?oc=5"
+    "titular": "Fundación Jubileo: Bolivia debe fortalecer sus exportaciones para generar divisas",
+    "fuente": "El Potosí",
+    "enlace": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNQW9obWY5cUxaWjhmSkxUNzQwVllLbGdzekRWMGgtRVp4U0JsWkFFbkNtMTNvOTNCUk03QjlrdUtOZkJiTWowRWtCVTRXeU5tS2VXdlUyd0pDSnZBekFhZVRGSVM4S2I1OEluTTBwWHpudlJYMlNZeE9XZUNJc3UyTnE2TkpUcGdnc0dhWjNzVTlGMUxSZmpjeU5QcnhlTnVsX0tzbURzMzhJWGhzaTZ5a0FteXQ2ckZNWmd5cmtMeWlJUQ?oc=5"
   },
   {
     "fecha": "2026-11-11",
-    "titular": "El dólar paralelo repunta este miércoles y roza nuevamente los Bs 12",
+    "titular": "¿Un dólar digital en Bolivia? Analizan propuesta para implementar USD Mint y modernizar la economía",
     "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNblNoWUtVQnRxUTFmdG5TZkQyOWNrTTI2ajdSZGEyb1l4dzVYRG1yNW1PWUNRZmlBRExpNHkzeU1Jd2hKUHVGTzBKUTZrMFJjN0plTUZpdEFvaHRBZkpRYXl1ZXNxU1pCb1VuSWhNRmZvaGpKdVl3S1YwMDVndlh0V2p4R1VnZk5mODVNR1JKenBtRFhGdHo1Q1p5WUNtNVhsS3FjU2ttaWl2OGFjLThBNHpmRndlaUJvdlE?oc=5"
+    "enlace": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxNUXl6REppLVNQdXNvMFVKLTJIY1p2d1VyQVVkSWdzLXRaTXlGenE5LUxSLV80YnNpa21DNXVKZmpvZ3ZFeDhPU00yZTlIdHdZd3JZYUUtbUU1RWZLdkNuWl90N0hmVkxoZERWQWF0Y3pFXzcyc2VmbVFKdHhKckQwbnpXR1ppcDFBaDhJeEx0Y1Nwb25WTnJYQlI1V2VkX1VDQUVFMnZ4RjZoeGNyczRkLUcyVmktTUZETGF1QVlWNjlIT3l1d2JZakV5d3hKd3JUZFdTQmFzbURoLVJZX1hPaA?oc=5"
   },
   {
     "fecha": "2026-11-11",
-    "titular": "Misión del FMI visitará el país para evaluar avances del acuerdo firmado con el Gobierno",
-    "fuente": "eju.tv",
-    "enlace": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOaWZHRXNSbjhnOTFkS3NfVmVmY0VSUTdXQktjV2tpaC1LMUZJeXcxRV92bXBmU0FCakJaMUtueC0tbjJ4NDVldUNkS0htaF8zRFFuNXlFbEVGRTRha2JwQS1WZlA0XzJ1YmdhSXlweXpSQlJYaFNwa2pSWXFYMHBSYnhiTm84SzBrM1NJcWMyTEoyQVhFamdjUURrUFR1Y2R4Wlp1aC12Uzk0ZGctWktSem9R?oc=5"
+    "titular": "La cotización oficial del dólar continúa en descenso este jueves en Bolivia",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPOS1fUlRwWUxpbDU4M1RNRlRvZXJCcEl2UkFVUEstY3RkY3NBMEtWelhUaEJkN2Q5dWVFanRNRGd3dVF3dHl2amNhS3JubENEYncwaHNaRkJ6eFdEcmRBd0FkQmZYUV8tbXlJNVNuanlOZHRxdlA5WC1CeUxjUW1tTTFKam8yU1B4aHljLXN6YzBuVVk5ckltbEJHeXdIRHJ0bnBLRWNyMkh0VTdaUWRCRGxJOGdYcDAzSGRfU0NsNGtSazg?oc=5"
+  },
+  {
+    "fecha": "2026-11-11",
+    "titular": "El dólar sube en Bolivia y el mercado cambia de rumbo",
+    "fuente": "Identidad Correntina",
+    "enlace": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQVXVFZTBuN2FiVnlTcldyZU5RbXl2SFIxdEtOYW8tN21kUVB5VEdYVnN6WmZHQXk3VUhBWGJYZHlrQlN4YmhQTjEyZi1yMUZpSFBtdFYwbG80ZUhobVpkRXhvUDVRWi10TUFkcW5EdTJndEJGQ3R5bHBfYmg2WEY4WFV2akplWFZkeW01elNxTjhIVlB2OHRXMmZiWmpGQzE0bm9IdTVPNkZ3YWFOd3c?oc=5"
+  },
+  {
+    "fecha": "2026-11-10",
+    "titular": "ANH emite resolución para aplicar las modificaciones del Decreto 5764",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPUUQzVXhqRkVNa180b0ZSMTlZRVYtYUtmTmNzZF83RGUzYVJSZzBOSFlkeXp4Tjd5VFlfWHNxS0RXc21oNS1hNUF3Rm1LMk1uMWlEQjBYUVdtM2xpSndabGxFZF9ZRVJGSVUwQlM3c21WOXVYTTRYOE5ENW5mZjRsVlpfcWJSRVctUVItU2drd3NKNU9ZQXprYkFvVnNfSGdWRVl0cW52ejBhemdodDNsN05QXzNpeGM?oc=5"
   },
   {
     "fecha": "2026-11-10",
@@ -389,45 +473,9 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-11-10",
-    "titular": "ANH emite resolución para aplicar las modificaciones del Decreto 5764",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPUUQzVXhqRkVNa180b0ZSMTlZRVYtYUtmTmNzZF83RGUzYVJSZzBOSFlkeXp4Tjd5VFlfWHNxS0RXc21oNS1hNUF3Rm1LMk1uMWlEQjBYUVdtM2xpSndabGxFZF9ZRVJGSVUwQlM3c21WOXVYTTRYOE5ENW5mZjRsVlpfcWJSRVctUVItU2drd3NKNU9ZQXprYkFvVnNfSGdWRVl0cW52ejBhemdodDNsN05QXzNpeGM?oc=5"
-  },
-  {
-    "fecha": "2026-11-10",
     "titular": "El dólar paralelo frena su tendencia al alza este martes y cierra por debajo de los Bs 12",
     "fuente": "Red Uno",
     "enlace": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxPMFpBQzJkTzBUdGROYjRhd3ZMMVBHNVAwM2h1WUhhYjBkbjIzVnl0MjNFOGt0YnhLLWtNTDI4R2dqMEoxbHZzb01BUFh1VXB0b2NyekRQbnFGd0lDX2JPd3hPTHR4MVlRaXppczRPUXNWcU9JTnVoaGtRYTJ5T19LMVJSeV9TQkUyVlZHbTFwdlBfYTRLdWdNbldsU3NkLVM5UDhUQ1VHX3prSHFtQzM4ZS1Cel9RSWN2YXJfMXhHZkNLdEU5WVFOa1ViX0hnOTczMGVpXw?oc=5"
-  },
-  {
-    "fecha": "2026-11-09",
-    "titular": "Bolivia logra un acuerdo técnico con el FMI por $us 1.900 millones",
-    "fuente": "Economy Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNNFYtOElTWHhkaklaZWtMNWlGUlBTaWZ3TFZHbkRQWVlNX3U3eHdoZHE1bmt0Ymg1Wl9aVzBkMkczb3N3YlZodGpER0NNSUNfVUtzcVBDb1U3SUFnek03SVVxcDFMN2pFV1hXR2YxNDhiQ1Zja0ZMYkJLRUtOT2Ywczd3Yw?oc=5"
-  },
-  {
-    "fecha": "2026-11-09",
-    "titular": "Bolivia alista sus primeras exportaciones de algodón a Perú y Paraguay tras 15 años",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPSm41R09UdWhxb1ZOeXN4TXJ6d1c0eFMzOUc4V2UxcnF5RkFWUzdwdUVWdVBoQzd1TVJHZjhCY1Mxd2ZNVFUxNE5ZaGtGMlVkNVcwbDRySXhpc01xTTZXdkhVTGltWUZYci1kRWNJMkdVM2pBRnQ5c1pGaFN4UkVPcTBuaDl6WUNVYkpOM2FEQjhpNDBKeXRrYXNZbTJ4TEp0Vk5XeWdKVHROQWh0YjBZT015bUw5VGJraFdlOXBTTmJWcFgtOUlNN3RyZHQ?oc=5"
-  },
-  {
-    "fecha": "2026-11-09",
-    "titular": "Superávit comercial no garantiza más dólares en Bolivia, según experto",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOSG5QMU1jVW4xRTRld2l0TXN2TjMxQThnQmZCaGJScjM4TzNqRV81aXlSUmMyRG0zT3h2OWprMHVmQW9HLXd1LXNWdVkwaWVwWXJuNEJKZWd6ekJNX1Z4aFhUZG9Qcml5SENYeVZIdjA1SWI2WHd6VmRRWGw1dHFteTFDMzVPdDcwNXVsNVpMZzM0dVlRajZPTGwzRldMQVJxSTVIUUJzNjhubl92eVB3MW5aSkhGcTE2cUE?oc=5"
-  },
-  {
-    "fecha": "2026-11-09",
-    "titular": "Evo Morales: la descentralización busca privatizar la educación \"cumpliendo el mandato del FMI\"",
-    "fuente": "teleSUR",
-    "enlace": "https://news.google.com/rss/articles/CBMiekFVX3lxTFBmcHFiNzRFVGVXZmNkcFlJZ0tTYU1qZGRMQjcxelk0VGVROG5GcXdFYTdxQ0ZNYi1CUVIya2lVeDItc1pXZ05JelNvc0lQU09CWGNkbjYyQ3NkQTU5QUVnN2ozNlpTdnl2ZTdyZDRwZlVsa3NSc2JqMzNB?oc=5"
-  },
-  {
-    "fecha": "2026-11-09",
-    "titular": "El dólar en Bolivia sigue estable y el mercado mira 2026",
-    "fuente": "Identidad Correntina",
-    "enlace": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNT3R2ZkIyYWR6ck4wYXhxNWxuRGIzSjB1QlMyX0ZkQkNuSGQzQVFoWjgxenJkY1k4RnBXajZVT0ZfQjhfVjZCQ0UyVTRQVDljTGZfZUxDTnpjbmZQV1ROcUhTRU53N1ZXcVJPR0UzY1M5RHJwUVJVVUduZDZxd0laSWpIWnFjQmJLdjFSVjgtbTFOTE96c1RUUXhtQUFpN3I0OVhPc0hqTTVQNzUxM3ZtRDFn?oc=5"
   },
   {
     "fecha": "2026-11-09",
@@ -440,6 +488,36 @@ const NOTICIAS_AUTOMATICAS = [
     "titular": "La cotización del dólar oficial es de Bs 11,81 en el inicio de la semana",
     "fuente": "eju.tv",
     "enlace": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNYTJoUGFjdFk0N0lhdXFNb0tvNUw1WExiVlZqSUp1YlJCeWFISlF6anNMUC1FTGNsWjJneVREU2JwdGxQVk1WRFZHdnBmQkhXQndPN2V6cFVhMWNKTHVKTXRyZWtYZWhXUDBxNHVvYUxFczNfRGs1TlI2NWZ6T0hnb3JlR2RwQ1p4ZGlHY29WOThCQlczMHpoRk1rWQ?oc=5"
+  },
+  {
+    "fecha": "2026-11-09",
+    "titular": "El dólar en Bolivia sigue estable y el mercado mira 2026",
+    "fuente": "Identidad Correntina",
+    "enlace": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNT3R2ZkIyYWR6ck4wYXhxNWxuRGIzSjB1QlMyX0ZkQkNuSGQzQVFoWjgxenJkY1k4RnBXajZVT0ZfQjhfVjZCQ0UyVTRQVDljTGZfZUxDTnpjbmZQV1ROcUhTRU53N1ZXcVJPR0UzY1M5RHJwUVJVVUduZDZxd0laSWpIWnFjQmJLdjFSVjgtbTFOTE96c1RUUXhtQUFpN3I0OVhPc0hqTTVQNzUxM3ZtRDFn?oc=5"
+  },
+  {
+    "fecha": "2026-11-09",
+    "titular": "Superávit comercial no garantiza más dólares en Bolivia, según experto",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOSG5QMU1jVW4xRTRld2l0TXN2TjMxQThnQmZCaGJScjM4TzNqRV81aXlSUmMyRG0zT3h2OWprMHVmQW9HLXd1LXNWdVkwaWVwWXJuNEJKZWd6ekJNX1Z4aFhUZG9Qcml5SENYeVZIdjA1SWI2WHd6VmRRWGw1dHFteTFDMzVPdDcwNXVsNVpMZzM0dVlRajZPTGwzRldMQVJxSTVIUUJzNjhubl92eVB3MW5aSkhGcTE2cUE?oc=5"
+  },
+  {
+    "fecha": "2026-11-09",
+    "titular": "Bolivia alista sus primeras exportaciones de algodón a Perú y Paraguay tras 15 años",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPSm41R09UdWhxb1ZOeXN4TXJ6d1c0eFMzOUc4V2UxcnF5RkFWUzdwdUVWdVBoQzd1TVJHZjhCY1Mxd2ZNVFUxNE5ZaGtGMlVkNVcwbDRySXhpc01xTTZXdkhVTGltWUZYci1kRWNJMkdVM2pBRnQ5c1pGaFN4UkVPcTBuaDl6WUNVYkpOM2FEQjhpNDBKeXRrYXNZbTJ4TEp0Vk5XeWdKVHROQWh0YjBZT015bUw5VGJraFdlOXBTTmJWcFgtOUlNN3RyZHQ?oc=5"
+  },
+  {
+    "fecha": "2026-11-09",
+    "titular": "Bolivia logra un acuerdo técnico con el FMI por $us 1.900 millones",
+    "fuente": "Economy Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNNFYtOElTWHhkaklaZWtMNWlGUlBTaWZ3TFZHbkRQWVlNX3U3eHdoZHE1bmt0Ymg1Wl9aVzBkMkczb3N3YlZodGpER0NNSUNfVUtzcVBDb1U3SUFnek03SVVxcDFMN2pFV1hXR2YxNDhiQ1Zja0ZMYkJLRUtOT2Ywczd3Yw?oc=5"
+  },
+  {
+    "fecha": "2026-11-09",
+    "titular": "Evo Morales: la descentralización busca privatizar la educación \"cumpliendo el mandato del FMI\"",
+    "fuente": "teleSUR",
+    "enlace": "https://news.google.com/rss/articles/CBMiekFVX3lxTFBmcHFiNzRFVGVXZmNkcFlJZ0tTYU1qZGRMQjcxelk0VGVROG5GcXdFYTdxQ0ZNYi1CUVIya2lVeDItc1pXZ05JelNvc0lQU09CWGNkbjYyQ3NkQTU5QUVnN2ozNlpTdnl2ZTdyZDRwZlVsa3NSc2JqMzNB?oc=5"
   },
   {
     "fecha": "2026-11-08",
@@ -467,27 +545,9 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-11-06",
-    "titular": "El dólar se mueve con calma en Bolivia mientras crecen las proyecciones para 2026",
-    "fuente": "Identidad Correntina",
-    "enlace": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxOMDB2RWNvVm5BdEpGNGNTdTdWTHNYMmprYTVNRkpLWHRoOFlzdWpReW9fWGg2M05xdmt4Rk5VOUtMYnNUa0ZhaUFJck8ySng5VVU4ZWNkX1lxa3RsT0ZpelNYWm1tMjl2bmppZU5KdmJCd3lsaDlMNG10SWtuajlnQUlQcnlzcTRBU2lYdGFBdklzX183ODhHVEVJbVBScWdWOEFuWERmTWFfYTlpdU1WQmdXODh2a0JBMlIwZ2pFdUFKcTZLeXRnWTVUUWtQQ2lNMEhR?oc=5"
-  },
-  {
-    "fecha": "2026-11-06",
-    "titular": "El dólar registra nuevos movimientos en Bolivia: conoce las cotizaciones",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPa1E0VzVVNjZMYTZtS2JkeDVmLWxTT1VCd2ZOX2cwa3VhTFYxLVJPb25oNXpFSXBiRkJkZVpfVldMWnFrY21nTFBDdnJNVF8wa1RlUHpEcGl3UWR0ZTdyRlp3c2tIb1lUZWM2dnhDMGpRZDNxWTEwaG5xQm5mMDhSRkFuMTRjbkFKOVpSS3hmZEticW5tQ0tyeXBTLVdfejhjTXp4OWY0dXRjV3Q4Yk8tOTlyb0c3WTQ0bVZB?oc=5"
-  },
-  {
-    "fecha": "2026-11-06",
-    "titular": "¿Va a comprar o vender dólares? Revise los últimos precios del mercado paralelo",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNdEw5eGxYdHI4Y1FPNHdsVVZoeUxuY3FCVTBITzFsOS1PY1FRWVd5bDNMS2RJcExURFIxNjlfZ0xoOGJrSUdaVlJlZGFSYjJ4YXNDQnpZd25Xem5rWWNoajBZbE1HZnVMVGQtVlNubnZJM3RKYUtFeFVxaGpkSG9PX19VN0F4Y0FIZl9MZEZkZllIWFlnTERUWXRkcnhKbkFrSDhZYkVVM0JPSmVxQlY1emlJcFFwZU9RZzg3YVhvMGhWTE0?oc=5"
-  },
-  {
-    "fecha": "2026-11-06",
-    "titular": "Examen al tipo de cambio en el primer año de Rodrigo Paz",
-    "fuente": "Mauricio Ríos García",
-    "enlace": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQRUEyVGdOZVFZMXBQUnNhYlk2ci01emVPMm01ODBUV3IxaXhrRk9BVWRtdzJmTHdIbHBjRVcxMmdtYTBNVFhFRWR1aER5Tk5HOVVxUkdQVjlpcUktRHNoLVRrdkpkZEZacy0tMGtHWVNWZkNIWTVBOUtHNl94V2I0ZUc2RV9Zb0F5WmI5UWFNaDBlUWNB?oc=5"
+    "titular": "El dólar oficial desciende bruscamente este viernes, pero ¿cómo quedó el dólar paralelo?",
+    "fuente": "Bolivia.com",
+    "enlace": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNQWdkREVCMGV2NEREeU5jMU53X2dkTk9KeFVaR1FDOXRzcVZYRTk4MVJzcXZCV3Rfd0hkdmxaclV6ektsYTJvTW8xN18zVERLVUtMbkVSUXJYSjZPLV9NUjliWnlTWE5IcnBEekVxNDFYaUtwTEtTTzQ4bU1jaHFVcWE4WWJ5d1ZWSnFrczhiU3JUSE5sWXJMSGZuV09DQk1CVDBqWXFMTmpxZVRMek1yOTN0bDBFRkFESUhBeGV3?oc=5"
   },
   {
     "fecha": "2026-11-06",
@@ -497,9 +557,33 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-11-06",
-    "titular": "El dólar oficial desciende bruscamente este viernes, pero ¿cómo quedó el dólar paralelo?",
-    "fuente": "Bolivia.com",
-    "enlace": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNQWdkREVCMGV2NEREeU5jMU53X2dkTk9KeFVaR1FDOXRzcVZYRTk4MVJzcXZCV3Rfd0hkdmxaclV6ektsYTJvTW8xN18zVERLVUtMbkVSUXJYSjZPLV9NUjliWnlTWE5IcnBEekVxNDFYaUtwTEtTTzQ4bU1jaHFVcWE4WWJ5d1ZWSnFrczhiU3JUSE5sWXJMSGZuV09DQk1CVDBqWXFMTmpxZVRMek1yOTN0bDBFRkFESUhBeGV3?oc=5"
+    "titular": "Examen al tipo de cambio en el primer año de Rodrigo Paz",
+    "fuente": "Mauricio Ríos García",
+    "enlace": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQRUEyVGdOZVFZMXBQUnNhYlk2ci01emVPMm01ODBUV3IxaXhrRk9BVWRtdzJmTHdIbHBjRVcxMmdtYTBNVFhFRWR1aER5Tk5HOVVxUkdQVjlpcUktRHNoLVRrdkpkZEZacy0tMGtHWVNWZkNIWTVBOUtHNl94V2I0ZUc2RV9Zb0F5WmI5UWFNaDBlUWNB?oc=5"
+  },
+  {
+    "fecha": "2026-11-06",
+    "titular": "El dólar registra nuevos movimientos en Bolivia: conoce las cotizaciones",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPa1E0VzVVNjZMYTZtS2JkeDVmLWxTT1VCd2ZOX2cwa3VhTFYxLVJPb25oNXpFSXBiRkJkZVpfVldMWnFrY21nTFBDdnJNVF8wa1RlUHpEcGl3UWR0ZTdyRlp3c2tIb1lUZWM2dnhDMGpRZDNxWTEwaG5xQm5mMDhSRkFuMTRjbkFKOVpSS3hmZEticW5tQ0tyeXBTLVdfejhjTXp4OWY0dXRjV3Q4Yk8tOTlyb0c3WTQ0bVZB?oc=5"
+  },
+  {
+    "fecha": "2026-11-06",
+    "titular": "El dólar se mueve con calma en Bolivia mientras crecen las proyecciones para 2026",
+    "fuente": "Identidad Correntina",
+    "enlace": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxOMDB2RWNvVm5BdEpGNGNTdTdWTHNYMmprYTVNRkpLWHRoOFlzdWpReW9fWGg2M05xdmt4Rk5VOUtMYnNUa0ZhaUFJck8ySng5VVU4ZWNkX1lxa3RsT0ZpelNYWm1tMjl2bmppZU5KdmJCd3lsaDlMNG10SWtuajlnQUlQcnlzcTRBU2lYdGFBdklzX183ODhHVEVJbVBScWdWOEFuWERmTWFfYTlpdU1WQmdXODh2a0JBMlIwZ2pFdUFKcTZLeXRnWTVUUWtQQ2lNMEhR?oc=5"
+  },
+  {
+    "fecha": "2026-11-06",
+    "titular": "¿Va a comprar o vender dólares? Revise los últimos precios del mercado paralelo",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNdEw5eGxYdHI4Y1FPNHdsVVZoeUxuY3FCVTBITzFsOS1PY1FRWVd5bDNMS2RJcExURFIxNjlfZ0xoOGJrSUdaVlJlZGFSYjJ4YXNDQnpZd25Xem5rWWNoajBZbE1HZnVMVGQtVlNubnZJM3RKYUtFeFVxaGpkSG9PX19VN0F4Y0FIZl9MZEZkZllIWFlnTERUWXRkcnhKbkFrSDhZYkVVM0JPSmVxQlY1emlJcFFwZU9RZzg3YVhvMGhWTE0?oc=5"
+  },
+  {
+    "fecha": "2026-11-05",
+    "titular": "Dólar oficial se cotiza en Bs 12,00: Banco Central de Bolivia registra baja de seis centavos",
+    "fuente": "FmBolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMiywFBVV95cUxObGVoQVdhQU5rd3ZTS19XWDltOVctWWxjLXp4RWlZNkpHcktldG81akpLVEpwSzJScVZYZUFGQ0s4SnloVmRHR3hudXRsc0NKX05RRDRjOW9MbldfZHV3S3ZxSDNjczhlN0c5SkR0aUVnTkhLMXNRUmlVMV9pbWtkUmg0emw0amZleVVtZFVFUTJzYTU5NEszbkpFSHoxWU42VFVPSy1VckpkQld6Y3VpVkEzbGdKZWEwdUc1VDE4QmxlNkRBWEZaelJNYw?oc=5"
   },
   {
     "fecha": "2026-11-05",
@@ -520,16 +604,10 @@ const NOTICIAS_AUTOMATICAS = [
     "enlace": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxNM3h3OW1LVGJTczdEWGZ4TnBDdGRScmo4UHVFdE01VUUzWDItdTN6TmZwYXNTWlBHOGtyN1E2Yld4WnUwYTV0Mkh1bjZiTmJBZVV3eWUtSFVHZjF5eERjNUNCU0l4NGNKZW1UN2pqeThMa1J5ZmJHTjlIaTBjM1dYLVhybmJYQV9HMjhQNElON0hLZmhOS3dUU2hoNVhpUllGUlNIbFY4bk1pQlV3Uk9iVWZ6Q2g4T3RSQWZ3OHlUbFA5cExWdGkycDlTdWpMdmNUZnUzb2MxcHJLUEs0Z1E0aXhqbnYtTEpf?oc=5"
   },
   {
-    "fecha": "2026-11-05",
-    "titular": "Dólar oficial se cotiza en Bs 12,00: Banco Central de Bolivia registra baja de seis centavos",
-    "fuente": "FmBolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMiywFBVV95cUxObGVoQVdhQU5rd3ZTS19XWDltOVctWWxjLXp4RWlZNkpHcktldG81akpLVEpwSzJScVZYZUFGQ0s4SnloVmRHR3hudXRsc0NKX05RRDRjOW9MbldfZHV3S3ZxSDNjczhlN0c5SkR0aUVnTkhLMXNRUmlVMV9pbWtkUmg0emw0amZleVVtZFVFUTJzYTU5NEszbkpFSHoxWU42VFVPSy1VckpkQld6Y3VpVkEzbGdKZWEwdUc1VDE4QmxlNkRBWEZaelJNYw?oc=5"
-  },
-  {
     "fecha": "2026-11-04",
-    "titular": "El dólar oficial continúa a la baja este jueves 5 de noviembre en Bolivia",
+    "titular": "Dólar paralelo en Bolivia: estas son las cotizaciones de compra y venta de este miércoles",
     "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNa2l2akZhX3hHdGpDQzdjaXpFOUNSMWhxSkg3a1NWN1hudzBuMHpaeUhYc3ZndU0zUFNkM0ZRa2JONnByaFJWbFB3ME5rX3VhcjIxd2ZqYS0wNHpUVkZaR0h0VlVjV1ZBd2dwcW02aG1aeTExYnZlRFNpaXdnbk9hN0dad0hkTWdtMENvLTU0V09UbWNRbWlBVlBNMl85cmswc1h3Tmt5cHZuYVBfUk9jeU9tS0dyVklHbEJZVENWZw?oc=5"
+    "enlace": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxQWGxieWJFNGtZYnBSblNBUE50bHNveWZpNU5nMmV0MmVqd1ZYQXV3aW9VS3pTOVNxSzc5ZXNlSjdMSWNDOFdycUNVWkZYZ0FZUUtzR2gxX1hfR0RJWi1aZUktVENDbGdheDZpbFN4aEpJcGw4Vjd3U0FLMnVJeFVxQ2ZQNksySldUNFJkdzVBekYwck16b2tqUFlQQWJuMGVuMmJlOFFtR25qOXVpcDA4WDZyOFhGUzQwN1BHcG9GSzZ6ZVZ3YVZsZDhXRXdSS1ZT?oc=5"
   },
   {
     "fecha": "2026-11-04",
@@ -539,51 +617,21 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-11-04",
-    "titular": "Dólar paralelo en Bolivia: estas son las cotizaciones de compra y venta de este miércoles",
+    "titular": "El dólar oficial continúa a la baja este jueves 5 de noviembre en Bolivia",
     "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxQWGxieWJFNGtZYnBSblNBUE50bHNveWZpNU5nMmV0MmVqd1ZYQXV3aW9VS3pTOVNxSzc5ZXNlSjdMSWNDOFdycUNVWkZYZ0FZUUtzR2gxX1hfR0RJWi1aZUktVENDbGdheDZpbFN4aEpJcGw4Vjd3U0FLMnVJeFVxQ2ZQNksySldUNFJkdzVBekYwck16b2tqUFlQQWJuMGVuMmJlOFFtR25qOXVpcDA4WDZyOFhGUzQwN1BHcG9GSzZ6ZVZ3YVZsZDhXRXdSS1ZT?oc=5"
+    "enlace": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNa2l2akZhX3hHdGpDQzdjaXpFOUNSMWhxSkg3a1NWN1hudzBuMHpaeUhYc3ZndU0zUFNkM0ZRa2JONnByaFJWbFB3ME5rX3VhcjIxd2ZqYS0wNHpUVkZaR0h0VlVjV1ZBd2dwcW02aG1aeTExYnZlRFNpaXdnbk9hN0dad0hkTWdtMENvLTU0V09UbWNRbWlBVlBNMl85cmswc1h3Tmt5cHZuYVBfUk9jeU9tS0dyVklHbEJZVENWZw?oc=5"
   },
   {
     "fecha": "2026-11-03",
-    "titular": "El dólar paralelo volvió a subir por la tarde de este martes 3 de noviembre",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxOdGNkNHVwWUk0ZXVwX2ZsZ1pEaVROYTJCZFB1QW9qY3ZwY3ZPZGRGbS1GSTIydm0wWFRZdXVZcWUxTkxJcnZ2SFc0N3BQNU9tSS1CdWRaM1Z6LTZNYVpWRWR0cWRWX2NpV1lBODVFWlR3UlVnRGRoSmVPdVRFbE1QM1Zid3pDNUgwSlRLNmZObV92VEhKd05POVVObnVFaUxVUEVCLUp6blEwWUlVVVdYcWxMRW04RFBSSnZOWkRQVW43WGxiMGFVRlNiUVFTMk5YQUE?oc=5"
-  },
-  {
-    "fecha": "2026-11-03",
-    "titular": "Oswaldo Barriga: “Bolivia necesita un cambio estructural para volver a generar dólares como antes”",
+    "titular": "Decreto instruye al BCB transitar a un nuevo régimen cambiario",
     "fuente": "Economy Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNVDNURnpzQVVCa01DcWdKaU5NbjE0VmVBTVJ3dTNIWTFFVEZoTXlnLVRyZU5kUTZjMEI0QS1mU2szXzBvU2NEd0hzZzZXY2xRRGtPcl9oUDFYNVpHTnZRNmxBOW9YNTFPbHRXSm9aQjNxMHZ5aDBVdU5hM1lyVWtyMXRFd1NKemxiTGVXM2VBNV9Oc2Z5b1ZqYkpNX3dSZENIR2tGWjJUZGFobTdUY09WTUd6NkpFSjNK?oc=5"
+    "enlace": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOTHU5S2pVa043TFlMLVI4NFVLQUFrYVNZa3h0a0hRbExOcHFyYjBFeHN0Zm5zZUhFMDhOTnNVN0FxdkdLQ29WQmpleGlDamxacWtsT2l0ZHd2TnltXzBEajFnQm9fSHVDME12bEZoalNwQUVBZE13UUt4MlMtVVotMkRoaENONVZlRlJVcXltb294TlhiUGc?oc=5"
   },
   {
     "fecha": "2026-11-03",
-    "titular": "Romero advierte que las medidas del BCB son \"paliativas\" y no resuelven la crisis de fondo de dólares ni combustibles",
+    "titular": "Senado sanciona crédito de $us 1.900 MM del FMI y cierra trámite legislativo",
     "fuente": "Economy Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPbEVpa21HMHJDV0JKTmhROTYzRGlqUlY3a3pPRzIydnFUZzBtdHkwOHVBVmRRUWphNW1tZC1IOEh3Q2lUR2JJN2F0cGNRNDdZMy00S3lTSk1CYm13MWFTdmdyR0hxZE50NUhxYzZKQm9LSlJidFl4a01KSkc4TUs4VzZCZU9zZ0twZlNGaWhrLWg4WEF5Z0c5Z1JPM2ttY0h1REp3bmJuQ2tJV1V0Qk12TzNDbGNWNTF6VFFiT0xoUXg0UlljeGEwTzB3?oc=5"
-  },
-  {
-    "fecha": "2026-11-03",
-    "titular": "Según Bloomberg, Bolivia conversa con el FMI un financiamiento de hasta $us3.300 millones",
-    "fuente": "Economy Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMimAFBVV95cUxOTlUzTzdVSHBpMHV2N1pPb3ZRWWdKZi1LZTY1enQxVEhlNU9aWk9hN0VWSTdLeEMzYjdQY1NCaGt0eWJMZnFLNEhUMU93MHM0RUVrbjBmSFlpVjIzLXRUeE9oTVZEeENXMmllX2NGZ0NrRGVIRzZkcklpR01RVXlCWDNESjctOWUxOFQtdHBLNWVJclkxUnFtTQ?oc=5"
-  },
-  {
-    "fecha": "2026-11-03",
-    "titular": "Deudas en dólares: ¿la nueva resolución garantiza respetar el tipo de cambio pactado?",
-    "fuente": "Economy Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNWXA1MzBMUHY5MVduTkFWRlNZZVhTT25ORk44a1RJbVBlSk5LdWFNNERjQzVjbGFCalVmUWhqUTRvYXFGVDI0MUVpQUhlU3p1MUhLQ0ZJMjNiV1Q5M1pQbXVlSXZJdV9lZG1IYThOT2FFWHU3blNXMTJCTGxJRVo5MVY0SmpwUklCVkN4QkpLYmQ0aFJ0MGNYc0hRNFRGWmxZM1l5OWFjRDNCUVRnTGFrUU44WE4?oc=5"
-  },
-  {
-    "fecha": "2026-11-03",
-    "titular": "Primer balance del tipo de cambio flexible: más presión sobre precios y divisas",
-    "fuente": "Economy Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQS3JnWUdQQU9XbUY2d0FEV3lDZ3prM2RIQjJmd1VoNFZva3Z6aklVWEwzNDVLNmdIOFQwbE9HVnRBSHdIaGtKQ0ltT2Zoc1lRT0FsUDFaZVpZTV9HRjFRMXp3ZXdFV091TkVlc0p6WXU5ZmNUTlNYVlhxWGE0QWNPc2dBMDNpTWxiUGJFNmE2Wk5jNXNlWHN3eFF3UWhYaV8tbkVz?oc=5"
-  },
-  {
-    "fecha": "2026-11-03",
-    "titular": "Bolivia — Los dólares vuelven a los bancos mientras Bolivia intenta reparar la confianza perdida",
-    "fuente": "Prensa Mercosur",
-    "enlace": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPeWZFMjRwUWZjeUg1MDJtWjRjSjQ3MTJNazlYcXhhb2tMejFMcU9MWUk2VXZBS2Q3X1VYNkg1UjdqVlFIYkR4SGFYaC1QZVlDUGxnY1VFZ0tHNFdjNXVlN0EtVlJRcV82RWp0M3BsWU9SVWFJVkxuaWNiVEZjWWo1MEtrVTZ1QkM5bUJKUjZYSXVaNi1oTmFKWlJUQ2wtRFRCNm5aZEdtMFlReHNJV3Fad2pKNzYtRnZ6dXFyajN5N0pWX1VQSnRSVXNva25udw?oc=5"
+    "enlace": "https://news.google.com/rss/articles/CBMingFBVV95cUxQYnZaVEhOdTZJSXFXVmdIaU5reUJmMnBWQlFjdFFTM1ZTdFFaQ280WUM1MHhQOE91Q29ZeURaUnl1RkFMVlhZLURlRnZCZVR5dHEtV01JM3VwMkNjOEdkVXpndXp1SW9uZUhvVWJCamZKa3V0OWZlOVlSeHI3WFljSFo0VGdFSnBVUEhzQmhRa1RQSXA1MTUzU2N5Q1VBUQ?oc=5"
   },
   {
     "fecha": "2026-11-03",
@@ -599,21 +647,57 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-11-03",
-    "titular": "Senado sanciona crédito de $us 1.900 MM del FMI y cierra trámite legislativo",
-    "fuente": "Economy Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMingFBVV95cUxQYnZaVEhOdTZJSXFXVmdIaU5reUJmMnBWQlFjdFFTM1ZTdFFaQ280WUM1MHhQOE91Q29ZeURaUnl1RkFMVlhZLURlRnZCZVR5dHEtV01JM3VwMkNjOEdkVXpndXp1SW9uZUhvVWJCamZKa3V0OWZlOVlSeHI3WFljSFo0VGdFSnBVUEhzQmhRa1RQSXA1MTUzU2N5Q1VBUQ?oc=5"
-  },
-  {
-    "fecha": "2026-11-03",
-    "titular": "Decreto instruye al BCB transitar a un nuevo régimen cambiario",
-    "fuente": "Economy Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOTHU5S2pVa043TFlMLVI4NFVLQUFrYVNZa3h0a0hRbExOcHFyYjBFeHN0Zm5zZUhFMDhOTnNVN0FxdkdLQ29WQmpleGlDamxacWtsT2l0ZHd2TnltXzBEajFnQm9fSHVDME12bEZoalNwQUVBZE13UUt4MlMtVVotMkRoaENONVZlRlJVcXltb294TlhiUGc?oc=5"
-  },
-  {
-    "fecha": "2026-11-03",
     "titular": "Cripto en Bolivia: empresas y ciudadanos se refugian en el dólar digital",
     "fuente": "Economy Bolivia",
     "enlace": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNclpPbDV3cjNRaXVTQmF1N2xGZm1fVDVDdnN5Y2RJSU1tNnVBN0V3UmhPODRtYWlfSGV0STd4NUI0REFMZGhCaGxrNk5UYUJMZkJKMlpHaXpsTHJkTmFuRjQzbkFUTFgzb0pJbzZQUWJ6MjJBUmdxMDhmczRhUkVGLTQtUFlUSFl1a05oZENlQlhlRjY0cHVrVnNn?oc=5"
+  },
+  {
+    "fecha": "2026-11-03",
+    "titular": "Bolivia — Los dólares vuelven a los bancos mientras Bolivia intenta reparar la confianza perdida",
+    "fuente": "Prensa Mercosur",
+    "enlace": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPeWZFMjRwUWZjeUg1MDJtWjRjSjQ3MTJNazlYcXhhb2tMejFMcU9MWUk2VXZBS2Q3X1VYNkg1UjdqVlFIYkR4SGFYaC1QZVlDUGxnY1VFZ0tHNFdjNXVlN0EtVlJRcV82RWp0M3BsWU9SVWFJVkxuaWNiVEZjWWo1MEtrVTZ1QkM5bUJKUjZYSXVaNi1oTmFKWlJUQ2wtRFRCNm5aZEdtMFlReHNJV3Fad2pKNzYtRnZ6dXFyajN5N0pWX1VQSnRSVXNva25udw?oc=5"
+  },
+  {
+    "fecha": "2026-11-03",
+    "titular": "Romero advierte que las medidas del BCB son \"paliativas\" y no resuelven la crisis de fondo de dólares ni combustibles",
+    "fuente": "Economy Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPbEVpa21HMHJDV0JKTmhROTYzRGlqUlY3a3pPRzIydnFUZzBtdHkwOHVBVmRRUWphNW1tZC1IOEh3Q2lUR2JJN2F0cGNRNDdZMy00S3lTSk1CYm13MWFTdmdyR0hxZE50NUhxYzZKQm9LSlJidFl4a01KSkc4TUs4VzZCZU9zZ0twZlNGaWhrLWg4WEF5Z0c5Z1JPM2ttY0h1REp3bmJuQ2tJV1V0Qk12TzNDbGNWNTF6VFFiT0xoUXg0UlljeGEwTzB3?oc=5"
+  },
+  {
+    "fecha": "2026-11-03",
+    "titular": "Deudas en dólares: ¿la nueva resolución garantiza respetar el tipo de cambio pactado?",
+    "fuente": "Economy Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNWXA1MzBMUHY5MVduTkFWRlNZZVhTT25ORk44a1RJbVBlSk5LdWFNNERjQzVjbGFCalVmUWhqUTRvYXFGVDI0MUVpQUhlU3p1MUhLQ0ZJMjNiV1Q5M1pQbXVlSXZJdV9lZG1IYThOT2FFWHU3blNXMTJCTGxJRVo5MVY0SmpwUklCVkN4QkpLYmQ0aFJ0MGNYc0hRNFRGWmxZM1l5OWFjRDNCUVRnTGFrUU44WE4?oc=5"
+  },
+  {
+    "fecha": "2026-11-03",
+    "titular": "Según Bloomberg, Bolivia conversa con el FMI un financiamiento de hasta $us3.300 millones",
+    "fuente": "Economy Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMimAFBVV95cUxOTlUzTzdVSHBpMHV2N1pPb3ZRWWdKZi1LZTY1enQxVEhlNU9aWk9hN0VWSTdLeEMzYjdQY1NCaGt0eWJMZnFLNEhUMU93MHM0RUVrbjBmSFlpVjIzLXRUeE9oTVZEeENXMmllX2NGZ0NrRGVIRzZkcklpR01RVXlCWDNESjctOWUxOFQtdHBLNWVJclkxUnFtTQ?oc=5"
+  },
+  {
+    "fecha": "2026-11-03",
+    "titular": "Oswaldo Barriga: “Bolivia necesita un cambio estructural para volver a generar dólares como antes”",
+    "fuente": "Economy Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNVDNURnpzQVVCa01DcWdKaU5NbjE0VmVBTVJ3dTNIWTFFVEZoTXlnLVRyZU5kUTZjMEI0QS1mU2szXzBvU2NEd0hzZzZXY2xRRGtPcl9oUDFYNVpHTnZRNmxBOW9YNTFPbHRXSm9aQjNxMHZ5aDBVdU5hM1lyVWtyMXRFd1NKemxiTGVXM2VBNV9Oc2Z5b1ZqYkpNX3dSZENIR2tGWjJUZGFobTdUY09WTUd6NkpFSjNK?oc=5"
+  },
+  {
+    "fecha": "2026-11-03",
+    "titular": "El dólar paralelo volvió a subir por la tarde de este martes 3 de noviembre",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxOdGNkNHVwWUk0ZXVwX2ZsZ1pEaVROYTJCZFB1QW9qY3ZwY3ZPZGRGbS1GSTIydm0wWFRZdXVZcWUxTkxJcnZ2SFc0N3BQNU9tSS1CdWRaM1Z6LTZNYVpWRWR0cWRWX2NpV1lBODVFWlR3UlVnRGRoSmVPdVRFbE1QM1Zid3pDNUgwSlRLNmZObV92VEhKd05POVVObnVFaUxVUEVCLUp6blEwWUlVVVdYcWxMRW04RFBSSnZOWkRQVW43WGxiMGFVRlNiUVFTMk5YQUE?oc=5"
+  },
+  {
+    "fecha": "2026-11-03",
+    "titular": "Primer balance del tipo de cambio flexible: más presión sobre precios y divisas",
+    "fuente": "Economy Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQS3JnWUdQQU9XbUY2d0FEV3lDZ3prM2RIQjJmd1VoNFZva3Z6aklVWEwzNDVLNmdIOFQwbE9HVnRBSHdIaGtKQ0ltT2Zoc1lRT0FsUDFaZVpZTV9HRjFRMXp3ZXdFV091TkVlc0p6WXU5ZmNUTlNYVlhxWGE0QWNPc2dBMDNpTWxiUGJFNmE2Wk5jNXNlWHN3eFF3UWhYaV8tbkVz?oc=5"
+  },
+  {
+    "fecha": "2026-11-02",
+    "titular": "Dólar en Bolivia: estabilidad, previsiones y presión cambiaria",
+    "fuente": "Identidad Correntina",
+    "enlace": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNc0R6QjJxSUt1cklDRTNtblVlNENPbkIxRFZReXJXaEl6X1ZxOVhLWE05M2NjOVlEa3RTaHNKbHhibV81ajBSTi10eFMzdnBhU3V6dDBvYUIxNUNhck9sUElUQkhRejNNd0RwdXVxdnlnbC1vNzNkRkVjdDNvLVZjYUx4QWNoZU9PTFFiMk5nTlZCMmFLVFVQVGJnRTZaYjJxOF9fZXR6aEtlU1BXSFdFWm9idXNVdw?oc=5"
   },
   {
     "fecha": "2026-11-02",
@@ -634,18 +718,6 @@ const NOTICIAS_AUTOMATICAS = [
     "enlace": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNMEhuMF9oMGk1dUdsQkk2NDY4RXZKX3JtWmQ2ZWx1OFUzVlhUc2x6VVB4QkR5blZXelc5V0lNenN3VWllNm9xZlktSWJwVDNVOFdacmtLdEx1YWZTQk1hYzB0bW9ZWFNtd0NETDZDUFBfSFNpY1R5QlpRRW0tRi12ZG9MUEUyNlhwNDR1ZUNRbDB0WGRPZGFqLUVOYnZIeS10QW9ydVV3a2V3RktN?oc=5"
   },
   {
-    "fecha": "2026-11-02",
-    "titular": "Dólar en Bolivia: estabilidad, previsiones y presión cambiaria",
-    "fuente": "Identidad Correntina",
-    "enlace": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNc0R6QjJxSUt1cklDRTNtblVlNENPbkIxRFZReXJXaEl6X1ZxOVhLWE05M2NjOVlEa3RTaHNKbHhibV81ajBSTi10eFMzdnBhU3V6dDBvYUIxNUNhck9sUElUQkhRejNNd0RwdXVxdnlnbC1vNzNkRkVjdDNvLVZjYUx4QWNoZU9PTFFiMk5nTlZCMmFLVFVQVGJnRTZaYjJxOF9fZXR6aEtlU1BXSFdFWm9idXNVdw?oc=5"
-  },
-  {
-    "fecha": "2026-11-01",
-    "titular": "Exportaciones de soya superan a las de gas natural por $us 101,3 millones hasta septiembre",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxNMlJ5MmR2OXVCZUgtNnFjT1k4MXJDQ0ZfNG1NTF9DZ0R2WE1ka0ZwMkg1ZjRRdUNZd0lZYTBlSzhGRWQzYXBmWm95Z01CZGstMGVjM0FQVlNiVFQxQUJjVGhFTE1SR2g5NEZmSEMxQ1RIREhSUWpXYzlQTDFudFlicm9ZWjlVbUpDUHo0SktFMXlucTItb0tiTXJUVGZJRHRraHNGc2NLSVNBeG96VDFDRkxVTWlZR1RqNURFTU9XNHVUa0I2ZWhxTjNBNWhycEpNQ184WQ?oc=5"
-  },
-  {
     "fecha": "2026-11-01",
     "titular": "¡Así arranca noviembre! Conozca la cotización del dólar oficial y paralelo en Bolivia este domingo",
     "fuente": "Red Uno",
@@ -658,46 +730,16 @@ const NOTICIAS_AUTOMATICAS = [
     "enlace": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPcDNrOHc2cVl4Ti1fblNGVG9WWkJuVEJwT2tyc1FIU2xFb003VURKdGo0Qm9YMUNxLV9jQ2F4NDVaUnpjN1NZaGVVdWZyMVpvQU9tLU1XQlF5eWltV3ZkbFFtcHBVajM4b3RicUx6Z3RBbjdlSWMyWmd5VklMYndNVk9UVlFJZGdWSmpJUzk4MHk3M0lVRGRoNk54X0VBS0draW1oM0tKd0NhYzZ3THB6Qg?oc=5"
   },
   {
-    "fecha": "2026-10-31",
-    "titular": "El Centro de la Revolución Cultural destaca 31 años de la FC-BCB impulsando el arte y la cultura en Bolivia",
-    "fuente": "ABI - Agencia Boliviana de Información",
-    "enlace": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNYVdnZmg1amo0SkhrRXVhVDhmUUg5bjNCU2F3VndKdFIwQW1WT0t2ZGNRTEhobUxBYXV5UVBrSVJKclktNEo4R2ZhZVY3X0wteTNzZXA5Tmt3eGUtc3gwSnNHQ1J5SG9Cdy1pU0tNLWozc0NHWC11N1RkTXV6RnlhQ2Y2QXRhMThjMlVWdUtULVJYSzEwcDVxTUdvUWlLZHdBc25YTHFJSk1kQ2kzazNyMXMtbXlOR05YemhwaThSbUg?oc=5"
-  },
-  {
-    "fecha": "2026-10-31",
-    "titular": "Senado aprueba crédito de US$1.900 MM del FMI",
-    "fuente": "www.economy.com.bo",
-    "enlace": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQTUwwTWhyY2ZPcXVKdTg2dDZlRnctYnNqX2h4eUx5NjFEcmZwSE95cDREeWU1OXdpb2EtVVp4Ujc2R080cXdQb3dFTDZQamN4dlUxV2ZqeXNEaE1BQURoYjdXdTAtOUtNem1QRTVtT2NYLWhpOWgwb21NM25odlp3WmNCMEF4Q3ZfZDRaeVRWc0JqOU1adDQ5SGRRMmhsY1JNZFlSbGZKWlBRTk0?oc=5"
-  },
-  {
-    "fecha": "2026-10-31",
-    "titular": "¿Quiénes podrán recuperar sus ahorros en dólares desde el 5 de noviembre y cómo funcionará?",
+    "fecha": "2026-11-01",
+    "titular": "Exportaciones de soya superan a las de gas natural por $us 101,3 millones hasta septiembre",
     "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPNDAwWkQwNk5sNS1UUGdXX3h1QUd5SWN2cjVid2ptd3VFcmdlTlljbDhnaXEwUVdzZjk4dm93WnpWVzhaaVZ4UlVqcFM1N2wtcVBoWnBxR3JsOHFnRDhCdWVTN3c3NHBkQzRKMFppVE1sbUhSUUVYTHJDNVhScllaUnhuQjY5VGN2OExtSlEtQlBVS2NhNzlkSDhkY1RDV0ZlSTVuMlRUTy1qaF9ETGhjMWlRaGJuSUZpNUJSV05EV1FCWC0yd2dkUllNbw?oc=5"
+    "enlace": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxNMlJ5MmR2OXVCZUgtNnFjT1k4MXJDQ0ZfNG1NTF9DZ0R2WE1ka0ZwMkg1ZjRRdUNZd0lZYTBlSzhGRWQzYXBmWm95Z01CZGstMGVjM0FQVlNiVFQxQUJjVGhFTE1SR2g5NEZmSEMxQ1RIREhSUWpXYzlQTDFudFlicm9ZWjlVbUpDUHo0SktFMXlucTItb0tiTXJUVGZJRHRraHNGc2NLSVNBeG96VDFDRkxVTWlZR1RqNURFTU9XNHVUa0I2ZWhxTjNBNWhycEpNQ184WQ?oc=5"
   },
   {
     "fecha": "2026-10-31",
-    "titular": "Fitch expresa sus dudas sobre la sostenibilidad de la acumulación de Reservas de Bolivia",
-    "fuente": "Economy Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPRk1pX2tEMkIxMFlkems2djVlQTVRNUs2MWo5SkdtT1pNa0thYzVVaXFEbkFKSUpiMzNXOHBKNE9OUF9PS1ZzVjQ5eGdEcGhkZmgxbkhXWnlDWW4wclNoZzVGYmZHeGFfdzNTNGQ1azRNMDZJRTJCanlGUWd5YVluLTdjalFyQmtJTWYwSnRWeUcxdFdpdDlubnoyYw?oc=5"
-  },
-  {
-    "fecha": "2026-10-31",
-    "titular": "Bolivia: el USDT cayó por debajo del dólar oficial y ya volvió a superarlo",
-    "fuente": "Criptoinforme",
-    "enlace": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQdk14QjZXazJ2NXBsSlRYWkpIekJoNVpNdk0wZVQ5OTJnMjZlaktYdldsanFldEEyMldselFId3NJNDRab3VPTUVnX0tKeEstSGhra0RkQU1CVU0yUnFsa1I3RDF4aC1qWkxXVU5wRUhnbHFLVW9xd0xhQ3FOT28tbjJn?oc=5"
-  },
-  {
-    "fecha": "2026-10-31",
-    "titular": "Acuerdo con el FMI abre una oportunidad de recuperación, pero su éxito depende de reformas y la protección social",
-    "fuente": "ANF Agencia de Noticias Fides Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxQLVFqSTR2Yzl6ZWhIQ1c4X24tUGhxV0tNd2xxSG9KX284d1VYal8tU1dWMlJvZ0tidDRVbGxyTVBzSlZuYWNSNFhwWGdqRUpwejczcGJ5S0pOVklvRlYwSXVxN1lrZlkzUHZTNWN6MWlJd0dHWmJsTlIxMUpmSlJ4bHl1UnVwcXZDYmV6SXczNDNBeWdmWXFUUGhyYV81RGptM1A3TFhfQ0JRNklHUmFhSXRGeTBFSms2Mk1QSTJfODFKTE11M1VZN1A2Z0FJTnZEWDROWktGVFNIZnlpbmFSVV9ncWJfQQ?oc=5"
-  },
-  {
-    "fecha": "2026-10-31",
-    "titular": "Paz solicita debate rápido de ley del préstamo del FMI",
-    "fuente": "economy.com.bo",
-    "enlace": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPMjhxajlVR3dKTlFjNmpaczZnNnIyR0dELWhPSk5qSkhWcU9rUjQ3T3Y1TkxfVEtjQkdENkZrRHpKaUVzbnlXSl9aeGF0S1cxSDdVdEdyS3BLUU12SG5ibElCS3BRR2tpS0tnUERqNkhjQ2JhQy1ET0hMT1lmdUJnenJ0cjFDMDFQ?oc=5"
+    "titular": "BCB adelanta la devolución de $us 333 millones y cambia el manejo de nuevos depósitos en dólares",
+    "fuente": "Economy",
+    "enlace": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPcFpaR3VaZklDeDhHdER1b0VDZGpNc2RSVDY3RnpfRUxnUkxxZEVreTBGNmZoRE05OEU5MzgzbS1YUUpmTzdrTWExM093ZTQxb1ZQaHFOREpYTEo0dmdKV2lTcXRjSGxVaGVYWGF6ZnU3Z1ZPamZxNUZYZGNEZFpTU0ZMYWZTMTlDb0s0eUZSS0dFRl9WWkNONUp2eU02U09OWUVRY1pzTERMU25nRGdLQjNMVTJwMXhBOFhfMVVJMmUtOFJkaUZHNFFpbUUxNWRQ0gHWAUFVX3lxTFBSSndnY18tb2dDdXVkbkVhMHlYazFJUERZWlFVYy1zOUp6WFNBaEpFcmNZTTZEenY2aUJkWVVSWi1MaGtnZFY1bndYS2JGNDNBVUdxSGFxd2hiSklIVGl2TzAzMDlVeFFEME1IYUxVVWxHZUM0d1R6MC1fTzRGeE5QOGdPSm5qOWhOVnRqM0l4QXRFVUZuUzRqZXdwMFQ0WVFTTkN5eUVKWllvaG1OTXY4WVRKS0p3UW5OOEdwcXJYYzJKYlBLNVFQcWY2MWF6REpPM2NDamc?oc=5"
   },
   {
     "fecha": "2026-10-31",
@@ -707,9 +749,9 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-10-31",
-    "titular": "El BCB adelanta la devolución de ahorros entre los 10.001 y 50.000 dólares",
-    "fuente": "Bolivia.com",
-    "enlace": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNeXAzekZieFJjbU16a2JkOG5LeXhxLTd3bXZ1dE1hNjhJR1VkbDNqWUpzbFZFY0xXTmhyY0NyeVMyRFhJQzZEWWtyUUk4SGxXSFAtTnc2cVI3djlRQ1JKNUxvLTJURGgteUZkTDhDQWVYc0ltc05YTVJLQ3dvdmtsWDU2Y0xwTXcyQWVkV2FhekxhcG1tMGVuRHpOTElBQVdmNTBLel94YmN6dkRCVTJnbzA4QjVHQkRHbXZIVm84Tkk?oc=5"
+    "titular": "La banca mundial resiste la presión mientras Bolivia cuida las divisas",
+    "fuente": "La Razón Digital Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNR0NDVHhQM3hBVHhDVE9ac3gwUVEyX0VWdGZOMXgtclBOZ2l5WWxIeHd5b2MySTUweWxla0xyOXVLSHU5aEhHc3Jacm1ib3hGcnlyZVk3Wk5kREdCbk5BOWVOVGV4eWs5cHZFbW1NNGVIcC1QQ0pvOVBHbFFoYU8wQVFldW1rLVlqMWlEb2o1M3RiRnpiZ3AyeG1sbERjbjZJdk1CNUxQcVZIX2duRHBDdVNsZ0pueFdXNlMw?oc=5"
   },
   {
     "fecha": "2026-10-31",
@@ -719,93 +761,57 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-10-31",
-    "titular": "La banca mundial resiste la presión mientras Bolivia cuida las divisas",
-    "fuente": "La Razón Digital Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNR0NDVHhQM3hBVHhDVE9ac3gwUVEyX0VWdGZOMXgtclBOZ2l5WWxIeHd5b2MySTUweWxla0xyOXVLSHU5aEhHc3Jacm1ib3hGcnlyZVk3Wk5kREdCbk5BOWVOVGV4eWs5cHZFbW1NNGVIcC1QQ0pvOVBHbFFoYU8wQVFldW1rLVlqMWlEb2o1M3RiRnpiZ3AyeG1sbERjbjZJdk1CNUxQcVZIX2duRHBDdVNsZ0pueFdXNlMw?oc=5"
+    "titular": "El BCB adelanta la devolución de ahorros entre los 10.001 y 50.000 dólares",
+    "fuente": "Bolivia.com",
+    "enlace": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNeXAzekZieFJjbU16a2JkOG5LeXhxLTd3bXZ1dE1hNjhJR1VkbDNqWUpzbFZFY0xXTmhyY0NyeVMyRFhJQzZEWWtyUUk4SGxXSFAtTnc2cVI3djlRQ1JKNUxvLTJURGgteUZkTDhDQWVYc0ltc05YTVJLQ3dvdmtsWDU2Y0xwTXcyQWVkV2FhekxhcG1tMGVuRHpOTElBQVdmNTBLel94YmN6dkRCVTJnbzA4QjVHQkRHbXZIVm84Tkk?oc=5"
   },
   {
     "fecha": "2026-10-31",
-    "titular": "BCB adelanta la devolución de $us 333 millones y cambia el manejo de nuevos depósitos en dólares",
-    "fuente": "Economy",
-    "enlace": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPcFpaR3VaZklDeDhHdER1b0VDZGpNc2RSVDY3RnpfRUxnUkxxZEVreTBGNmZoRE05OEU5MzgzbS1YUUpmTzdrTWExM093ZTQxb1ZQaHFOREpYTEo0dmdKV2lTcXRjSGxVaGVYWGF6ZnU3Z1ZPamZxNUZYZGNEZFpTU0ZMYWZTMTlDb0s0eUZSS0dFRl9WWkNONUp2eU02U09OWUVRY1pzTERMU25nRGdLQjNMVTJwMXhBOFhfMVVJMmUtOFJkaUZHNFFpbUUxNWRQ0gHWAUFVX3lxTFBSSndnY18tb2dDdXVkbkVhMHlYazFJUERZWlFVYy1zOUp6WFNBaEpFcmNZTTZEenY2aUJkWVVSWi1MaGtnZFY1bndYS2JGNDNBVUdxSGFxd2hiSklIVGl2TzAzMDlVeFFEME1IYUxVVWxHZUM0d1R6MC1fTzRGeE5QOGdPSm5qOWhOVnRqM0l4QXRFVUZuUzRqZXdwMFQ0WVFTTkN5eUVKWllvaG1OTXY4WVRKS0p3UW5OOEdwcXJYYzJKYlBLNVFQcWY2MWF6REpPM2NDamc?oc=5"
+    "titular": "Paz solicita debate rápido de ley del préstamo del FMI",
+    "fuente": "economy.com.bo",
+    "enlace": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPMjhxajlVR3dKTlFjNmpaczZnNnIyR0dELWhPSk5qSkhWcU9rUjQ3T3Y1TkxfVEtjQkdENkZrRHpKaUVzbnlXSl9aeGF0S1cxSDdVdEdyS3BLUU12SG5ibElCS3BRR2tpS0tnUERqNkhjQ2JhQy1ET0hMT1lmdUJnenJ0cjFDMDFQ?oc=5"
   },
   {
-    "fecha": "2026-10-30",
-    "titular": "¿Necesita comprar o vender dólares? Conozca los precios que se reportan este viernes",
+    "fecha": "2026-10-31",
+    "titular": "El Centro de la Revolución Cultural destaca 31 años de la FC-BCB impulsando el arte y la cultura en Bolivia",
+    "fuente": "ABI - Agencia Boliviana de Información",
+    "enlace": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNYVdnZmg1amo0SkhrRXVhVDhmUUg5bjNCU2F3VndKdFIwQW1WT0t2ZGNRTEhobUxBYXV5UVBrSVJKclktNEo4R2ZhZVY3X0wteTNzZXA5Tmt3eGUtc3gwSnNHQ1J5SG9Cdy1pU0tNLWozc0NHWC11N1RkTXV6RnlhQ2Y2QXRhMThjMlVWdUtULVJYSzEwcDVxTUdvUWlLZHdBc25YTHFJSk1kQ2kzazNyMXMtbXlOR05YemhwaThSbUg?oc=5"
+  },
+  {
+    "fecha": "2026-10-31",
+    "titular": "Bolivia: el USDT cayó por debajo del dólar oficial y ya volvió a superarlo",
+    "fuente": "Criptoinforme",
+    "enlace": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQdk14QjZXazJ2NXBsSlRYWkpIekJoNVpNdk0wZVQ5OTJnMjZlaktYdldsanFldEEyMldselFId3NJNDRab3VPTUVnX0tKeEstSGhra0RkQU1CVU0yUnFsa1I3RDF4aC1qWkxXVU5wRUhnbHFLVW9xd0xhQ3FOT28tbjJn?oc=5"
+  },
+  {
+    "fecha": "2026-10-31",
+    "titular": "Fitch expresa sus dudas sobre la sostenibilidad de la acumulación de Reservas de Bolivia",
+    "fuente": "Economy Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPRk1pX2tEMkIxMFlkems2djVlQTVRNUs2MWo5SkdtT1pNa0thYzVVaXFEbkFKSUpiMzNXOHBKNE9OUF9PS1ZzVjQ5eGdEcGhkZmgxbkhXWnlDWW4wclNoZzVGYmZHeGFfdzNTNGQ1azRNMDZJRTJCanlGUWd5YVluLTdjalFyQmtJTWYwSnRWeUcxdFdpdDlubnoyYw?oc=5"
+  },
+  {
+    "fecha": "2026-10-31",
+    "titular": "¿Quiénes podrán recuperar sus ahorros en dólares desde el 5 de noviembre y cómo funcionará?",
     "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPZTUyRlQ2TFRtc3R0SzNaQVFTZDczTFJmRVRYWVF4V25mQ1JWTEotck5ObjJDT0g2UmdRa3BTcXo1bl90MWkxYVQ5d1RvSy15bGo1RTFSaTdQMFI4MTZpb09Ma2lyamtQOFBOajBKQnZZSUttZi01UDVkLVJJSnNCQ1ZkV3FIeG5SZXpsMVdySXNnZUVBNGVHMENoY3FwZ2ppLUthRWZBZFFEUnZYTlBYd3Z0aC1oRFpaTlhqUnFySVFoTTBqOXNiZnlpTGY?oc=5"
+    "enlace": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPNDAwWkQwNk5sNS1UUGdXX3h1QUd5SWN2cjVid2ptd3VFcmdlTlljbDhnaXEwUVdzZjk4dm93WnpWVzhaaVZ4UlVqcFM1N2wtcVBoWnBxR3JsOHFnRDhCdWVTN3c3NHBkQzRKMFppVE1sbUhSUUVYTHJDNVhScllaUnhuQjY5VGN2OExtSlEtQlBVS2NhNzlkSDhkY1RDV0ZlSTVuMlRUTy1qaF9ETGhjMWlRaGJuSUZpNUJSV05EV1FCWC0yd2dkUllNbw?oc=5"
+  },
+  {
+    "fecha": "2026-10-31",
+    "titular": "Senado aprueba crédito de US$1.900 MM del FMI",
+    "fuente": "www.economy.com.bo",
+    "enlace": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQTUwwTWhyY2ZPcXVKdTg2dDZlRnctYnNqX2h4eUx5NjFEcmZwSE95cDREeWU1OXdpb2EtVVp4Ujc2R080cXdQb3dFTDZQamN4dlUxV2ZqeXNEaE1BQURoYjdXdTAtOUtNem1QRTVtT2NYLWhpOWgwb21NM25odlp3WmNCMEF4Q3ZfZDRaeVRWc0JqOU1adDQ5SGRRMmhsY1JNZFlSbGZKWlBRTk0?oc=5"
+  },
+  {
+    "fecha": "2026-10-31",
+    "titular": "Acuerdo con el FMI abre una oportunidad de recuperación, pero su éxito depende de reformas y la protección social",
+    "fuente": "ANF Agencia de Noticias Fides Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxQLVFqSTR2Yzl6ZWhIQ1c4X24tUGhxV0tNd2xxSG9KX284d1VYal8tU1dWMlJvZ0tidDRVbGxyTVBzSlZuYWNSNFhwWGdqRUpwejczcGJ5S0pOVklvRlYwSXVxN1lrZlkzUHZTNWN6MWlJd0dHWmJsTlIxMUpmSlJ4bHl1UnVwcXZDYmV6SXczNDNBeWdmWXFUUGhyYV81RGptM1A3TFhfQ0JRNklHUmFhSXRGeTBFSms2Mk1QSTJfODFKTE11M1VZN1A2Z0FJTnZEWDROWktGVFNIZnlpbmFSVV9ncWJfQQ?oc=5"
   },
   {
     "fecha": "2026-10-30",
-    "titular": "La suegra FMI finalmente abrió la cartera",
-    "fuente": "Publico.bo",
-    "enlace": "https://news.google.com/rss/articles/CBMieEFVX3lxTE5SZ2w5VkxjZjBOUjgzQlU3cHFUaXpBdVZmcURwOC1QYkJsdGpUZHpPUExWWnNHQ1Rqa0tXdlFuZUxwS3ZJUGVOU2J6LXZrb3dnZG1QYlZaX2R4TVAzMmlGMWF5VlA5LWRFQmh5R2UyclVxVGZpQ0N6YQ?oc=5"
-  },
-  {
-    "fecha": "2026-10-30",
-    "titular": "BCB adelanta devolución de dólares a ahorristas",
-    "fuente": "La Patria Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOWHRyVE9jczA4b3puUDM2OWw4NERyUFU5SGtTY3ZUbUpNODRVc1IxX0d2a01FNmJsemRoZG51YW5HXzJVb2xTSVdybzBXbUtxVlhiTmVYc1lYTi1lZEx0UkhkS0V5TmhpcFZHbFNQSUFjUDR3eWdyNXNJLUFoY1U3N2ZEM0FkWEc2SjFtazRiOEhtVWxkZmF3dnFfdHN3dWxKREtZYQ?oc=5"
-  },
-  {
-    "fecha": "2026-10-30",
-    "titular": "Contratos y deudas en dólares anteriores al 26 de junio no serán alcanzados por nuevo régimen cambiario",
+    "titular": "El dólar paralelo rompe la tendencia al alza y cae por debajo de los Bs 12 este viernes",
     "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxPQnNJT1VWMHoxSnNBN2xSdlZ1U0JIS1BZSkZMOUVES3ZOWVhEUkZwZnZ0cXNYSXZlRUp0R2JNU0MwbE9FMDJTeEpvbmpSZC1USUFlN2I5eVU1U2hWYTR3Qk93QmE4aHFGXy1mUHo4YVlkUUdSY0ptN0xWNGlwLVNmeTUtZUNVV1o2M243dmNXX0FILW52eEF0akNjREViOXU3WkF5SHhnRkRnOGpwRGlKcmYtdjQ5Ym9uR2V4cFRad3NXU25mTldPMHFqWnF3d0hiOHdhRWNjT2hPUFZRUXE0S1VfdU9HQWUz?oc=5"
-  },
-  {
-    "fecha": "2026-10-30",
-    "titular": "El dólar vuelve a caer y se cotizará en Bs 12,09 durante los próximos cuatro días",
-    "fuente": "eju.tv",
-    "enlace": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNMkwxaWtJUF9UTjVRM2RYYlRGbWV1cWlDOWxuTkROazktNEttTUw2ZXQwa0xwY3d4RWFnZGs1VVFrTGQwa3hkVXRIZFZsLTFkdnpyeU9ZNFljN2stUzc0TVBmVVBKdExWWHJyRThzem1lVXBSN0JHVVcxc0gtcERtZFFmMWoxYmFpSm9LNWRWOWE1Znk1TmZMVTBQcHRnVWVsaVQtMlM5dw?oc=5"
-  },
-  {
-    "fecha": "2026-10-30",
-    "titular": "¿Cumple Bolivia el acuerdo con el FMI? El Presupuesto 2027 abre dudas por los combustibles",
-    "fuente": "El Deber",
-    "enlace": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQTENka3BoTmE1dDcybTFEdXBLdXFOSi13RVNMS3RwcVh0M2MyTGVWcW1KbkQ4dkhrUHpJNWJPdjlwUDZpcVVkQ3JULU04ZjIxQnE5U0ZlMUpQaGxiX0tPSFMxcHppbEhENVU5LWQ4aERWRW52WGV0bVRvU0tkdmQydWFkMTdEYV9pcGF5LWl4NEJPSTM4RU1HMnZEWlI4NktMZnBhQmNRUXdmQTkwRUNr?oc=5"
-  },
-  {
-    "fecha": "2026-10-30",
-    "titular": "El Ministerio de Economía dispone respetar el tipo de cambio de Bs 6,96 en contratos anteriores al 26 de junio",
-    "fuente": "El País Tarija",
-    "enlace": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxNSWdrbGgya0I0d2tUM283Q0RaWGJfbmZEWFplNnR6WlR0Q1N0OXo1WmtWUG9DSUVDNDY4Zk9ENXJnWDF4SUFVckdoSzlYT1J6UE9fTUxwVWRTaW56RllFRHEyYklpWHBsZGE4dW92R2N2WFZCMUpDRURBM3JrSWpGUml4YWM1bnVPdHEtYTVXMDZsV0RGUUgxc0xITXpGcVp2bjNVSTlJbjRFbGZzcFhmdTd5dF9DTERJMmx6NnJYbWlMZDEzVlVzcDdUMFVTM0IwR2t3YkIwbEJTTllIQ0pBYnZJT3Njdw?oc=5"
-  },
-  {
-    "fecha": "2026-10-30",
-    "titular": "Banco Central de Bolivia anuncia devolución anticipada de dólares a quienes tienen depósitos de $us 10.001 a $us 50.000",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxPTk9qOGdqTXB4UnRqUFRCcW5jVUgxcXg1dU92Z1l0dElYOXU1NF9ybWRWd2ZvRVJzUjRvOEU1WHU1ZlJEc3otNW1zVVByTWFobXhJSzRDaS1WLU5vanBsSlV5VTB4RjdSOG9hVE1lVXJDSUptdUE0SHdfSUZXRGNzXy1nMTJwY09TOEh0MjlJdER3QVZCcVA1cFpRekJNSEl4OWFmOGdWWklsaEw1bUtzTkVyUEZ0R1dranRYNFFXNnl1clRpWElTeEZEbFJfU3BhY0JZZjh1QkJPRTYzUVBMZnFZSnhkczhkSVVIenVRcXBLRHpkOFJYaVZn?oc=5"
-  },
-  {
-    "fecha": "2026-10-30",
-    "titular": "PGE 2027: dólar a Bs 12,02; decrecimiento de -1,5 % y subvención de Bs 11.000 millones",
-    "fuente": "EL DÍA - Noticias de Bolivia para el mundo",
-    "enlace": "https://news.google.com/rss/articles/CBMiygFBVV95cUxNWkdqVWxHTExDRktZQVdhaC1EcjBaT2dETHRoLVZ6TkhxalNDajFORTdaODhuQnRTbUdOZXdaMl9iZWdqcmpCa1l0MzdCMUU4N2pGS2FRdlR3ZVBMWEFGVkF2akp0X0lLVExlWUZ5UHhRckoydnE3Ymw1WnFXMUlRUUlWMHdhTUM4ZzE0VHVRUExZeWVGMzZSa0NUQ1ZfMTJGRzZLWkt6bFVCbmdVMkYzV0EtZW90RHFQUDVMR1prU2hETXJPT1ZDX3V3?oc=5"
-  },
-  {
-    "fecha": "2026-10-30",
-    "titular": "EFY Finance dinamiza operaciones con divisas",
-    "fuente": "El Diario - Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMikgFBVV95cUxORWxPQjFEdzlXbVFjUVZUQmhTRXB2VzBxeGJHSndqdWhONXRKdmpXb3RWRk1NM3puWnhhQnlBRkNNU3NZTWVwY2l6S3dZUDN0MjBqTUxQVUFSTERJWWFqOXA1RlpBWTZqUUdoVENKVHJxQkhySDZrRGN3bmlvcWpvd1JjUUlUTmlyMDBialN6ZjB2UQ?oc=5"
-  },
-  {
-    "fecha": "2026-10-30",
-    "titular": "FMI destaca medidas acordadas con Gobierno para el crecimiento",
-    "fuente": "El Diario - Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQSThjbVVUbXYzUE93bzkyQmVxMWdzQkw4Sk5qU2gza2pGaDBYSWJlUklFSUM1X2NWRnFYd2xhVGlOZUJhRGpKR0RsbmlpQl81VmpMSmZIR1hrWl9rNlJYalExSVVocFh4TThPRmVlTnlzN0c3Y3gyTThfbUY4VXZfMVktakdJN0EwbkYxSlpqNVp2LVpXTjRxNlktc1NJUk5DWU85UjYzNUQxUQ?oc=5"
-  },
-  {
-    "fecha": "2026-10-30",
-    "titular": "EL DÓLAR RETROCEDE UN CENTAVO Y MARCA BS 12,11",
-    "fuente": "El Alteño",
-    "enlace": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNbGJOWG1pTmhPamZUalZKMEw5cHdmbVlwbWVrTWRkLXZ0RzRPSkRMLVZjeEVwTThRSnRPZGxmRmJSbldzTktjSk9QU2ZqTVhaWnZuVU9MN0h6LUc1b2VLOFNTQVZkcDBrdzdjemZRd01XY3dQU3M2cmc0LTd2cHBaa3hMVDdid3VxOGJ4Z0dtVmRjbmNCYVE?oc=5"
-  },
-  {
-    "fecha": "2026-10-30",
-    "titular": "El BCB proyecta una inflación del 9,2% para fin de año",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNc2pNd2xJQmotMEVJaThrVE5YRU53b2ZjeUN2TVVNWENubExpUDZJd0JWYjQ3ZFl4ODNONy1mdUU3dE1vanI2RWtFQ0MxV1FzbnlYelBUUkdIamJueDBWTDZqcFAydjNQLVFEVnU0RW5uMHJ6WThvUjZmVnNkY1d3MXVlUExJS1lDcjNRMWoxZ0xNVkxYT1d3b3V3eGNpaGR2MGZVSDZB?oc=5"
+    "enlace": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxOdmRLRjNlcFM2WXF0Z0FROFNVcUFMaTU3Ul9tUUROcmpRbHVoRFNycngwY1ZGdk9lRFJGM25yeWo2RE1vVlBsZDNBVTM3UDVPa0U0TkVQTHhxRWhhX1JpbEh6YURidkI5OTlQZjVwSmtQZ3c1c2ItN3hkd0ItaE82LTJJSzBTODRFSDllN0lKYkZFSThVTFlsM3BhWE01LXZJci1xOEpjZG1FWEFWTXVVZHp4NkZEWDZfMm1qUVRIR09LdEg3QmthOTJlcHgxZ2Jna0E?oc=5"
   },
   {
     "fecha": "2026-10-30",
@@ -815,92 +821,86 @@ const NOTICIAS_AUTOMATICAS = [
   },
   {
     "fecha": "2026-10-30",
-    "titular": "El dólar paralelo rompe la tendencia al alza y cae por debajo de los Bs 12 este viernes",
+    "titular": "El BCB proyecta una inflación del 9,2% para fin de año",
     "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxOdmRLRjNlcFM2WXF0Z0FROFNVcUFMaTU3Ul9tUUROcmpRbHVoRFNycngwY1ZGdk9lRFJGM25yeWo2RE1vVlBsZDNBVTM3UDVPa0U0TkVQTHhxRWhhX1JpbEh6YURidkI5OTlQZjVwSmtQZ3c1c2ItN3hkd0ItaE82LTJJSzBTODRFSDllN0lKYkZFSThVTFlsM3BhWE01LXZJci1xOEpjZG1FWEFWTXVVZHp4NkZEWDZfMm1qUVRIR09LdEg3QmthOTJlcHgxZ2Jna0E?oc=5"
+    "enlace": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNc2pNd2xJQmotMEVJaThrVE5YRU53b2ZjeUN2TVVNWENubExpUDZJd0JWYjQ3ZFl4ODNONy1mdUU3dE1vanI2RWtFQ0MxV1FzbnlYelBUUkdIamJueDBWTDZqcFAydjNQLVFEVnU0RW5uMHJ6WThvUjZmVnNkY1d3MXVlUExJS1lDcjNRMWoxZ0xNVkxYT1d3b3V3eGNpaGR2MGZVSDZB?oc=5"
   },
   {
-    "fecha": "2026-10-29",
-    "titular": "El dólar oficial cambia de precio en Bolivia: ¿a cuánto llegó este jueves?",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOaERVckdFTXBtVnJPeGVhYWlRTkhjbDJnWndJVlB4bUNWSFA1S09wVFNiY1NMSkRxUzJ3MUVfd0tLUHNxdTNOUXh3Z0M2aGlTbExhQlpGb1JNakZoUkpuSW5HQU1RXzdld01jSWhNaU1MaFZHUDdyVVQzT3RucVdyNjROQ0VJeFp5ZEROWnpUcE5FRU85Vnowd3FKcVZpbno5UVYwcHpCd3dOeGdIaTc3VlBVVXk0cUJiTk96MQ?oc=5"
-  },
-  {
-    "fecha": "2026-10-29",
-    "titular": "EFY Financiera dinamiza operaciones con divisas en Bolivia",
-    "fuente": "El Diario - Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQaDMtRzVoVDY0VmxPWGpPeHEwOEVveW9YVWsza3I0Y2RPMG9DOUlsU3VJdlZVazRFZzBOLXdGUXhPUi0wWmY3THhVWXB0bTZMbkNsNUsyMzI4XzdOS2lzUmVZZDFDWmthZUpsRFZhZ0QwdjYwWk5XNlN4NHVPNnMxSjZSOHZXYzl2QUVJeFRIU3hPUy1VT3VJR252cVVrVWwxa1hwRA?oc=5"
-  },
-  {
-    "fecha": "2026-10-29",
-    "titular": "DÓLAR SUBE Y ALCANZA LOS BS 12,12",
+    "fecha": "2026-10-30",
+    "titular": "EL DÓLAR RETROCEDE UN CENTAVO Y MARCA BS 12,11",
     "fuente": "El Alteño",
-    "enlace": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNalY2MEQ0UENBbG0tYUk4eVJ1M0xLNXp5bjUwUWtFNFd3YjJqRkZsVWF0XzBHdVA0UGlWa3JlSk5Oa29QOF9ycy0wU2JKQ09SRnhMTTl3TEhTVzRaNEFKMlR2dXkxbzZ3UWY0SExmWlk4RnRsMFNHTU94RTJ1ejlxT1Z2MFc?oc=5"
+    "enlace": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNbGJOWG1pTmhPamZUalZKMEw5cHdmbVlwbWVrTWRkLXZ0RzRPSkRMLVZjeEVwTThRSnRPZGxmRmJSbldzTktjSk9QU2ZqTVhaWnZuVU9MN0h6LUc1b2VLOFNTQVZkcDBrdzdjemZRd01XY3dQU3M2cmc0LTd2cHBaa3hMVDdid3VxOGJ4Z0dtVmRjbmNCYVE?oc=5"
+  },
+  {
+    "fecha": "2026-10-30",
+    "titular": "EFY Finance dinamiza operaciones con divisas",
+    "fuente": "El Diario - Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMikgFBVV95cUxORWxPQjFEdzlXbVFjUVZUQmhTRXB2VzBxeGJHSndqdWhONXRKdmpXb3RWRk1NM3puWnhhQnlBRkNNU3NZTWVwY2l6S3dZUDN0MjBqTUxQVUFSTERJWWFqOXA1RlpBWTZqUUdoVENKVHJxQkhySDZrRGN3bmlvcWpvd1JjUUlUTmlyMDBialN6ZjB2UQ?oc=5"
+  },
+  {
+    "fecha": "2026-10-30",
+    "titular": "PGE 2027: dólar a Bs 12,02; decrecimiento de -1,5 % y subvención de Bs 11.000 millones",
+    "fuente": "EL DÍA - Noticias de Bolivia para el mundo",
+    "enlace": "https://news.google.com/rss/articles/CBMiygFBVV95cUxNWkdqVWxHTExDRktZQVdhaC1EcjBaT2dETHRoLVZ6TkhxalNDajFORTdaODhuQnRTbUdOZXdaMl9iZWdqcmpCa1l0MzdCMUU4N2pGS2FRdlR3ZVBMWEFGVkF2akp0X0lLVExlWUZ5UHhRckoydnE3Ymw1WnFXMUlRUUlWMHdhTUM4ZzE0VHVRUExZeWVGMzZSa0NUQ1ZfMTJGRzZLWkt6bFVCbmdVMkYzV0EtZW90RHFQUDVMR1prU2hETXJPT1ZDX3V3?oc=5"
+  },
+  {
+    "fecha": "2026-10-30",
+    "titular": "Banco Central de Bolivia anuncia devolución anticipada de dólares a quienes tienen depósitos de $us 10.001 a $us 50.000",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxPTk9qOGdqTXB4UnRqUFRCcW5jVUgxcXg1dU92Z1l0dElYOXU1NF9ybWRWd2ZvRVJzUjRvOEU1WHU1ZlJEc3otNW1zVVByTWFobXhJSzRDaS1WLU5vanBsSlV5VTB4RjdSOG9hVE1lVXJDSUptdUE0SHdfSUZXRGNzXy1nMTJwY09TOEh0MjlJdER3QVZCcVA1cFpRekJNSEl4OWFmOGdWWklsaEw1bUtzTkVyUEZ0R1dranRYNFFXNnl1clRpWElTeEZEbFJfU3BhY0JZZjh1QkJPRTYzUVBMZnFZSnhkczhkSVVIenVRcXBLRHpkOFJYaVZn?oc=5"
+  },
+  {
+    "fecha": "2026-10-30",
+    "titular": "FMI destaca medidas acordadas con Gobierno para el crecimiento",
+    "fuente": "El Diario - Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQSThjbVVUbXYzUE93bzkyQmVxMWdzQkw4Sk5qU2gza2pGaDBYSWJlUklFSUM1X2NWRnFYd2xhVGlOZUJhRGpKR0RsbmlpQl81VmpMSmZIR1hrWl9rNlJYalExSVVocFh4TThPRmVlTnlzN0c3Y3gyTThfbUY4VXZfMVktakdJN0EwbkYxSlpqNVp2LVpXTjRxNlktc1NJUk5DWU85UjYzNUQxUQ?oc=5"
+  },
+  {
+    "fecha": "2026-10-30",
+    "titular": "¿Cumple Bolivia el acuerdo con el FMI? El Presupuesto 2027 abre dudas por los combustibles",
+    "fuente": "El Deber",
+    "enlace": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQTENka3BoTmE1dDcybTFEdXBLdXFOSi13RVNMS3RwcVh0M2MyTGVWcW1KbkQ4dkhrUHpJNWJPdjlwUDZpcVVkQ3JULU04ZjIxQnE5U0ZlMUpQaGxiX0tPSFMxcHppbEhENVU5LWQ4aERWRW52WGV0bVRvU0tkdmQydWFkMTdEYV9pcGF5LWl4NEJPSTM4RU1HMnZEWlI4NktMZnBhQmNRUXdmQTkwRUNr?oc=5"
+  },
+  {
+    "fecha": "2026-10-30",
+    "titular": "El dólar vuelve a caer y se cotizará en Bs 12,09 durante los próximos cuatro días",
+    "fuente": "eju.tv",
+    "enlace": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNMkwxaWtJUF9UTjVRM2RYYlRGbWV1cWlDOWxuTkROazktNEttTUw2ZXQwa0xwY3d4RWFnZGs1VVFrTGQwa3hkVXRIZFZsLTFkdnpyeU9ZNFljN2stUzc0TVBmVVBKdExWWHJyRThzem1lVXBSN0JHVVcxc0gtcERtZFFmMWoxYmFpSm9LNWRWOWE1Znk1TmZMVTBQcHRnVWVsaVQtMlM5dw?oc=5"
+  },
+  {
+    "fecha": "2026-10-30",
+    "titular": "Contratos y deudas en dólares anteriores al 26 de junio no serán alcanzados por nuevo régimen cambiario",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxPQnNJT1VWMHoxSnNBN2xSdlZ1U0JIS1BZSkZMOUVES3ZOWVhEUkZwZnZ0cXNYSXZlRUp0R2JNU0MwbE9FMDJTeEpvbmpSZC1USUFlN2I5eVU1U2hWYTR3Qk93QmE4aHFGXy1mUHo4YVlkUUdSY0ptN0xWNGlwLVNmeTUtZUNVV1o2M243dmNXX0FILW52eEF0akNjREViOXU3WkF5SHhnRkRnOGpwRGlKcmYtdjQ5Ym9uR2V4cFRad3NXU25mTldPMHFqWnF3d0hiOHdhRWNjT2hPUFZRUXE0S1VfdU9HQWUz?oc=5"
+  },
+  {
+    "fecha": "2026-10-30",
+    "titular": "BCB adelanta devolución de dólares a ahorristas",
+    "fuente": "La Patria Bolivia",
+    "enlace": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOWHRyVE9jczA4b3puUDM2OWw4NERyUFU5SGtTY3ZUbUpNODRVc1IxX0d2a01FNmJsemRoZG51YW5HXzJVb2xTSVdybzBXbUtxVlhiTmVYc1lYTi1lZEx0UkhkS0V5TmhpcFZHbFNQSUFjUDR3eWdyNXNJLUFoY1U3N2ZEM0FkWEc2SjFtazRiOEhtVWxkZmF3dnFfdHN3dWxKREtZYQ?oc=5"
+  },
+  {
+    "fecha": "2026-10-30",
+    "titular": "La suegra FMI finalmente abrió la cartera",
+    "fuente": "Publico.bo",
+    "enlace": "https://news.google.com/rss/articles/CBMieEFVX3lxTE5SZ2w5VkxjZjBOUjgzQlU3cHFUaXpBdVZmcURwOC1QYkJsdGpUZHpPUExWWnNHQ1Rqa0tXdlFuZUxwS3ZJUGVOU2J6LXZrb3dnZG1QYlZaX2R4TVAzMmlGMWF5VlA5LWRFQmh5R2UyclVxVGZpQ0N6YQ?oc=5"
+  },
+  {
+    "fecha": "2026-10-30",
+    "titular": "¿Necesita comprar o vender dólares? Conozca los precios que se reportan este viernes",
+    "fuente": "Red Uno",
+    "enlace": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPZTUyRlQ2TFRtc3R0SzNaQVFTZDczTFJmRVRYWVF4V25mQ1JWTEotck5ObjJDT0g2UmdRa3BTcXo1bl90MWkxYVQ5d1RvSy15bGo1RTFSaTdQMFI4MTZpb09Ma2lyamtQOFBOajBKQnZZSUttZi01UDVkLVJJSnNCQ1ZkV3FIeG5SZXpsMVdySXNnZUVBNGVHMENoY3FwZ2ppLUthRWZBZFFEUnZYTlBYd3Z0aC1oRFpaTlhqUnFySVFoTTBqOXNiZnlpTGY?oc=5"
+  },
+  {
+    "fecha": "2026-10-30",
+    "titular": "El Ministerio de Economía dispone respetar el tipo de cambio de Bs 6,96 en contratos anteriores al 26 de junio",
+    "fuente": "El País Tarija",
+    "enlace": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxNSWdrbGgya0I0d2tUM283Q0RaWGJfbmZEWFplNnR6WlR0Q1N0OXo1WmtWUG9DSUVDNDY4Zk9ENXJnWDF4SUFVckdoSzlYT1J6UE9fTUxwVWRTaW56RllFRHEyYklpWHBsZGE4dW92R2N2WFZCMUpDRURBM3JrSWpGUml4YWM1bnVPdHEtYTVXMDZsV0RGUUgxc0xITXpGcVp2bjNVSTlJbjRFbGZzcFhmdTd5dF9DTERJMmx6NnJYbWlMZDEzVlVzcDdUMFVTM0IwR2t3YkIwbEJTTllIQ0pBYnZJT3Njdw?oc=5"
   },
   {
     "fecha": "2026-10-29",
     "titular": "BCB: Reservas Internacionales Netas registran un saldo de $us 1.905 millones a agosto el 2024",
     "fuente": "Economy",
     "enlace": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxORGtiX2FxSGhvTEQ0aTFkRnNEUTdCeUsxNjdZbGpaT3MwUTcxTWtlVk8xSFIwTlBiR0hya21XMzgwZDZlQ3gxTE8yQXRkZkZoOWNzUjhvbDNsM2VvOTM4dGxuY3BpMk9Zc0FyT09kSGdVUE9hajNRZVRBYVo2RU1RcDlDa0lvREY0SnJLTDN6cGdSWF9rNDVmM01COVhHTWhlUldrcmRWR0V0Q3ZjLURiaXAtTlJtM2ZYaW5oQ0hyYkhrRHpyRGZZTC0xNEl6c1BmVV80bGh1NmTSAd4BQVVfeXFMTmt2cnd3VS12NmtUYzYzdlEwd05mOGo5eHJsWWd1YUxLLXAtcW9EQjdhTHotRk1xTnZNV3c1NXE5YVpRdmJNSmJNOGZVY2lVTGNVWDdpcFZGTUFZMmQteUk0OVlNU2NpbEFtRjh0UmJ2LWZwczhURWNSYktrc2lPQVBsTTM3SnZDOTRhN0xkYmdWWW4xU09vT3h0UHVkWjdGV2NLUmJwQnBwRnR3eWhqX1ZhTjFZQUdHTEg2MVBLRlNKbERQX0JNNFcybnlpbmtCdmcxNzVhZzdUak81UTlR?oc=5"
-  },
-  {
-    "fecha": "2026-10-28",
-    "titular": "¡Atención! Dólar paralelo en Bolivia: estas son las cotizaciones reportadas este miércoles por la tarde",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxQRkZDQ0NYdXNCV1NSTHk1MzZTYW9WM3A4RlBnRy15dE5NWno0TEZHN0FDZjdibEN0UENITHlfTWpuR2tSOGoxeXdkX1FoZGowX21MRVJWZ1RJR1BhWHBzYXpheFYxbmVNTkVHNC1kSFZpcUx6VGdZRE1tekNvSXdyWnpDbFRhTl9KU1hzcTBxVVJCdTFHUDhVdU1sd1A1ZWgwOUs3THVtVUJRN2wzYXdxVEp2YlNVUTNtTG5fcGl0S3NYOVVTYWdVU3J2N3hsOE1mWG15b1B5RmlWT0lGbms4MWhRWnM?oc=5"
-  },
-  {
-    "fecha": "2026-10-27",
-    "titular": "Cotización del dólar llega a Bs 12,02 este martes en Bolivia",
-    "fuente": "Red PAT",
-    "enlace": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOaXh1ZmFCYXZQZWFVSjdNRUY1YTh6VDJ3NFVrVm9pU3c0Sk1Xb1hzZEZPY0U1UUNKVnJFX2dUaGhhd1hfM3NlaGZlSTZULWJycGN3OFg3c1JQMDVJV241WVpoUWJCN0xGcmpYb0xRU0hHV3ZwdVluLWY0TWNwUlhvbTRqSGxOTzhOTnhMSHpSa21wTE5Y?oc=5"
-  },
-  {
-    "fecha": "2026-10-26",
-    "titular": "Tras las traiciones de la COB, los trabajadores bolivianos lanzan una nueva oleada de luchas contra el aumento de los combustibles y la austeridad del FMI",
-    "fuente": "World Socialist Web Site",
-    "enlace": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1scG1MakM2ckJQY19iRGl0RTR6cGJKeTRSVU9fRVlGWlluVzFJUXhwNW5iY3l1WVFzNS1QNDdHVlhoM0tXZ3pyRkR4OGItNmtlTjJlOG5kdGhTQlp1Vm0ySm93UTVDRVN4?oc=5"
-  },
-  {
-    "fecha": "2026-10-26",
-    "titular": "El dólar oficial cruza la barrera de los Bs 12 este martes en Bolivia",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQZUh2aXZxMFkwQ3RidHJ1VjhZMGhOU1JrLUhrSHNmbnBJSkVyV1dEa053N2tPWHdrZkxGSHhEOHVsSXpXZElhbVNWZVA1TEs2NkRjQkZKRnJUQXZYeVg5cjNkM2NzOG5vY1dmZF9YckRMemRVRWczTC1mODdCcGFKLXJ0UTlHSnBfaWM2REZUZkRMdnF0bDlGN09JdkNlQmVNV2ZnaTgxRlM1SThvZ1d5SjNsa2xyVlY4VjhB?oc=5"
-  },
-  {
-    "fecha": "2026-10-26",
-    "titular": "El crédito del FMI no compra capacidad de ejecución",
-    "fuente": "El País Tarija",
-    "enlace": "https://news.google.com/rss/articles/CBMilgFBVV95cUxONVphMzVZdmVnZFVGTHRUWEh4SlVGNXRIekctX0hLREVGLTZjOUY1R1ZhWWFCdExqZXpnajBsNWhWTWJ0ZjJKdGFBYlRjaDFfeGFwWS1famlRSlF0U08zVThzUk1PcVhOSks3a0JQUVhZUDRTdUJicENQTDVHVnp4MGtzRm8wbzRyQWM0R0J5d2dqTnI4Umc?oc=5"
-  },
-  {
-    "fecha": "2026-10-26",
-    "titular": "Dólar paralelo en Bolivia registra nuevas variaciones este martes: estos son los precios de compra y venta",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxOUmllRUh3cnhPWlV6a1NvLVZHVUp3dTl6ZU8tZFp6YVI0ZEF5ZFhEZUtmVkQwZnZMMmI3SmJxYTdfbXVITmtFUW9XUzVWSVVCNjBTR25EbW9CZGl2T1pnXy1nT1ZfVXItb0s1ckdFRlJCYnlQMFVGRmxaWUpXV3pjVDAxZ0lLSTZ0SjdmQW9CaEpFV1VINks4aUxiSG12M19OOFZhbEtRVUx0eUZWdjFxVEJsaVI0ZDZhR0RCcjhGQTh6Y3Atc01UdDEySGJHY2FKbERWZWVCOW1NV1I2UkkzaXVCdVh1UmNBd2RR?oc=5"
-  },
-  {
-    "fecha": "2026-10-25",
-    "titular": "¡Cisterna con combustible en llamas! Reportan impresionante incendio en la carretera a Camiri",
-    "fuente": "Red Uno",
-    "enlace": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxORUhqeWpKY1FHRWoxaHN0UXFzS3dpeHh6N0NwLUJOZTlZcDVoNHN0VnI0by1qMWtZZEkxVmtUNjdNTFhjaEFQU2IyMlNwZW95WFBzbFJPVVB6TjJtdjNENk1LWVlsMUxUUzBNVzkxRk1HZ3lQU0s2M1lRVlRuaXlkMmJrd3AyTGpIdXItNkhlU3dhTzBRME56Rm1DSlZCYjNxSnNTbTFqNWRoUkdraHhlREhuYldqeFk2N3poWEx2M08?oc=5"
-  },
-  {
-    "fecha": "2026-10-25",
-    "titular": "Bolivia: Reservas Internacionales suman 3.978 millones de dólares",
-    "fuente": "La Patria Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOSEFQTER6ZzMweS1pQWpIOEJ4bzFOaHgyakdEMjVNc1B3d3hCcGJGTG5TdnJDOXhHSUJyR3czWG5ib2pZVDVGcHVxLVJVTmNvSS0wY0l0RERiVi03enRMSzlmazMwOFZRNDl4WDNtNS1GYjcxWUlMZlVMcERsRTNJYWIyREVUb2dXQUdtQjNCenlsNkFYUFhjajRmRGtFXzF1QV9F?oc=5"
-  },
-  {
-    "fecha": "2026-10-24",
-    "titular": "Divisas de RIN bajan a $us 647 millones",
-    "fuente": "El Diario - Bolivia",
-    "enlace": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPSXBacGpaTTVGMElfQjNpWmtyek80VzlHXzlfeXU5M2NqNmoxc1FOakMtLTRwblMyQlhPMlBPR181YjZQNGJ3R3Vram16SDgtQWFGcTIyZWRQckw1OThYbndTODFLOWk5aU9zUVV0ekljekEtLVNBbXBjT193LVY0M0huSFhScnpsc0E?oc=5"
-  },
-  {
-    "fecha": "2026-10-24",
-    "titular": "El BCB informa que las RIN llegaron a $us 3.978 millones",
-    "fuente": "EL DÍA - Noticias de Bolivia para el mundo",
-    "enlace": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPZlhsY3pTbmRVQVVQZFl2ZXhFS0VMSk5RelNlQmFCLUlKVWxvOEh1aVE1SUNUWmNmQmQ0SWhXbmwxSWxVNEtLNEJKT25FcERuQURPcXliZU5pNXptYlhqVXYySndNWVJ6N2h6UkVqVUZkZFZhMWFXM1lmTFpCaU9vRW9VUUlWVTJZalRLa3JmU0RsMTRCWTZGVVFnXzZ4VlRUR1E0?oc=5"
   }
 ];
